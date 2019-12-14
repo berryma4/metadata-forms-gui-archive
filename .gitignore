@@ -13,3 +13,17 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+
+t.t
+t.t2
+t.tmp
+
+
+# Visual studio code artifacts left around
+.vs*
+*ProjectSettings.jsons
+*slnx.sqlite
+*.suo
+
+log/*
