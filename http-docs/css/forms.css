@@ -1,0 +1,312 @@
+.body {
+   font-family:GOTHAM_BOLD;san-serif;sans-serif
+   background-color: #EBEBEB;  
+   font-size: 16px;
+}
+
+input {
+    border: 1px solid dimgrey;
+}
+
+#top_nav {
+  width:100%;
+  display:block;  
+  height:30px;
+  background-color:#217F0B;  
+  color:#FFF;
+  font-family:Arial;
+  font-size:32px;
+  font-weigt: bold;
+  text-align: center;
+  vert-align: center;
+  padding-top: 5px;
+  overflow: hidden;
+}
+
+#top_nav > h1 {
+  font-size: 10px;
+}
+
+#page-vmid{
+  width: 100%;
+  height: 88%;
+  display: block;
+  padding-bottom:1em;  
+  vertical-align:top;
+  background-color: #CFCFCF;
+  font-size:0;
+}
+
+#lbody {
+  display: inline-block;
+  width:16%;
+  height:100%;
+  font-family:Arial;
+  text-align:left;
+  vertical-align:top;
+  background-color:#217F0B;
+  color:  #DFDFDF;
+  font-size: 9pt;
+}
+
+#lbody  a {
+    font-family: "Trebuchet MS",sans-serif;
+    text-decoration: none;
+    font-size: 0.9em;
+	color: Silver;
+}
+
+#lbody li {
+  list-style-type: none;
+  margin: 0;
+  margin-left: 0.2em;
+  padding:0.1em;
+  padding-left: 0.2em;
+}
+#lbody  a:visited {
+  color: Silver;
+    
+}
+
+#lbody  li:hover {
+    text-decoration: underline;
+    backkground-color:#FAFAAA;
+}
+
+#lbody  li:active {
+}
+
+#lbody  h3 {
+  padding-bottom: 1px;
+  margin-bottom: 1px;
+  font-size: 0.8em;
+}
+
+#mbody {
+  display:inline-block;
+  background-color: white;  
+  width:64%; 
+  height:100%;
+  vertical-align:top;
+  font-size: small;  
+}
+
+#mbody p {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+#rbody {
+  width:20%;
+  display: inline-block;
+  height:100%;
+  font-family:Arial;
+  font-size:x-small;
+  text-align:left;
+  vertical-align:top;  
+  overflow-y: none;
+  background-color: :#217F0B;
+  color:  #DFDFDF;
+
+}
+
+#page_footer {
+    float: right;    
+    display: block; 
+    width:100%;
+    background-color: #000;
+    color: #FFF;
+    font-family: Arial;
+    font-size: 0.5em;
+    font-weight: bold;
+    text-align: center;
+    vert-align: center;
+    padding-top: 5px;
+}
+
+
+#Hist::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+#Hist::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+#hist::-webkit-scrollbar-thumb {
+background-color: darkgrey;
+outline: 1px solid slategrey;
+}
+
+
+#hist {
+  display:block;
+  width:100%;
+  xheight: 40%;
+  min-height: 5px;
+  max-height: 50%;
+  font-size:80%;
+  overflow-y: auto;
+   border-bottom: 1px solid dimgrey;
+}
+
+#ask {
+  display: block;
+  width:100%;
+  height: 55%;
+  font-size: 90%;
+}
+
+div.histItem {
+  padding-bottom: 0.6em;
+  padding-left: 0.2em;
+}
+
+div.histLabel {
+  font-weight: 400;
+}
+
+div.histValue {
+  font-weight: 600;
+  padding-left: 0.2em;
+  display: inline-block;
+}
+
+p.quest_label {
+  font-weight: bold;
+  display: block;
+  padding: 0px;
+  margin: 0px;
+}
+
+p.quest_text {
+  font-size: 70%;
+  display: block;
+  padding: 1px;
+  margin: 1px;
+  font-family: arial;
+}
+
+div.quest {
+  border-style: solid;
+  margin: 3px;
+  padding: 2px;
+  vertical-align: top;
+}
+
+input.input_text {
+  min-width: 50px;  
+  font-size: 90%;
+  max-width: 98%;  
+}
+
+
+textarea.input_text {
+  min-width: 50px;
+  max-width: 95%;
+  font-size: 90%;
+  outline-color:silver;
+  resize: none;
+  overflow:hidden;
+  padding:0px;
+  margin:0px;
+  box-sizing: border-box;         /* For IE and modern versions of Chrome */
+  -moz-box-sizing: border-box;    /* For Firefox                          */
+  -webkit-box-sizing: border-box; 
+}
+
+input.next_button {
+  font-size: 90%;
+  border-radius:2px;
+  text-align:center;
+  vertical-align:middle;
+  font-family: Arial, Helvetica, sans-serif;
+  cursor:pointer;
+  height:8pt;
+  width: 18pt;
+  margin-left:5px;
+}
+
+img.sample_img {
+    border-radius: 3%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    max-width: 95%;
+    max-height: 95%;
+    x-max-width: 340px;
+}
+
+div.option {
+  display: block;
+  padding-bottom: 1px;
+  flex-wrap: nowrap;
+  padding-top: 0px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+div.option:hover {
+  font-weight: bold;
+  background-color: silver;
+  
+}
+
+div.option_label {
+  display: inline-block;
+  width: 76%;
+  vertical-align:top;
+}
+
+div.tree_quest {
+  padding-left: 5px;
+  margin-left: 5px;
+  margin-top: 4px;
+  border-left: 1px solid red;
+}
+
+
+div.tree_option {
+  margin-left: 3px;
+  padding-left: 5px;
+  border-left: 1px darkcyan dotted;
+}
+
+.tree_quest_id {
+   padding: 2px;
+   font-size: 75%;
+   display: block;
+}
+.tree_quest_id:hover {
+  font-weight: 800;
+  text-decoration: underline;
+}
+
+
+.tree_quest_label {
+    padding: 2px;
+    font-size: 105%;
+    font-weight: 110%;
+}
+
+.tree_loopback {
+  padding: 4px;
+}
+
+.tree_startover {
+  padding-left: 13px;
+  font-size: 75%;
+  display: block;
+}
+
+.full_tree {
+  overflow-y: scroll;
+  width:100%;
+  height: 99%;
+  display:block;
+}
+
+#ErrMessage {
+  display: none;
+}
