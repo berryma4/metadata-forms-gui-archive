@@ -259,11 +259,15 @@ function mformsParseMeta(aStr, parms) {
 
         // TODO: Add Variable Subsitution from previously parsed values or passed in context.
         //     Note Interpolation is a function already avaialble in cacre
+        //  TODO: Add support for escaping in quoted values.
         //  TODO: Adding Removing string to right of # when outside of quoted string
         //  TODO: Parsing JSON as data value when string starts with "[" or "{"
         //  TODO: Parsing Quoted String
         //  Parsing a Space consolidate multi-line String
         //  Parsing a Space retained multi-line string.
+        // TODO: Add support for flow sytle format which is not exactly JSON
+        // TODO: Handle multi-line constants that contain JSON.  Current version only
+        //   processes JSON if it is single line. 
 
         //console.log(" tout=", JSON.stringify(outObj, null, 2));
     } // for lines

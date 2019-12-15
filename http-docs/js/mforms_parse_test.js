@@ -4,12 +4,12 @@
 */
 
 if (typeof require != "undefined") {
-    var mforms = require("./mparser.js");
+  var mforms = require("./mforms_parse.js");
 } else {
-    // emulate module variable for browser
-    var mforms = {
-        "mformsParseMeta": mformsParseMeta
-    };
+  // emulate module variable for browser
+  var mforms = {
+    "mformsParseMeta": mformsParseMeta
+  };
 }
 
 var testStrForm1 = `
@@ -147,19 +147,19 @@ var testStrPerson4 = `
 
 
 function mParserTest(label, dataStr) {
-    var tres = mforms.mformsParseMeta(dataStr, {});
-    console.log("L77: mParserTest:", label, " Out=", JSON.stringify(tres, null, 2));
-    return tres;
+  var tres = mforms.mformsParseMeta(dataStr, {});
+  console.log("L77: mParserTest:", label, " Out=", JSON.stringify(tres, null, 2));
+  return tres;
 }
 
 if (typeof require != "undefined") {
-    mParserTest("test 1 form", testStrForm1);
-    mParserTest("test 2 people", testStrPeople1);
-    mParserTest("test 3 people", testStrPeople2);
-    // Tests to see if an outermost object of 
-    // type person gets created with the proper 
-    // containment eg {" person" : {}}
-    mParserTest("test single person dict object", testStrPerson3);
-    mParserTest("test single dict at outer level", testStrPerson4);
+  mParserTest("test 1 form", testStrForm1);
+  mParserTest("test 2 people", testStrPeople1);
+  mParserTest("test 3 people", testStrPeople2);
+  // Tests to see if an outermost object of 
+  // type person gets created with the proper 
+  // containment eg {" person" : {}}
+  mParserTest("test single person dict object", testStrPerson3);
+  mParserTest("test single dict at outer level", testStrPerson4);
 
 }
