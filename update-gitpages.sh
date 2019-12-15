@@ -7,8 +7,9 @@
 # a basic Demo using the static htmlo pages from the same
 # code artifacts.
 mkdir data
-cp -r http-docs/js docs/js
-cp -r http-docs/cs docs/cs
+cp -r http-docs/js docs
+cp -r http-docs/css docs
+cp -r http-docs/* docs
 mkdir docs/data
 mkdir docs/data/forms
-cp -r data/forms/cs docs/data/forms
+cp -r data/forms docs/data

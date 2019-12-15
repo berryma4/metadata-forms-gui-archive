@@ -1,0 +1,40 @@
+field: 
+  id: projectNum
+  widget_type: text
+  label = Project #
+    place = left
+    align = right
+    width = 
+  size = 20
+  data_context = cert/con_project_number  
+  required=true
+  max_len=25
+  class=input_field
+  data_type=text
+  
+
+  
+field:
+  id=facilityName
+  widget_type = text
+  label = Facility Name #
+  label_align = left
+  size = 30
+  data_context = con_project_number  
+  required=true
+  max_len=50
+  class=input_field
+  data_type=text
+
+
+form:
+ row:
+ col:
+   widgets:
+     - projectNum
+     - FacilityName
+
+
+
+
+
