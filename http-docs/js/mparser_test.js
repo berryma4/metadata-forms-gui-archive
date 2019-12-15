@@ -2,9 +2,17 @@
   intended to make it easier to unit tests javascript
   intended to run in browser.
 */
-var mforms=require("./mparser.js");
 
-var testStr = `
+if (typeof require != "undefined") {
+    var mforms = require("./mparser.js");
+} else {
+    // emulate module variable for browser
+    var mforms = {
+        "mformsParseMeta": mformsParseMeta
+    };
+}
+
+var testStrForm1 = `
 - widget: 
      id: projectNum
      widget_type: text
@@ -42,8 +50,24 @@ var testStr = `
 
 `;
 
+var testStrPeople1 = `
+- jack:    
+    projectNum : 1983
+- lingua:
+     hasPlane: false
+     pets:
+       sam:
+         living: true
+       girtude: 
+         living: false
+     kids:
+      - hacker:
+           living: true
+      - nancy:
+           living: false
+`;
 
-var testStr2 = `
+var testStrPeople2 = `
 - jimmy 
 - jack:
     phone : 206-828-2387
@@ -56,9 +80,10 @@ var testStr2 = `
      taxCred: -1983.21
      hasCar: true
      hasPlane: false
-     #label:
-     #  text: I am text
-     #  align: right
+     cars: ["ford", "toyota Tacoma", "subaru"]
+     label:
+       text: I am text
+       align: right
      pets:
        sam:
          living: true
@@ -71,8 +96,17 @@ var testStr2 = `
            living: false
 `;
 
-//var tres = mforms.mformsParseMeta(testStr, {});
-//console.log(" tres testStr=", JSON.stringify(tres, null, 2));
 
-var tres = mforms.mformsParseMeta(testStr2, {});
-console.log(" tres testStr2=", JSON.stringify(tres, null, 2));
+
+function mParserTest(label, dataStr) {
+    var tres = mforms.mformsParseMeta(dataStr, {});
+    console.log("L77: mParserTest:", label, " Out=", JSON.stringify(tres, null, 2));
+    return tres;
+}
+
+if (typeof require != "undefined") {
+    mParserTest("test 1 form", testStrForm1);
+    mParserTest("test 2 people", testStrPeople1);
+    mParserTest("test 3 people", testStrPeople2);
+
+}

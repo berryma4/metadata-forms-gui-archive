@@ -62,6 +62,12 @@ function parseCoerceDataValues(dataVal) {
     if (dataVal == null) {
         return null;
     }
+    //console.log("L65: dataVal=" + dataVal);
+    trimDataVal = dataVal.trim(dataVal);
+    if ((trimDataVal[0] == "{") || (trimDataVal[0] == "[")) {
+        // Handle Single line JSON as data value
+        return JSON.parse(trimDataVal);
+    }
 
     var lcDataVal = dataVal.toLowerCase();
     if ((lcDataVal == "yes") || (lcDataVal == "true")) {
@@ -97,6 +103,9 @@ function parseCoerceDataValues(dataVal) {
 ..Note this parser does not attempt to provide full
 ..full Yaml capabilities but it's data set would 
 ..likely suceed to be parsed by a YAML parser.
+
+  Design Note:  Internally manipulate stack for descent unwiding 
+    to avoid overhead of recursive javascript calls.
 */
 function mformsParseMeta(aStr, parms) {
     var outObj = null; // leave as null until we know what kind of object we are parsing
@@ -108,6 +117,7 @@ function mformsParseMeta(aStr, parms) {
     var currObj = null;
     var currSpaceCnt = 0;
     var currKey = null;
+    var stackObj = {};
 
     for (var i = 0; i < tarr.length; i++) {
         var tline = tarr[i].trimRight();
@@ -144,23 +154,26 @@ function mformsParseMeta(aStr, parms) {
             varName = varName.slice(1).trim();
         }
         dataVal = parseCoerceDataValues(dataVal);
-        console.log("L149: tline=", tline, "leadSpace=", leadSpace, 'firstChar=', firstChar, 'lastChar=', lastChar, "varName=", varName, "dataVal=", dataVal);
+        //console.log("L149: tline=", tline, "leadSpace=", leadSpace, 'firstChar=', firstChar, 'lastChar=', lastChar, "varName=", varName, "dataVal=", dataVal);
 
         // unwind the stack until we find a object
         // at equal level of indent.
-        while ((currSpaceCnt >= 0) && (currSpaceCnt > leadSpace)) {
-            if (objStack.length == 0) {
+        while (leadSpace <= currSpaceCnt) {
+            if ((objStack.length == 0) || (currSpaceCnt <= 0)) {
                 currSpaceCnt = 0;
+                currObj = outObj;
+                currKey = varName;
                 break;
+            } else {
+                //console.log("L158: dedent prePop leadSpace=", leadSpace, " currSpaceCnt=", currSpaceCnt, "currKey=", currKey, "currObj=", JSON.stringify(currObj), "objStack=", JSON.stringify(objStack));
+                stackObj = objStack.pop();
+                currObj = stackObj.obj;
+                currKey = stackObj.key;
+                currSpaceCnt = stackObj.indent;
+                //console.log("L165: dedent popped stackObj=", JSON.stringify(stackObj));
             }
-            console.log("L168: leadSpace=", leadSpace, " currSpaceCnt=", currSpaceCnt, "currKey=", currKey, "currObj=", currObj);
-            stackObj = objStack.pop();
-            currObj = stackObj.obj;
-            currKey = stackObj.key;
-            currSpaceCnt = stackObj.indent;
-            console.log("L165: stackObj=", stackObj);
         }
-        console.log("L174: leadSpace=", leadSpace, " currSpaceCnt=", currSpaceCnt, "currKey=", currKey, "currObj=", currObj);
+        //console.log("L174: leadSpace=", leadSpace, " currSpaceCnt=", currSpaceCnt, "currKey=", currKey, "currObj=", JSON.stringify(currObj), "objStack=", JSON.stringify(objStack));
 
         // If currObj is null it is because we do not yet know the type of the 
         // current object because it is either as the first of the file
@@ -176,11 +189,18 @@ function mformsParseMeta(aStr, parms) {
             // Set the main output object if it has not already been         
             if (outObj == null) {
                 outObj = tmpObj;
-                var stackObj = {'obj' : outObj, 'key' : currKey, "indent" : currSpaceCnt};
-                objStack.push(stackObj);
+                stackObj = {
+                    'obj': outObj,
+                    'key': currKey,
+                    "indent": currSpaceCnt
+                };
+                //--NNobjStack.push(stackObj);
+                //--NNconsole.log("L185: indent set mainObj objStack=", JSON.stringify(objStack));
             }
             //console.log("L95: lastObj=", lastObj, "lastKey=", lastKey, "tmpObj=", tmpObj);
 
+            currObj = tmpObj;
+            // Add Current Object to Last Object
             if (lastObj != null) {
                 // Add current content to the existing object 
                 // either as an array element or as a hash element
@@ -201,22 +221,31 @@ function mformsParseMeta(aStr, parms) {
                     lastObj[lastKey] = tmpObj;
                 }
             }
-            console.log("L103: lastObj=", lastObj, "lastKey=", lastKey, "tmpObj=", tmpObj);
-            currObj = tmpObj;
+            //console.log("L103: currObj=", JSON.stringify(currObj) + " lastObj=", JSON.stringify(lastObj), " lastKey=", lastKey);
         }
 
 
 
         if (lastChar == ":") {
-            var stackObj = {'obj' : currObj, 'key' : varName, "indent" : leadSpace};
+            // Starting a new defenition so 
+            // need to setup conditions so the next line
+            // when we find out what kind of object we are 
+            // defining we can detect the need.
+            stackObj = {
+                'obj': currObj,
+                'key': varName,
+                "indent": currSpaceCnt
+            };
             objStack.push(stackObj);
+            //console.log("L221: indent needed stackObj=", JSON.stringify(stackObj), " objStack=", JSON.stringify(objStack));
             lastObj = currObj;
             lastKey = varName;
+            // Setup next object for the index.
             currObj = null;
             currKey = null;
             currSpaceCnt = leadSpace;
             state = pStates.start_new_def;
-            console.log("L119: lastObj=", lastObj, "lastKey=", lastKey, "stackObj=", stackObj);
+            //console.log("L119: lastObj=", JSON.stringify(lastObj), "lastKey=", lastKey, "stackObj=", JSON.stringify(stackObj));
             continue;
         }
 
@@ -228,15 +257,13 @@ function mformsParseMeta(aStr, parms) {
         }
         // }
 
-
-        // State:  Seeking Children
-        // seeking first child
-        //  Adding simple string as array element
-        //  Adding Removing string to right of # when outside of quoted string
-        //  Parsing JSON
-        //  Parsing Quoted String
-        //  Parsing a Space consolidate String
-        //  Parsing a Space retained string.
+        // TODO: Add Variable Subsitution from previously parsed values or passed in context.
+        //     Note Interpolation is a function already avaialble in cacre
+        //  TODO: Adding Removing string to right of # when outside of quoted string
+        //  TODO: Parsing JSON as data value when string starts with "[" or "{"
+        //  TODO: Parsing Quoted String
+        //  Parsing a Space consolidate multi-line String
+        //  Parsing a Space retained multi-line string.
 
         //console.log(" tout=", JSON.stringify(outObj, null, 2));
     } // for lines
@@ -244,9 +271,10 @@ function mformsParseMeta(aStr, parms) {
     return outObj;
 } // func
 
-
-// more node.js to allow local testing but doesn't hurt anything when 
-// ran in browser
-module.exports = {
-    'mformsParseMeta': mformsParseMeta
-};
+if (typeof module != "undefined") {
+    // more node.js to allow local testing but doesn't hurt anything when 
+    // ran in browser
+    module.exports = {
+        'mformsParseMeta': mformsParseMeta
+    };
+}
