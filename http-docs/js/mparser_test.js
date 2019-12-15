@@ -96,6 +96,54 @@ var testStrPeople2 = `
            living: false
 `;
 
+var testStrPerson3 = `
+person:
+     id: lingua
+     phone: 205-686-38383
+     yearBorn: 1983
+     hourly: 198.24
+     taxCred: -1983.21
+     hasCar: true
+     hasPlane: false
+     cars: ["ford", "toyota Tacoma", "subaru"]
+     label:
+       text: I am text
+       align: right
+     pets:
+       sam:
+         living: true
+       girtude: 
+         living: false
+     kids:
+      - jack:
+           living: true
+      - nancy:
+           living: false
+`;
+
+var testStrPerson4 = `
+     id: lingua
+     phone: 205-686-38383
+     yearBorn: 1983
+     hourly: 198.24
+     taxCred: -1983.21
+     hasCar: true
+     hasPlane: false
+     cars: ["ford", "toyota Tacoma", "subaru"]
+     label:
+       text: I am text
+       align: right
+     pets:
+       sam:
+         living: true
+       girtude: 
+         living: false
+     kids:
+      - jack:
+           living: true
+      - nancy:
+           living: false
+`;
 
 
 function mParserTest(label, dataStr) {
@@ -108,5 +156,10 @@ if (typeof require != "undefined") {
     mParserTest("test 1 form", testStrForm1);
     mParserTest("test 2 people", testStrPeople1);
     mParserTest("test 3 people", testStrPeople2);
+    // Tests to see if an outermost object of 
+    // type person gets created with the proper 
+    // containment eg {" person" : {}}
+    mParserTest("test single person dict object", testStrPerson3);
+    mParserTest("test single dict at outer level", testStrPerson4);
 
 }
