@@ -222,5 +222,5 @@
          "gbl": gContext
      };
 
-     mformsGetDef(formSpecUri, "", context);
+     mformsGetDef(formSpecUri, ".", context);
  }
