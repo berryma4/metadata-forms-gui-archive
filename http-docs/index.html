@@ -1,168 +1,247 @@
 <html>
+
 <head>
-  
+
   <link rel="stylesheet" type="text/css" href="css/forms.css" />
   <style>
-     .h3 {
+    .h3 {
       text-decoration: none;
-     }
+    }
   </style>
   <script src="js/browser_util.js" type="text/javascript"></script>
-  <script src="js/simple_ajax.js" type="text/javascript"></script>  
-  <script src="js/basic_widgets.js" type="text/javascript"></script>    
-  <script src="js/mforms.js" type="text/javascript"></script>  
-  <script src="js/mformsParser.js" type="text/javascript"></script>  
-  
+  <script src="js/simple_ajax.js" type="text/javascript"></script>
+  <!--<script src="js/basic_widgets.js" type="text/javascript"></script>-->
+  <script src="js/mforms.js" type="text/javascript"></script>
+  <script src="js/mforms_parse.js" type="text/javascript"></script>
+
   <style>
     img.sampleImage {
       width: 100%;
     }
-  </style>
-  
-  <script>
-    var GContext = {
-      accessToken: "AABBCCDDEEAA",
-      zip : "48876",
-      street : "",
-      name : "",
-      maxDist : 8,
-      specialty : "ANY",
-      state : "ANY",
-      lastSearchStr: null,
-      provNdx : {}
-    };
 
-function onLoad(GContext) {
+    .inputFrm {
+      width: 100%;
+      font-family: Verdana, Vivaldi, 'Vladimir Script';
+      background-color: ivory;
+      font-size: 0.8em;
+    }
+
+    .inputFrmHead {
+      width: 100%;
+      font: 600;
+      background-color: #117F0B;
+      font-size: 1.2em;
+      margin: 0px;
+      color: azure;
+    }
+
+
+    .vgroup {
+      width: 100%;
+      display: block;
+    }
+
+    .vgroupLabel {
+      width: 100%;
+      font-size: 1.2em;
+      color: rgb(13, 85, 9);
+      display: block;
+      margin: 0;
+      margin-bottom: 0.5em;
+      margin-top: 0.6em;
+    }
+
+    .input_fieldContainer {
+      margin-top: 0.25em;
+    }
+
+    .input_fieldLabel {
+      display: inline-block;
+      width: 8em;
+      text-align: right;
+      vertical-align: top;
+      color: cadetBlue;
+      padding-left: 0.05em;
+      padding-right: 0.09em;
+      margin-right: 0.1em;
+    }
+
+    .input_field {
+      display: inline-block;
+      border-radius: 4px;
+      padding: 0.02em;
+      margin: 0em;
+      margin-left: 0.04em;
+      color: rgb(13, 85, 9);
+      font-size: 1em;
+    }
+  </style>
+
+  <script>
+    function onLoad(GContext) {
       //runCACREDemo();     
     }
-    
 
-/*
-    function runCACREDemo() {      
-      cacreInitialize("cacreAsk", "cacreHist", "/insurance-1", "whatcanidoforyou", "joe123" )         
-    }
-    
-    
-    
 
-    
-    function displayImageInBody(uriPath) {
-       var b = new String_builder;
-       qObj = 
-       b.start("div", {"class" : "sampleImage"});
-       b.make("img", {"src" :  uriPath,
-                      "class" : "sampleImage"}); 
-       b.finish("div");
-       b.toDiv("main-page-body");     
+    /*
+        function runCACREDemo() {      
+          cacreInitialize("cacreAsk", "cacreHist", "/insurance-1", "whatcanidoforyou", "joe123" )         
+        }
+        
+        
+        
 
-    }
-    
-    function displayMemberProperties() {
-     displayImageInBody("ex-sample/medicaid-sample-member-profile.jpg");
-    }
-    
-    
-    
-    function medicaidSampleBeneficiaryLookup() {
-     displayImageInBody("ex-sample/medicaid-sample-beneficiary-lookup.jpg");
-    }
-    
-    function displayMemberIdentityCard() {
-      displayImageInBody("ex-sample/medicaid-sample-insurnace-card.jpg");
-    }
-    
-    function displayPaymentInformation(){
-       displayImageInBody("ex-sample/medicare-premium-bill-form-cms-500.jpg"); 
-    }
-    
-    function displayMemberStatus() {
-       displayImageInBody("ex-sample/medicaide-sample-enrollment-detail.jpg"); 
-    }
-    
-    function displayBillInformation() {
-      displayImageInBody("ex-sample/medicare-premium-bill-form-cms-500.jpg");
-    }
-    
-    function displayDependantInformation() {
-    }
-    
-    function displayClaimHistoryInformation() {
-    }
+        
+        function displayImageInBody(uriPath) {
+           var b = new String_builder;
+           qObj = 
+           b.start("div", {"class" : "sampleImage"});
+           b.make("img", {"src" :  uriPath,
+                          "class" : "sampleImage"}); 
+           b.finish("div");
+           b.toDiv("main-page-body");     
 
-    // handle click event to set respondent id to demonstrate
-    switching respondents 
-    function setRespondent(rid) {
-        cacreResetActiveRespondent(rid);
-    }
-    
-    function chooseScript(dirPrefix,initialQuest) {
-      cacreResetDefaultQuestion(dirPrefix,initialQuest);
-    }
-    
-    function renderCurrentTree() {
-      renderTree(GCACRE.activeResp.currPathPrefix, GCACRE.activeResp.startQuestId, 'main-page-body');
-    }
-    */
+        }
+        
+        function displayMemberProperties() {
+         displayImageInBody("ex-sample/medicaid-sample-member-profile.jpg");
+        }
+        
+        
+        
+        function medicaidSampleBeneficiaryLookup() {
+         displayImageInBody("ex-sample/medicaid-sample-beneficiary-lookup.jpg");
+        }
+        
+        function displayMemberIdentityCard() {
+          displayImageInBody("ex-sample/medicaid-sample-insurnace-card.jpg");
+        }
+        
+        function displayPaymentInformation(){
+           displayImageInBody("ex-sample/medicare-premium-bill-form-cms-500.jpg"); 
+        }
+        
+        function displayMemberStatus() {
+           displayImageInBody("ex-sample/medicaide-sample-enrollment-detail.jpg"); 
+        }
+        
+        function displayBillInformation() {
+          displayImageInBody("ex-sample/medicare-premium-bill-form-cms-500.jpg");
+        }
+        
+        function displayDependantInformation() {
+        }
+        
+        function displayClaimHistoryInformation() {
+        }
+
+        // handle click event to set respondent id to demonstrate
+        switching respondents 
+        function setRespondent(rid) {
+            cacreResetActiveRespondent(rid);
+        }
+        
+        function chooseScript(dirPrefix,initialQuest) {
+          cacreResetDefaultQuestion(dirPrefix,initialQuest);
+        }
+        
+        function renderCurrentTree() {
+          renderTree(GCACRE.activeResp.currPathPrefix, GCACRE.activeResp.startQuestId, 'main-page-body');
+        }
+        */
   </script>
- 
+
 </head>
 
-<body onload="onLoad(GContext)">
+<body>
   <div id="top_nav">
     <h1>Metadata Driven Forms Demonstration</h1>
   </div>
-  
+
   <div id="page-vmid">
-  <div id="lbody">
+    <div id="lbody">
       <h3>Certificate of Need</h3>
-      <li onclick="display_form('data/forms/cert-of-need', '/data/cert-of-need/1004.JSON')">Cert #1004</li>
-      <li onclick="display_form('data/forms/cert-of-need', '/data/cert-of-need/1011.JSON')">Cert #1011</li>
-      <li onclick="display_form('data/forms/cert-of-need', '/data/cert-of-need/1019.JSON')">Cert #1019</li>
-      <li onclick="display_form('data/forms/cert-of-need', '/data/cert-of-need/1023.JSON')">Cert #1023</li>
-      <li onclick="display_form('data/forms/cert-of-need', '/data/cert-of-need/1086.JSON')">Cert #1086</li>
-      <li onclick="display_list_form('data/forms/cert-of-need/list-certs', 'delim_parser', '/data/cert-of-need/index.txt', '^')">List Certs</li><br />
-     <h3>Docs</h3>
+      <li
+        onclick="display_form('main-page-body', 'data/forms/cert-of-need/cneed', '/data/cert-of-need/1004.JSON', GTX)">
+        Cert
+        #1004
+      </li>
+      <li
+        onclick="display_form('main-page-body', 'data/forms/cert-of-need/cneed' , '/data/cert-of-need/1011.JSON', GTX )">
+        Cert
+        #1011</li>
+      <li
+        onclick="display_form('main-page-body', 'data/forms/cert-of-need/cneed' , '/data/cert-of-need/1019.JSON', GTX )">
+        Cert
+        #1019</li>
+      <li
+        onclick="display_form('main-page-body', 'data/forms/cert-of-need/cneed' , '/data/cert-of-need/1023.JSON', GTX )">
+        Cert
+        #1023</li>
+      <li
+        onclick="display_form('main-page-body', 'data/forms/cert-of-need/cneed' , '/data/cert-of-need/1086.JSON', GTX )">
+        Cert
+        #1086</li>
+      <li onclick="display_list_form(" main-page-body", 'data/forms/cert-of-need/list-certs' , 'delim_parser'
+        , '/data/cert-of-need/index.txt' , '^' , GTX)">
+        List Certs</li><br />
+      <h3>Docs</h3>
       <li><a href="https://github.com/joeatbayes/metadata-forms-gui/src/master/README.md" target="docs">Read ME</a></li>
-      <li><a href="https://github.com/joeatbayes/metadata-forms-gui/src/master/documentation/syntax-tutorial.md" target="docs">Syntax tutorial</a></li>
-      <li><a href="https://github.com/joeatbayes/metadata-forms-gui/src/master/license.md" target="docs">License</a></li>
+      <li><a href="https://github.com/joeatbayes/metadata-forms-gui/src/master/documentation/syntax-tutorial.md"
+          target="docs">Syntax tutorial</a></li>
+      <li><a href="https://github.com/joeatbayes/metadata-forms-gui/src/master/license.md" target="docs">License</a>
+      </li>
       <h3>tools</h3>
       <!--<li><a href="#" onclick="renderCurrentTree()">Show Full Tree</a></li>-->
-  </div><!--lbody-->
-    
-  <div id="mbody">    
-   <div id="main-page-body">
-      <h3><a href="https://joeatbayes.github.io/metadata-forms-gui/" target="MF" class="h3">Metadata Forms Scripting Engine</a>.</h3> 
-        <p>  Allow Meta-data driven forms to be
-            defined without writing Javascript while retaining
+    </div>
+    <!--lbody-->
+
+    <div id="mbody">
+      <div id="main-page-body">
+        <h3><a href="https://joeatbayes.github.io/metadata-forms-gui/" target="MF" class="h3">Metadata Forms Scripting
+            Engine</a>.</h3>
+        <p> Allow Meta-data driven forms to be
+          defined without writing Javascript while retaining
           the full richness of HTML5 and CSS. </p>
 
-       <p> Allow definition of large complex master
+        <p> Allow definition of large complex master
           detail, detail drill down with CRUD operations backed by HTTP / JSON services.</p>
 
-       <p>Our goal are to reduce person time required to design and
-          deliver these screens by over 85% while reducing code volume 
-          by over 80%.  </p>
-    
-   <h4>Select a Form from Left-Nav To demonstrate System</h4>
-   </div>
-   
-  </div><!--mbody-->
+        <p>Our goal are to reduce person time required to design and
+          deliver these screens by over 85% while reducing code volume
+          by over 80%. </p>
+
+        <h4>Select a Form from Left-Nav To demonstrate System</h4>
+      </div>
+
+    </div>
+    <!--mbody-->
 
 
     <div id="rbody">
-      <div id="rbody_head"><!--rbody_head--></div>
-      <div id="rbody_main"><!--rbody_main--></div>
-      <div id="rbody_foot"><!--rbody_foot--></div>
-    </div> <!--rbody-->
-    
-      
-  </div> <!--page-vmid-->
-  
-  
-  <div id="page_footer">MForms - Meta DAta Forms Demonstration<br/>
-    <small><small><small>Some Data <br/>
-     By Joseph Ellsworth CTO <a href="https://www.linkedin.com/in/joe-ellsworth-68222/"></a></small></small></small>
+      <div id="rbody_head">
+        <!--rbody_head-->
+      </div>
+      <div id="rbody_main">
+        <!--rbody_main-->
+      </div>
+      <div id="rbody_foot">
+        <!--rbody_foot-->
+      </div>
+    </div>
+    <!--rbody-->
+
+
   </div>
-  
+  <!--page-vmid-->
+
+
+  <div id="page_footer">MForms - Meta DAta Forms Demonstration<br />
+    <small><small><small>Some Data <br />
+          By Joseph Ellsworth CTO <a
+            href="https://www.linkedin.com/in/joe-ellsworth-68222/"></a></small></small></small>
+  </div>
+
 </body>
+
 </html>

@@ -61,6 +61,12 @@
 * Ability to defer rendering inactive TABS until the tab is displayed.  Since content on one tab could change based on actions in another tab then 
 * Ability to show TABS that have incomplete work before record can be saved to server.
 * Ability to autosave changes in WIP state prior to user pressing SAVE.   Ability to retrieve WIP state.  WIP state would be specific to a user but possibly not consider saving a .WIP file. 
+* Support basic filed edit with re-pattern.
+* support realtime field edit with javascript callback
+* support realtime validation check with ajaj call
+* support interpolating values from context into URI  specified in the form.
+* Support loading list of values for popdown list from specified URI in form / widget
+* Ability to load CSS from file specified in the form rather than requiring it to be loaded in parent html page.
 
 
 

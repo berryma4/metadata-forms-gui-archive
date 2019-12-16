@@ -1,0 +1,191 @@
+- widget: 
+    id: projectNum
+    type: text
+    label: Project #
+    width: 20
+    size: 20
+    placeholder: Enter Project Name
+    data_context: cert/con_project_number  
+    required: true
+    maxlength: 25
+    class: input_field
+    data_type: text
+  
+  
+- widget:
+    id: facilityName
+    data_type: text
+    type: text
+    label : Facility Name 
+    placeholder: Enter Facility Name
+    size: 35
+    data_context: cert/facilityName  
+    required: true
+    maxlength: 50
+    class: input_field
+
+
+- widget:
+    id: address
+    data_type: text
+    type: text
+    label : Address
+    placeholder: Enter Address
+    size: 35
+    data_context: cert/address  
+    required: true
+    maxlength: 50
+    class: input_field
+
+- widget:
+    id: city
+    data_type: text
+    type: text
+    label : City
+    placeholder: Enter City
+    size: 35
+    data_context: cert/City  
+    required: true
+    maxlength: 50
+    class: input_field
+    validFun: validate_city
+
+- widget:
+    id: state
+    data_type: text
+    type: text
+    label : State
+    size: 2
+    data_context: cert/State  
+    required: true
+    maxlength: 2
+    class: input_field
+    validFun: validate_state
+    pattern: "[A-Za-z]{2}"
+
+
+- widget:
+    id: zip
+    data_type: text
+    type: text
+    label : Zipcode
+    placeholder: 99999-9999
+    size: 9
+    data_context: cert/zip  
+    required: true
+    maxlength: 9
+    class: input_field
+    validFun: validate_zip
+
+
+- widget:
+    id: certNumber
+    data_type: text
+    type: text
+    label : Cert #
+    placeholder: Enter Certificate #
+    size: 45
+    data_context: cert/zip  
+    required: true
+    maxlength: 9
+    class: input_field
+
+
+- widget:
+    id: projectDesc
+    data_type: textarea
+    type: text
+    label : Description
+    placeholder: Enter Project Description
+    size: 45
+    rows: 5
+    data_context: cert/zip  
+    required: true
+    maxlength: 500
+    class: input_field
+
+- widget:
+    id: projectStatus
+    data_type: text
+    type: text
+    label : Status
+    placeholder: Proj Status
+    size: 20
+    data_context: cert/status 
+    required: true
+    maxlength: 20
+    class: input_field
+
+- widget:
+    id: projectStatusDate
+    data_type: date
+    type: text
+    label : Status Date    
+    size: 12
+    data_context: cert/statusDate
+    required: true
+    maxlength: 12
+    class: input_field
+    validFun: validate_date
+    placeholder: Status Date
+
+- widget:
+    id: saveButton
+    data_type: button
+    type: button
+    label : Save    
+    size: 12
+    maxlength: 12
+    class: submit_field
+    validFun: validate_date
+    align: right;
+
+
+# Alternate syntax allows arbitrary JSON for any Data value and it will be 
+# parsed as if it where expressed as YAML.
+- widget: {"id": "saveButton", "widget_type" : "button", "label" : "Save", "class" : "save_button"}
+
+- widget:
+    id: currOperatorGroup
+    label: Current Operator 
+    type: widgetGroup
+    class: vgroup
+    layout: vertical
+    widgets:   
+         - projectNum
+         - facilityName
+         - address
+         - city
+         - state
+         - zip 
+
+
+- widget:
+    id: projectGroup
+    label: Project Specific 
+    type: widgetGroup
+    class: vgroup
+    layout: vertical
+    widgets:   
+         - certNumber
+         - projectDesc
+         - projectStatus
+         - projectStatusDate
+         -
+
+- form:
+   id : cert_need
+   class: inputFrm
+   label: FDA Project Certificate of Need
+   # TODO: Allow other files to be loaded here to allow re-use
+   fetch:
+      uri: data/cert-of-need/{cert_id}.JSON
+      method: GET
+   save:
+      uri: data/cert-of-need/{cert_id}/.JSON
+      verb: PUT
+      where: body   
+   widgets:   
+           - currOperatorGroup
+           - projectGroup
+           - saveButton
