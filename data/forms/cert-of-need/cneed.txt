@@ -147,7 +147,7 @@
     type: button
     label : Save    
     size: 8
-    class: submit_field
+    class: submit_button
 
 
 # Alternate syntax allows arbitrary JSON for any Data value and it will be 

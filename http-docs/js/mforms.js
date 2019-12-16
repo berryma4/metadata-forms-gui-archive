@@ -9,6 +9,15 @@
      }
  };
 
+ function mformsRenderButton(widDef, b, context) {
+     b.make("button", {
+         "id": widDef.id,
+         "class": widDef.class,
+         "type": "button",
+         "label": widDef.label,
+         "onClick": "(simple_form,saveFormChanges(GContext))"
+     }, "Save");
+ }
 
  function mformsRenderGroupWidget(widDef, b, context) {
      var gtx = context.gbl;
@@ -87,7 +96,8 @@
  var widgRenderFuncs = {
      "widgetGroup": mformsRenderGroupWidget,
      "text": mformsRenderTextWidget,
-     "textarea": mformsRenderTextWidget
+     "textarea": mformsRenderTextWidget,
+     "button": mformsRenderButton
  }
 
  function mformsRenderWidgets(parent, widgets, b, context) {
