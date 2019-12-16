@@ -25,6 +25,8 @@
 * Ability to parse delimited files with headers
 * Ability to parse JSON files 
 * Ability to load a form entirely from demo page by naming form and data source on URI like what we do in CSV tables.
+* Ability to support tabbing order through fields in the generated form
+* Check size to see if need to create a default somewhat larger
 * Form loader:
   * Allow YAML like syntax with embededed single line JSON as input.
   * Allow naming a form file to load which contains all widgets.
@@ -67,6 +69,8 @@
 * support interpolating values from context into URI  specified in the form.
 * Support loading list of values for popdown list from specified URI in form / widget
 * Ability to load CSS from file specified in the form rather than requiring it to be loaded in parent html page.
+* For fda sample page remove the right navigation payne and enlarge middle payne when  displaying on anything less than 900 px;
+* 
 
 
 

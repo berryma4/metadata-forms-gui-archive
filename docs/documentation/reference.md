@@ -27,6 +27,9 @@
 * Javascript
   * [dynamically adding a css file](http://www.javascriptkit.com/javatutors/loadjavascriptcss.shtml)
   * [dynamically removing and read javascript file](http://www.javascriptkit.com/javatutors/loadjavascriptcss2.shtml)
+* CSS
+  * [Use Media Queries to change browser behavior on small devices](https://www.smashingmagazine.com/2010/07/how-to-use-css3-media-queries-to-create-a-mobile-version-of-your-website/)
+  * [tool to show page in different viewports](https://app.protofluid.com/#https://joeatbayes.github.io/metadata-forms-gui/)
 * GO
   * 
 
