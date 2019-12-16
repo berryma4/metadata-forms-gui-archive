@@ -5,7 +5,7 @@
     width: 20
     size: 20
     placeholder: Enter Project Name
-    data_context: cert/con_project_number  
+    data_context: con_project_number  
     required: true
     maxlength: 25
     class: input_field
@@ -19,7 +19,7 @@
     label : Facility Name 
     placeholder: Enter Facility Name
     size: 35
-    data_context: cert/facilityName  
+    data_context: facility_name  
     required: true
     maxlength: 50
     class: input_field
@@ -32,7 +32,7 @@
     label : Address
     placeholder: Enter Address
     size: 35
-    data_context: cert/address  
+    data_context: "project_site/address_line1  
     required: true
     maxlength: 50
     class: input_field
@@ -44,11 +44,24 @@
     label : City
     placeholder: Enter City
     size: 35
-    data_context: cert/City  
+    data_context: project_site/City  
     required: true
     maxlength: 50
     class: input_field
-    validFun: validate_city
+
+
+- widget:
+    id: county
+    data_type: text
+    type: text
+    label : County
+    placeholder: Enter County
+    size: 35
+    data_context: project_site/county_name  
+    required: true
+    maxlength: 50
+    class: input_field
+
 
 - widget:
     id: state
@@ -56,7 +69,7 @@
     type: text
     label : State
     size: 2
-    data_context: cert/State  
+    data_context: project_site/state  
     required: true
     maxlength: 2
     class: input_field
@@ -71,7 +84,7 @@
     label : Zipcode
     placeholder: 99999-9999
     size: 9
-    data_context: cert/zip  
+    data_context: project_site//zip  
     required: true
     maxlength: 9
     class: input_field
@@ -168,6 +181,7 @@
          - projectStatus
          - projectStatusDate
          -
+# TOOD: Add Facility Data See: http://127.0.0.1:9831/data/cert-of-need/1007.JSON
 
 - form:
    id : cert_need
