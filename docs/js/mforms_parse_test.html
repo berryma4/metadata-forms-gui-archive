@@ -1,0 +1,102 @@
+<html>
+
+<head>
+
+  <link rel="stylesheet" type="text/css" href="../css/forms.css" />
+  <style>
+    .h3 {
+      text-decoration: none;
+    }
+  </style>
+  <script src="browser_util.js" type="text/javascript"></script>
+  <script src="mforms_parse.js" type="text/javascript"></script>
+  <script src="mforms_parse_test.js" type="text/javascript"></script>
+  <script>
+    function runTest(label, sourceData) {
+      toDiv("testResult", "");
+      toDiv("sourceData", "<h3>Source Data</h3>" +
+        "<h4>" + label + "</h4>" +
+        "<pre>\n" + sourceData + "\n</pre>");
+
+      var tout = mParserTest(label, sourceData)
+      var asJSONStr = JSON.stringify(tout, null, 2);
+      addTestRes("parsed OK");
+      toDiv("asJSON", "<h3>as JSON</h3>" +
+        "<pre>\n" + asJSONStr + "\n</pre>");
+      return tout;
+    }
+
+    function addTestRes(astr) {
+      appendDiv("testResult", "<p>" + astr + "</p>");
+    }
+
+    // TODO: Modify a way to move the test checks to the test module
+    // and still print the results into tdiv.
+    function runTest1() {
+      var tout = runTest("Test Forms", testStrForm1);
+      if (tout[0].widget.width != 38) {
+        addTestRes("FAIL: expected tout[0].widget.width=38 but found " + tout[0].widget.width);
+      }
+
+      if (tout[0].widget.label.place != "left") {
+        addTestRes("FAIL: expected tout[0].widget.label.place=left but found " + tout[0].widget.label.place);
+      }
+    }
+
+    function runTest2() {
+      var tout = runTest("Test People", testStrPeople1);
+
+      if (tout[0].jack.projectNum != 1983) {
+        addTestRes("FAIL: expected tout[0].jack.projectNum=1983  but found " + tout[0].jack.projectNum);
+      }
+
+      if (tout[1].lingua.pets.girtude.living != false) {
+        addTestRes("FAIL: expected tout[2].lingua.pets.girtude.living=true but found " + tout[2].lingua.pets.girtude
+          .living);
+      }
+    }
+
+
+    function runTest3() {
+      var tout = runTest("Test People", testStrPeople2);
+
+      if (tout[1].jack.projectNum != 1983) {
+        addTestRes("FAIL: expected tout[1].jack.projectNum=1983  but found " + tout[1].jack.projectNum);
+      }
+
+      if (tout[2].lingua.pets.girtude.living != false) {
+        addTestRes("FAIL: expected tout[2].lingua.pets.girtude.living=true but found " + tout[2].lingua.pets.girtude
+          .living);
+      }
+
+      if (tout[2].lingua.cars[2] !== "subaru") {
+        addTestRes("FAIL: tout[2].lingua.cars[2]='subaru' but found " + tout[2].lingua.cars[2]);
+      }
+    }
+  </script>
+
+</head>
+
+<body onload="">
+  <div id="top_nav">
+    <h1>Demonstrate Metadata parser</h1>
+  </div>
+  <div id="test_select">
+    <ul><a href="#" onClick="runTest1()">Run test 1 MetaData</a></ul>
+    <ul><a href="#" onClick="runTest2()">Run test 2 people simple</a></ul>
+    <ul><a href="#" onClick="runTest3()">Run test 3 people with label</a></ul>
+    <div>
+      <div id="testResult"></div>
+      <div id="sourceData"></div>
+      <div id="asJSON"></div>
+      <div id="page_footer">
+        <small><small><small>
+              <h3><a href="https://joeatbayes.github.io/metadata-forms-gui/" target="MF" class="h3">Metadata Forms
+                  Scripting Engine</a></h3>
+              <br />
+              By Joseph Ellsworth CTO <a href="https://www.linkedin.com/in/joe-ellsworth-68222/"></a>
+            </small></small></small>
+      </div>
+</body>
+
+</html>
