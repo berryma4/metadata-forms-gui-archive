@@ -25,6 +25,9 @@
       font-family: Verdana, Vivaldi, 'Vladimir Script';
       background-color: ivory;
       font-size: 0.8em;
+      padding: 0px;
+      margin: 0px;
+      border: none;
     }
 
     .inputFrmHead {
@@ -106,27 +109,23 @@
   <div id="page-vmid">
     <div id="lbody">
       <h3>Certificate of Need</h3>
-      <li onclick="display_form('main-page-body', 'data/forms/cert-of-need/cneed', 'data/cert-of-need/1004.JSON', GTX)">
+      <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed', 'data/cert-of-need/1004.JSON', GTX)">
         Cert
         #1004
       </li>
-      <li
-        onclick="display_form('main-page-body', 'data/forms/cert-of-need/cneed' , 'data/cert-of-need/1011.JSON', GTX )">
+      <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' , 'data/cert-of-need/1011.JSON', GTX )">
         Cert
         #1011</li>
-      <li
-        onclick="display_form('main-page-body', 'data/forms/cert-of-need/cneed' , 'data/cert-of-need/1019.JSON', GTX )">
+      <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' , 'data/cert-of-need/1019.JSON', GTX )">
         Cert
         #1019</li>
-      <li
-        onclick="display_form('main-page-body', 'data/forms/cert-of-need/cneed' , 'data/cert-of-need/1023.JSON', GTX )">
+      <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' , 'data/cert-of-need/1023.JSON', GTX )">
         Cert
         #1023</li>
-      <li
-        onclick="display_form('main-page-body', 'data/forms/cert-of-need/cneed' , 'data/cert-of-need/1086.JSON', GTX )">
+      <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' , 'data/cert-of-need/1086.JSON', GTX )">
         Cert
         #1086</li>
-      <li onclick="display_list_form(" main-page-body", 'data/forms/cert-of-need/list-certs' , 'delim_parser'
+      <li onclick="display_list_form('mbody', 'data/forms/cert-of-need/list-certs' , 'delim_parser'
         , 'data/cert-of-need/index.txt' , '^' , GTX)">
         List Certs</li><br />
       <h3>Docs</h3>
@@ -141,22 +140,22 @@
     <!--lbody-->
 
     <div id="mbody">
-      <div id="main-page-body">
-        <h3><a href="https://joeatbayes.github.io/metadata-forms-gui/" target="MF" class="h3">Metadata Forms Scripting
-            Engine</a>.</h3>
-        <p> Allow Meta-data driven forms to be
-          defined without writing Javascript while retaining
-          the full richness of HTML5 and CSS. </p>
 
-        <p> Allow definition of large complex master
-          detail, detail drill down with CRUD operations backed by HTTP / JSON services.</p>
+      <h3><a href="https://joeatbayes.github.io/metadata-forms-gui/" target="MF" class="h3">Metadata Forms Scripting
+          Engine</a>.</h3>
+      <p> Allow Meta-data driven forms to be
+        defined without writing Javascript while retaining
+        the full richness of HTML5 and CSS. </p>
 
-        <p>Our goal are to reduce person time required to design and
-          deliver these screens by over 85% while reducing code volume
-          by over 80%. </p>
+      <p> Allow definition of large complex master
+        detail, detail drill down with CRUD operations backed by HTTP / JSON services.</p>
 
-        <h4>Select a Form from Left-Nav To demonstrate System</h4>
-      </div>
+      <p>Our goal are to reduce person time required to design and
+        deliver these screens by over 85% while reducing code volume
+        by over 80%. </p>
+
+      <h4>Select a Form from Left-Nav To demonstrate System</h4>
+
 
     </div>
     <!--mbody-->
@@ -181,7 +180,7 @@
 
 
   <div id="page_footer">MForms - Meta DAta Forms Demonstration<br />
-    <small><small><small>Some Data <br />
+    <small><small><small>
           By Joseph Ellsworth CTO <a
             href="https://www.linkedin.com/in/joe-ellsworth-68222/"></a></small></small></small>
   </div>
