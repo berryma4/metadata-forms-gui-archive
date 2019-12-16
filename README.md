@@ -8,8 +8,9 @@ Building forms based GUI to CRUD operations.  Provide a Meta data based system t
 
 Please file a Issue to request enhancements.  You can also reach me on Linked-in [Contact](https://www.linkedin.com/in/joe-ellsworth-68222/)   main Git Repo URI:   [metadata-forms-gui](https://github.com/joeatbayes/metadata-forms-gui) 
 
-
 # Sample Screen
+
+![Sample Screen for FDA Project Certificate Of Need](docs/documentation/samples/fda-cert-of-need.jpg)
 
 # Sample Script
 
@@ -74,14 +75,6 @@ We do not really need the MDS server but we do need REST server that can save da
 ## Support Files
 
 * [update-gitpages.sh](update-gitpages.sh) - Copies selected code and data to the /docs directory where it can be published to the [gitpages site](https://joeatbayes.github.io/metadata-forms-gui/) for this repository.  This is needed to supply a basically working GUI with working forms without requiring any installation or downloading.    Code ran on the [gitpages site](https://joeatbayes.github.io/metadata-forms-gui/) can not save the updated form data because [github pages](https://help.github.com/en/github/working-with-github-pages/about-github-pages) does not support PUT and POST operations.
-
-
-
-# Referenced Repositories
-
-* [(Computer Aided Call Response System](https://bitbucket.org/joexdobs/computer-aided-call-response-engine) Provides a advanced YAML like syntax for specifying elements of data in a easily human edited format.   I felt this approach was better than trying to use a native JSON with everything in one huge file because I wanted the ability to load fragments of widgets or widget sets for re-use.  It also uses a version of the same Dynamic HTML generation features used in DForms which is the basis for the widget generator.
-* [https://github.com/joeatbayes/CSVTablesInBrowser](https://github.com/joeatbayes/CSVTablesInBrowser)  - Easily display data from CSV tables in HTML tables with nice formatting that can be overridden by Cell.  Includes repeated headers, etc.  
-* [Meta Data Server](https://bitbucket.org/joexdobs/meta-data-server/src/master/)  High performance HTTP server with built in highly scalable saving and retrieval of data using HTTP GET & POST.  Designed to support super high performance enrichment of data after a traditional search engine has delivered core data results.  [Go Modules on bitbucket](https://medium.com/rungo/anatomy-of-modules-in-go-c8274d215c16)  [goutil](https://github.com/joeatbayes/goutil) Common functions packaged for reuse in my various GO projects.   [GoPackaging](https://github.com/joeatbayes/GoPackaging) Example I produced showing how to download GO packages direct from Github.   [httptest](https://github.com/joeatbayes/http-stress-test) a http test utility for a command line packaged for direct build using the go get command.
 
 
 
