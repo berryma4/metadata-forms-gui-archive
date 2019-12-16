@@ -102,20 +102,18 @@
                  var rendFunc = widgRenderFuncs[widDef.type];
                  rendFunc(widDef, b, context);
              } else {
-                 console.log("cound not find rendering func=", widDef.Type, " id=", widId, " widDef=", widDef);
+                 console.log("cound not find rendering func=", widDef.Type, "for id=", widId, "widNdx=", i, " widDef=", widDef);
                  b.make("h6", {
                      id: widId
-                 }, "Unkown Widget Type " + widDef.type + " id=", widId).nl();
+                 }, "Unkown Widget Type " + widDef.type + " id=" + widId + " widDef=" + JSON.stringify(widDef)).nl();
              }
-         } else {
+         } else if (widId > ".") {
              // Widget Defenition missing so output error message
-             if (widId > ".") {
-                 console.log("missing widget id=", widId, "id***" + widId + "***");
-                 var msg = "Widget ID " + widId + " can not be found";
-                 b.make("h6", {
-                     "id": "wid" + widId
-                 }, msg);
-             }
+             console.log("missing widget id=", widId, "id***" + widId + "***");
+             var msg = "Widget ID " + widId + " can not be found";
+             b.make("h6", {
+                 "id": "wid" + widId
+             }, msg);
          }
      }
  }

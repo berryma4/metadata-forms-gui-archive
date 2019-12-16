@@ -130,15 +130,11 @@
     placeholder: Status Date
 
 - widget:
-    id: saveButton
-    data_type: button
+    id: saveButton    
     type: button
     label : Save    
-    size: 12
-    maxlength: 12
+    size: 8
     class: submit_field
-    validFun: validate_date
-    align: right;
 
 
 # Alternate syntax allows arbitrary JSON for any Data value and it will be 

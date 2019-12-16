@@ -21,6 +21,7 @@
 
     .inputFrm {
       width: 100%;
+      height: 100%;
       font-family: Verdana, Vivaldi, 'Vladimir Script';
       background-color: ivory;
       font-size: 0.8em;
@@ -69,9 +70,10 @@
     .input_field {
       display: inline-block;
       border-radius: 4px;
-      padding: 0.02em;
+      padding: 0.08em;
+      padding-left: 0.2em;
       margin: 0em;
-      margin-left: 0.04em;
+      margin-left: 0.06em;
       color: rgb(13, 85, 9);
       font-size: 1em;
     }
@@ -81,74 +83,6 @@
     function onLoad(GContext) {
       //runCACREDemo();     
     }
-
-
-    /*
-        function runCACREDemo() {      
-          cacreInitialize("cacreAsk", "cacreHist", "/insurance-1", "whatcanidoforyou", "joe123" )         
-        }
-        
-        
-        
-
-        
-        function displayImageInBody(uriPath) {
-           var b = new String_builder;
-           qObj = 
-           b.start("div", {"class" : "sampleImage"});
-           b.make("img", {"src" :  uriPath,
-                          "class" : "sampleImage"}); 
-           b.finish("div");
-           b.toDiv("main-page-body");     
-
-        }
-        
-        function displayMemberProperties() {
-         displayImageInBody("ex-sample/medicaid-sample-member-profile.jpg");
-        }
-        
-        
-        
-        function medicaidSampleBeneficiaryLookup() {
-         displayImageInBody("ex-sample/medicaid-sample-beneficiary-lookup.jpg");
-        }
-        
-        function displayMemberIdentityCard() {
-          displayImageInBody("ex-sample/medicaid-sample-insurnace-card.jpg");
-        }
-        
-        function displayPaymentInformation(){
-           displayImageInBody("ex-sample/medicare-premium-bill-form-cms-500.jpg"); 
-        }
-        
-        function displayMemberStatus() {
-           displayImageInBody("ex-sample/medicaide-sample-enrollment-detail.jpg"); 
-        }
-        
-        function displayBillInformation() {
-          displayImageInBody("ex-sample/medicare-premium-bill-form-cms-500.jpg");
-        }
-        
-        function displayDependantInformation() {
-        }
-        
-        function displayClaimHistoryInformation() {
-        }
-
-        // handle click event to set respondent id to demonstrate
-        switching respondents 
-        function setRespondent(rid) {
-            cacreResetActiveRespondent(rid);
-        }
-        
-        function chooseScript(dirPrefix,initialQuest) {
-          cacreResetDefaultQuestion(dirPrefix,initialQuest);
-        }
-        
-        function renderCurrentTree() {
-          renderTree(GCACRE.activeResp.currPathPrefix, GCACRE.activeResp.startQuestId, 'main-page-body');
-        }
-        */
   </script>
 
 </head>
