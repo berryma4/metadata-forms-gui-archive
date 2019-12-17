@@ -2,13 +2,39 @@
 
 # TODO:
 
-* When starting form load need to also trigger retrieval of the data record and defer display until record is loaded.  Need unambiguous way to map user data for a given form rendering to a specific data object when multiple root objects are already cached in RAM.  If the data specific object is already loaded in RAM re-use the one already available to re-render the same form.  
+* Add support for TextArea covering several lines.  Change cert of need description to display in this widget.
+* Demonstrate shrinking label for state to allow better formatting.
+* Add support for concept of horizontal group that is not allowed to wrap widgets. EG for city, state, zip
+* Add support for update of data object when fields change
+* When no label is included in Vgroup then supppress generation of label field.
+* demonstrate support for fields with labels forced to wrap 
+* Add support to PUT or POST data back to server on save button press when all validation rules are good.
+* Add support to display form is dirty and unsaved when a field changes from original data.
+* Add support to specify form display with data object in URI when driver page is loaded
+* Add support for basic validators demonstrate with zipcode and state
+* Add support for checkbox widget
+* Demo of contact form that shows changes in the bound JSON as the fields are edited.
+* Add support for drop down list widget
+* Add support for radio button widget
+* Add support to render list of certificates with a  metadata form widget.
+* Add support for alternating color Table in list view with custom links to open up next table
+* Add support for tabs across top of page rendering sub forms into tab as they are clicked.
+* Add support to hide rightnav when page is displayed in portrait on mobile device.
+* Add support to change text size when page is displayed on mobile device.
+* Add support for chained forms that display one after another
+* Add support for disabled widgets.
+* Add support to disable submit button when all mandatory fields are not filled in.
+* Ability to fetch contents of dropdown, radio, checkbox lists from remote service rather than embedding in  form.
+* Prevent right nav from wrapping when page is shrunk too far.
+* Add support to invalidate and remove parent object after edit of child when child views are included in parent fetch.  Or support editing them in place so other forms can properly see the changed fields when sub form edit field is displayed.
+* Add support to display edit error messages below the field when validation or edit rules are violated.
+* DONE:JOE:2019-12-16: When starting form load need to also trigger retrieval of the data record and defer display until record is loaded.  Need unambiguous way to map user data for a given form rendering to a specific data object when multiple root objects are already cached in RAM.  If the data specific object is already loaded in RAM re-use the one already available to re-render the same form.  
 * Add support to allow multiple forms to be defined in a single file and only the one marked master.
 * Add support to allow multiple data objects to be rendered and update the form as the data objects are received. 
 * Support notion of update form data when objects is is interested in are loaded. 
 * Modify form fetch to skip fetch is form is already in memory
 * Extend Forms parser to allow include loading additional files which have contents loaded at end of the existing file.    What happens in Yaml if you reload the same key a second time.
-* Demonstrate first with Certificate of Need Data from DFORMS System but converted to Dynamic Form.
+* DONE:JOE:2019-12-16: Demonstrate first with Certificate of Need Data from DFORMS System but converted to Dynamic Form.
 * Make a clean way to read a directory of files and return header data to allow rendering a summary table.  EG: If each contact is in a separate file then would want to returns some basic data for each contact to render the initial table prior to the click that drills in to edit each piece of content.
 * Map Sample Data  Using FHIR  data structures and URI as much as possible
 * Package MDS server to allow import of the MDS feature and local server that defines additional handlers.   Need this to easily  have custom local directories for DOCS and build a handler to aggregate all widgets defined in a directory tree and fed them back as one stream.  I want the MDS server to be added so we have native support for a data directory where we can run GET/PUT/POST commands. 
@@ -18,6 +44,8 @@
 * Extend the CSV tables widget to provide in table sort functionality by clicking on the headers.
 * Extend CSV tables widget to allow a multi-level sort functionality by Shift click on different headers.  Show shift click instruction on hover or some other multi-level sort function
 * [Configure custom domain](https://help.github.com/en/github/working-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site) for github pages site
+* Add support to change context on right hand # of uri as user selects different widgets.
+* 
 
 
 
@@ -28,19 +56,18 @@
 * Ability to use YAML anchors @ extensions  to create template fields and only supply what was missing.
 * Ability to take reasonable defaults when not specified.  EG:  dataType can be assumed to be string unless otherwise specified.    PlaceHolder can be assumed to be Label unless specified.  PlaceHolder can be assumed to be same as Label unless specified. 
 * Ability to specified HTML relative to the Div ID the form is created in to allow users to customize to their hearts content.
-* Must be able to display a form in a pre-existing DIV structure without taking over the entire pages.
+* DONE:JOE:2019-12-17: Must be able to display a form in a pre-existing DIV structure without taking over the entire pages.
 * Ability to parse delimited files with headers
 * Ability to parse JSON files 
 * Ability to load a form entirely from demo page by naming form and data source on URI like what we do in CSV tables.
-* Ability to support tabbing order through fields in the generated form
-* Check size to see if need to create a default somewhat larger
+* DONE:JOE:2109-12-19: Ability to support tabbing order through fields in the generated form
 * Form loader:
   * Allow YAML like syntax with embededed single line JSON as input.
-  * Allow naming a form file to load which contains all widgets.
+  * DONE:JOE:2019-12-19: Allow naming a form file to load which contains all widgets.
   * Allow naming a widget that triggers loading for a form.
   * 
 * Meta data description
-  * Ability to described fields or sets of fields that can be re-used.
+  * DONE:JOE:2019-12-19: Ability to described fields or sets of fields that can be re-used.
   * Ability to re-use the fragments without copy paste
   * Allow fragments to be enhanced with data from local environment using interpolation
   * Server ability to assemble all fragments from a directory tree assemble them and return in one set to reduce round trips wile remaining highly editable.
