@@ -3,6 +3,7 @@
 <head>
 
   <link rel="stylesheet" type="text/css" href="css/forms.css" />
+  <link rel="stylesheet" type="text/css" href="css/mforms-demo-1.css" />
   <style>
     .h3 {
       text-decoration: none;
@@ -15,85 +16,13 @@
   <script src="js/mforms_parse.js" type="text/javascript"></script>
 
   <style>
-    img.sampleImage {
-      width: 100%;
-    }
 
-    .inputFrm {
-      width: 100%;
-      height: 100%;
-      font-family: Verdana, Vivaldi, 'Vladimir Script';
-      background-color: ivory;
-      font-size: 0.8em;
-    }
-
-    .inputFrmHead {
-      width: 99.5%;
-      font: 600;
-      background-color: rgb(45, 58, 45);
-      font-size: 1.2em;
-      margin: 0px;
-      color: azure;
-      padding: 0.1em;
-
-    }
-
-
-    .vgroup {
-      width: 100%;
-      display: block;
-    }
-
-    .vgroupLabel {
-      width: 100%;
-      font-size: 1.2em;
-      color: rgb(13, 85, 9);
-      display: block;
-      margin: 0;
-      margin-bottom: 0.5em;
-      margin-top: 0.6em;
-
-    }
-
-    .input_fieldContainer {
-      margin-top: 0.25em;
-      display: inline-block;
-    }
-
-    .input_fieldLabel {
-      display: inline-block;
-      width: 8em;
-      text-align: right;
-      vertical-align: top;
-      color: cadetBlue;
-      padding-left: 0.05em;
-      padding-right: 0.09em;
-      margin-right: 0.1em;
-    }
-
-    .input_field {
-      display: inline-block;
-      border-radius: 4px;
-      padding: 0.08em;
-      padding-left: 0.2em;
-      margin: 0em;
-      margin-left: 0.06em;
-      color: rgb(13, 85, 9);
-      font-size: 1em;
-    }
-
-    .submit_button {
-      margin-right: 8em;
-      margin-left: 80%;
-      margin-top: 4em;
-      border-radius: 4px;
-    }
   </style>
 
   <script>
-    function onLoad(GContext) {
+    /*function onLoad(GContext) {
       //runCACREDemo();     
-    }
+    }*/
   </script>
 
 </head>
@@ -106,27 +35,18 @@
   <div id="page-vmid">
     <div id="lbody">
       <h3>Certificate of Need</h3>
-      <li onclick="display_form('main-page-body', 'data/forms/cert-of-need/cneed', 'data/cert-of-need/1004.JSON', GTX)">
-        Cert
-        #1004
+      <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed',  '1004', GTX)">
+        Cert #1004
       </li>
-      <li
-        onclick="display_form('main-page-body', 'data/forms/cert-of-need/cneed' , 'data/cert-of-need/1011.JSON', GTX )">
-        Cert
-        #1011</li>
-      <li
-        onclick="display_form('main-page-body', 'data/forms/cert-of-need/cneed' , 'data/cert-of-need/1019.JSON', GTX )">
-        Cert
-        #1019</li>
-      <li
-        onclick="display_form('main-page-body', 'data/forms/cert-of-need/cneed' , 'data/cert-of-need/1023.JSON', GTX )">
-        Cert
-        #1023</li>
-      <li
-        onclick="display_form('main-page-body', 'data/forms/cert-of-need/cneed' , 'data/cert-of-need/1086.JSON', GTX )">
-        Cert
-        #1086</li>
-      <li onclick="display_list_form(" main-page-body", 'data/forms/cert-of-need/list-certs' , 'delim_parser'
+      <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' ,  '1011', GTX )">
+        Cert #1011</li>
+      <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' ,  '1019', GTX )">
+        Cert #1019</li>
+      <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' , '1023', GTX )">
+        Cert #1023</li>
+      <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' , '1086', GTX )">
+        Cert #1086</li>
+      <li onclick="display_list_form('mbody', 'data/forms/cert-of-need/list-certs' , 'delim_parser'
         , 'data/cert-of-need/index.txt' , '^' , GTX)">
         List Certs</li><br />
       <h3>Docs</h3>
@@ -141,22 +61,23 @@
     <!--lbody-->
 
     <div id="mbody">
-      <div id="main-page-body">
-        <h3><a href="https://joeatbayes.github.io/metadata-forms-gui/" target="MF" class="h3">Metadata Forms Scripting
-            Engine</a>.</h3>
-        <p> Allow Meta-data driven forms to be
-          defined without writing Javascript while retaining
-          the full richness of HTML5 and CSS. </p>
 
-        <p> Allow definition of large complex master
-          detail, detail drill down with CRUD operations backed by HTTP / JSON services.</p>
+      <h3><a href="https://joeatbayes.github.io/metadata-forms-gui/" target="MF" class="h3">
+          Metadata Forms Scripting Engine</a>.</h3>
 
-        <p>Our goal are to reduce person time required to design and
-          deliver these screens by over 85% while reducing code volume
-          by over 80%. </p>
+      <p> Allow Meta-data driven forms to be
+        defined without writing Javascript while retaining
+        the full richness of HTML5 and CSS. </p>
 
-        <h4>Select a Form from Left-Nav To demonstrate System</h4>
-      </div>
+      <p> Allow definition of large complex master
+        detail, detail drill down with CRUD operations backed by HTTP / JSON services.</p>
+
+      <p>Our goal are to reduce person time required to design and
+        deliver these screens by over 85% while reducing code volume
+        by over 80%. </p>
+
+      <h3>Select a Form from Left-Nav To demonstrate System</h3>
+
 
     </div>
     <!--mbody-->
@@ -174,18 +95,13 @@
       </div>
     </div>
     <!--rbody-->
-
-
   </div>
   <!--page-vmid-->
-
-
-  <div id="page_footer">MForms - Meta DAta Forms Demonstration<br />
-    <small><small><small>Some Data <br />
+  <div id="page_footer">MForms - Meta Data Forms Demonstration<br />
+    <small><small><small>
           By Joseph Ellsworth CTO <a
             href="https://www.linkedin.com/in/joe-ellsworth-68222/"></a></small></small></small>
   </div>
-
 </body>
 
 </html>

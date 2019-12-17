@@ -1,94 +1,110 @@
 .body {
-   font-family:GOTHAM_BOLD;san-serif;sans-serif
-   background-color: #EBEBEB;  
-   font-size: 16px;
+  font-family: GOTHAM_BOLD;
+  san-serif;
+  sans-serif;
+  background-color: #EBEBEB;
+  font-size: 16px;
+  margin: 0px;
+  padding: 0px;
+  border: none;
 }
 
 input {
-    border: 1px solid dimgrey;
+  border: 1px solid dimgrey;
 }
 
 #top_nav {
-  width:100%;
-  display:block;  
-  height:30px;
-  background-color:#217F0B;  
-  color:#FFF;
-  font-family:Arial;
-  font-size:32px;
+  width: 100%;
+  display: block;
+  height: 1.7em;
+  background-color: #217F0B;
+  color: #FFF;
+  font-family: Arial;
+  font-size: 1.4em;
   font-weigt: bold;
   text-align: center;
   vert-align: center;
-  padding-top: 5px;
+  padding-top: 0.03em;
+  padding-bottom: 0.03em;
   overflow: hidden;
+  margin: 0px;
+  border: none;
 }
 
-#top_nav > h1 {
-  font-size: 10px;
+#top_nav>h1 {
+  font-size: 0.8em;
 }
 
-#page-vmid{
+#page-vmid {
   width: 100%;
   height: 88%;
   display: block;
-  padding-bottom:1em;  
-  vertical-align:top;
-  background-color: #CFCFCF;
-  font-size:0;
+  background-color: rgb(13, 94, 3);
+  font-size: 0.9em;
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  vertical-align: top;
 }
 
 #lbody {
   display: inline-block;
-  width:16%;
-  height:100%;
-  font-family:Arial;
-  text-align:left;
-  vertical-align:top;
-  background-color:#217F0B;
-  color:  #DFDFDF;
-  font-size: 9pt;
+  width: 16%;
+  height: 100%;
+  font-family: Arial;
+  text-align: left;
+  vertical-align: top;
+  background-color: #217F0B;
+  color: #DFDFDF;
+  font-size: 0.7em;
+  margin: 0px;
+  border: none;
+  padding: 0px;
 }
 
-#lbody  a {
-    font-family: "Trebuchet MS",sans-serif;
-    text-decoration: none;
-    font-size: 0.9em;
-	color: Silver;
+#lbody a {
+  font-family: "Trebuchet MS", sans-serif;
+  text-decoration: none;
+  font-size: 1.1em;
+  color: Silver;
 }
 
 #lbody li {
   list-style-type: none;
   margin: 0;
   margin-left: 0.2em;
-  padding:0.1em;
+  padding: 0.1em;
   padding-left: 0.2em;
 }
-#lbody  a:visited {
+
+#lbody a:visited {
   color: Silver;
-    
+
 }
 
-#lbody  li:hover {
-    text-decoration: underline;
-    backkground-color:#FAFAAA;
+#lbody li:hover {
+  text-decoration: underline;
+  backkground-color: #FAFAAA;
 }
 
-#lbody  li:active {
-}
+#lbody li:active {}
 
-#lbody  h3 {
+#lbody h3 {
   padding-bottom: 1px;
   margin-bottom: 1px;
   font-size: 0.8em;
 }
 
 #mbody {
-  display:inline-block;
-  background-color: white;  
-  width:64%; 
-  height:100%;
-  vertical-align:top;
-  font-size: small;  
+  display: inline-block;
+  background-color: white;
+  width: 64%;
+  height: 100%;
+  vertical-align: top;
+  font-size: small;
+  margin: 0px;
+  border: none;
+  padding: 0px;
 }
 
 #mbody p {
@@ -96,32 +112,46 @@ input {
   padding-right: 1em;
 }
 
-#rbody {
-  width:20%;
+#main-page-body {
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  border: none;
   display: inline-block;
-  height:100%;
-  font-family:Arial;
-  font-size:x-small;
-  text-align:left;
-  vertical-align:top;  
+  background-color: beige;
+}
+
+#rbody {
+  width: 18.9%;
+  display: inline-block;
+  height: 100%;
+  font-family: Arial;
+  font-size: 0.4em;
+  text-align: left;
+  vertical-align: top;
   overflow-y: none;
-  background-color: :#217F0B;
-  color:  #DFDFDF;
+  background-color: #217F0B;
+  color: #DFDFDF;
+  margin: 0px;
+  border: none;
+  padding: 0px;
+
 
 }
 
 #page_footer {
-    float: right;    
-    display: block; 
-    width:100%;
-    background-color: #000;
-    color: #FFF;
-    font-family: Arial;
-    font-size: 0.5em;
-    font-weight: bold;
-    text-align: center;
-    vert-align: center;
-    padding-top: 5px;
+  display: block;
+  width: 100%;
+  background-color: rgb(48, 47, 47);
+  color: #FFF;
+  font-family: Arial;
+  font-weight: bold;
+  text-align: center;
+  vert-align: center;
+  padding: 0px;
+  margin: 0px;
+  font-size: 0.8em;
 }
 
 
@@ -130,31 +160,31 @@ input {
 }
 
 #Hist::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
 
 #hist::-webkit-scrollbar-thumb {
-background-color: darkgrey;
-outline: 1px solid slategrey;
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
 }
 
 
 #hist {
-  display:block;
-  width:100%;
+  display: block;
+  width: 100%;
   xheight: 40%;
   min-height: 5px;
   max-height: 50%;
-  font-size:80%;
+  font-size: 0.8em;
   overflow-y: auto;
-   border-bottom: 1px solid dimgrey;
+  border-bottom: 1px solid dimgrey;
 }
 
 #ask {
   display: block;
-  width:100%;
+  width: 100%;
   height: 55%;
-  font-size: 90%;
+  font-size: 0.9em;
 }
 
 div.histItem {
@@ -195,47 +225,50 @@ div.quest {
 }
 
 input.input_text {
-  min-width: 50px;  
-  font-size: 90%;
-  max-width: 98%;  
+  min-width: 50px;
+  font-size: 0.9em;
+  max-width: 98%;
 }
 
 
 textarea.input_text {
   min-width: 50px;
   max-width: 95%;
-  font-size: 90%;
-  outline-color:silver;
+  font-size: 0.9em;
+  ;
+  outline-color: silver;
   resize: none;
-  overflow:hidden;
-  padding:0px;
-  margin:0px;
-  box-sizing: border-box;         /* For IE and modern versions of Chrome */
-  -moz-box-sizing: border-box;    /* For Firefox                          */
-  -webkit-box-sizing: border-box; 
+  overflow: hidden;
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  /* For IE and modern versions of Chrome */
+  -moz-box-sizing: border-box;
+  /* For Firefox                          */
+  -webkit-box-sizing: border-box;
 }
 
 input.next_button {
-  font-size: 90%;
-  border-radius:2px;
-  text-align:center;
-  vertical-align:middle;
+  font-size: 0.9em;
+  border-radius: 2px;
+  text-align: center;
+  vertical-align: middle;
   font-family: Arial, Helvetica, sans-serif;
-  cursor:pointer;
-  height:8pt;
+  cursor: pointer;
+  height: 8pt;
   width: 18pt;
-  margin-left:5px;
+  margin-left: 5px;
 }
 
 img.sample_img {
-    border-radius: 3%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 95%;
-    max-width: 95%;
-    max-height: 95%;
-    x-max-width: 340px;
+  border-radius: 3%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  max-width: 95%;
+  max-height: 95%;
+  x-max-width: 340px;
 }
 
 div.option {
@@ -250,13 +283,13 @@ div.option {
 div.option:hover {
   font-weight: bold;
   background-color: silver;
-  
+
 }
 
 div.option_label {
   display: inline-block;
   width: 76%;
-  vertical-align:top;
+  vertical-align: top;
 }
 
 div.tree_quest {
@@ -274,10 +307,12 @@ div.tree_option {
 }
 
 .tree_quest_id {
-   padding: 2px;
-   font-size: 75%;
-   display: block;
+  padding: 2px;
+  font-size: 0.75em;
+  ;
+  display: block;
 }
+
 .tree_quest_id:hover {
   font-weight: 800;
   text-decoration: underline;
@@ -285,9 +320,10 @@ div.tree_option {
 
 
 .tree_quest_label {
-    padding: 2px;
-    font-size: 105%;
-    font-weight: 110%;
+  padding: 2px;
+  font-size: 1.2em;
+  ;
+  font-weight: 110%;
 }
 
 .tree_loopback {
@@ -302,9 +338,9 @@ div.tree_option {
 
 .full_tree {
   overflow-y: scroll;
-  width:100%;
+  width: 100%;
   height: 99%;
-  display:block;
+  display: block;
 }
 
 #ErrMessage {
