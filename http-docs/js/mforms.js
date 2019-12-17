@@ -337,9 +337,9 @@ to perform the interpolation  */
  }
 
  // Load script file from server
- function mformsGetDef(scriptId, prefix, context) {
+ function mformsGetDef(scriptId, context) {
      var parms = {};
-     var req_uri = prefix + "/" + scriptId + ".txt?ti=" + Date.now();
+     var req_uri = scriptId + ".txt?ti=" + Date.now();
      req_uri = req_uri.replace("//", "/");
      console.log("L25: mformsGetDef req_uri=", req_uri);
      parms.req_headers = {
@@ -371,5 +371,5 @@ to perform the interpolation  */
          "gbl": gContext
      };
 
-     mformsGetDef(formSpecUri, "", context);
+     mformsGetDef(formSpecUri, context);
  }
