@@ -2,14 +2,12 @@
 
 var exports = {} // to allow the node style exports.
 
-function numberWithCommas(n)
-{
+function numberWithCommas(n) {
   var parts = n.toString().split(".");
   return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
 }
 
-function comma_formated(aVal, numDec)
-{
+function comma_formated(aVal, numDec) {
   var tnum = aVal;
   if (isString(tnum)) tnum = parseFloat(tnum.trim());
   tnum = tnum.toFixed(numDec);
@@ -18,10 +16,10 @@ function comma_formated(aVal, numDec)
 }
 
 function formatPhone(astr) {
-    if (astr.length !== 10) {
-        return astr;
-    }
-    return ("(" + astr.substring(0, 3) + ") " + astr.substring(4, 7) + "-" + astr.substring(6, 10));
+  if (astr.length !== 10) {
+    return astr;
+  }
+  return ("(" + astr.substring(0, 3) + ") " + astr.substring(4, 7) + "-" + astr.substring(6, 10));
 }
 
 function spacePad(aStr, plen) {
@@ -51,28 +49,24 @@ function currTimeAsISO() {
 function isObject(aVar) {
   return (aVar instanceof Object);
 }
-function isArray(aVar)
-{
+
+function isArray(aVar) {
   return (aVar instanceof Array);
 }
 
-function isString(aVar)
-{
+function isString(aVar) {
   return (typeof aVar === 'string')
 }
 
-function isFloat(aVar)
-{
+function isFloat(aVar) {
   return ((typeof aVar === 'float') || (typeof aVar === 'number'))
 }
 
-function isInt(aVar)
-{
+function isInt(aVar) {
   return ((typeof aVar === 'int') || (typeof aVar === 'number'))
 }
 
-function isNum(aVar)
-{
+function isNum(aVar) {
   return ((typeof aVar === 'number') || (isFloat(aVar)) || (isInt(aVar)))
 }
 
@@ -100,21 +94,17 @@ function titleCase(str) {
   return str.join(' ');
 }
 
-function showDiv(divId)
-{
+function showDiv(divId) {
   var tdiv = document.getElementById(divId);
-  if ((tdiv !== undefined) && (tdiv !== null))
-  {
+  if ((tdiv !== undefined) && (tdiv !== null)) {
     tdiv.style.display = "block";
   }
   return tdiv
 }
 
-function toDiv(divId, message)
-{
+function toDiv(divId, message) {
   var tdiv = document.getElementById(divId);
-  if ((tdiv == undefined) || (tdiv == null))
-  {
+  if ((tdiv == undefined) || (tdiv == null)) {
     tdiv = document.createElement("div");
     tdiv.id = divId;
     document.body.appendChild(tdiv);
@@ -125,50 +115,46 @@ set_div_contents = toDiv;
 to_div = toDiv;
 
 
-function appendDiv(divId, message)
-{
+function appendDiv(divId, message) {
   var tdiv = document.getElementById(divId);
-  if ((tdiv !== undefined) && (tdiv !== null))
-  {
+  if ((tdiv !== undefined) && (tdiv !== null)) {
     tdiv.innerHTML += message;
   }
 }
 set_div_contents = toDiv;
 
-function divp(divId, astr)
-{
+function divp(divId, astr) {
   var tdiv = document.getElementById(divId);
-  if ((tdiv !== undefined)  && (tdiv !== null))
-  {
+  if ((tdiv !== undefined) && (tdiv !== null)) {
     tdiv.innerHTML += astr;
   }
 }
 
 
-   function hideDiv(aName) {
-     var adiv = document.getElementById(aName);
-      if (adiv !== null) {
-        adiv.style.display = "none";
-        adiv.style.visibility = "hidden";
-      }
-    }
+function hideDiv(aName) {
+  var adiv = document.getElementById(aName);
+  if (adiv !== null) {
+    adiv.style.display = "none";
+    adiv.style.visibility = "hidden";
+  }
+}
 
-    function showDiv(aName) {
-      var adiv = document.getElementById(aName);
-       if (adiv !== null) {
-          adiv.style.display = "block";
-          adiv.style.visibility = "visible";
-        }
-    }
+function showDiv(aName) {
+  var adiv = document.getElementById(aName);
+  if (adiv !== null) {
+    adiv.style.display = "block";
+    adiv.style.visibility = "visible";
+  }
+}
 
-    function hide_all_but(hide_list, keep) {
-      for (var i in hide_list) {
-        var hideName = hide_list[i];
-        if (hideName !== keep) {
-          hideDiv(hideName);
-        }
-      }
+function hide_all_but(hide_list, keep) {
+  for (var i in hide_list) {
+    var hideName = hide_list[i];
+    if (hideName !== keep) {
+      hideDiv(hideName);
     }
+  }
+}
 
 function forceBlur(divId) {
   var tdiv = document.getElementById(divId);
@@ -184,7 +170,7 @@ function scrollDivBottom(divId) {
     if (tdiv.scrollHeight > tdiv.clientHeight) {
       //tdiv.scrollIntoView(false);
       //window.scrollTo(0, tdiv.innerHeight);
-      tdiv.scrollTop = tdiv.scrollHeight 
+      tdiv.scrollTop = tdiv.scrollHeight
     }
   }
 }
@@ -207,36 +193,31 @@ function setFormValue(divId, value) {
 }
 
 
-function Status_div(divId)
-{
+function Status_div(divId) {
   this.divId = divId;
   this.sdiv = undefined;
 
-  this.check_div = function()
-  {
+  this.check_div = function () {
     if (this.sdiv === undefined)
       this.sdiv = document.getElementById(divId);
     return this;
   }
 
-  this.log = function(msg)
-  {
+  this.log = function (msg) {
     this.check_div();
     if (this.sdiv !== undefined)
       this.sdiv.innerHTML += msg;
     return this;
   }
 
-  this.clear = function()
-  {
+  this.clear = function () {
     this.check_div();
     if (this.sdiv !== undefined)
       this.sdiv.innerHTML = "";
     return this;
   }
 
-  this.br = function()
-  {
+  this.br = function () {
     this.check_div();
     if (this.sdiv !== undefined)
       this.sdiv.innerHTML += "<br/>";
@@ -252,8 +233,7 @@ var dQuote = '\"';
 var dQuoteEscaped = '\\\"';
 
 
-String.prototype.replaceAll = function(token1, token2)
-{
+String.prototype.replaceAll = function (token1, token2) {
   var tarr = this.split(token1);
   return tarr.join(token2);
 }
@@ -268,8 +248,7 @@ function RenderTag(tagName, attr, autoClose) {
   }
   if (autoClose == true) {
     sb.push("/>");
-  }
-  else {
+  } else {
     sb.push(">");
   };
   return sb.join("");
@@ -305,8 +284,8 @@ function URIEncodeQueryParms(parms, skipFields) {
 paramters are supplied with the tag names as keys in a dictionary
 and values are the encodeURI verison of those values.  All values
 must be strings before calling this function.   */
-function makeURIWithQueryString(uriPrefix, parms,skipFields) {
-  var tmp = uriPrefix + "?" + URIEncodeQueryParms(parms,skipFields);
+function makeURIWithQueryString(uriPrefix, parms, skipFields) {
+  var tmp = uriPrefix + "?" + URIEncodeQueryParms(parms, skipFields);
   return tmp.replace("/?", "?");
 }
 
@@ -315,7 +294,7 @@ function makeURIWithQueryString(uriPrefix, parms,skipFields) {
 underlying objects are shared pointers essentially ensuring
 a copy by value with no references */
 function deepCloneObj(aObj) {
-    return JSON.parse(JSON.stringify(aObj))
+  return JSON.parse(JSON.stringify(aObj))
 }
 
 
@@ -327,25 +306,21 @@ function String_builder() {
 
 
 /* ************
-*** String_Builder
-************** */
-String_builder.prototype.to_str = function()
-{
+ *** String_Builder
+ ************** */
+String_builder.prototype.to_str = function () {
   return this.sb.join("")
 }
 
-String_builder.prototype.toString = function ()
-{
+String_builder.prototype.toString = function () {
   return this.sb.join("")
 }
 
-String_builder.prototype.clear = function()
-{
+String_builder.prototype.clear = function () {
   this.sb = [];
 }
 
-String_builder.prototype.b = function (pStr)
-{
+String_builder.prototype.b = function (pStr) {
   this.sb.push(pStr);
   return this;
 }
@@ -355,10 +330,10 @@ b but can accept a large number of paramters.  did not implement
 as replacment for b.b beause there is a little extra overhead
 for the loop when adding asingle string.*/
 String_builder.prototype.bv = function () {
-    for (var i = 0; i < arguments.length; i++) {
-        this.sb.push(arguments[i]);
-    }
-    return this;
+  for (var i = 0; i < arguments.length; i++) {
+    this.sb.push(arguments[i]);
+  }
+  return this;
 }
 
 String_builder.prototype.add = String_builder.prototype.b;
@@ -371,20 +346,17 @@ String_builder.prototype.insert = function (pStr) {
 }
 
 
-String_builder.prototype.br = function ()
-{
+String_builder.prototype.br = function () {
   this.push("<br/>");
   return this;
 }
 
-String_builder.prototype.hr = function ()
-{
+String_builder.prototype.hr = function () {
   this.push("<hr/>");
   return this;
 }
 
-String_builder.prototype.nl = function ()
-{
+String_builder.prototype.nl = function () {
   this.push("\n");
   return this;
 }
@@ -393,27 +365,24 @@ String_builder.prototype.nl = function ()
 // Produce a HTML element with a bunch of
 // attributes.    Properly escapes the attribute
 // values.
-String_builder.prototype.start_element =function(elementName, attribs)
-{
-   var sb = this.sb;
-   sb.push("<" + elementName)
-   for (var tName in attribs)
-   {
-     var tVal = attribs[tName];
-     if ((tVal !== undefined) && (tVal !== null)) {
-       tVal = tVal.toString().replaceAll(dQuote,dQuoteEscaped);
-       sb.push(" " + tName + "=" + dQuote + tVal + dQuote);
-     }
-   }
-   sb.push(">");
-   return this;
+String_builder.prototype.start_element = function (elementName, attribs) {
+  var sb = this.sb;
+  sb.push("<" + elementName)
+  for (var tName in attribs) {
+    var tVal = attribs[tName];
+    if ((tVal !== undefined) && (tVal !== null)) {
+      tVal = tVal.toString().replaceAll(dQuote, dQuoteEscaped);
+      sb.push(" " + tName + "=" + dQuote + tVal + dQuote);
+    }
+  }
+  sb.push(">");
+  return this;
 }
 
 String_builder.prototype.start = String_builder.prototype.start_element;
 
 
-String_builder.prototype.finish_element = function (elementName)
-{
+String_builder.prototype.finish_element = function (elementName) {
   this.sb.push("</" + elementName + ">");
   return this;
 }
@@ -424,8 +393,7 @@ String_builder.prototype.EndElement = function (elementName) {
   return this;
 }
 
-String_builder.prototype.make_element = function (elementName, attribs, bodyStr)
-{
+String_builder.prototype.make_element = function (elementName, attribs, bodyStr) {
   this.start_element(elementName, attribs);
   if (bodyStr) {
     this.push(bodyStr);
@@ -442,43 +410,40 @@ String_builder.prototype.toDiv = function (div_or_name) {
 }
 
 
-String_builder.prototype.to_div = function (div_or_name)
-{
+String_builder.prototype.to_div = function (div_or_name) {
   toDiv(div_or_name, this.to_str());
 }
 
 
-String_builder.prototype.append_div = function (div_or_name)
-{
+String_builder.prototype.append_div = function (div_or_name) {
   appendDiv(div_or_name, this.to_str());
 }
 
 
 
-String_builder.prototype.td =  function(pStr)
-{
+String_builder.prototype.td = function (pStr) {
   this.push("<td>").push(pStr).push("</td>");
 }
 
 
 
-String_builder.prototype.Render = function(tagName, attr, autoClose) {
+String_builder.prototype.Render = function (tagName, attr, autoClose) {
   this.push(RenderTag(tagName, attr, autoClose));
 }
 
 /* Wrap input string with the specified character and return results */
 function wrapStr(aStr, wrapChar) {
-    return wrapChar + aStr + wrapChar;
+  return wrapChar + aStr + wrapChar;
 }
 
 /* wrap a string in single quotes and return results */
 function wrapsq(aStr) {
-    return "'" + aStr + "'";
+  return "'" + aStr + "'";
 }
 
 /* wrap a string in double quotes and return results */
 function wrapdq(aStr) {
-    return '"' + aStr + '"';
+  return '"' + aStr + '"';
 }
 
 
@@ -502,7 +467,7 @@ String_builder.prototype.addInputField = function addInputField(fieldSpec) {
   var fldNameForId = fldName;
   var context = "null";
   if (fieldSpec.context) {
-      context = fieldSpec.context;
+    context = fieldSpec.context;
   }
 
   if (fieldSpec.idPrefix !== undefined) {
@@ -511,7 +476,7 @@ String_builder.prototype.addInputField = function addInputField(fieldSpec) {
 
   var validate = "null";
   if (fieldSpec.validate) {
-      validate = fieldSpec.validate;
+    validate = fieldSpec.validate;
   }
 
 
@@ -520,7 +485,7 @@ String_builder.prototype.addInputField = function addInputField(fieldSpec) {
   var frmName = "frm_" + fldNameForId
 
   if (!(fieldSpec.onchange)) {
-      fieldSpec.onchange = "fieldOnChange";
+    fieldSpec.onchange = "fieldOnChange";
   }
 
   var label = fieldSpec.label;
@@ -539,67 +504,75 @@ String_builder.prototype.addInputField = function addInputField(fieldSpec) {
   var grp_class = 'frm_grp frm_grp_' + fldNameForId;
   var placeholder = label;
   if (fieldSpec.placeholder) {
-      placeholder = fieldSpec.placeholder;
+    placeholder = fieldSpec.placeholder;
   }
 
   var inpFldAttr = {
 
-      'id': frmName,
-      'onblur': fieldSpec.onchange + "(" + onChgParms + ")",
-      'onchange': fieldSpec.onchange + "(" + onChgParms + ")",
-      'type': fieldSpec.type,
-      'placeholder': placeholder,
-      'class': "frm_input frm_input_" + fldNameForId
+    'id': frmName,
+    'onblur': fieldSpec.onchange + "(" + onChgParms + ")",
+    'onchange': fieldSpec.onchange + "(" + onChgParms + ")",
+    'type': fieldSpec.type,
+    'placeholder': placeholder,
+    'class': "frm_input frm_input_" + fldNameForId
   }
 
   if (fieldSpec.onupdate) {
-      chgact = fieldSpec.onupdate + "(" + onChgParms + ");"
+    chgact = fieldSpec.onupdate + "(" + onChgParms + ");"
   }
 
 
   for (var ndx in AddInputFieldCopyAttrList) {
-      var attrName = AddInputFieldCopyAttrList[ndx];
-      if (fieldSpec[attrName]) {
-          inpFldAttr[attrName] = fieldSpec[attrName];
-      }
+    var attrName = AddInputFieldCopyAttrList[ndx];
+    if (fieldSpec[attrName]) {
+      inpFldAttr[attrName] = fieldSpec[attrName];
+    }
   }
 
   if (label.length > 0) {
     inpFldAttr.title = label;
-  }
-  else {
+  } else {
     inpFldAttr.title = defLabel;
   }
 
-  var errInpAttr = { 'class': errorClass, 'id': errorId };
+  var errInpAttr = {
+    'class': errorClass,
+    'id': errorId
+  };
 
-  this.start("div", { 'class': grp_class, 'id': grpId });
+  this.start("div", {
+    'class': grp_class,
+    'id': grpId
+  });
 
   if (fieldSpec.label) {
-      this.start("div", { 'class': 'frm_label' });
-      if (fieldSpec.leadingIcon) {
-          this.make("span", fieldSpec.leadingIcon);
-      }
-      this.add(label);
-      this.finish("div") // label
+    this.start("div", {
+      'class': 'frm_label'
+    });
+    if (fieldSpec.leadingIcon) {
+      this.make("span", fieldSpec.leadingIcon);
+    }
+    this.add(label);
+    this.finish("div") // label
   }
 
   if (ftype == "textarea") {
-      inputTag = "textarea";
-      inpFldAttr.type = "text";
-  }
-  else if (ftype == "button") {
+    inputTag = "textarea";
+    inpFldAttr.type = "text";
+  } else if (ftype == "button") {
     buttonSpec = {
       "class": "frm_button",
       "onclick": "connect('" + frmName + "')",
       "value": "Connect",
       "type": "submit"
-      }
+    }
   }
-  this.start("div", {"class": "frm_fld" + " frm_fld_" + fldNameForId});
+  this.start("div", {
+    "class": "frm_fld" + " frm_fld_" + fldNameForId
+  });
   this.start(inputTag, inpFldAttr);
   if (fieldSpec.postFieldHTML) {
-          this.make(fieldSpec.postFieldHTML);
+    this.make(fieldSpec.postFieldHTML);
   }
   this.finish(inputTag);
   this.make("span", errInpAttr, "");
@@ -616,7 +589,9 @@ String_builder.prototype.addInputField = function addInputField(fieldSpec) {
  container divId all css specifiers should be relative to that divid. */
 String_builder.prototype.addInputFields = function addInputFields(containerDivId, onChangeMethod, fieldSpecs, idPrefix) {
   if (containerDivId) {
-    this.start("div", { 'id': containerDivId });
+    this.start("div", {
+      'id': containerDivId
+    });
   }
   for (fldndx in fieldSpecs) {
     var tfld = fieldSpecs[fldndx];
@@ -645,118 +620,116 @@ option in a div containing other data about that expiry but
 we defer rendering the original expires DIV until the
 the data set returns */
 var pending_div_placement = {};
-function place_by_id_on_timer_expire(args) {
-    // for each pending placement see if the
-    // target div exists and then replace that
-    // div's inner html content.
-    clearInterval(place_timer_id)
-    toDel = [];
-    for (var ndx in args) {
-        var tdiv = document.getElementById(ndx);
-        if ((tdiv !== undefined) && (tdiv !== null)) {
-            tdiv.innerHTML = args[ndx];
-            toDel.push(ndx);
-        }
-    }
 
-    // remove the keys we have already
-    // placed so we do not do the work again
-    for (var ndx in toDel) {
-        tkey = toDel[ndx];
-        delete args[tkey];
+function place_by_id_on_timer_expire(args) {
+  // for each pending placement see if the
+  // target div exists and then replace that
+  // div's inner html content.
+  clearInterval(place_timer_id)
+  toDel = [];
+  for (var ndx in args) {
+    var tdiv = document.getElementById(ndx);
+    if ((tdiv !== undefined) && (tdiv !== null)) {
+      tdiv.innerHTML = args[ndx];
+      toDel.push(ndx);
     }
-    // If we are still waiting for divs to show
-    // up then schedule for another try.
-    if (args.length > 0) {
-        setTimeout(place_by_id_on_timer_expire, 100, args);
-    }
+  }
+
+  // remove the keys we have already
+  // placed so we do not do the work again
+  for (var ndx in toDel) {
+    tkey = toDel[ndx];
+    delete args[tkey];
+  }
+  // If we are still waiting for divs to show
+  // up then schedule for another try.
+  if (args.length > 0) {
+    setTimeout(place_by_id_on_timer_expire, 100, args);
+  }
 }
 
 function schedule_div_placement(id, pstr) {
-    pending_div_placement[id] = pstr;
-    place_timer_id = setTimeout(place_by_id_on_timer_expire, 50, pending_div_placement);
+  pending_div_placement[id] = pstr;
+  place_timer_id = setTimeout(place_by_id_on_timer_expire, 50, pending_div_placement);
 }
 
 
 /************
-* Utility and Parsing Routines
-* commonly used by a wide variety
-* of pages so included here.
-*************/
+ * Utility and Parsing Routines
+ * commonly used by a wide variety
+ * of pages so included here.
+ *************/
 
 // parse simple file containing a
 // list of strings on separate lines
 // similar to symbol list files
 // used in the symbol-list directory
 function parseSimpleList(dataStr) {
-    var tout = [];
-    var tarr = dataStr.split("\n");
-    for (var rowndx in tarr) {
-        var rowstr = tarr[rowndx].trim();
-        rowstr = rowstr.split("#")[0].trim();
-        if (rowstr.length > 0) {
-            tout.push(rowstr);
-        }
+  var tout = [];
+  var tarr = dataStr.split("\n");
+  for (var rowndx in tarr) {
+    var rowstr = tarr[rowndx].trim();
+    rowstr = rowstr.split("#")[0].trim();
+    if (rowstr.length > 0) {
+      tout.push(rowstr);
     }
-    return tout;
+  }
+  return tout;
 }
 
 function parseQueryString(queryString) {
-    var parms = {};
-    var queries = queryString.replace("?", "&").split("#")[0].split("&");
-    for (var i in queries) {
-        var temp = queries[i].split('=');
-        parms[temp[0]] = temp[1];
-    }
-    return parms;
+  var parms = {};
+  var queries = queryString.replace("?", "&").split("#")[0].split("&");
+  for (var i in queries) {
+    var temp = queries[i].split('=');
+    parms[temp[0]] = temp[1];
+  }
+  return parms;
 };
 
 function parseURLHash(purl) {
-    var pa = purl.split("#", 2);
-    if (pa.length > 1)
-        return pa[1];
-    else
-        return null;
+  var pa = purl.split("#", 2);
+  if (pa.length > 1)
+    return pa[1];
+  else
+    return null;
 }
 
 
-function parseAssocArray(dataStr)
-{
-    var trows = dataStr.split("\n");
-    var ts = "";
-    var tobj = {};
-    for (ndx in trows)
-    {
-        var trow = trows[ndx].split("#")[0].trim();
-        if (trow.length > 1)
-        {
-            var tarr = trow.split("=", 2);
-            if (tarr.length == 2)
-            {
-                var tkey = tarr[0].toLowerCase().trim().replaceAll(" ", "_").replaceAll("-", "_");
-                tobj[tkey] = tarr[1].trim();
-            }
-        }
+function parseAssocArray(dataStr) {
+  var trows = dataStr.split("\n");
+  var ts = "";
+  var tobj = {};
+  for (ndx in trows) {
+    var trow = trows[ndx].split("#")[0].trim();
+    if (trow.length > 1) {
+      var tarr = trow.split("=", 2);
+      if (tarr.length == 2) {
+        var tkey = tarr[0].toLowerCase().trim().replaceAll(" ", "_").replaceAll("-", "_");
+        tobj[tkey] = tarr[1].trim();
+      }
     }
-    return tobj;
+  }
+  return tobj;
 }
 
 
 var barDateRE = /^\d\d\d\d-\d\d-\d\d$/;
+
 function isValidBarDatePattern(aDateStr) {
-    var res = aDateStr.match(barDateRE);
-    //console.log("datein=" + aDateStr + " result=" + res);
-    if (res == null) {
-        return false;
-    }
-    return true;
+  var res = aDateStr.match(barDateRE);
+  //console.log("datein=" + aDateStr + " result=" + res);
+  if (res == null) {
+    return false;
+  }
+  return true;
 }
 
 function parseDate(aDateStr) {
-    if (isValidDatePattern(aDateStr) = false) {
-        return null;
-    }
-    return new Date(aDateStr);
+  if (isValidDatePattern(aDateStr) = false) {
+    return null;
+  }
+  return new Date(aDateStr);
 }
 
 // Many of our input dates come as bar dates
@@ -765,10 +738,10 @@ function parseDate(aDateStr) {
 // assumes UMT. By adding the EST to those
 // dates we get the proper time zone adjustment.
 function parseDateAdjustedToEST(aDateStr) {
-    if (aDateStr.indexOf(" EST") == -1) {
-        aDateStr = aDateStr + " EST"
-    };
-    return parseDate(aDateStr);
+  if (aDateStr.indexOf(" EST") == -1) {
+    aDateStr = aDateStr + " EST"
+  };
+  return parseDate(aDateStr);
 }
 
 
@@ -786,48 +759,48 @@ function parseDateAdjustedToEST(aDateStr) {
 //  conversion of strings to numbers so all
 //  values are treated as strings.
 function setNested(model, path, value) {
-    var segs = path.split("__");
-    var sobj = model;
-    for (ndx in segs) {
-        var fldName = segs[ndx];
-        if (ndx >= segs.length - 1) {
-            // last seg so just assign to fldName
-            sobj[fldName] = value;
-        } else {
-            // still walking the tree;
-            if (fldName in sobj) {
-                // sub obj already exists so just use it
-                sobj = sobj[fldName];
-            } else {
-                // sub obj does not exist to must create it
-                sobj[fldName] = {};
-                sobj = sobj[fldName];
-            }
-        }
+  var segs = path.split(".");
+  var sobj = model;
+  for (ndx in segs) {
+    var fldName = segs[ndx];
+    if (ndx >= segs.length - 1) {
+      // last seg so just assign to fldName
+      sobj[fldName] = value;
+    } else {
+      // still walking the tree;
+      if (fldName in sobj) {
+        // sub obj already exists so just use it
+        sobj = sobj[fldName];
+      } else {
+        // sub obj does not exist to must create it
+        sobj[fldName] = {};
+        sobj = sobj[fldName];
+      }
     }
+  }
 }
 
 /* Return true if the specified character is a digit
 otherwise return false */
 function isDigit(pchar) {
-    if ((pchar < '0') || (pchar > '9')) {
-        return false;
-    } else {
-        return true;
-    }
+  if ((pchar < '0') || (pchar > '9')) {
+    return false;
+  } else {
+    return true;
+  }
 }
 
 /* parse a key segment either as a string or as
 a numeric address if the segment name starts with
 a Zero.  */
 function parseKeySeg(fname) {
-    if (isDigit(fname[0])) {
-        var tmp = parseInt(fname, 10);
-        if (tmp !== NaN) {
-            return tmp;
-        }
+  if (isDigit(fname[0])) {
+    var tmp = parseInt(fname, 10);
+    if (tmp !== NaN) {
+      return tmp;
     }
-    return fname;
+  }
+  return fname;
 }
 
 
@@ -836,23 +809,23 @@ function parseKeySeg(fname) {
 // found.  if any sub object does not exist then
 // return null.
 function getNested(model, path) {
-    var segs = path.split("__");
-    var sobj = model;
-    for (ndx in segs) {
-        var fldName = parseKeySeg(segs[ndx]);
-        if (ndx >= segs.length - 1) {
-            // last seg so just assign to fldName
-            return sobj[fldName];
-        } else {
-            // still walking the tree;
-            if (fldName in sobj) {
-                // sub obj already exists so just use it
-                sobj = sobj[fldName];
-            } else {
-                return null;
-            }
-        }
+  var segs = path.split(".");
+  var sobj = model;
+  for (ndx in segs) {
+    var fldName = parseKeySeg(segs[ndx]);
+    if (ndx >= segs.length - 1) {
+      // last seg so just assign to fldName
+      return sobj[fldName];
+    } else {
+      // still walking the tree;
+      if (fldName in sobj) {
+        // sub obj already exists so just use it
+        sobj = sobj[fldName];
+      } else {
+        return null;
+      }
     }
+  }
 }
 
 
@@ -860,16 +833,15 @@ function getNested(model, path) {
 // diplays a error message if value is empty and returns false.
 // otherwise clears the error message and returns true.
 function validate_not_empty(fld, fldName, model, validateFun) {
-    var fldVal = fld.value;
-    var errName = "frm_msg_" + fldName
-    if (fldVal <= "") {
-        toDiv(errName, fldName + " May not be empty");
-        return false;
-    }
-    else {
-        toDiv(errName, "");
-        return true;
-    }
+  var fldVal = fld.value;
+  var errName = "frm_msg_" + fldName
+  if (fldVal <= "") {
+    toDiv(errName, fldName + " May not be empty");
+    return false;
+  } else {
+    toDiv(errName, "");
+    return true;
+  }
 }
 
 
@@ -877,39 +849,39 @@ function validate_not_empty(fld, fldName, model, validateFun) {
 // processed.   Calls the defiined validate function if
 // present.
 function fieldOnChange(fld, fldName, context, validateFun) {
-    var fldVal = fld.value.trim();
-    if (validateFun) {
-        var tRes = validateFun(fld, fldName, context, validateFun)
-        if (tRes === false) {
-            return false;
-        }
+  var fldVal = fld.value.trim();
+  if (validateFun) {
+    var tRes = validateFun(fld, fldName, context, validateFun)
+    if (tRes === false) {
+      return false;
     }
-    if (context !== null) {
-        var currVal = getNested(context.model, fldName);
-        if (currVal !== fldVal) {
-            // Field really has changed
-            setNested(context.model, fldName, fldVal);
-            context.isDirty = true;
-            if (context.onDirty) {
-                context.onDirty(fld, fldName, context);
-            }
-        }
-        toDiv("show_domain_obj", "Model as JSON" + JSON.stringify(context.model));
+  }
+  if (context !== null) {
+    var currVal = getNested(context.model, fldName);
+    if (currVal !== fldVal) {
+      // Field really has changed
+      setNested(context.model, fldName, fldVal);
+      context.isDirty = true;
+      if (context.onDirty) {
+        context.onDirty(fld, fldName, context);
+      }
     }
+    toDiv("show_domain_obj", "Model as JSON" + JSON.stringify(context.model));
+  }
 }
 
 function frmEnable(divId) {
-    var ele = document.getElementById(divId);
-    if (ele) {
-        ele.disabled = false;
-    }
+  var ele = document.getElementById(divId);
+  if (ele) {
+    ele.disabled = false;
+  }
 }
 
 function frmDisable(divId) {
-    var ele = document.getElementById(divId);
-    if (ele) {
-        ele.disabled = true;
-    }
+  var ele = document.getElementById(divId);
+  if (ele) {
+    ele.disabled = true;
+  }
 }
 
 // Ieterate the form to find all input fields and
@@ -917,24 +889,24 @@ function frmDisable(divId) {
 // set the value for all form fields based on the
 // domain objects current values.
 function updateFormValuesFromModel(formId, model) {
-    var aform = document.getElementById(formId);
-    var elems = aform.elements;
-    var numEle = elems.length;
-    for (var i = 0; i < numEle; i++) {
-        var ele = elems[i];
-        var eleId = ele.id
-        if (eleId.startsWith("frm_")) {
-            var fld_name = eleId.replace("frm_", "");
-            var aval = getNested(model, fld_name);
-            if (aval != null) {
-                ele.value = aval;
-                // custom method to convert datetime to string
-                // custom method for checkbox
-                // custom method for radio button
-                // custom method for select box
-            }
-        }
+  var aform = document.getElementById(formId);
+  var elems = aform.elements;
+  var numEle = elems.length;
+  for (var i = 0; i < numEle; i++) {
+    var ele = elems[i];
+    var eleId = ele.id
+    if (eleId.startsWith("frm_")) {
+      var fld_name = eleId.replace("frm_", "");
+      var aval = getNested(model, fld_name);
+      if (aval != null) {
+        ele.value = aval;
+        // custom method to convert datetime to string
+        // custom method for checkbox
+        // custom method for radio button
+        // custom method for select box
+      }
     }
+  }
 }
 
 
@@ -944,22 +916,22 @@ function updateFormValuesFromModel(formId, model) {
 // required when automatic update via click handlers
 // is provided.
 function updateModelFromForm(formId, model) {
-    var aform = document.getElementById(formId);
-    var elems = aform.elements;
-    var numEle = elems.length;
-    for (var i = 0; i < numEle; i++) {
-        var ele = elems[i];
-        var eleId = ele.id
-        if (eleId.startsWith("frm_")) {
-            var fld_name = eleId.replace("frm_", "");
-            var aval = setNested(model, fld_name);
-            if (aval != null) {
-                ele.value = aval;
-                // custom method to convert datetime to string
-                // custom method for checkbox
-                // custom method for radio button
-                // custom method for select box
-            }
-        }
+  var aform = document.getElementById(formId);
+  var elems = aform.elements;
+  var numEle = elems.length;
+  for (var i = 0; i < numEle; i++) {
+    var ele = elems[i];
+    var eleId = ele.id
+    if (eleId.startsWith("frm_")) {
+      var fld_name = eleId.replace("frm_", "");
+      var aval = setNested(model, fld_name);
+      if (aval != null) {
+        ele.value = aval;
+        // custom method to convert datetime to string
+        // custom method for checkbox
+        // custom method for radio button
+        // custom method for select box
+      }
     }
+  }
 }

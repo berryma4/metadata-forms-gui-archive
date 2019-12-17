@@ -11,14 +11,54 @@
     class: input_field
     data_type: text
   
+- widget:
+    id: completionDate
+    data_type: text
+    type: text
+    label : Completion Date
+    placeholder: ccyy/mm/dd
+    size: 11
+    data_context: actual_construction_completion_date  
+    required: true
+    maxlength: 11
+    class: input_field
+    validFun: validate_date
+
+- widget:
+    id: projectCost
+    data_type: text
+    type: text
+    label : ProjectCost
+    placeholder: Enter Cost
+    size: 35
+    data_context: total_project_cost  
+    required: true
+    maxlength: 18
+    class: input_field
+
   
+  ##################
+  ### Facility FIELDS
+  ###################
+- widget:
+    id: facilityId
+    data_type: text
+    type: text
+    label : Facility ID 
+    placeholder: Facility ID
+    size: 35
+    data_context: facility_id
+    required: true
+    maxlength: 50
+    class: input_field
+
 - widget:
     id: facilityName
     data_type: text
     type: text
     label : Facility Name 
     placeholder: Enter Facility Name
-    size: 35
+    size: 45
     data_context: facility_name  
     required: true
     maxlength: 50
@@ -26,83 +66,105 @@
 
 
 - widget:
-    id: address
+    id: facilityType
+    data_type: text
+    type: text
+    label : Facility Type 
+    placeholder: 
+    size: 45
+    data_context: facility_type  
+    required: true
+    maxlength: 50
+    class: input_field
+
+
+
+###############
+### OPERATOR FIELDS
+###############
+
+
+- widget:
+    id: operatorCertNumber
+    data_type: text
+    type: text
+    label : Cert #
+    placeholder: Enter Certificate #
+    size: 45
+    data_context: current_operator.operating_certificate_number  
+    required: true
+    maxlength: 9
+    class: input_field
+
+- widget:
+    id: operatorName
+    data_type: text
+    type: text
+    label : Name 
+    placeholder: Enter Name
+    size: 45
+    data_context: current_operator.name  
+    required: true
+    maxlength: 50
+    class: input_field
+
+- widget:
+    id: operatorAddress
     data_type: text
     type: text
     label : Address
     placeholder: Enter Address
-    size: 35
-    data_context: "project_site/address_line1  
+    size: 45
+    data_context: current_operator.address_line1
     required: true
     maxlength: 50
     class: input_field
 
 - widget:
-    id: city
+    id: operatorCity
     data_type: text
     type: text
     label : City
     placeholder: Enter City
-    size: 35
-    data_context: project_site/City  
+    size: 25
+    data_context: current_operator.city
     required: true
     maxlength: 50
     class: input_field
 
 
 - widget:
-    id: county
-    data_type: text
-    type: text
-    label : County
-    placeholder: Enter County
-    size: 35
-    data_context: project_site/county_name  
-    required: true
-    maxlength: 50
-    class: input_field
-
-
-- widget:
-    id: state
+    id: operatorState
     data_type: text
     type: text
     label : State
     size: 2
-    data_context: project_site/state  
+    data_context: current_operator.state
     required: true
     maxlength: 2
     class: input_field
     validFun: validate_state
     pattern: "[A-Za-z]{2}"
 
-
 - widget:
-    id: zip
+    id: operatorZip
     data_type: text
     type: text
     label : Zipcode
     placeholder: 99999-9999
     size: 9
-    data_context: project_site//zip  
+    data_context: current_operator.zip_code
     required: true
     maxlength: 9
     class: input_field
     validFun: validate_zip
 
 
-- widget:
-    id: certNumber
-    data_type: text
-    type: text
-    label : Cert #
-    placeholder: Enter Certificate #
-    size: 45
-    data_context: cert/zip  
-    required: true
-    maxlength: 9
-    class: input_field
 
+
+######################
+#### Project FIELDS
+######################
 
 - widget:
     id: projectDesc
@@ -112,7 +174,7 @@
     placeholder: Enter Project Description
     size: 45
     rows: 5
-    data_context: cert/zip  
+    data_context: project.description  
     required: true
     maxlength: 500
     class: input_field
@@ -124,7 +186,7 @@
     label : Status
     placeholder: Proj Status
     size: 20
-    data_context: cert/status 
+    data_context: project.status 
     required: true
     maxlength: 20
     class: input_field
@@ -135,7 +197,7 @@
     type: text
     label : Status Date    
     size: 12
-    data_context: cert/statusDate
+    data_context: project.status_date
     required: true
     maxlength: 12
     class: input_field
@@ -155,19 +217,29 @@
 - widget: {"id": "saveButton", "widget_type" : "button", "label" : "Save", "class" : "save_button"}
 
 - widget:
+    id: facilityGroup
+    label: Facility 
+    type: widgetGroup
+    class: vgroup
+    layout: vertical
+    widgets:   
+         - facilityId
+         - facilityName
+         - facilityType
+
+- widget:
     id: currOperatorGroup
     label: Current Operator 
     type: widgetGroup
     class: vgroup
     layout: vertical
     widgets:   
-         - projectNum
-         - facilityName
-         - address
-         - city
-         - state
-         - zip 
-
+         - operatorCertNumber
+         - operatorName
+         - operatorAddress
+         - operatorCity
+         - operatorState
+         - operatorZip 
 
 - widget:
     id: projectGroup
@@ -176,11 +248,10 @@
     class: vgroup
     layout: vertical
     widgets:   
-         - certNumber
          - projectDesc
          - projectStatus
          - projectStatusDate
-         -
+         # Add Project Address
 # TOOD: Add Facility Data See: http://127.0.0.1:9831/data/cert-of-need/1007.JSON
 
 - form:
@@ -189,13 +260,18 @@
    label: FDA Project Certificate of Need
    # TODO: Allow other files to be loaded here to allow re-use
    fetch:
-      uri: data/cert-of-need/{cert_id}.JSON
+      uri: data/cert-of-need/{dataObjId}.JSON
       method: GET
+      parse: JSON
    save:
-      uri: data/cert-of-need/{cert_id}/.JSON
+      uri: data/cert-of-need/{dataObjId}.JSON
       verb: PUT
       where: body   
    widgets:   
+           - projectNum
+           - completionDate
+           - projectCost
            - currOperatorGroup
+           - facilityGroup
            - projectGroup
            - saveButton

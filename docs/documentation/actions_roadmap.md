@@ -2,6 +2,12 @@
 
 # TODO:
 
+* When starting form load need to also trigger retrieval of the data record and defer display until record is loaded.  Need unambiguous way to map user data for a given form rendering to a specific data object when multiple root objects are already cached in RAM.  If the data specific object is already loaded in RAM re-use the one already available to re-render the same form.  
+* Add support to allow multiple forms to be defined in a single file and only the one marked master.
+* Add support to allow multiple data objects to be rendered and update the form as the data objects are received. 
+* Support notion of update form data when objects is is interested in are loaded. 
+* Modify form fetch to skip fetch is form is already in memory
+* Extend Forms parser to allow include loading additional files which have contents loaded at end of the existing file.    What happens in Yaml if you reload the same key a second time.
 * Demonstrate first with Certificate of Need Data from DFORMS System but converted to Dynamic Form.
 * Make a clean way to read a directory of files and return header data to allow rendering a summary table.  EG: If each contact is in a separate file then would want to returns some basic data for each contact to render the initial table prior to the click that drills in to edit each piece of content.
 * Map Sample Data  Using FHIR  data structures and URI as much as possible
@@ -19,6 +25,7 @@
 
 ## Requirements 
 
+* Ability to use YAML anchors @ extensions  to create template fields and only supply what was missing.
 * Ability to take reasonable defaults when not specified.  EG:  dataType can be assumed to be string unless otherwise specified.    PlaceHolder can be assumed to be Label unless specified.  PlaceHolder can be assumed to be same as Label unless specified. 
 * Ability to specified HTML relative to the Div ID the form is created in to allow users to customize to their hearts content.
 * Must be able to display a form in a pre-existing DIV structure without taking over the entire pages.

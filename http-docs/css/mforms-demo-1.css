@@ -1,0 +1,76 @@
+  img.sampleImage {
+      width: 100%;
+  }
+
+  .inputFrm {
+      width: 100%;
+      height: 100%;
+      font-family: Verdana, Vivaldi, 'Vladimir Script';
+      background-color: ivory;
+      font-size: 0.8em;
+      padding: 0px;
+      margin: 0px;
+      border: none;
+  }
+
+  .inputFrmHead {
+      width: 99.5%;
+      font: 600;
+      background-color: rgb(45, 58, 45);
+      font-size: 1.2em;
+      margin: 0px;
+      color: azure;
+      padding: 0.1em;
+
+  }
+
+
+  .vgroup {
+      width: 100%;
+      display: block;
+  }
+
+  .vgroupLabel {
+      width: 100%;
+      font-size: 1.2em;
+      color: rgb(13, 85, 9);
+      display: block;
+      margin: 0;
+      margin-bottom: 0.5em;
+      margin-top: 0.6em;
+
+  }
+
+  .input_fieldContainer {
+      margin-top: 0.25em;
+      display: inline-block;
+  }
+
+  .input_fieldLabel {
+      display: inline-block;
+      width: 8em;
+      text-align: right;
+      vertical-align: top;
+      color: cadetBlue;
+      padding-left: 0.05em;
+      padding-right: 0.09em;
+      margin-right: 0.1em;
+  }
+
+  .input_field {
+      display: inline-block;
+      border-radius: 4px;
+      padding: 0.08em;
+      padding-left: 0.2em;
+      margin: 0em;
+      margin-left: 0.06em;
+      color: rgb(13, 85, 9);
+      font-size: 1em;
+  }
+
+  .submit_button {
+      margin-right: 8em;
+      margin-left: 80%;
+      margin-top: 4em;
+      border-radius: 4px;
+  }
