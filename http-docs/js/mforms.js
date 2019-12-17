@@ -254,7 +254,7 @@ to perform the interpolation  */
      }
      if (data <= "") {
          console.log("L5: mformGetDataObjOnData err=" + httpObj);
-         toDiv("ErrorMsg", "Failure getScript\n" + httpObj);
+         toDiv("ErrorMsg", "Failure mformGetDataObjOnData  uri=" + parms.uri + "\n" + httpObj);
      } else {
          var objId = parms.context.dataobjId;
          var gtx = parms.context.gbl;
@@ -326,7 +326,7 @@ to perform the interpolation  */
      }
      if (data <= "") {
          console.log("L5: mformsGetDefOnData err=" + httpObj);
-         toDiv("ErrorMsg", "Failure getScript\n" + httpObj);
+         toDiv("ErrorMsg", "Failure mformsGetDefOnData\n" + httpObj);
      } else {
          console.log("L8: mformsGetDefOnData get data=", data, " parms=", parms);
          var pdata = mformsParseMeta(data);
