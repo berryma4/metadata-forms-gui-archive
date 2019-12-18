@@ -12,11 +12,47 @@ Please file a Issue to request enhancements.  You can also reach me on Linked-in
 
 ![Sample Screen for FDA Project Certificate Of Need](docs/documentation/samples/fda-cert-of-need.jpg)
 
-# Sample Script
 
-# Sample Data
 
-# Getting Started
+## Getting Started
+
+### Sample Script
+
+* #### Define a Widget
+
+* 
+
+* #### Define a form using the Widget
+
+* 
+
+* #### Display the form
+
+* 
+
+* #### Modifying CSS to control form look & Feel
+
+* 
+
+* #### Example JSON Sample Data
+
+* 
+
+* #### Specifying Data Path in the Sample Data
+
+* 
+
+* #### Specifying  URI to Fetch Data for the form
+
+* 
+
+* #### Interpolating Data into URI
+
+  
+
+  
+
+# 
 
 #Build and install
 
@@ -35,6 +71,11 @@ We do not really need the MDS server but we do need REST server that can save da
 
 
 # Files
+
+## Documentation
+
+- [Programmers & Syntax documentation](docs/documentation/programmers-guide.md)
+- [Requirements & Future Actions](docs/documentation/actions_roadmap.md)
 
 ## Directories 
 

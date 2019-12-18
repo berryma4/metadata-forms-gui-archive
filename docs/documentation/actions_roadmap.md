@@ -3,11 +3,19 @@
 # TODO:
 
 * Add support for TextArea covering several lines.  Change cert of need description to display in this widget.
+* Add link to certificate of need causing the metadata to be displayed in a new tab.
 * Demonstrate shrinking label for state to allow better formatting.
 * Add support for concept of horizontal group that is not allowed to wrap widgets. EG for city, state, zip
 * Add support for update of data object when fields change
-* When no label is included in Vgroup then supppress generation of label field.
+* When no label is included in Vgroup then suppress generation of label field.
+* Properly render multi-line text area field.
+* ability to include a leading icon for a field like renderField from old browserutil.
+* Ability to specify a class for label independent of class of the widget.
 * demonstrate support for fields with labels forced to wrap 
+* Implement the List of certs form that drills into the detail for specific cert.  
+* Ability to change contents on in a field list for drop down type widgets based on a web service calls by the  time field gains context based on contents in data model based on prior changes.  EG:  When user selects state then the list of cities in drop down list is modified.  Should also allow all child objects to be specified in data context and the select a subset branch using other data fields as a key.
+* Demonstrate breadcrumb trail that makes it easy to get back to list view or prior form.
+* Modify get nested so if a value is passed with path as  family.children.[3].name.first that is pulls the 3rd child.  Same with updates.
 * Add support to PUT or POST data back to server on save button press when all validation rules are good.
 * Add support to display form is dirty and unsaved when a field changes from original data.
 * Add support to specify form display with data object in URI when driver page is loaded
@@ -45,6 +53,9 @@
 * Extend CSV tables widget to allow a multi-level sort functionality by Shift click on different headers.  Show shift click instruction on hover or some other multi-level sort function
 * [Configure custom domain](https://help.github.com/en/github/working-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site) for github pages site
 * Add support to change context on right hand # of uri as user selects different widgets.
+* Remove the create input field from browser util since we are using a different approach and it could be confusing to have both approaches in the same library.
+* Create a new set of files for cert of need where the facility operator is consolidated to include all certificates for that operator.  Also include ability to get the children with a sub query.
+* Add physicians list to the data set for demonstration.
 * 
 
 
