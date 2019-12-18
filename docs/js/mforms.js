@@ -16,44 +16,8 @@
  }
 
 
- /* Interpolate data values into variables named by { + variableName + }
-and generate a new string.  variables not found are left as is
-in the generated string. Searches the dictionaries as supplied
-to perform the interpolation  */
- function InterpolateStr(pstr, dictArr) {
-     b = [];
-     if ((pstr === undefined) || (pstr.length < 1)) {
-         return "";
-     }
-     var tarr = pstr.split(/(\{.*?\})/);
-     if (tarr.length < 1) {
-         return "";
-     }
-     for (var ndx = 0; ndx < tarr.length; ndx++) {
-         var tseg = tarr[ndx];
-         var tsegTrim = tseg.trim();
-         if ((tsegTrim[0] === '{') && (tsegTrim[tseg.length - 1] === '}')) {
-             var tpath = tsegTrim.slice(1, -1);
-             var lookVal = null;
-             for (var dictNdx in dictArr) {
-                 tdict = dictArr[dictNdx];
-                 lookVal = getNested(tdict, tpath);
-                 if (lookVal !== null) {
-                     break;
-                 }
-             }
-             if ((lookVal === null) || (lookVal === undefined)) {
-                 lookVal = tseg;
-             }
-             tseg = lookVal;
-         }
-         b.push(tseg);
-     }
-     return b.join("");
- }
 
-
- function saveFormChanges(hwidget) {
+ function mformSaveFormChanges(hwidget) {
      var attr = hwidget.attributes;
      var formId = gattr(hwidget, "form_id");
      var widId = hwidget.id;
@@ -62,7 +26,101 @@ to perform the interpolation  */
      console.log("in save form changes widId=", widId, "formId=", formId, " dataObjId=", dataObjId, "context=", context);
  }
 
- function addContextAttributes(attr, widDef, context) {
+ // Ieterate the form to find all input fields and
+ // then map their ID to the model.  Use this to
+ // set the value for all form fields based on the
+ // domain objects current values.
+ function mformUpdateFormValuesFromModel(formId, model) {
+     var aform = document.getElementById(formId);
+     var elems = aform.elements;
+     var numEle = elems.length;
+     for (var i = 0; i < numEle; i++) {
+         var ele = elems[i];
+         var eleId = ele.id
+         if (eleId.startsWith("frm_")) {
+             var fld_name = eleId.replace("frm_", "");
+             var aval = getNested(model, fld_name);
+             if (aval != null) {
+                 ele.value = aval;
+                 // custom method to convert datetime to string
+                 // custom method for checkbox
+                 // custom method for radio button
+                 // custom method for select box
+             }
+         }
+     }
+ }
+
+
+ // Ieterate the form to find all input fields and
+ // for each field that starts with frm_ update
+ // the supplied DOM object.  This is not normally
+ // required when automatic update via click handlers
+ // is provided.
+ function mformUpdateModelFromForm(formId, model) {
+     var aform = document.getElementById(formId);
+     var elems = aform.elements;
+     var numEle = elems.length;
+     for (var i = 0; i < numEle; i++) {
+         var ele = elems[i];
+         var eleId = ele.id
+         if (eleId.startsWith("frm_")) {
+             var fld_name = eleId.replace("frm_", "");
+             var aval = setNested(model, fld_name);
+             if (aval != null) {
+                 ele.value = aval;
+                 // custom method to convert datetime to string
+                 // custom method for checkbox
+                 // custom method for radio button
+                 // custom method for select box
+             }
+         }
+     }
+ }
+
+ // Call by the validate function in the on click handler.
+ // diplays a error message if value is empty and returns false.
+ // otherwise clears the error message and returns true.
+ function mformValidateNotEmpty(fld, fldName, model, validateFun) {
+     var fldVal = fld.value;
+     var errName = "frm_msg_" + fldName
+     if (fldVal <= "") {
+         toDiv(errName, fldName + " May not be empty");
+         return false;
+     } else {
+         toDiv(errName, "");
+         return true;
+     }
+ }
+
+
+ // On Field Change handler to process changes as fields are
+ // processed.   Calls the defiined validate function if
+ // present.
+ function mformFieldOnChange(fld, fldName, context, validateFun) {
+     var fldVal = fld.value.trim();
+     if (validateFun) {
+         var tRes = validateFun(fld, fldName, context, validateFun)
+         if (tRes === false) {
+             return false;
+         }
+     }
+     if (context !== null) {
+         var currVal = getNested(context.model, fldName);
+         if (currVal !== fldVal) {
+             // Field really has changed
+             setNested(context.model, fldName, fldVal);
+             context.isDirty = true;
+             if (context.onDirty) {
+                 context.onDirty(fld, fldName, context);
+             }
+         }
+         toDiv("show_domain_obj", "Model as JSON" + JSON.stringify(context.model));
+     }
+ }
+
+
+ function mformAddContextAttributes(attr, widDef, context) {
      attr.dataObjId = context.dataObjId;
      attr.form_id = context.form_id;
      attr.id = widDef.id;
@@ -76,7 +134,7 @@ to perform the interpolation  */
          "type": "button",
          "onClick": "saveFormChanges(this)"
      };
-     addContextAttributes(attr, widDef, context);
+     mformAddContextAttributes(attr, widDef, context);
      b.make("button", attr, "Save");
  }
 
@@ -109,12 +167,6 @@ to perform the interpolation  */
 
  };
 
- function stripQuotes(astr) {
-     if ((astr[0] == '"') || (astr[0] == "'")) {
-         return astr.slice(1, -1); // strip surrounding quotes
-     }
-     return astr;
- }
 
  function mformsRenderTextWidget(widDef, b, context) {
      var gtx = context.gbl;
@@ -201,7 +253,7 @@ to perform the interpolation  */
  // requeset so we can retrieve it latter 
  // using the combination for form_id
  // and data object Id.
- function setFormContext(form, context) {
+ function mformSetFormContext(form, context) {
      var gtx = context.gbl;
      var formId = form.id;
      if (!("formContexts" in gtx)) {
@@ -218,7 +270,7 @@ to perform the interpolation  */
      var b = new String_builder();
      var flds = gtx.widgets;
      context.form_id = form.id;
-     setFormContext(form, context);
+     mformSetFormContext(form, context);
      b.start("div", {
          "id": form.id + "cont",
          "class": form.class
@@ -353,8 +405,6 @@ to perform the interpolation  */
      context.gbl.filesLoading[req_uri] = true;
      simpleGet(req_uri, mformsGetDefOnData, parms);
  }
-
-
 
  function display_form(targetDiv, formSpecUri, dataObjId, gContext) {
      //"dataSourceUri": dataSourceUri,

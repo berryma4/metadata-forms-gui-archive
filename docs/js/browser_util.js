@@ -30,6 +30,7 @@ function spacePad(aStr, plen) {
   return tout.substr(tout.length - plen);
 }
 
+
 /* Return Current time in float which contains
  seconds and fractional seconds */
 function curr_time() {
@@ -192,6 +193,41 @@ function setFormValue(divId, value) {
   return undefined;
 }
 
+/* Interpolate data values into variables named by { + variableName + }
+and generate a new string.  variables not found are left as is
+in the generated string. Searches the dictionaries as supplied
+to perform the interpolation  */
+function InterpolateStr(pstr, dictArr) {
+  b = [];
+  if ((pstr === undefined) || (pstr.length < 1)) {
+    return "";
+  }
+  var tarr = pstr.split(/(\{.*?\})/);
+  if (tarr.length < 1) {
+    return "";
+  }
+  for (var ndx = 0; ndx < tarr.length; ndx++) {
+    var tseg = tarr[ndx];
+    var tsegTrim = tseg.trim();
+    if ((tsegTrim[0] === '{') && (tsegTrim[tseg.length - 1] === '}')) {
+      var tpath = tsegTrim.slice(1, -1);
+      var lookVal = null;
+      for (var dictNdx in dictArr) {
+        tdict = dictArr[dictNdx];
+        lookVal = getNested(tdict, tpath);
+        if (lookVal !== null) {
+          break;
+        }
+      }
+      if ((lookVal === null) || (lookVal === undefined)) {
+        lookVal = tseg;
+      }
+      tseg = lookVal;
+    }
+    b.push(tseg);
+  }
+  return b.join("");
+}
 
 function Status_div(divId) {
   this.divId = divId;
@@ -448,164 +484,6 @@ function wrapdq(aStr) {
 
 
 
-var AddInputFieldCopyAttrList = ["disabled", "size", "rows", "cols", "title", "value"]
-
-/* Adds a labeled input fields based ona the supplied field specification.  Creates a series
-   of field id and classes to make each individual element addressable via css selectors and
-   to access by unique document id.
-
-   Currently only supports simple text style input fields not radio group
-   { fldName: "first_name", type: 'text', size: 30, 'class' : 'inputFieldClass, 'size' : myFieldSize, 'type' : 'myfieldtype'  },
-     where
-       class = the class to set create the field with.
-       size =  the size to create the field with
-       type =  the type parameter used in the input file.
-
-    TODO: Extend to support radio_button, Scroll, Checkbox.*/
-String_builder.prototype.addInputField = function addInputField(fieldSpec) {
-  var fldName = fieldSpec.fldName;
-  var fldNameForId = fldName;
-  var context = "null";
-  if (fieldSpec.context) {
-    context = fieldSpec.context;
-  }
-
-  if (fieldSpec.idPrefix !== undefined) {
-    fldNameForId = fieldSpec.idPrefix + "_" + fldNameForId;
-  }
-
-  var validate = "null";
-  if (fieldSpec.validate) {
-    validate = fieldSpec.validate;
-  }
-
-
-  var onChgParms = ["this", wrapsq(fldName), context, validate].join(",");
-
-  var frmName = "frm_" + fldNameForId
-
-  if (!(fieldSpec.onchange)) {
-    fieldSpec.onchange = "fieldOnChange";
-  }
-
-  var label = fieldSpec.label;
-  var labelClass = "frm_label"
-  var errorClass = "frm_err";
-  var errorId = "frm_msg_" + fldNameForId;
-  var dspName = "frm_msg_" + fldNameForId;
-  var defLabel = fldName.toUpperCase().replaceAll("_", " ");
-  var label = defLabel;
-  var ftype = fieldSpec.type;
-  var inputTag = "input";
-  if (fieldSpec.label !== undefined) {
-    label = fieldSpec.label;
-  }
-  var grpId = "frm_grp_" + fldNameForId;
-  var grp_class = 'frm_grp frm_grp_' + fldNameForId;
-  var placeholder = label;
-  if (fieldSpec.placeholder) {
-    placeholder = fieldSpec.placeholder;
-  }
-
-  var inpFldAttr = {
-
-    'id': frmName,
-    'onblur': fieldSpec.onchange + "(" + onChgParms + ")",
-    'onchange': fieldSpec.onchange + "(" + onChgParms + ")",
-    'type': fieldSpec.type,
-    'placeholder': placeholder,
-    'class': "frm_input frm_input_" + fldNameForId
-  }
-
-  if (fieldSpec.onupdate) {
-    chgact = fieldSpec.onupdate + "(" + onChgParms + ");"
-  }
-
-
-  for (var ndx in AddInputFieldCopyAttrList) {
-    var attrName = AddInputFieldCopyAttrList[ndx];
-    if (fieldSpec[attrName]) {
-      inpFldAttr[attrName] = fieldSpec[attrName];
-    }
-  }
-
-  if (label.length > 0) {
-    inpFldAttr.title = label;
-  } else {
-    inpFldAttr.title = defLabel;
-  }
-
-  var errInpAttr = {
-    'class': errorClass,
-    'id': errorId
-  };
-
-  this.start("div", {
-    'class': grp_class,
-    'id': grpId
-  });
-
-  if (fieldSpec.label) {
-    this.start("div", {
-      'class': 'frm_label'
-    });
-    if (fieldSpec.leadingIcon) {
-      this.make("span", fieldSpec.leadingIcon);
-    }
-    this.add(label);
-    this.finish("div") // label
-  }
-
-  if (ftype == "textarea") {
-    inputTag = "textarea";
-    inpFldAttr.type = "text";
-  } else if (ftype == "button") {
-    buttonSpec = {
-      "class": "frm_button",
-      "onclick": "connect('" + frmName + "')",
-      "value": "Connect",
-      "type": "submit"
-    }
-  }
-  this.start("div", {
-    "class": "frm_fld" + " frm_fld_" + fldNameForId
-  });
-  this.start(inputTag, inpFldAttr);
-  if (fieldSpec.postFieldHTML) {
-    this.make(fieldSpec.postFieldHTML);
-  }
-  this.finish(inputTag);
-  this.make("span", errInpAttr, "");
-  this.finish("div");
-  this.finish("div");
-  return this;
-}
-
-
-/* Add a group of fields to a page by generating markup for each field.
- it is created as with a outer div named in the call and modified with
- placed onto the page inside the specified targed div. See .addInput for
- characterization of fieldSpecs.   Note since the caller controls the
- container divId all css specifiers should be relative to that divid. */
-String_builder.prototype.addInputFields = function addInputFields(containerDivId, onChangeMethod, fieldSpecs, idPrefix) {
-  if (containerDivId) {
-    this.start("div", {
-      'id': containerDivId
-    });
-  }
-  for (fldndx in fieldSpecs) {
-    var tfld = fieldSpecs[fldndx];
-    if (idPrefix !== undefined) {
-      tfld.idPrefix = idPrefix;
-    }
-    tfld.class = "form_fld"
-    tfld.onchange = onChangeMethod
-    this.addInputField(tfld);
-  }
-
-
-}
-
 
 /* **************
 * DEFERRED DIV PLACEMENT
@@ -829,46 +707,6 @@ function getNested(model, path) {
 }
 
 
-// Call by the validate function in the on click handler.
-// diplays a error message if value is empty and returns false.
-// otherwise clears the error message and returns true.
-function validate_not_empty(fld, fldName, model, validateFun) {
-  var fldVal = fld.value;
-  var errName = "frm_msg_" + fldName
-  if (fldVal <= "") {
-    toDiv(errName, fldName + " May not be empty");
-    return false;
-  } else {
-    toDiv(errName, "");
-    return true;
-  }
-}
-
-
-// On Field Change handler to process changes as fields are
-// processed.   Calls the defiined validate function if
-// present.
-function fieldOnChange(fld, fldName, context, validateFun) {
-  var fldVal = fld.value.trim();
-  if (validateFun) {
-    var tRes = validateFun(fld, fldName, context, validateFun)
-    if (tRes === false) {
-      return false;
-    }
-  }
-  if (context !== null) {
-    var currVal = getNested(context.model, fldName);
-    if (currVal !== fldVal) {
-      // Field really has changed
-      setNested(context.model, fldName, fldVal);
-      context.isDirty = true;
-      if (context.onDirty) {
-        context.onDirty(fld, fldName, context);
-      }
-    }
-    toDiv("show_domain_obj", "Model as JSON" + JSON.stringify(context.model));
-  }
-}
 
 function frmEnable(divId) {
   var ele = document.getElementById(divId);
@@ -884,54 +722,9 @@ function frmDisable(divId) {
   }
 }
 
-// Ieterate the form to find all input fields and
-// then map their ID to the model.  Use this to
-// set the value for all form fields based on the
-// domain objects current values.
-function updateFormValuesFromModel(formId, model) {
-  var aform = document.getElementById(formId);
-  var elems = aform.elements;
-  var numEle = elems.length;
-  for (var i = 0; i < numEle; i++) {
-    var ele = elems[i];
-    var eleId = ele.id
-    if (eleId.startsWith("frm_")) {
-      var fld_name = eleId.replace("frm_", "");
-      var aval = getNested(model, fld_name);
-      if (aval != null) {
-        ele.value = aval;
-        // custom method to convert datetime to string
-        // custom method for checkbox
-        // custom method for radio button
-        // custom method for select box
-      }
-    }
+function stripQuotes(astr) {
+  if ((astr[0] == '"') || (astr[0] == "'")) {
+    return astr.slice(1, -1); // strip surrounding quotes
   }
-}
-
-
-// Ieterate the form to find all input fields and
-// for each field that starts with frm_ update
-// the supplied DOM object.  This is not normally
-// required when automatic update via click handlers
-// is provided.
-function updateModelFromForm(formId, model) {
-  var aform = document.getElementById(formId);
-  var elems = aform.elements;
-  var numEle = elems.length;
-  for (var i = 0; i < numEle; i++) {
-    var ele = elems[i];
-    var eleId = ele.id
-    if (eleId.startsWith("frm_")) {
-      var fld_name = eleId.replace("frm_", "");
-      var aval = setNested(model, fld_name);
-      if (aval != null) {
-        ele.value = aval;
-        // custom method to convert datetime to string
-        // custom method for checkbox
-        // custom method for radio button
-        // custom method for select box
-      }
-    }
-  }
+  return astr;
 }
