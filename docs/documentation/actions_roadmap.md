@@ -2,9 +2,14 @@
 
 # TODO:
 
-* Add support for TextArea covering several lines.  Change cert of need description to display in this widget.
+* DONE:JOE:2019-12-19: Add support for TextArea covering several lines.  Change cert of need description to display in this widget.
+* Disable Save Button until the Form is Dirty.
+* Show Fields that fail validating in a alternate background color
+* Allow some fields to be disabled in metadata spec to prevent editing.
+* When updating DOM with record value if the field fails it's validation then display error message at that time in a div that remains hidden until validation validation fails.
+* Display currency with formatting showing space at grouping then remove the space prior to conversion.
 * Add link to certificate of need causing the metadata to be displayed in a new tab.
-* Demonstrate shrinking label for state to allow better formatting.
+* Allow labelClass to override normal generated class for the label.  Demonstrate shrinking label for state to allow better formatting.    This is to allow easier formatting when we want custom behavior out of a subset of labels.
 * Add support for concept of horizontal group that is not allowed to wrap widgets. EG for city, state, zip
 * Add support for update of data object when fields change
 * When no label is included in Vgroup then suppress generation of label field.

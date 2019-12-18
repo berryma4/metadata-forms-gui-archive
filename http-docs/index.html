@@ -32,7 +32,6 @@
   <div id="top_nav">
     <h1>Metadata Driven Forms Demonstration</h1>
   </div>
-
   <div id="page-vmid">
     <div id="lbody">
       <h3>Certificate of Need</h3>
@@ -47,9 +46,10 @@
         Cert #1023</li>
       <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' , '1086', GTX )">
         Cert #1086</li>
-      <li onclick="display_list_form('mbody', 'data/forms/cert-of-need/list-certs' , 'delim_parser'
+
+      <!--<li onclick="display_list_form('mbody', 'data/forms/cert-of-need/list-certs' , 'delim_parser'
         , 'data/cert-of-need/index.txt' , '^' , GTX)">
-        List Certs</li><br />
+        List Certs</li><br />-->
       <h3>Docs</h3>
       <li><a href="https://github.com/joeatbayes/metadata-forms-gui" target="docs">Read ME</a></li>
       <li><a href="https://joeatbayes.github.io/metadata-forms-gui/documentation/programmers-guide.md" target="docs">Programmers Guide &amp; Syntax Tutorial</a></li>
@@ -57,10 +57,7 @@
       </li>
       <h3>tools</h3>
       <!--<li><a href="#" onclick="renderCurrentTree()">Show Full Tree</a></li>-->
-    </div>
-    <!--lbody-->
-
-    <div id="mbody">
+    </div><div id="mbody">
 
       <h3><a href="https://joeatbayes.github.io/metadata-forms-gui/" target="MF" class="h3">
           Metadata Forms Scripting Engine</a>.</h3>
@@ -77,26 +74,9 @@
         by over 80%. </p>
 
       <h3>Select a Form from Left-Nav To demonstrate System</h3>
-
-
-    </div>
-    <!--mbody-->
-
-
-    <div id="rbody">
-      <div id="rbody_head">
-        <!--rbody_head-->
-      </div>
-      <div id="rbody_main">
-        <!--rbody_main-->
-      </div>
-      <div id="rbody_foot">
-        <!--rbody_foot-->
-      </div>
-    </div>
-    <!--rbody-->
+    </div><!--mbody-->
+    <div id="dataObjDiv"></div>
   </div>
-  <!--page-vmid-->
   <div id="page_footer">MForms - Meta Data Forms Demonstration<br />
     <small><small><small>
           By Joseph Ellsworth CTO <a

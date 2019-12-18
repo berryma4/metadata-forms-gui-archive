@@ -267,7 +267,8 @@
    save:
       uri: data/cert-of-need/{dataObjId}.JSON
       verb: PUT
-      where: body   
+      where: body
+   show_data_obj_div: dataObjDiv
    widgets:   
            - projectNum
            - completionDate

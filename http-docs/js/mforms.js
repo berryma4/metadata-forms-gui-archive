@@ -28,6 +28,37 @@
      console.log("in save form changes widId=", widId, "formId=", formId, " dataObjId=", dataObjId, "context=", context);
  }
 
+ function mformFieldChanged(hwidget) {
+     var attr = hwidget.attributes;
+     var widId = hwidget.id;
+     var widDef = GTX.widgets[widId];
+     var dataContext = widDef.data_context;
+     var formId = gattr(hwidget, "form_id");
+     var dataObjId = gattr(hwidget, "dataObjId");
+     var context = GTX.formContexts[formId][dataObjId];
+     var dataObj = GTX.dataObj[dataObjId];
+     var fldVal = hwidget.value.trim();
+     var oldFldVal = getNested(dataObj, dataContext, null);
+     if (fldVal != oldFldVal) {
+         // Data has actually changed so we can upate the domain object
+         setNested(dataObj, dataContext, fldVal);
+         if ('show_data_obj_div' in context.form) {
+             toDiv(context.form.show_data_obj_div, "<pre>" + JSON.stringify(dataObj, null, 2) + "</pre>");
+         }
+     }
+     // console.log("FieldChanged", widId, "fldVal=", fldVal, "formId=", formId,
+     //   " dataObjId=", dataObjId, "context=", context, "dataObj", dataObj);
+
+     //TODO:  Add Field Validation and Error Message Here
+     //TODO: Mark field context as dirty
+     //TODO: Mark field invalid if any fields fail validation
+ }
+
+ function mformFieldInput(hwidget) {
+     mformFieldChanged(hwidget);
+ }
+
+ /*
  // Ieterate the form to find all input fields and
  // then map their ID to the model.  Use this to
  // set the value for all form fields based on the
@@ -120,6 +151,7 @@
          toDiv("show_domain_obj", "Model as JSON" + JSON.stringify(context.model));
      }
  }
+ */
 
  /***************
   **** RENDERING 
@@ -131,7 +163,7 @@
      "button": mformsRenderButton
  }
 
- var textFieldCopyAttr = {
+ var mformTextFieldCopyAttr = {
      "size": true,
      "placeholder": true,
      "maxlength": true,
@@ -143,17 +175,34 @@
      "align": true,
      "pattern": true,
      "rows": true,
-     "cols": true
+     "cols": true,
+     "label": true,
+     "class": true,
+     "data_context": true,
+     "form_id": true,
+     "dataObjId": true
  };
 
- function mformAddContextAttributes(attr, widDef, context) {
+ /*function mformAddContextAttributes(attr, widDef, context) {
      attr.dataObjId = context.dataObjId;
      attr.form_id = context.form_id;
      attr.id = widDef.id;
      attr.data_context = widDef.data_context;
      attr.class = widDef.class;
      attr.label = widDef.label;
+ } */
 
+
+
+ // Copy over the Attributes we are interested in 
+ // as is.
+ function mformCopyAttribs(widDef, widAttr, copySpec) {
+     for (var atname in widDef) {
+         lcname = atname.toLowerCase();
+         if (lcname in copySpec) {
+             widAttr[atname] = stripQuotes(widDef[atname]);
+         }
+     }
  }
 
  function mformsRenderButton(widDef, b, context) {
@@ -161,7 +210,7 @@
          "type": "button",
          "onClick": "saveFormChanges(this)"
      };
-     mformAddContextAttributes(attr, widDef, context);
+     mformCopyAttribs(widDef, attr, mformTextFieldCopyAttr);
      b.make("button", attr, "Save");
  }
 
@@ -196,30 +245,23 @@
 
      // Add Div with Label
      b.make("div", {
-         "class": widDef.class + "Label"
+         "class": widDef.class + "Label",
+         "id": widDef.id + "Label"
      }, widDef.label);
 
      // Add the actual Text Widget
 
      var widAttr = {
-         'id': widId + "Fld",
+         'id': widId,
          //'onblur': fieldSpec.onchange + "(" + onChgParms + ")",
          //'onchange': fieldSpec.onchange + "(" + onChgParms + ")",
          'type': widDef.type,
-         'class': widDef.class
+         'onChange': 'mformFieldChanged(this)',
+         'onInput': 'mformFieldInput(this)',
+         'dataObjId': context.dataObjId,
+         'form_id': context.form_id,
      };
-
-     //############
-     //TODO: MOVE TO:  function copyAttributed(target, source, map)
-     //#############
-     // Copy over the Attributes we are interested in 
-     // as is.
-     for (var atname in widDef) {
-         lcname = atname.toLowerCase();
-         if (lcname in textFieldCopyAttr) {
-             widAttr[atname] = stripQuotes(widDef[atname]);
-         }
-     }
+     mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
 
      // Add Initial Field Value from the Data Object
      var widVal = "";
@@ -231,7 +273,6 @@
              widVal = null;
          }
      }
-
 
      var makeEleName = "input";
      if (widDef.type == "textarea") {
@@ -272,7 +313,7 @@
  }
 
  // save complete context from rendering 
- // requeset so we can retrieve it latter 
+ // request so we can retrieve it latter 
  // using the combination for form_id
  // and data object Id.
  function mformSetFormContext(form, context) {
@@ -319,6 +360,9 @@
      b.finish("form");
      b.finish("div"); // form container
      b.toDiv(context.targetDiv);
+     if ('show_data_obj_div' in context.form) {
+         toDiv(context.form.show_data_obj_div, "<pre>" + JSON.stringify(context.dataObj, null, 2) + "</pre>");
+     }
  }
 
  // Process message header data received from server
@@ -330,7 +374,7 @@
          console.log("L5: mformGetDataObjOnData err=" + httpObj);
          toDiv("ErrorMsg", "Failure mformGetDataObjOnData  uri=" + parms.uri + "\n" + httpObj);
      } else {
-         var objId = parms.context.dataobjId;
+         var objId = parms.context.dataObjId;
          var gtx = parms.context.gbl;
          console.log("L8: mformsGetDefOnData get data=", data, " parms=", parms);
          // TODO: Add support for alternative parsers.
@@ -339,8 +383,12 @@
          gtx.dataObj[objId] = pdata;
          parms.context.dataObj = pdata;
          parms.context.gbl.filesLoaded[parms.uri] = pdata;
-         console.log(" parsed dataObj=", pdata, " context=", parms.context);
+         parms.widVal =
+             console.log(" parsed dataObj=", pdata, " context=", parms.context);
          mformsRenderForm(context.form, context);
+         if ('show_data_obj_div' in context.form) {
+             toDiv(context.form.show_data_obj_div, "<pre>" + JSON.stringify(pdata, null, 2) + "</pre>");
+         }
      }
  }
 
