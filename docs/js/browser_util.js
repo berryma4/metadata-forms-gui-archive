@@ -685,8 +685,13 @@ function parseKeySeg(fname) {
 // Spit path on __ and then lookup path segments
 // in the DOM object returning the final object
 // found.  if any sub object does not exist then
-// return null.
-function getNested(model, path) {
+// return default value passed in.  If no default
+// value is supplied when sub object does not
+// exists then return null;
+function getNested(model, path, defVal) {
+  if (defVal == undefined) {
+    defVal = null;
+  }
   var segs = path.split(".");
   var sobj = model;
   for (ndx in segs) {
@@ -700,7 +705,7 @@ function getNested(model, path) {
         // sub obj already exists so just use it
         sobj = sobj[fldName];
       } else {
-        return null;
+        return defVal;
       }
     }
   }

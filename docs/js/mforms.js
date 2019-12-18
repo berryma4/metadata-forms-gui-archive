@@ -16,7 +16,9 @@
  }
 
 
-
+ /*********
+  **** INTERACTION / OnClick / EVENTS
+  **********/
  function mformSaveFormChanges(hwidget) {
      var attr = hwidget.attributes;
      var formId = gattr(hwidget, "form_id");
@@ -119,6 +121,30 @@
      }
  }
 
+ /***************
+  **** RENDERING 
+  **************  */
+ var widgRenderFuncs = {
+     "widgetGroup": mformsRenderGroupWidget,
+     "text": mformsRenderTextWidget,
+     "textarea": mformsRenderTextWidget,
+     "button": mformsRenderButton
+ }
+
+ var textFieldCopyAttr = {
+     "size": true,
+     "placeholder": true,
+     "maxlength": true,
+     "min": true,
+     "max": true,
+     "step": true,
+     "autofocus": true,
+     "disabled": true,
+     "align": true,
+     "pattern": true,
+     "rows": true,
+     "cols": true
+ };
 
  function mformAddContextAttributes(attr, widDef, context) {
      attr.dataObjId = context.dataObjId;
@@ -127,6 +153,7 @@
      attr.data_context = widDef.data_context;
      attr.class = widDef.class;
      attr.label = widDef.label;
+
  }
 
  function mformsRenderButton(widDef, b, context) {
@@ -153,19 +180,7 @@
      b.finish("div");
  }
 
- var textFieldCopyAttr = {
-     "size": true,
-     "placeholder": true,
-     "maxlength": true,
-     "min": true,
-     "max": true,
-     "step": true,
-     "autofocus": true,
-     "disabled": true,
-     "align": true,
-     "pattern": true
 
- };
 
 
  function mformsRenderTextWidget(widDef, b, context) {
@@ -194,6 +209,9 @@
          'class': widDef.class
      };
 
+     //############
+     //TODO: MOVE TO:  function copyAttributed(target, source, map)
+     //#############
      // Copy over the Attributes we are interested in 
      // as is.
      for (var atname in widDef) {
@@ -204,22 +222,26 @@
      }
 
      // Add Initial Field Value from the Data Object
+     var widVal = "";
      if ("dataObj" in context) {
-         var widVal = getNested(context.dataObj, widDef.data_context);
+         widVal = getNested(context.dataObj, widDef.data_context);
          if (widVal != null) {
              widAttr.value = widVal;
+         } else {
+             widVal = null;
          }
      }
-     b.make("input", widAttr);
+
+
+     var makeEleName = "input";
+     if (widDef.type == "textarea") {
+         b.make("textarea", widAttr, widVal);
+     } else {
+         b.make(makeEleName, widAttr);
+     }
      b.finish("div");
  }
 
- var widgRenderFuncs = {
-     "widgetGroup": mformsRenderGroupWidget,
-     "text": mformsRenderTextWidget,
-     "textarea": mformsRenderTextWidget,
-     "button": mformsRenderButton
- }
 
  function mformsRenderWidgets(parent, widgets, b, context) {
      var gtx = context.gbl;
