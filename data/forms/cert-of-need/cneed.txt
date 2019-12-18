@@ -94,7 +94,7 @@
     data_context: current_operator.operating_certificate_number  
     required: true
     maxlength: 9
-    class: input_field
+    class: input_fieldv
 
 - widget:
     id: operatorName
@@ -106,7 +106,7 @@
     data_context: current_operator.name  
     required: true
     maxlength: 50
-    class: input_field
+    class: input_fieldv
 
 - widget:
     id: operatorAddress
@@ -118,7 +118,7 @@
     data_context: current_operator.address_line1
     required: true
     maxlength: 50
-    class: input_field
+    class: input_fieldv
 
 - widget:
     id: operatorCity
@@ -168,16 +168,17 @@
 
 - widget:
     id: projectDesc
-    data_type: textarea
-    type: text
+    data_type: text
+    type: textarea
     label : Description
     placeholder: Enter Project Description
     size: 45
-    rows: 5
+    rows: 7
+    cols: 60
     data_context: project.description  
     required: true
     maxlength: 500
-    class: input_field
+    class: input_text_area input_field
 
 - widget:
     id: projectStatus

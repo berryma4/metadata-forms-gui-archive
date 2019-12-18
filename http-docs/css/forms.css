@@ -50,6 +50,8 @@ input {
 #lbody {
   display: inline-block;
   width: 16%;
+  max-width: 12em;
+  min-width: 6em;
   height: 100%;
   font-family: Arial;
   text-align: left;
