@@ -8,12 +8,11 @@
 * Allow some fields to be disabled in metadata spec to prevent editing.
 * When updating DOM with record value if the field fails it's validation then display error message at that time in a div that remains hidden until validation validation fails.
 * Display currency with formatting showing space at grouping then remove the space prior to conversion.
-* Add link to certificate of need causing the metadata to be displayed in a new tab.
-* Allow labelClass to override normal generated class for the label.  Demonstrate shrinking label for state to allow better formatting.    This is to allow easier formatting when we want custom behavior out of a subset of labels.
+* Allow label Class to override normal generated class for the label.  Demonstrate shrinking label for state to allow better formatting.    This is to allow easier formatting when we want custom behavior out of a subset of labels.
 * Add support for concept of horizontal group that is not allowed to wrap widgets. EG for city, state, zip
-* Add support for update of data object when fields change
+* DONE:JOE:2019-12-19: Add support for update of data object when fields change
 * When no label is included in Vgroup then suppress generation of label field.
-* Properly render multi-line text area field.
+* DONE:JOE:2019-12-19: Properly render multi-line text area field.
 * ability to include a leading icon for a field like renderField from old browserutil.
 * Ability to specify a class for label independent of class of the widget.
 * demonstrate support for fields with labels forced to wrap 
@@ -26,26 +25,25 @@
 * Add support to specify form display with data object in URI when driver page is loaded
 * Add support for basic validators demonstrate with zipcode and state
 * Add support for checkbox widget
-* Demo of contact form that shows changes in the bound JSON as the fields are edited.
+* DONE:JOE:2019-12-19: Demo of contact form that shows changes in the bound JSON as the fields are edited.
 * Add support for drop down list widget
 * Add support for radio button widget
 * Add support to render list of certificates with a  metadata form widget.
 * Add support for alternating color Table in list view with custom links to open up next table
 * Add support for tabs across top of page rendering sub forms into tab as they are clicked.
-* Add support to hide rightnav when page is displayed in portrait on mobile device.
+* Hide data / JSON view when in  portrait on mobile device.
 * Add support to change text size when page is displayed on mobile device.
 * Add support for chained forms that display one after another
 * Add support for disabled widgets.
 * Add support to disable submit button when all mandatory fields are not filled in.
 * Ability to fetch contents of dropdown, radio, checkbox lists from remote service rather than embedding in  form.
-* Prevent right nav from wrapping when page is shrunk too far.
+* DONE:JOE:2019-12-19: Prevent right nav from wrapping when page is shrunk too far.
 * Add support to invalidate and remove parent object after edit of child when child views are included in parent fetch.  Or support editing them in place so other forms can properly see the changed fields when sub form edit field is displayed.
 * Add support to display edit error messages below the field when validation or edit rules are violated.
 * DONE:JOE:2019-12-16: When starting form load need to also trigger retrieval of the data record and defer display until record is loaded.  Need unambiguous way to map user data for a given form rendering to a specific data object when multiple root objects are already cached in RAM.  If the data specific object is already loaded in RAM re-use the one already available to re-render the same form.  
 * Add support to allow multiple forms to be defined in a single file and only the one marked master.
 * Add support to allow multiple data objects to be rendered and update the form as the data objects are received. 
-* Support notion of update form data when objects is is interested in are loaded. 
-* Modify form fetch to skip fetch is form is already in memory
+* DONE:JOE:2019-12-19: Modify form fetch to skip fetch is form is already in memory
 * Extend Forms parser to allow include loading additional files which have contents loaded at end of the existing file.    What happens in Yaml if you reload the same key a second time.
 * DONE:JOE:2019-12-16: Demonstrate first with Certificate of Need Data from DFORMS System but converted to Dynamic Form.
 * Make a clean way to read a directory of files and return header data to allow rendering a summary table.  EG: If each contact is in a separate file then would want to returns some basic data for each contact to render the initial table prior to the click that drills in to edit each piece of content.
@@ -57,8 +55,8 @@
 * Extend the CSV tables widget to provide in table sort functionality by clicking on the headers.
 * Extend CSV tables widget to allow a multi-level sort functionality by Shift click on different headers.  Show shift click instruction on hover or some other multi-level sort function
 * [Configure custom domain](https://help.github.com/en/github/working-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site) for github pages site
-* Add support to change context on right hand # of uri as user selects different widgets.
-* Remove the create input field from browser util since we are using a different approach and it could be confusing to have both approaches in the same library.
+* Add support to change context on right hand # of uri at top of browser as user selects different widgets.
+* DONE:JOE:2019-12-19: Remove the create input field from browser util since we are using a different approach and it could be confusing to have both approaches in the same library.
 * Create a new set of files for cert of need where the facility operator is consolidated to include all certificates for that operator.  Also include ability to get the children with a sub query.
 * Add physicians list to the data set for demonstration.
 * 
@@ -71,7 +69,7 @@
 
 * Ability to use YAML anchors @ extensions  to create template fields and only supply what was missing.
 * Ability to take reasonable defaults when not specified.  EG:  dataType can be assumed to be string unless otherwise specified.    PlaceHolder can be assumed to be Label unless specified.  PlaceHolder can be assumed to be same as Label unless specified. 
-* Ability to specified HTML relative to the Div ID the form is created in to allow users to customize to their hearts content.
+* DONE:JOE:2019-12-17: Ability to specified HTML relative to the Div ID the form is created in to allow users to customize to their hearts content.
 * DONE:JOE:2019-12-17: Must be able to display a form in a pre-existing DIV structure without taking over the entire pages.
 * Ability to parse delimited files with headers
 * Ability to parse JSON files 
