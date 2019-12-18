@@ -3,6 +3,7 @@
 # TODO:
 
 * DONE:JOE:2019-12-19: Add support for TextArea covering several lines.  Change cert of need description to display in this widget.
+* Button or Link to show the metadata definition in a separate target window.
 * Disable Save Button until the Form is Dirty.
 * Show Fields that fail validating in a alternate background color
 * Allow some fields to be disabled in metadata spec to prevent editing.
