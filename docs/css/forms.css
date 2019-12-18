@@ -110,8 +110,9 @@ input {
 #dataObjDiv {
   display: table-cell;
   max-width: 20em;
-  min-width: 10%;
+  min-width: 15%;
   overflow: scroll;
+  font-size: 0.8em;
 }
 
 #mbody p {

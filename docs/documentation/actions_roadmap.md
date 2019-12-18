@@ -60,7 +60,8 @@
 * DONE:JOE:2019-12-19: Remove the create input field from browser util since we are using a different approach and it could be confusing to have both approaches in the same library.
 * Create a new set of files for cert of need where the facility operator is consolidated to include all certificates for that operator.  Also include ability to get the children with a sub query.
 * Add physicians list to the data set for demonstration.
-* 
+* Increase font sizes when displayed in portrait mode on android browser.
+* Add generic support for copying from a given getNested path in document read from server into different setNested path in preparation to send back to update web service.
 
 
 
