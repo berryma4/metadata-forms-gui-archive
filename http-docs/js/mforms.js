@@ -39,11 +39,22 @@
      var dataObj = GTX.dataObj[dataObjId];
      var fldVal = hwidget.value.trim();
      var oldFldVal = getNested(dataObj, dataContext, null);
+     var saveFlg = true;
      if (fldVal != oldFldVal) {
          // Data has actually changed so we can upate the domain object
-         setNested(dataObj, dataContext, fldVal);
-         if ('show_data_obj_div' in context.form) {
-             toDiv(context.form.show_data_obj_div, "<pre>" + JSON.stringify(dataObj, null, 2) + "</pre>");
+         if ((widDef.type == "dropdown") && (oldFldVal == null) && (fldVal == "NULL")) {
+             // Do not save to the tree if we get the speical sentinal NULL
+             // when there is no value in the exisitng DOM record. 
+             saveFlg = false;
+             // TODO:  If user sets to NULL and the value exists then
+             // remove it from the DOM tree all together.
+         }
+
+         if (saveFlg == true) {
+             setNested(dataObj, dataContext, fldVal);
+             if ('show_data_obj_div' in context.form) {
+                 toDiv(context.form.show_data_obj_div, "<pre>" + JSON.stringify(dataObj, null, 2) + "</pre>");
+             }
          }
      }
      // console.log("FieldChanged", widId, "fldVal=", fldVal, "formId=", formId,
@@ -246,6 +257,10 @@
  }
 
  function mformFinishWidget(widDef, b, context) {
+     b.make("div", {
+         "class": "fieldStatusMsg",
+         "id": widDef.id + "Status"
+     });
      b.finish("div");
  }
 
@@ -267,10 +282,52 @@
      var widId = widDef.id;
      mformStartWidget(widDef, b, context);
      // Add the actual Text Widget
-     var widAttr = basicWidAttr(widDef, context);
+     var widAttr = mformBasicWidAttr(widDef, context);
      mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
+     //widAttr["-webkit-appearance"] = "none";
+     b.start("select", widAttr);
 
-     finishWidget(widDef, b, context);
+
+     var matchOptVal = null;
+     var dataVal = getNested(context.dataObj, widDef.data_context, null);
+     var opt = null;
+     var optndx = null;
+     if ("option" in widDef) {
+         var options = widDef.option;
+         if (dataVal != null) {
+             // Find the matching option and default
+             var dataValMatch = dataVal.trim().toLowerCase();
+             // search options to find one that matches the 
+             // value. 
+             for (optndx in options) {
+                 opt = options[optndx];
+                 if ("value" in opt) {
+                     var oval = opt.value.trim().toLowerCase();
+                     if (oval == dataValMatch) {
+                         matchOptVal = opt.value;
+                         break;
+                     }
+                 }
+             }
+         }
+
+         var optattr = null;
+         for (optndx in options) {
+             opt = options[optndx];
+             optattr = {
+                 "value": opt.value
+             };
+             if (opt.value == matchOptVal) {
+                 optattr.selected = true;
+             } else if ((matchOptVal == false) && ("default" in opt) && (opt.default == true)) {
+                 optattr.selected = true;
+             }
+             b.make("option", optattr, opt.label);
+         } // for
+     } // if options defined
+
+     b.finish("select");
+     mformFinishWidget(widDef, b, context);
  }
 
 

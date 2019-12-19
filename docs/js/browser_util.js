@@ -56,7 +56,7 @@ function isArray(aVar) {
 }
 
 function isString(aVar) {
-  return (typeof aVar === 'string')
+  return (typeof aVar === 'string');
 }
 
 function isFloat(aVar) {

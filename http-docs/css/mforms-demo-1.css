@@ -82,7 +82,12 @@
       font-size: 1em;
   }
 
-
+  input:focus,
+  select:focus,
+  textarea:focus,
+  button:focus {
+      outline: none;
+  }
 
   .submit_button {
       margin-right: 8em;

@@ -82,6 +82,15 @@
         addTestRes("FAIL: tout[2].lingua.cars[2]='subaru' but found " + tout[2].lingua.cars[2]);
       }
     }
+
+
+    function runTest4() {
+      var tout = runTest("Test array with json nodes", testStrOptArr);
+    }
+
+
+
+
   </script>
 
 </head>
@@ -94,6 +103,7 @@
     <ul><a href="#" onClick="runTest1()">Run test 1 MetaData</a></ul>
     <ul><a href="#" onClick="runTest2()">Run test 2 people simple</a></ul>
     <ul><a href="#" onClick="runTest3()">Run test 3 people with label</a></ul>
+    <ul><a href="#" onClick="runTest4()">Run Test 4 option array of javascript</a></ul>
     <div>
       <div id="testResult"></div>
       <div id="sourceData"></div>

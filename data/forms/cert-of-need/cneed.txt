@@ -38,21 +38,19 @@
 
 - widget:
     id: reviewLevel
-    data_type: dropdown
-    type: text
+    data_type: text
+    type: dropdown
     label : Review Level
-    size: 35
+    #width: 35
     data_context: review_level
-    required: true
-    maxlength: 18
+    required: true    
     class: input_field
     ignore-case-match: true
-    -option: {"label" : "Admin", "value" : "admin"}
-    -option: {"label" : "Regional", "value": "region"}
-    -option: {"label" : "Full", "value" : "Full"}
-    -option: {"label" : "unknown",  "value": "none",  "default" : true}
-        
-
+    option:
+       - {"label" : "Admin", "value" : "Admin"}
+       - {"label" : "Regional", "value": "region"}
+       - {"label" : "Full", "value" : "Full"}
+       - {"label" : "unknown",  "value": "NULL",  "default" : true}
 
   ##################
   ### Facility FIELDS

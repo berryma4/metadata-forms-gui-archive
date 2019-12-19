@@ -50,6 +50,14 @@ var testStrForm1 = `
 
 `;
 
+var testStrOptArr = `
+- option:
+       - {"label" : "Admin", "value" : "admin"}
+       - {"label" : "Regional", "value": "region"}
+       - {"label" : "Full", "value" : "Full"}
+       - {"label" : "unknown",  "value": "none",  "default" : true}
+`;
+
 var testStrPeople1 = `
 - jack:    
     projectNum : 1983

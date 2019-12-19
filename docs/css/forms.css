@@ -7,8 +7,10 @@
   border: none;
 }
 
-input {
+input,
+select {
   border: 1px solid dimgrey;
+  border-radius
 }
 
 #top_nav {
@@ -107,13 +109,7 @@ input {
   padding: 0px;
 }
 
-#dataObjDiv {
-  display: table-cell;
-  max-width: 20em;
-  min-width: 15%;
-  overflow: scroll;
-  font-size: 0.8em;
-}
+
 
 #mbody p {
   padding-left: 1em;
@@ -241,89 +237,13 @@ input.next_button {
   margin-left: 5px;
 }
 
-img.sample_img {
-  border-radius: 3%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 95%;
-  max-width: 95%;
-  max-height: 95%;
-  x-max-width: 340px;
-}
-
-div.option {
-  display: block;
-  padding-bottom: 1px;
-  flex-wrap: nowrap;
-  padding-top: 0px;
-  margin-bottom: 0px;
-  margin-top: 0px;
-}
-
-div.option:hover {
-  font-weight: bold;
-  background-color: silver;
-
-}
-
-div.option_label {
-  display: inline-block;
-  width: 76%;
-  vertical-align: top;
-}
-
-div.tree_quest {
-  padding-left: 5px;
-  margin-left: 5px;
-  margin-top: 4px;
-  border-left: 1px solid red;
-}
-
-
-div.tree_option {
-  margin-left: 3px;
-  padding-left: 5px;
-  border-left: 1px darkcyan dotted;
-}
-
-.tree_quest_id {
-  padding: 2px;
-  font-size: 0.75em;
-  ;
-  display: block;
-}
-
-.tree_quest_id:hover {
-  font-weight: 800;
-  text-decoration: underline;
-}
-
-
-.tree_quest_label {
-  padding: 2px;
-  font-size: 1.2em;
-  ;
-  font-weight: 110%;
-}
-
-.tree_loopback {
-  padding: 4px;
-}
-
-.tree_startover {
-  padding-left: 13px;
-  font-size: 75%;
-  display: block;
-}
-
-.full_tree {
-  overflow-y: scroll;
-  width: 100%;
-  height: 99%;
-  display: block;
-}
 
 #ErrMessage {
   display: none;
+}
+
+.fieldStatusMsg {
+  color: red;
+  display: none;
+  display: block;
 }

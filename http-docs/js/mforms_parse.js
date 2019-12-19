@@ -62,6 +62,9 @@ function parseCoerceDataValues(dataVal) {
     if (dataVal == null) {
         return null;
     }
+    if (isString(dataVal) == false) {
+        return dataVal;
+    }
     //console.log("L65: dataVal=" + dataVal);
     trimDataVal = dataVal.trim(dataVal);
     if ((trimDataVal[0] == "{") || (trimDataVal[0] == "[")) {
@@ -143,8 +146,14 @@ function mformsParseMeta(aStr, parms) {
         var varName = null;
         var dataVal = null;
         var firstColon = tleft.indexOf(":");
+        var remainAfterFirstChar = tleft.slice(1).trim();
+        var secondChar = remainAfterFirstChar[0];
         if (lastChar == ':') {
             varName = tleft.slice(0, -1);
+        } else if ((firstChar == "-") && ((secondChar == "{") || (secondChar == "]"))) {
+            // array element starting with dash immediatly followed
+            // by '{'            
+            dataVal = remainAfterFirstChar;
         } else if (firstColon != -1) {
             varName = tleft.slice(0, firstColon).trim();
             dataVal = tleft.slice(firstColon + 1).trim();
