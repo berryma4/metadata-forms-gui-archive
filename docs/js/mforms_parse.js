@@ -66,7 +66,12 @@ function parseCoerceDataValues(dataVal) {
     trimDataVal = dataVal.trim(dataVal);
     if ((trimDataVal[0] == "{") || (trimDataVal[0] == "[")) {
         // Handle Single line JSON as data value
-        return JSON.parse(trimDataVal);
+        try {
+            return JSON.parse(trimDataVal);
+        } catch (err) {
+            console.log("Error parsing=", err, " trimDataVal=", trimDataVal);
+            return trimDataVal;
+        }
     }
 
     var lcDataVal = dataVal.toLowerCase();

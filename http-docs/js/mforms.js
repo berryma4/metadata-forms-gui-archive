@@ -160,7 +160,8 @@
      "widgetGroup": mformsRenderGroupWidget,
      "text": mformsRenderTextWidget,
      "textarea": mformsRenderTextWidget,
-     "button": mformsRenderButton
+     "button": mformsRenderButton,
+     "dropdown": mformRenderDropdown
  }
 
  var mformTextFieldCopyAttr = {
@@ -229,17 +230,11 @@
      b.finish("div");
  }
 
-
-
-
- function mformsRenderTextWidget(widDef, b, context) {
-     var gtx = context.gbl;
-     var flds = gtx.widgets;
-     var parClass = parent.class;
-     var widId = widDef.id;
-     // Add Container div for label and Field
+ // Start rendering the widget with common logic
+ // for label and container. 
+ function mformStartWidget(widDef, b, context) {
      b.start("div", {
-         "id": widId + "Container",
+         "id": widDef.id + "Container",
          "class": widDef.class + "Container"
      });
 
@@ -248,11 +243,15 @@
          "class": widDef.class + "Label",
          "id": widDef.id + "Label"
      }, widDef.label);
+ }
 
-     // Add the actual Text Widget
+ function mformFinishWidget(widDef, b, context) {
+     b.finish("div");
+ }
 
-     var widAttr = {
-         'id': widId,
+ function mformBasicWidAttr(widDef, context) {
+     return {
+         'id': widDef.id,
          //'onblur': fieldSpec.onchange + "(" + onChgParms + ")",
          //'onchange': fieldSpec.onchange + "(" + onChgParms + ")",
          'type': widDef.type,
@@ -261,6 +260,26 @@
          'dataObjId': context.dataObjId,
          'form_id': context.form_id,
      };
+ }
+
+ function mformRenderDropdown(widDef, b, context) {
+     var gtx = context.gbl;
+     var widId = widDef.id;
+     mformStartWidget(widDef, b, context);
+     // Add the actual Text Widget
+     var widAttr = basicWidAttr(widDef, context);
+     mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
+
+     finishWidget(widDef, b, context);
+ }
+
+
+ function mformsRenderTextWidget(widDef, b, context) {
+     var gtx = context.gbl;
+     var widId = widDef.id;
+     mformStartWidget(widDef, b, context);
+     // Add the actual Text Widget
+     var widAttr = mformBasicWidAttr(widDef, context);
      mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
 
      // Add Initial Field Value from the Data Object
@@ -280,7 +299,7 @@
      } else {
          b.make(makeEleName, widAttr);
      }
-     b.finish("div");
+     mformFinishWidget(widDef, b, context)
  }
 
 
@@ -293,8 +312,14 @@
          if (widId in flds) {
              var widDef = flds[widId];
              if (widDef.type in widgRenderFuncs) {
-                 var rendFunc = widgRenderFuncs[widDef.type];
-                 rendFunc(widDef, b, context);
+
+                 try {
+                     var rendFunc = widgRenderFuncs[widDef.type];
+                     rendFunc(widDef, b, context);
+                 } catch (err) {
+                     console.log("L324: Error rendering=", err, " widDef=", widDef, " funName", rendFunc);
+                     b.b("<h6>Error Rendering See console</h6>");
+                 }
              } else {
                  console.log("cound not find rendering func=", widDef.Type, "for id=", widId, "widNdx=", i, " widDef=", widDef);
                  b.make("h6", {
@@ -378,7 +403,13 @@
          var gtx = parms.context.gbl;
          console.log("L8: mformsGetDefOnData get data=", data, " parms=", parms);
          // TODO: Add support for alternative parsers.
-         var pdata = JSON.parse(data);
+         var pdata = null;
+         try {
+             pdata = JSON.parse(data);
+         } catch (err) {
+             console.log("error parsing=", err, " data=", data);
+             pdata = {};
+         }
          /// PUT Proper Processing HERE
          gtx.dataObj[objId] = pdata;
          parms.context.dataObj = pdata;
