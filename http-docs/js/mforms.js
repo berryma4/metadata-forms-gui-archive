@@ -244,7 +244,7 @@
  function mformStartWidget(widDef, b, context, skipLabel) {
      b.start("div", {
          "id": widDef.id + "Container",
-         "class": widDef.class + "Container"
+         "class": widDef.class
      }).nl();
 
      if (skipLabel == true) {
@@ -376,8 +376,13 @@
              } else if ((matchOptVal == false) && ("default" in opt) && (opt.default == true)) {
                  optattr.checked = true;
              }
+             b.start("div", {
+                 "id": optattr.id + "cont",
+                 "class": "buttonCont"
+             });
              b.make("input", optattr);
              b.b(opt.label).nl();
+             b.finish("div").nl();
          }
 
      } // if options defined
