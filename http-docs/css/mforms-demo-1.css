@@ -27,27 +27,6 @@
   }
 
 
-  .vgroup {
-      width: 100%;
-      display: block;
-  }
-
-  .vgroupLabel {
-      width: 99%;
-
-      font-size: 1.2em;
-      color: rgb(13, 85, 9);
-      display: block;
-      background-color: rgb(199, 194, 194);
-      margin: 0;
-      margin-bottom: 0.5em;
-      margin-top: 0.6em;
-      margin-left: 0.2em;
-
-
-
-  }
-
   .input_fieldContainer,
   .input_fieldvContainer {
       margin-top: 0.25em;
@@ -112,4 +91,46 @@
       overflow: scroll;
       font-size: 0.78em;
       background-color: rgb(223, 222, 221);
+  }
+
+
+  div.vgroup {
+      width: auto;
+      display: block;
+      margin-bottom: 0.5em;
+
+  }
+
+  bgroup.legend {
+      width: auto;
+      border-color: darkgrey;
+      width: auto;
+      margin-bottom: 0px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #1f497d;
+  }
+
+  fieldset.vgroup {
+      display: block;
+      margin-top: 7px;
+      border-color: rgb(231, 228, 228);
+      background-color: rgb(247, 245, 228);
+      border-radius: 3px;
+  }
+
+  legend.vgroupLabel {
+      width: 99%;
+      font-size: 1.2em;
+      color: dimgray;
+      display: block;
+      background-color: rgb(199, 194, 194);
+      margin: 0;
+      margin-bottom: 0.5em;
+      margin-top: 0.6em;
+      margin-left: 0.2em;
+  }
+
+  fieldset.inputFrm {
+      margin-left: 4em;
   }

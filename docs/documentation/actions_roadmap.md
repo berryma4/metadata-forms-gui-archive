@@ -2,6 +2,16 @@
 
 # TODO:
 
+* DONE: JOE: 2019-12-19: Add Dropdown select field
+* Add Radio Button List  Supply basic style for horizontal or vertical
+* Add Checkbox
+* Implement validation function showing an error message
+* Finish code to submit object back to a target URI.
+* Add some of new HTML widgets like Date
+* Covert vgroup coding to a field group 
+* Allows a single form to be rendered with different look and feel. Ability to specify custom style in uri such as abc.com#style=x3 that causes a style sheet to be added to the page.  The list of stylesheets is computed from a spec in the form and if the style parameter is present in the file is interpolated into the style URI from parameters specified in the URI.  
+* Ability to source data from two different objects resident in the object graph for interpolation.   EG: If you have a master contact list and are editing a detailed contact then you may want to render fields in the sub form from both records.  This requires the data_context to be enhanced so it can handle branched access where it currently only looks into the active object.    EG:  If the master contact has a ID of 300 and  a field of first_name we want to render in the sub form then the individual contact event has an ID of 18181 and is the active object and it includes an attribute master_contact: 300 then we need to be able to derive a path that goes to the root of the object graph using 300 as the key to retrieve it.   EG:   /objects:{master_contact}.name  which derives to going into the global list at GTX.objects['300'].name  rather than looking at current object.
+* Ability to import arbitrary text for a label or a paragraph from a specified URI.  Run it through interpolation and then render into the Div.  This allows the system to modify contents of what is normally static text such as an explanation paragraph.  This would be ran through interpolation against the selected object.
 * DONE:JOE:2019-12-19: Add support for TextArea covering several lines.  Change cert of need description to display in this widget.
 * Button or Link to show the metadata definition in a separate target window.
 * Disable Save Button until the Form is Dirty.

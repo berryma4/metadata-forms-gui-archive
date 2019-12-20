@@ -30,17 +30,28 @@
 
  function mformFieldChanged(hwidget) {
      var attr = hwidget.attributes;
-     var widId = hwidget.id;
+     var widId = hwidget.id.split("-_")[0];
      var widDef = GTX.widgets[widId];
      var dataContext = widDef.data_context;
      var formId = gattr(hwidget, "form_id");
      var dataObjId = gattr(hwidget, "dataObjId");
      var context = GTX.formContexts[formId][dataObjId];
      var dataObj = GTX.dataObj[dataObjId];
-     var fldVal = hwidget.value.trim();
+     var fldVal = null;
+     if (widDef.type == "radio") {
+         if (hwidget.checked == true) {
+             fldVal = hwidget.value;
+         } else {
+             fldVal = "NULL";
+         }
+     } else {
+         // read value like we do as text field.
+         fldVal = hwidget.value.trim();
+     }
+
      var oldFldVal = getNested(dataObj, dataContext, null);
      var saveFlg = true;
-     if (fldVal != oldFldVal) {
+     if ((fldVal != oldFldVal) && (fldVal != null)) {
          // Data has actually changed so we can upate the domain object
          if ((widDef.type == "dropdown") && (oldFldVal == null) && (fldVal == "NULL")) {
              // Do not save to the tree if we get the speical sentinal NULL
@@ -172,7 +183,8 @@
      "text": mformsRenderTextWidget,
      "textarea": mformsRenderTextWidget,
      "button": mformsRenderButton,
-     "dropdown": mformRenderDropdown
+     "dropdown": mformRenderDropdown,
+     "radio": mformRenderRadio
  }
 
  var mformTextFieldCopyAttr = {
@@ -226,42 +238,34 @@
      b.make("button", attr, "Save");
  }
 
- function mformsRenderGroupWidget(widDef, b, context) {
-     var gtx = context.gbl;
-     var flds = gtx.widgets;
-     var parClass = parent.class;
-     b.start("div", {
-         "id": widDef.id + "group",
-         "class": widDef.class
-     });
-     b.make("div", {
-         "class": widDef.class + "Label"
-     }, widDef.label);
-     mformsRenderWidgets(widDef, widDef.widgets, b, context);
-     b.finish("div");
- }
-
  // Start rendering the widget with common logic
  // for label and container. 
- function mformStartWidget(widDef, b, context) {
+ function mformStartWidget(widDef, b, context, skipLabel) {
      b.start("div", {
          "id": widDef.id + "Container",
          "class": widDef.class + "Container"
-     });
+     }).nl();
 
-     // Add Div with Label
-     b.make("div", {
-         "class": widDef.class + "Label",
-         "id": widDef.id + "Label"
-     }, widDef.label);
+     if (skipLabel == true) {
+         return b;
+     }
+     if ("label" in widDef) {
+         // Add Div with Label
+         b.make("div", {
+             "class": widDef.class + "Label",
+             "id": widDef.id + "Label"
+         }, widDef.label).nl();
+     }
+     return b;
  }
 
  function mformFinishWidget(widDef, b, context) {
      b.make("div", {
          "class": "fieldStatusMsg",
          "id": widDef.id + "Status"
-     });
-     b.finish("div");
+     }).nl();
+     b.finish("div").nl();
+     return b;
  }
 
  function mformBasicWidAttr(widDef, context) {
@@ -275,6 +279,110 @@
          'dataObjId': context.dataObjId,
          'form_id': context.form_id,
      };
+ }
+
+ function mformsRenderGroupWidget(widDef, b, context) {
+     var gtx = context.gbl;
+     var flds = gtx.widgets;
+     var parClass = parent.class;
+
+     b.start("div", {
+         "id": widDef.id + "cont",
+         "class": widDef.class
+     });
+
+     b.start("fieldset", {
+         "id": widDef.id + "FS",
+         "class": widDef.class
+     });
+
+     if ("label" in widDef) {
+         b.make("legend", {
+             "id": widDef.id + "Legend",
+             "class": widDef.class,
+         }, widDef.label);
+
+         mformsRenderWidgets(widDef, widDef.widgets, b, context);
+
+     }
+     b.finish("fieldset");
+     b.finish("div");
+ }
+
+ function mformRenderRadio(widDef, b, context) {
+     var gtx = context.gbl;
+     var widId = widDef.id;
+     mformStartWidget(widDef, b, context, true);
+     // Add the actual Text Widget
+     var widAttr = mformBasicWidAttr(widDef, context);
+     mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
+     var fldName = widDef.id + "Name";
+     widAttr.name = fldName;
+     //widAttr["-webkit-appearance"] = "none";
+     delete widAttr.onChange;
+     delete widAttr.onInput;
+     widAttr.id = widDef.id + "FS";
+     b.start("fieldset", widAttr).nl();
+     var matchOptVal = null;
+
+     if ("label" in widDef) {
+         b.make("legend", {
+             "class": widDef.class,
+             "id": widDef.id + "legend",
+             "name": fldName,
+         }, widDef.label);
+     }
+
+     var dataVal = getNested(context.dataObj, widDef.data_context, null);
+     var opt = null;
+     var optndx = null;
+     if ("option" in widDef) {
+
+         // TODO: Move this to function MatchChoice
+         var options = widDef.option;
+         if (dataVal != null) {
+             // Find the matching option and default
+             var dataValMatch = dataVal.trim().toLowerCase();
+             // search options to find one that matches the 
+             // value. 
+             for (optndx in options) {
+                 opt = options[optndx];
+                 if ("value" in opt) {
+                     var oval = opt.value.trim().toLowerCase();
+                     if (oval == dataValMatch) {
+                         matchOptVal = opt.value;
+                         break;
+                     }
+                 }
+             }
+         }
+
+
+         var optattr = null;
+         for (optndx in options) {
+             opt = options[optndx];
+             optattr = widAttr;
+             optattr.value = opt.value;
+             optattr.id = widDef.id + "-_" + optndx;
+             optattr.type = "radio";
+             optattr.name = fldName;
+             optattr.onClick = 'mformFieldInput(this)';
+             if ("checked" in optattr) {
+                 delete optattr.checked;
+             }
+             if (opt.value == matchOptVal) {
+                 optattr.checked = true;
+             } else if ((matchOptVal == false) && ("default" in opt) && (opt.default == true)) {
+                 optattr.checked = true;
+             }
+             b.make("input", optattr);
+             b.b(opt.label).nl();
+         }
+
+     } // if options defined
+     b.finish("fieldset").nl();
+     mformFinishWidget(widDef, b, context)
+     b.nl();
  }
 
  function mformRenderDropdown(widDef, b, context) {

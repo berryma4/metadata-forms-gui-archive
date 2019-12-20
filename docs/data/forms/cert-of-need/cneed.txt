@@ -52,6 +52,24 @@
        - {"label" : "Full", "value" : "Full"}
        - {"label" : "unknown",  "value": "NULL",  "default" : true}
 
+- widget:
+    id: reviewLevelb2
+    data_type: text
+    type: radio
+    label : Review Level
+    #width: 35
+    data_context: review_level
+    required: true    
+    class: input_field
+    ignore-case-match: true
+    option:
+       - {"label" : "Admin", "value" : "Admin"}
+       - {"label" : "Regional", "value": "region"}
+       - {"label" : "Full", "value" : "Full"}
+       - {"label" : "unknown",  "value": "NULL",  "default" : true}
+
+
+
   ##################
   ### Facility FIELDS
   ###################
@@ -267,6 +285,7 @@
          - projectDesc
          - projectStatus
          - projectStatusDate
+         - reviewLevelb2
          # Add Project Address
 # TOOD: Add Facility Data See: http://127.0.0.1:9831/data/cert-of-need/1007.JSON
 
@@ -284,6 +303,7 @@
       verb: PUT
       where: body
    show_data_obj_div: dataObjDiv
+
    widgets:   
            - projectNum
            - completionDate
@@ -292,4 +312,5 @@
            - currOperatorGroup
            - facilityGroup
            - projectGroup
+           
            - saveButton
