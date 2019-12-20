@@ -2,17 +2,21 @@
 
 # TODO:
 
+* Demo of contact form that shows changes in the bound JSON as the fields are edited.
+* Demo of Patient Intake form
 * DONE: JOE: 2019-12-19: Add Dropdown select field
-* Add Radio Button List  Supply basic style for horizontal or vertical
+* DONE: JOE:2019-12-19: Add Radio Button List  Supply basic style for horizontal or vertical
+* DONE:JOE:2019-12-19:Add support for Date Widget.
+* DONE:JOE:2019-12-19: Add support for vertical radio button as a css styling option.
 * Add Checkbox
 * Implement validation function showing an error message
 * Finish code to submit object back to a target URI.
 * Add some of new HTML widgets like Date
-* Covert vgroup coding to a field group 
+* DONE:JOE:2019-12-19: Covert vgroup coding to a field group 
 * Allows a single form to be rendered with different look and feel. Ability to specify custom style in uri such as abc.com#style=x3 that causes a style sheet to be added to the page.  The list of stylesheets is computed from a spec in the form and if the style parameter is present in the file is interpolated into the style URI from parameters specified in the URI.  
 * Ability to source data from two different objects resident in the object graph for interpolation.   EG: If you have a master contact list and are editing a detailed contact then you may want to render fields in the sub form from both records.  This requires the data_context to be enhanced so it can handle branched access where it currently only looks into the active object.    EG:  If the master contact has a ID of 300 and  a field of first_name we want to render in the sub form then the individual contact event has an ID of 18181 and is the active object and it includes an attribute master_contact: 300 then we need to be able to derive a path that goes to the root of the object graph using 300 as the key to retrieve it.   EG:   /objects:{master_contact}.name  which derives to going into the global list at GTX.objects['300'].name  rather than looking at current object.
 * Ability to import arbitrary text for a label or a paragraph from a specified URI.  Run it through interpolation and then render into the Div.  This allows the system to modify contents of what is normally static text such as an explanation paragraph.  This would be ran through interpolation against the selected object.
-* DONE:JOE:2019-12-19: Add support for TextArea covering several lines.  Change cert of need description to display in this widget.
+* DONE:JOE:2019-12-18: Add support for TextArea covering several lines.  Change cert of need description to display in this widget.
 * Button or Link to show the metadata definition in a separate target window.
 * Disable Save Button until the Form is Dirty.
 * Show Fields that fail validating in a alternate background color
@@ -21,9 +25,9 @@
 * Display currency with formatting showing space at grouping then remove the space prior to conversion.
 * Allow label Class to override normal generated class for the label.  Demonstrate shrinking label for state to allow better formatting.    This is to allow easier formatting when we want custom behavior out of a subset of labels.
 * Add support for concept of horizontal group that is not allowed to wrap widgets. EG for city, state, zip
-* DONE:JOE:2019-12-19: Add support for update of data object when fields change
-* When no label is included in Vgroup then suppress generation of label field.
-* DONE:JOE:2019-12-19: Properly render multi-line text area field.
+* DONE:JOE:2019-12-17: Add support for update of data object when fields change
+* DONE:JOE:2019-12-19: When no label is included in Vgroup then suppress generation of label field.
+* DONE:JOE:2019-12-17: Properly render multi-line text area field.
 * ability to include a leading icon for a field like renderField from old browserutil.
 * Ability to specify a class for label independent of class of the widget.
 * demonstrate support for fields with labels forced to wrap 
@@ -36,7 +40,7 @@
 * Add support to specify form display with data object in URI when driver page is loaded
 * Add support for basic validators demonstrate with zipcode and state
 * Add support for checkbox widget
-* DONE:JOE:2019-12-19: Demo of contact form that shows changes in the bound JSON as the fields are edited.
+* 
 * Add support for drop down list widget
 * Add support for radio button widget
 * Add support to render list of certificates with a  metadata form widget.
