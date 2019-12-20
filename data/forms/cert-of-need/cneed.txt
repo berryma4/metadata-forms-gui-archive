@@ -16,13 +16,14 @@
     data_type: text
     type: text
     label : Completion Date
-    placeholder: ccyy/mm/dd
+    placeholder: mm/dd/ccyy
     size: 11
     data_context: actual_construction_completion_date  
     required: true
     maxlength: 11
     class: input_field
     validFun: validate_date
+    validFormat: mm/dd/ccyy
 
 - widget:
     id: projectCost

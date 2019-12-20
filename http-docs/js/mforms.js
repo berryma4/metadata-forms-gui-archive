@@ -184,7 +184,8 @@
      "textarea": mformsRenderTextWidget,
      "button": mformsRenderButton,
      "dropdown": mformRenderDropdown,
-     "radio": mformRenderRadio
+     "radio": mformRenderRadio,
+     "date": mformsRenderTextWidget
  }
 
  var mformTextFieldCopyAttr = {
