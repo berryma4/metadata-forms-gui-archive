@@ -134,3 +134,19 @@
   fieldset.inputFrm {
       margin-left: 4em;
   }
+
+  fieldset.vradio {
+      padding: 0.3em;
+  }
+
+  div.fsblock {
+      display: block;
+  }
+
+  div.buttonCont {
+      display: inline-block;
+  }
+
+  input.vradio div.buttonCont {
+      display: block;
+  }

@@ -16,13 +16,14 @@
     data_type: text
     type: text
     label : Completion Date
-    placeholder: ccyy/mm/dd
+    placeholder: mm/dd/ccyy
     size: 11
     data_context: actual_construction_completion_date  
     required: true
     maxlength: 11
     class: input_field
     validFun: validate_date
+    validFormat: mm/dd/ccyy
 
 - widget:
     id: projectCost
@@ -60,8 +61,12 @@
     #width: 35
     data_context: review_level
     required: true    
-    class: input_field
+    #class: input_field vradio fsblock
+    class: input_field 
+    # Add the vradio syle to force vertical radio buttons.
     ignore-case-match: true
+    # Add the fsblock to force a group widget like radio button
+    # to display act as a block rather than inline.
     option:
        - {"label" : "Admin", "value" : "Admin"}
        - {"label" : "Regional", "value": "region"}
