@@ -3,6 +3,8 @@
 # Rank Ordered Feature Work
 
 * Demo of Implement sample Client / sub client forms.
+* Allow arbitrary creation of variables at top level of Yaml to support re-use.  EG: A float  pattern would be re-usable across many fields. 
+* Demonstrate a field validator for simple single token all alpha numeric.
 * Demo of Implement []sample claim submission form]([https://www.ada.org/~/media/ADA/Publications/Files/2019ADADentalClaim%20Form_2019May.pdf?la=en](https://www.ada.org/~/media/ADA/Publications/Files/2019ADADentalClaim Form_2019May.pdf?la=en).
   * Convert CDT to CSV for rapid file transfer.
   * Download sample CDT Codes to populate drop down.
@@ -15,6 +17,9 @@
   * Support pop-up search form so when user enters field to Name a User pop up search field to find users.   If user types "mand den" the filter should find "D5751"
   * Support to validate field value with Ajax Call.  EG once a user enters a policy number attempt to validate on server.  Requires  3 validation states.  unchecked,  valid, invalid, validation in process.
   * Generic Delimited parser where delimiter and presence of header is specified. 
+  * Need to Allow update or refresh of a given form field based on actions taken in other form fields.  EG: A search set a member identity field based on the results of a search field. 
+  * Support display only field. 
+  * 
 * Demo of Patient Intake form
 * Ability to show additional descriptive text when user enters a widget for editing also displays when they hover over that field.
 * Add support for HGroup.   Horizontal Group ideally using CSS to allow same row flex placement but with a min-width  to force wrapping as the screen shrinks.  horizontal group that is not allowed to wrap widgets. EG for city, state, zip
@@ -83,6 +88,9 @@
   * Apply basic security for these objects based on JSession
   * Add basic OIDC support for the server 
   * Add Native HTTPS functionality to the server so if we have a valid cert it can support HTTPS
+  * Utility to convert arbitrary TSV file into a searchable permuted index one file per column with optional specification to combine columns such as first, last middle name.
+    * File bisect server utility to find object identity from matching tokens 
+    * Alternative upload to Firebase after converting to JSON and reference there.  This would be more consistent with a desirable long term deployment pattern.
 * **Support stylesheets specified in the form metadata**.  These are  are added at runtime by naming in the form specification.  Must support interpolation. 
 * **Support Alternative Style sheets by Brand**.   Ideally show that as a interpolation parameter.  Allows a single form to be rendered with different look and feel. Ability to specify custom style in uri such as abc.com#style=x3 that causes a style sheet to be added to the page.  The list of stylesheets is computed from a spec in the form and if the style parameter is present in the file is interpolated into the style URI from parameters specified in the URI.  
 * Display Rather than Edit Mode for Form - Support display mode which either renders the widget without the edit components or which changes the CSS selector to hide the edit field,  disables the field for editing changes the spacing to a tighter space.    Should support transition to display mode rather than edit mode as simple function call. 
