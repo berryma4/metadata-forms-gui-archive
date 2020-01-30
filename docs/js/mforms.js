@@ -205,7 +205,9 @@
      "class": true,
      "data_context": true,
      "form_id": true,
-     "dataObjId": true
+     "dataObjId": true,
+     "title": true,
+     "jimbo": true
  };
 
  /*function mformAddContextAttributes(attr, widDef, context) {
@@ -230,6 +232,24 @@
      }
  }
 
+ function getDataValue(dataObj, widDef, context) {
+     var dataPath = widDef.data_context;
+     if (dataPath == undefined) {
+         alert("ERROR Widget Data Context is not specified " + JSON.stringify(widDef));
+     }
+     var dataVal = getNested(dataObj, dataPath, null);
+     if (dataVal == null) {
+         // If no data value is found in the source object
+         // then set based on field default specified in 
+         // widget defenition. 
+         dataVal = getNested(widDef, "default", null);
+         if (dataVal != null) {
+             setNested(dataObj, dataPath, dataVal)
+         }
+     }
+     return dataVal;
+ }
+
  function mformsRenderButton(widDef, b, context) {
      attr = {
          "type": "button",
@@ -242,9 +262,13 @@
  // Start rendering the widget with common logic
  // for label and container. 
  function mformStartWidget(widDef, b, context, skipLabel) {
+     var cssClass = widDef.class;
+     if (widDef.force_wrap == true) {
+         cssClass = "forceWrap " + cssClass;
+     }
      b.start("div", {
-         "id": widDef.id + "Container",
-         "class": widDef.class
+         "id": widDef.id + "Cont",
+         "class": cssClass + "Cont"
      }).nl();
 
      if (skipLabel == true) {
@@ -286,27 +310,30 @@
      var gtx = context.gbl;
      var flds = gtx.widgets;
      var parClass = parent.class;
-
+     var cssClass = widDef.class;
      b.start("div", {
          "id": widDef.id + "cont",
-         "class": widDef.class
+         "class": cssClass + "cont"
      });
 
-     b.start("fieldset", {
-         "id": widDef.id + "FS",
-         "class": widDef.class
-     });
+     var rendFieldSet = getNested(widDef, "renderFieldset", true);
+     if (rendFieldSet == true) {
+         b.start("fieldset", {
+             "id": widDef.id + "FS",
+             "class": cssClass + "FS"
+         });
+     }
 
      if ("label" in widDef) {
          b.make("legend", {
              "id": widDef.id + "Legend",
-             "class": widDef.class,
+             "class": cssClass + "Leg",
          }, widDef.label);
-
-         mformsRenderWidgets(widDef, widDef.widgets, b, context);
-
      }
-     b.finish("fieldset");
+     mformsRenderWidgets(widDef, widDef.widgets, b, context);
+     if (rendFieldSet == true) {
+         b.finish("fieldset");
+     }
      b.finish("div");
  }
 
@@ -323,18 +350,21 @@
      delete widAttr.onChange;
      delete widAttr.onInput;
      widAttr.id = widDef.id + "FS";
-     b.start("fieldset", widAttr).nl();
-     var matchOptVal = null;
-
      if ("label" in widDef) {
-         b.make("legend", {
-             "class": widDef.class,
+         b.make("div", {
+             "class": widDef.class + "label",
              "id": widDef.id + "legend",
              "name": fldName,
          }, widDef.label);
      }
 
-     var dataVal = getNested(context.dataObj, widDef.data_context, null);
+     b.start("fieldset", widAttr).nl();
+
+     var matchOptVal = null;
+
+     var dataObj = context.dataObj;
+     var dataVal = getDataValue(dataObj, widDef, context);
+
      var opt = null;
      var optndx = null;
      if ("option" in widDef) {
@@ -357,7 +387,10 @@
                  }
              }
          }
-
+         b.start("div", {
+             "id": widId + "OptWrap",
+             "class": "optWrap"
+         });
 
          var optattr = null;
          for (optndx in options) {
@@ -384,12 +417,15 @@
              b.b(opt.label).nl();
              b.finish("div").nl();
          }
+         b.finish("div").nl();
 
      } // if options defined
      b.finish("fieldset").nl();
      mformFinishWidget(widDef, b, context)
      b.nl();
  }
+
+
 
  function mformRenderDropdown(widDef, b, context) {
      var gtx = context.gbl;
@@ -401,9 +437,8 @@
      //widAttr["-webkit-appearance"] = "none";
      b.start("select", widAttr);
 
-
      var matchOptVal = null;
-     var dataVal = getNested(context.dataObj, widDef.data_context, null);
+     getDataValue(context.dataObj, widDef, context);
      var opt = null;
      var optndx = null;
      if ("option" in widDef) {
@@ -456,14 +491,13 @@
      // Add Initial Field Value from the Data Object
      var widVal = "";
      if ("dataObj" in context) {
-         widVal = getNested(context.dataObj, widDef.data_context);
+         widVal = getDataValue(context.dataObj, widDef, context);
          if (widVal != null) {
              widAttr.value = widVal;
          } else {
              widVal = null;
          }
      }
-
      var makeEleName = "input";
      if (widDef.type == "textarea") {
          b.make("textarea", widAttr, widVal);
@@ -595,10 +629,16 @@
  }
 
 
+
  // Load script file from server
  function mformGetDataObj(form, context) {
      var parms = {};
-     // Add Iterpolation here
+     if (context.dataObjId == null) {
+         //User did not specify a object so give it a 
+         //random data object Id and skip direct to 
+         //rendering 
+     }
+     // Interpolate variables into URI Here
      var req_uri = InterpolateStr(form.fetch.uri, [context, form]);
      console.log("L263: mformGetDataObj req_uri=", req_uri);
      parms.req_headers = {
@@ -681,6 +721,20 @@
  function display_form(targetDiv, formSpecUri, dataObjId, gContext) {
      //"dataSourceUri": dataSourceUri,
      console.log(" display_form() targetDiv=", targetDiv, " formSpecUri=", formSpecUri, " dataObjId=", dataObjId)
+
+     if (dataObjId == null) {
+         // Initialize empty data object with fabricated Id 
+         // so we can skip a fetch on the server.  This assumes
+         // that all fields have reasonable defaults specified in 
+         // their form spec.
+         dataObjId = "AUTO" + (0 - curr_time()) + "-" + (Math.floor(Math.random() * 1000));
+         var dataObj = {
+             "_id": dataObjId,
+             "_client_created": true
+         };
+         gContext.dataObj[dataObjId] = dataObj;
+     }
+
 
      // Create a new context but keep a copy of the Global context
      // passed in to allow us to access things like total list of

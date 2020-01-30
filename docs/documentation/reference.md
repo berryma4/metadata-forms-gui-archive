@@ -14,8 +14,17 @@
 * [Insurance Plan](https://www.hl7.org/fhir/insuranceplan.html) - Details of an insurance plan.  Includes Network.  Product Admin, Etc.  
 * [Plan Administrator](https://www.hl7.org/fhir/insuranceplan-definitions.html#InsurancePlan.administeredBy)  See Also  [Organization](https://www.hl7.org/fhir/organization.html) since an administrator is a form of an organization
 * [Organization](https://www.hl7.org/fhir/organization.html)  Organization is base for any company or legal unit involved in care, billing, administration.  It is used to define the organization once and reference it from other entities based on the type.  Eg:  An [Insurance Plan](https://www.hl7.org/fhir/insuranceplan.html)  includes a [Plan Administrator](https://www.hl7.org/fhir/insuranceplan-definitions.html#InsurancePlan.administeredBy)  which is a link to an organization.  Note: Organization can refer to each other in a arbitrarily deep fashion to describe any type of company hierarchy.
+* [Sample Claim expressed in FHIR](https://www.hl7.org/fhir/claim-example.json.html) [hl7 FHIR Claim Spec](https://www.hl7.org/fhir/claim.html) [Sample Dental Claim JSON](https://www.hl7.org/fhir/claim-example-oral-contained.json.html)
+* 
 
+## Forms & Processes 
 
+* [Anthem claims Submission Manual](https://www11.anthem.com/provider/nv/f5/s5/t1/pw_b130799.pdf?refer=ahpfooter) Includes detailed samples of how to used codes and lookup.
+* [Indiana Health Coverage Programs Provider reference claims submission](https://www.in.gov/medicaid/files/claim%20submission%20and%20processing.pdf)  - Includes Sample Web Ap.  A bit dated but usable. 
+* [EZClaim submission](https://www.ezclaim.com/manuals/premierbilling/index.html#!Documents/additionalclaimscreeninformation.htm)
+* [sample ADA claim submission form](https://www.ada.org/~/media/ADA/Publications/Files/2019ADADentalClaim%20Form_2019May.pdf?la=en),  
+  *  [Better Sample](https://victims.ca.gov/docs/forms/providers/adaclaimform.pdf),  
+  * [Delta Dental Sample Claim Form][https://www.deltadentalva.com/uploadedFiles/Generic/adaclaimform.pdf]
 
 ## Technical
 
@@ -36,14 +45,43 @@
   * [Use Media Queries to change browser behavior on small devices](https://www.smashingmagazine.com/2010/07/how-to-use-css3-media-queries-to-create-a-mobile-version-of-your-website/)
   * [tool to show page in different viewports](https://app.protofluid.com/#https://joeatbayes.github.io/metadata-forms-gui/)
   * [stylizing checkboxes](https://cssnewbie.com/stylize-checkboxes-and-text-fields-using-css/#.XfcRdmTYq0o)
+  * [Fixing legend formatting](https://beckism.com/2008/12/display_block_legend/)
   * 
 
 * ### **GO**
 
+  * .
+  
+* ### RegEx
+
+  * [online RegEx Tester with replace](https://www.freeformatter.com/regex-tester.html)
+  
+  * [RegEx quick reference](http://regexrenamer.sourceforge.net/help/regex_quickref.html)
+  
+  * [8 regular expressions you should know](https://code.tutsplus.com/tutorials/8-regular-expressions-you-should-know--net-6149) match user name,  match email,  match url,  match ip, 
+  
+  * [Reg Ex examples with many samples](https://www.regular-expressions.info/examples.html])
+  
+    * [match floating point number](https://www.regular-expressions.info/floatingpoint.html)
+  
+    * [verify credit card number](https://www.regular-expressions.info/creditcard.html)
+  
+    * [validate email address](https://www.regular-expressions.info/email.html)
+  
+      [validate dates](https://www.regular-expressions.info/dates.html)
+  
+  * [cspan common RE patterns](https://metacpan.org/pod/Regexp::Common)
+  
   * 
 
 
 
+
+
+# Data Sources
+
 * [CDT Codes with Descriptions](https://ca.healthnetadvantage.com/content/dam/centene/healthnet/pdfs/medicare/2019/CA/2019-CA-HNTCD-MA-MAPD-DSNP.pdf)  Used to source some example data
+
 * [Fake Name Generator with fake attributes like address, Id, Etc](https://www.fakenamegenerator.com/thanks.php)
-* 
+
+  

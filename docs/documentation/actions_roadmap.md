@@ -5,8 +5,25 @@
 * Demo of Implement sample Client / sub client forms.
 * Allow arbitrary creation of variables at top level of Yaml to support re-use.  EG: A float  pattern would be re-usable across many fields. 
 * Demonstrate a field validator for simple single token all alpha numeric.
-* Demo of Implement []sample claim submission form]([https://www.ada.org/~/media/ADA/Publications/Files/2019ADADentalClaim%20Form_2019May.pdf?la=en](https://www.ada.org/~/media/ADA/Publications/Files/2019ADADentalClaim Form_2019May.pdf?la=en).
+* Modify Date parser to accept alternative input form and reform to desired format to support date picker.
+* Done:JOE:2020-01-25 warn programmer if data context can not be located.
+* DONE:JOE:2020-01-25: Add Default Values for Form fields when no value is supplied in the JSON
+* DONE:JOE:2020-01-25: Support null for data Obj Id which will create a object with time + random generated id.
+* DONE:JOE:2020-01-25:Groups should render even when label is omitted.
+* DONE:JOE:2020-01-25: Ability to show additional descriptive text when user enters a widget for editing also displays when they hover over that field.
+* DONE:JOE:2020-01-25: Add Force Wrap directive to widgets that converts the inline-block to display:block for it's containing div.
+* DONE:JOE:2020-01-25: Make the group containers directly addressable in Css with different classname.
+* DONE:JOE:2020-01-25: Make Field set object directly addressable in css with different classname
+* DONE:JOE:2020-02-25: Group Container that can suppress field set generation so it can just be used to help control layout.
+* Warn programmer if form specification can not be loaded.
+* Warn programmer if Requested data object can not be located.
+* Horizontal Div blocks are not properly wrapping.
+* comments trailing the data value on the line are not properly detected and removed after parsing YML
+* Demo of Implement 
   * Convert CDT to CSV for rapid file transfer.
+  * Create basic ADA For Fields.
+  * Fast search filter widget to make search by codes easy.
+  * Feature to set a random / timestamp data object Id after an empty object is loaded. Support rendering blank form when source object can not be located.
   * Download sample CDT Codes to populate drop down.
   * Download category of service
   * Map Category of service to CDT codes as column 
@@ -18,17 +35,34 @@
   * Support to validate field value with Ajax Call.  EG once a user enters a policy number attempt to validate on server.  Requires  3 validation states.  unchecked,  valid, invalid, validation in process.
   * Generic Delimited parser where delimiter and presence of header is specified. 
   * Need to Allow update or refresh of a given form field based on actions taken in other form fields.  EG: A search set a member identity field based on the results of a search field. 
+  * Form field which Sums other fields on the form.
   * Support display only field. 
+  * Support hidden fields that will create the default value at a given path to fill out a valid structure.
+  * Will have to create a Potential claim ID so we have something to save can probably use timestamp.
+  * set city and state from zip when the zip is not set to None.
+  * Validate Zip from list of valid zipcodes.
   * 
+* Claim Form Deferable Enhancements
+  * Support rendering array of procedure codes and editing inline.   Better yet always render a blank line when they start filling in a line then add another blank line.
+  * Validate zipcode against presence of a zipcode file show error message when no match.
+  * Default quantity to 1
+  * Validate Tooth numbers
+  *  Validate Tooth surface
+  * Default date to last date entered or current date if no date entered.
+  * When user enters company name provide search dropdown list
+  * When user enters name of poly holder do search for select
+  * When procedure code is entered support rapid search that pops up when they enter.  Or add a search popup that allows search and then sets the code.
+  * When procedure code is entered then populate description if description does not have text in it.
+  * On claim form support adding new blank lines with a +
 * Demo of Patient Intake form
-* Ability to show additional descriptive text when user enters a widget for editing also displays when they hover over that field.
+* 
 * Add support for HGroup.   Horizontal Group ideally using CSS to allow same row flex placement but with a min-width  to force wrapping as the screen shrinks.  horizontal group that is not allowed to wrap widgets. EG for city, state, zip
 * Add support for a Widget Icon that is added in addition to the label field Widget Icon that is rendered before the actual Widget when specified.
 * Add support for basic validators demonstrate with zipcode and state
 * Add support for checkbox widget
 * Add support for drop down list widget
 * Add support for radio button widget
-* 
+* respect data type specifier in widget rather than keeping as text
 * Add Checkbox Widget
 * Display edit error messages below the field when validation or edit rules are violated.  Implement validation function showing an error message
 * Implement Top Menu Bar Widget where the menu could be display a different form  could be separate page.
@@ -38,6 +72,7 @@
   * Disable Save Button until the Form is Dirty.
   * Detect forms that contain unsaved data.   Warn user if they are leaving page context when there are  unsaved changes on the form. 
   * 
+* Demonstrate creating a POST string for send when fetching the object.
 * Implement TAB bar widget which is very similar to top menu bar except is supports a change of visualization for the TAB that is currently open.
   * Ability to defer rendering inactive TABS until the tab is displayed.  Since content on one tab could change based on actions in another tab then 
   * Ability to show TABS that have incomplete work before record can be saved to server.
@@ -53,6 +88,10 @@
   * Expand larger page to fit and return to server paging. 
   * Add support for alternating color Table in list view with custom links to open up next table
   * Show Fields that fail validating in a alternate background color
+  * Hide rest of fields for other insurance when it does not apply
+  * When other insurance does apply then those fields should be mandatory.
+  * 
+* Allow clicking on +- to show hide Div group sections make rendering the collapse functions optional.
 * Add support to render list of certificates with a  metadata form widget.
 * Tutorial showing custom rendering agent
 * **Allow form display without custom HTML** - Ability to specify form display and data object in URI when driver page is loaded.  This allows demonstrating new forms without requiring any code changes.
@@ -90,7 +129,8 @@
   * Add Native HTTPS functionality to the server so if we have a valid cert it can support HTTPS
   * Utility to convert arbitrary TSV file into a searchable permuted index one file per column with optional specification to combine columns such as first, last middle name.
     * File bisect server utility to find object identity from matching tokens 
-    * Alternative upload to Firebase after converting to JSON and reference there.  This would be more consistent with a desirable long term deployment pattern.
+    * Think about how to make this useful for publishing on a static server where I do not have server side functionality so it can be demonstrated on git.io. EG produce a list of Object ID  for each token and keep in one file per toke then the client can match.  Then create edge ngram files showing the tokens that are contained in each edge prefix to allow fast match retrieval by client.   
+* Utility to convert sample people to JSON and save in fireBase on google.  Also modify sample to query firebase.
 * **Support stylesheets specified in the form metadata**.  These are  are added at runtime by naming in the form specification.  Must support interpolation. 
 * **Support Alternative Style sheets by Brand**.   Ideally show that as a interpolation parameter.  Allows a single form to be rendered with different look and feel. Ability to specify custom style in uri such as abc.com#style=x3 that causes a style sheet to be added to the page.  The list of stylesheets is computed from a spec in the form and if the style parameter is present in the file is interpolated into the style URI from parameters specified in the URI.  
 * Display Rather than Edit Mode for Form - Support display mode which either renders the widget without the edit components or which changes the CSS selector to hide the edit field,  disables the field for editing changes the spacing to a tighter space.    Should support transition to display mode rather than edit mode as simple function call. 
@@ -118,7 +158,7 @@
 * Implement the List of certs form that drills into the detail for specific cert.  
 * Ability to change contents on in a field list for drop down type widgets based results from on a web service calls by the  time field gains context based on contents in data model based on prior changes.  EG:  When user selects state then the list of cities in drop down list is modified.  Should also allow all child objects to be specified in data context and the select a subset branch using other data fields as a key.
 * Demonstrate breadcrumb trail that makes it easy to get back to list view or prior form.
-* 
+* Display error popup / alert when form spec can not be located on the server.
 * Add support to invalidate and remove parent object after edit of child when child views are included in parent fetch.  Or support editing them in place so other forms can properly see the changed fields when sub form edit field is displayed.
 * **Server side meta data combiner** that reads the field include features and builds the total meta data server side rather than requiring multiple round trips.  This improves performance in marginal networks.
 * Add support to allow multiple forms to be defined in a single file and only the one marked master.
@@ -191,6 +231,11 @@
 
 # DONE:
 
+* DONE:JOE:2020-01-25: Find sample claim forms and sample claim screens document in reference links. 
+* DONE:JOE:2020-01-25: Find sample claims in FHIR form including a general example and a Dental example.
+* DONE: JOE:2020-01-25: Produce a CDT file to populate the CDT search button. 
+* DONE:JOE:2020-01-25: Download sample zipcode file to validate zipcode lookup with web service.
+* DONE:JOE:2020-01-25: Gather a large list of fake people names to use to drive simple search behavior
 * DONE:JOE:2019-12-19: Remove the create input field from browser util since we are using a different approach and it could be confusing to have both approaches in the same library.
 * DONE:JOE:2019-12-17: Ability to specified HTML relative to the Div ID the form is created in to allow users to customize to their hearts content.
 * DONE:JOE:2019-12-17: Must be able to display a form in a pre-existing DIV structure without taking over the entire pages.

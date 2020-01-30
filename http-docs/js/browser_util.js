@@ -30,6 +30,11 @@ function spacePad(aStr, plen) {
   return tout.substr(tout.length - plen);
 }
 
+function right(str, chr) {
+  return str.slice(str.length - chr, str.length);
+}
+
+
 
 /* Return Current time in float which contains
  seconds and fractional seconds */
@@ -698,7 +703,12 @@ function getNested(model, path, defVal) {
     var fldName = parseKeySeg(segs[ndx]);
     if (ndx >= segs.length - 1) {
       // last seg so just assign to fldName
-      return sobj[fldName];
+      var retVal = sobj[fldName];
+      if (retVal != undefined) {
+        return retVal;
+      } else {
+        return defVal;
+      }
     } else {
       // still walking the tree;
       if (fldName in sobj) {
