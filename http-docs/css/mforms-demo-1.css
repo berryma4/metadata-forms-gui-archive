@@ -289,3 +289,23 @@
       padding: 0px;
       width: auto;
   }
+
+  .arrow-up {
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 6px solid black;
+      float: right;
+      display: inline-block;
+  }
+
+  .arrow-down {
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 6px solid #f00;
+      float: right;
+      display: inline-block;
+  }

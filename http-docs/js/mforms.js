@@ -324,14 +324,27 @@
          });
      }
 
+     var contDivName = widDef.id + "Content";
+
      if ("label" in widDef) {
          b.make("legend", {
              "id": widDef.id + "Legend",
              "class": cssClass + "Leg",
          }, widDef.label);
+
+         b.make("div", {
+             "class": "arrow-up",
+             "onclick": "toggleDiv('" + contDivName + "')"
+         });
+         b.start("div", {
+             "id": contDivName,
+             "class": "groupContentDiv"
+         });
      }
+
      mformsRenderWidgets(widDef, widDef.widgets, b, context);
      if (rendFieldSet == true) {
+         b.finish("div");
          b.finish("fieldset");
      }
      b.finish("div");

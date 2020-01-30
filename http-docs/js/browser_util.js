@@ -108,6 +108,25 @@ function showDiv(divId) {
   return tdiv
 }
 
+function toggleDiv(divId) {
+  var tdiv = document.getElementById(divId);
+  if ((tdiv !== undefined) && (tdiv !== null)) {
+    var lastStyle = tdiv.style.lastStyle;
+    if (tdiv.style.display != "none") {
+      tdiv.style.lastStyle = tdiv.style.display;
+      tdiv.style.display = "none";
+
+    } else {
+      if (lastStyle != undefined) {
+        tdiv.style.display = lastStyle;
+      } else {
+        tdiv.style.display = "block";
+      }
+    }
+  }
+  return tdiv;
+}
+
 function toDiv(divId, message) {
   var tdiv = document.getElementById(divId);
   if ((tdiv == undefined) || (tdiv == null)) {

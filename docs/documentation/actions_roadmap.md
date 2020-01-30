@@ -2,19 +2,14 @@
 
 # Rank Ordered Feature Work
 
-* Demo of Implement sample Client / sub client forms.
-* Allow arbitrary creation of variables at top level of Yaml to support re-use.  EG: A float  pattern would be re-usable across many fields. 
 * Demonstrate a field validator for simple single token all alpha numeric.
+* Ensure both the Global and local context are searched during interpolation
+* Test / Demo arbitrary creation of variables at top level of Yaml to support re-use.  EG: A float  pattern would be re-usable across many fields. 
+* DONE:JOE:2020-01-26: Add userCollapsible feature to group level that renders the group with an icon to collaps with Icon to re-explode.
+* AutoHideCollapsible feature added at the group level.  Do not render that portion if a data match does not exist eg:    {collapsible: { dataFiter: { src_data_context: person.isbuyer  compareFun: isTrue(), monitor: [persIsBuyer]}}}    Then must set a filter event or watcher so every change to one of a set Id triggers re-evaluation to add that area.  We will need the containter rendered so there is someplace to put it even if we skipped rendering it last time.     This implies we will need a list of rendered ID for the form so we can do global validation of mandatory fields that skips those fields we chose not render.
+* Switch over to using Flexbox instead of inline-block for field placement.
+* Switch over to using Label-for instad of manual label div specification.
 * Modify Date parser to accept alternative input form and reform to desired format to support date picker.
-* Done:JOE:2020-01-25 warn programmer if data context can not be located.
-* DONE:JOE:2020-01-25: Add Default Values for Form fields when no value is supplied in the JSON
-* DONE:JOE:2020-01-25: Support null for data Obj Id which will create a object with time + random generated id.
-* DONE:JOE:2020-01-25:Groups should render even when label is omitted.
-* DONE:JOE:2020-01-25: Ability to show additional descriptive text when user enters a widget for editing also displays when they hover over that field.
-* DONE:JOE:2020-01-25: Add Force Wrap directive to widgets that converts the inline-block to display:block for it's containing div.
-* DONE:JOE:2020-01-25: Make the group containers directly addressable in Css with different classname.
-* DONE:JOE:2020-01-25: Make Field set object directly addressable in css with different classname
-* DONE:JOE:2020-02-25: Group Container that can suppress field set generation so it can just be used to help control layout.
 * Warn programmer if form specification can not be loaded.
 * Warn programmer if Requested data object can not be located.
 * Horizontal Div blocks are not properly wrapping.
@@ -55,6 +50,8 @@
   * When procedure code is entered then populate description if description does not have text in it.
   * On claim form support adding new blank lines with a +
 * Demo of Patient Intake form
+* Demo of Implement sample Client / sub client forms.
+* 
 * 
 * Add support for HGroup.   Horizontal Group ideally using CSS to allow same row flex placement but with a min-width  to force wrapping as the screen shrinks.  horizontal group that is not allowed to wrap widgets. EG for city, state, zip
 * Add support for a Widget Icon that is added in addition to the label field Widget Icon that is rendered before the actual Widget when specified.
@@ -231,7 +228,15 @@
 
 # DONE:
 
-* DONE:JOE:2020-01-25: Find sample claim forms and sample claim screens document in reference links. 
+* Done:JOE:2020-01-25 warn programmer if data context can not be located.
+* DONE:JOE:2020-01-25: Add Default Values for Form fields when no value is supplied in the JSON
+* DONE:JOE:2020-01-25: Support null for data Obj Id which will create a object with time + random generated id.
+* DONE:JOE:2020-01-25:Groups should render even when label is omitted.
+* DONE:JOE:2020-01-25: Ability to show additional descriptive text when user enters a widget for editing also displays when they hover over that field.
+* DONE:JOE:2020-01-25: Add Force Wrap directive to widgets that converts the inline-block to display:block for it's containing div.
+* DONE:JOE:2020-01-25: Make the group containers directly addressable in Css with different classname.
+* DONE:JOE:2020-01-25: Make Field set object directly addressable in css with different classname
+* DONE:JOE:2020-02-25: Group Container that can suppress field set generation so it can just be used to help control layout.DONE:JOE:2020-01-25: Find sample claim forms and sample claim screens document in reference links. 
 * DONE:JOE:2020-01-25: Find sample claims in FHIR form including a general example and a Dental example.
 * DONE: JOE:2020-01-25: Produce a CDT file to populate the CDT search button. 
 * DONE:JOE:2020-01-25: Download sample zipcode file to validate zipcode lookup with web service.
