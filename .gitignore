@@ -19,6 +19,9 @@ t.t
 t.t2
 t.tmp
 
+# This is a huge file need to be sure I want to check it in.
+people.txt
+
 
 # Visual studio code artifacts left around
 .vs*
