@@ -1,4 +1,4 @@
-# Actions & Roadmap for Metadata Forms Engine
+Actions & Roadmap for Metadata Forms Engine
 
 # Rank Ordered Feature Work
 
@@ -96,6 +96,25 @@
     Please update programmer guide accordingly.
 
     
+
+  * Fix parser to properly handle lines truncated with a comment  See: mforms_parse_test.html Run Test #6 for details.    The text from # on should be removed and any trailing spaces trimmed from the end. 
+
+  * ```yaml
+    - widget:
+      id: procedures # Code must be unique
+      type: table # Type is used to lookup rendering agent
+      total_col: # Total Column is used 
+        - arrProcFee # One of columns to total
+      columns: # List of column objects
+        - arrProcDate: # one of my columns
+             total: false # wether I should add total on this column
+             label: Procedure Date        
+        - arrProcArea:
+             total: false
+             label: Area
+             title: Procedure Area
+         
+    ```
 
     
 
@@ -242,6 +261,8 @@
   * Add array level support to setNested and getNested.
 
   * Must support column header rather than field headers.
+
+  * Support total columns
 
   * Support a Table for Array Element Display 
 
@@ -554,38 +575,97 @@
 
 # DONE:
 
+* SKIP:JOE:2020-01-25 Fix Parser to properly Handle Array of Sub Objects semantic: NOTE:  See Test 5 in mforms_parse_test.html   It seems to work correctly.  Need a better test use case if it is really broke.
+
+  ```yaml
+    - widget:
+      id: procedures
+      type: table
+      total_col:
+       arrProcFee
+      columns: 
+        - arrProcDate:
+             total: false
+             label: Procedure Date        
+        - arrProcArea:
+             total: false
+             label: Area
+             title: Procedure Area
+         
+  ```
+
+  
+
 * DONE:JOE:2020-01-26: Move Demo-page layout to separate CSS so only that CSS germane to general forms remains in meta-forms. css also move cert-of-need.css specific styling to an external file and dental specific styling to adaform.css.
+
 * DONE:JOE:2020-01-27: Demonstrate a RegEx field Validation functionality 
+
 * DONE:JOE:2020-01-26: Add userCollapsible feature to group level that renders the group with an icon to collaps with Icon to re-explode.
+
 * DONE:JOE:2020-01-26: Modify arrow when group is contracted to point down to expand and up when contraction is available.
+
 * Done:JOE:2020-01-25 warn programmer if data context can not be located.
+
 * DONE:JOE:2020-01-25: Add Default Values for Form fields when no value is supplied in the JSON
+
 * DONE:JOE:2020-01-25: Support null for data Obj Id which will create a object with time + random generated id.
+
 * DONE:JOE:2020-01-25:Groups should render even when label is omitted.
+
 * DONE:JOE:2020-01-25: Ability to show additional descriptive text when user enters a widget for editing also displays when they hover over that field.
+
 * DONE:JOE:2020-01-25: Add Force Wrap directive to widgets that converts the inline-block to display:block for it's containing div.
+
 * DONE:JOE:2020-01-25: Make the group containers directly addressable in Css with different classname.
+
 * DONE:JOE:2020-01-25: Make Field set object directly addressable in css with different classname
+
 * DONE:JOE:2020-02-25: Group Container that can suppress field set generation so it can just be used to help control layout.DONE:JOE:2020-01-25: Find sample claim forms and sample claim screens document in reference links. 
+
 * DONE:JOE:2020-01-25: Find sample claims in FHIR form including a general example and a Dental example.
+
 * DONE: JOE:2020-01-25: Produce a CDT file to populate the CDT search button. 
+
 * DONE:JOE:2020-01-25: Download sample zipcode file to validate zipcode lookup with web service.
+
 * DONE:JOE:2020-01-25: Gather a large list of fake people names to use to drive simple search behavior
+
 * DONE:JOE:2019-12-19: Remove the create input field from browser util since we are using a different approach and it could be confusing to have both approaches in the same library.
+
 * DONE:JOE:2019-12-17: Ability to specified HTML relative to the Div ID the form is created in to allow users to customize to their hearts content.
+
 * DONE:JOE:2019-12-17: Must be able to display a form in a pre-existing DIV structure without taking over the entire pages.
+
 * DONE:JOE:2109-12-19: Ability to support tabbing order through fields in the generated form
+
 * DONE:JOE:2019-12-16: Demonstrate first with Certificate of Need Data from DFORMS System but converted to Dynamic Form.
+
 * DONE:JOE:2019-12-19: Prevent right nav from wrapping when page is shrunk too far.
+
 * DONE:JOE:2019-12-16: When starting form load need to also trigger retrieval of the data record and defer display until record is loaded.  Need unambiguous way to map user data for a given form rendering to a specific data object when multiple root objects are already cached in RAM.  If the data specific object is already loaded in RAM re-use the one already available to re-render the same form.  
+
 * DONE:JOE:2019-12-19: Modify form fetch to skip fetch is form is already in memory
+
 * DONE:JOE:2019-12-19: Demo of contact form that shows changes in the bound JSON as the fields are edited.
+
 * DONE: JOE: 2019-12-19: Add Dropdown select field
+
 * DONE: JOE:2019-12-19: Add Radio Button List  Supply basic style for horizontal or vertical
+
 * DONE:JOE:2019-12-19:Add support for Date Widget.
+
 * DONE:JOE:2019-12-19: Add support for vertical radio button as a css styling option.
+
 * DONE:JOE:2019-12-19: Covert vgroup coding to a field group 
+
 * DONE:JOE:2019-12-18: Add support for TextArea covering several lines.  Change cert of need description to display in this widget.
+
 * DONE:JOE:2019-12-17: Add support for update of data object when fields change
+
 * DONE:JOE:2019-12-19: When no label is included in Vgroup then suppress generation of label field.
+
 * DONE:JOE:2019-12-17: Properly render multi-line text area field.
+
+  
+
+* 

@@ -154,6 +154,40 @@ var testStrPerson4 = `
 `;
 
 
+var testStrNestedObj = `
+- widget:
+  id: procedures
+  type: table
+  total_col:
+     - arrProcFee
+  columns: 
+    - arrProcDate:
+         total: false
+         label: Procedure Date        
+    - arrProcArea:
+         total: false
+         label: Area
+         title: Procedure Area
+     
+`;
+
+var testStrObjectCommentOnEOL = `
+- widget:
+  id: procedures # Code must be unique
+  type: table # Type is used to lookup rendering agent
+  total_col: # Total Column is used 
+    - arrProcFee # One of columns to total
+  columns: # List of column objects
+    - arrProcDate: # one of my columns
+         total: false # wether I should add total on this column
+         label: Procedure Date        
+    - arrProcArea:
+         total: false
+         label: Area
+         title: Procedure Area
+     
+`;
+
 function mParserTest(label, dataStr) {
   var tres = mforms.mformsParseMeta(dataStr, {});
   console.log("L77: mParserTest:", label, " Out=", JSON.stringify(tres, null, 2));

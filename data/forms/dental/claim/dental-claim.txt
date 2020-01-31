@@ -655,12 +655,32 @@
          - topRightFieldsGroup
 
 
+
+- widget:
+  id: procedures
+  type: table
+  total_col:
+   arrProcFee
+  columns: 
+    - arrProcDate
+    - arrProcArea
+    - arrProcToothSystem
+    - arrProcToothNumber
+    - arrProcToothSurface
+    - arrProcCode
+    - arrProcDesc
+    - arrProcFee
+
+
+
 - widget:
     id: saveButton    
     type: button
     label : Save    
     size: 8
     class: submit_button
+    data_context: operation.proceedures
+
 
 
 
