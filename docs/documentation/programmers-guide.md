@@ -1,16 +1,18 @@
-## Metadata Form GUI - Programmer Guide
+# Metadata Form GUI - Programmer Guide
 
 
 
-### 
+# Basic Form Usage
 
 * ## Define a Widget
+
+  * ### Hooking widgets to the Data Model
 
 * 
 
 * ## Define a form using the Widget
 
-* Define Groups of Widgest
+* Define Groups of Widget
 
 * D
 
@@ -130,9 +132,48 @@ Useful for example when State follows city on the same line.
 
 
 
-Support for Subforms using TABS
+## Support for Subforms using TABS
 
-Adding Left Nav display of sub forms
+## Adding Left Nav display of sub forms
 
-Expanding form sections that contain functions.
+## Expanding form sections that contain functions.
 
+## Localizing forms
+
+## Custom Labeling & Branding defined at runtime.
+
+# Diagnostic Tools
+
+## Display the JSON representation of object as it changes
+
+The form attribute  **show_data_obj_div**:  is used to specify that you would like the system to render the JSON representation of the object in a Div that is refreshed every time a field is edited.   Display also occurs when the data if any is loaded from the server.    
+
+This can be useful to ensure the right data elements are hooked to right underlying data models.   The value  specified is used as a DivId to display the JSON into. 
+
+If the attribute is not specified then no rendering occurs.   **show_data_obj_div: dataObjDiv**  in the snippet below will try to render the JSON of the active data object to a HTML Div with the ID of "dataObjDiv" every time the field changes.   [See it in operation](https://joeatbayes.github.io/metadata-forms-gui/) 
+
+```yaml
+
+- form:
+   id : basicForm
+   class: inputFrm
+   label: A Basic Form   
+   fetch:
+      uri: data/claims/{dataObjId}.JSON
+      method: GET
+      parse: JSON
+   save:
+      uri: data/claims/{dataObjId}.JSON
+      verb: PUT
+      where: body   
+   show_data_obj_div: dataObjDiv 
+   widgets:   
+           - topFieldsGroup
+           - saveButton
+```
+
+
+
+## Testing the YML Parser
+
+.

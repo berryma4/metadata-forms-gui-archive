@@ -4,7 +4,7 @@
 
 * YML Parser
 
-  * Ability to use value from any previously defined widget.  Eg define phone # validator pattern and then re-use with access via get nested.  EG:    
+  * Ability to use value from any previously defined data element.  Eg define phone # validator pattern and then re-use with access via get nested.  EG:    
 
     ```yml
     validators:
@@ -22,9 +22,11 @@
     
     ```
 
+     Please update programmer guide accordingly.
+
     
 
-  * Ability to import a base widget Def from another defined widget and only override what changes
+  * Ability to import a base widget Def from another defined widget and only override what changes.  
 
     ```yaml
     validators:
@@ -42,17 +44,154 @@
       ignore_case_match: true
       valid_patt: <validators.phone
       
-    -widget: <basic_phone
+    -widget: <widget.basic_phone
+        id: basic_phone
         label: Patient Phone #
         data_context: claim.patient.phoneNum
     
     ```
 
+    Please update programmer guide accordingly.
+
     
 
-  * Ability to import another widget definition file using a #INCLUDE directive.  Make sure the #Include is relative to the directory containing the file where it occurs. 
+  * Ability to import another widget definition file using a #INCLUDE directive.  Make sure the #Include is relative to the directory containing the file where it occurs.  Included files may contain other files.  This acts just like reading the file and combining the text at the time of the directive.  In reality we make a call do the parse and inject the results into the parse tree.  The included files must  be processed in a blocking fashion because further parsing may use things referenced in them.     I would eventually implement a server side handler that would do this step but also want client side to allow complete operating with simple static file server.   Example syntax below but willing to consider alternatives.   Please update programmer guide accordingly.
 
-  * Implement basic support so labels can all be treated as lookup. 
+    ```yaml
+    ----------------------------------
+    File data/forms/validators.txt
+    ----------------------------------
+    validators:
+      auth_patern: {0.9}8.\s\w\n
+      phone: ^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$
+      zip: ^[0-9]{5}(?:-[0-9]{4})?$
+    
+    ----------------------------------
+    file data/forms/common/address.txt
+    ----------------------------------
+    -widget:
+        id: basic_addr1
+        data_type: text
+        type: text
+        label :Address 1
+        size: 50
+        mandatory: true
+        data_context: insurer.address1
+        class: input_field
+        ignore-case-match: true
+    
+    -widget:
+        id: basic_addr2
+        data_type: text
+        type: text
+        label :Address 2
+        size: 50
+        mandatory: true
+        data_context: insurer.address2
+        class: input_field    
+    
+    -widget:
+        id: basic_city
+        data_type: text
+        type: text
+        label :City
+        size: 35
+        mandatory: true
+        data_context: insurer.city
+        class: input_field
+    
+    -widget:
+        id: basic_state
+        data_type: text
+        type: text
+        label :State
+        size: 2
+        maxlength: 2
+        mandatory: true
+        data_context: insurer.state
+        class: input_field
+        valid_patt: ^[0-9]{5}(?:-[0-9]{4})?$
+        valid_fun: validate_zipcode
+    
+    ----------------------------------
+    file data/forms/dental/dental-claim.txt
+    ----------------------------------
+    #include ../common/address.txt
+    #include ../common/validators.txt
+    
+    -widget: <  basic_city
+      id: patCity
+      data_context: patient.address.city
+      
+    -widget: < basic_state
+      id: patState
+      data_context: patient.address.state
+    
+    ```
+
+    
+
+  * Implement basic support so labels can all be treated as lookup values.  This may be done as a post  processing step after the YML Parse..       In effect anyplace a label was specified it can be replaced with a value looked up.   As shown below we use interpolation values {brand}/{local} to compute the URI where the value will be retrieved.   The lookup is done by Id so the merge is a little smart since when the line in the localization file "basic_addr1: Adresse 1" it has to look through all the widgets and forms an any other item where we may specify a and look for obj.label and replace what is there with "address 1" if the ID matches what is specified.  Please update programmer guide accordingly.
+
+    ```
+    -------------------------
+    -- basic-form.txt -------
+    -------------------------
+    -widget:
+        id: basic_addr1
+        data_type: text
+        type: text
+        label :Address 1
+        size: 50
+        mandatory: true
+        data_context: insurer.address1
+        class: input_field
+        ignore-case-match: true
+    
+    -widget:
+        id: basic_addr2
+        data_type: text
+        type: text
+        label :Address 2
+        size: 50
+        mandatory: true
+        data_context: insurer.address2
+        class: input_field    
+    
+    
+    - form:
+       id : basicForm
+       class: inputFrm
+       label: A Basic Form   
+       fetch:
+          uri: data/claims/{dataObjId}.JSON
+          method: GET
+          parse: JSON
+       save:
+          uri: data/claims/{dataObjId}.JSON
+          verb: PUT
+          where: body   
+       show_data_obj_div: dataObjDiv
+       labels: basic_form_localize/{brand}/{local}
+       widgets:   
+               - topFieldsGroup
+               - saveButton
+    
+    -----------------------------------
+    -- basic_form_localize/national/fr.txt
+    -----------------------------------
+    basic_addr1: Adresse 1
+    basic_addr2: Address 2
+    basic_city: ville
+    ```
+
+    
+
+  * 
+
+  
+
+* Easy ability to force label to align to left or above field. 
 
 * Demonstrate a company search using data from cert-of-need or from provider search. 
 

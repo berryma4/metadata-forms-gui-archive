@@ -667,8 +667,6 @@
       verb: PUT
       where: body
    show_data_obj_div: dataObjDiv
-   default_data:
-     claim.type: oral
 
    widgets:   
            - topFieldsGroup
