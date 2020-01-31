@@ -2,257 +2,7 @@ Actions & Roadmap for Metadata Forms Engine
 
 # Rank Ordered Feature Work
 
-* YML Parser
-
-  * comments trailing the data value on the line are not properly detected and removed after parsing YML.   The text after # on id: basic_zip should be removed during parsing with any trailing spaces removed.
-
-    ```
-    -widget:
-        id: basic_zip #Some comment text
-        data_type: text
-        type: text
-    ```
-
-    
-
-  * Fix Array level parsing error:  In the example below the ^ on the front of the array elements at widget.valid_pat.pattern seems to be stripping of the first characters of the string which makes the RE pattern invalid.  See:  [../../data/forms/examples/field-validator-regex-multiple.txt](../../data/forms/examples/field-validator-regex-multiple.txt)
-
-  ```
-  -widget:
-      id: basic_zip
-      data_type: text
-      type: text
-      label :Zip
-      size: 11
-      data_context: person.zip
-      class: input_field
-      valid_pat:
-         pattern:
-           -^[0-9]{5}(?:-[0-9]{4})?$
-           -^(([\d]{2} )|(2[abAB] ))*(([\d]{2})|(2[abAB]))$
-         message : Invalid zipcode try 5 digits or zip plus 4. eg: 84401 or 84401-8178
-  
-  - form:
-     id : sample_field_validator
-     class: inputFrm
-     label: Regular Expression based Field Validator
-     show_data_obj_div: dataObjDiv
-     widgets:   
-        - basic_zip
-        
-  ```
-
-  
-
-  * Ability to use value from any previously defined data element.  Eg define phone # validator pattern and then re-use with access via get nested.  EG:    
-
-    ```yml
-    validators:
-      auth_patern: {0.9}8.\s\w\n
-    
-    widget:
-        id: preauthNumber
-        data_type: text
-        type: text
-        label : Preauthorization number
-        data_context: claim.insurance.preAuthRef
-        class: input_field
-        ignore-case-match: true
-        valid_pat: <validators.auth_pattern
-    
-    ```
-
-     Please update programmer guide accordingly.
-
-    
-
-  * Ability to import a base widget Def from another defined widget and only override what changes.  
-
-    ```yaml
-    validators:
-      auth_patern: {0.9}8.\s\w\n
-      phone: ^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$
-      zip: ^[0-9]{5}(?:-[0-9]{4})?$
-    
-    - widget: 
-      id: basic_phone
-      data_type: text
-      type: text
-      label: phone #
-      data_context: empty
-      class: input_field
-      ignore_case_match: true
-      valid_patt: <validators.phone
-      
-    -widget: <widget.basic_phone
-        id: basic_phone
-        label: Patient Phone #
-        data_context: claim.patient.phoneNum
-    
-    ```
-
-    **Ability to import arbitrary text for a label or a paragraph from a specified URI**.  Run it through interpolation and then render into the Div.  This allows the system to modify contents of what is normally static text such as an explanation paragraph.  This would be ran through interpolation against the selected object.
-
-    Please update programmer guide accordingly.
-
-    
-
-  * Fix parser to properly handle lines truncated with a comment  See: mforms_parse_test.html Run Test #6 for details.    The text from # on should be removed and any trailing spaces trimmed from the end. 
-
-  * ```yaml
-    - widget:
-      id: procedures # Code must be unique
-      type: table # Type is used to lookup rendering agent
-      total_col: # Total Column is used 
-        - arrProcFee # One of columns to total
-      columns: # List of column objects
-        - arrProcDate: # one of my columns
-             total: false # wether I should add total on this column
-             label: Procedure Date        
-        - arrProcArea:
-             total: false
-             label: Area
-             title: Procedure Area
-         
-    ```
-
-    
-
-  * Ability to import another widget definition file using a #INCLUDE directive.  Make sure the #Include is relative to the directory containing the file where it occurs.  Included files may contain other files.  This acts just like reading the file and combining the text at the time of the directive.  In reality we make a call do the parse and inject the results into the parse tree.  The included files must  be processed in a blocking fashion because further parsing may use things referenced in them.     I would eventually implement a server side handler that would do this step but also want client side to allow complete operating with simple static file server.   Example syntax below but willing to consider alternatives.   Please update programmer guide accordingly.
-
-    ```yaml
-    ----------------------------------
-    File data/forms/validators.txt
-    ----------------------------------
-    validators:
-      auth_patern: {0.9}8.\s\w\n
-      phone: ^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$
-      zip: ^[0-9]{5}(?:-[0-9]{4})?$
-    
-    ----------------------------------
-    file data/forms/common/address.txt
-    ----------------------------------
-    -widget:
-        id: basic_addr1
-        data_type: text
-        type: text
-        label :Address 1
-        size: 50
-        mandatory: true
-        data_context: insurer.address1
-        class: input_field
-        ignore-case-match: true
-    
-    -widget:
-        id: basic_addr2
-        data_type: text
-        type: text
-        label :Address 2
-        size: 50
-        mandatory: true
-        data_context: insurer.address2
-        class: input_field    
-    
-    -widget:
-        id: basic_city
-        data_type: text
-        type: text
-        label :City
-        size: 35
-        mandatory: true
-        data_context: insurer.city
-        class: input_field
-    
-    -widget:
-        id: basic_state
-        data_type: text
-        type: text
-        label :State
-        size: 2
-        maxlength: 2
-        mandatory: true
-        data_context: insurer.state
-        class: input_field
-        valid_patt: ^[0-9]{5}(?:-[0-9]{4})?$
-        valid_fun: validate_zipcode
-    
-    ----------------------------------
-    file data/forms/dental/dental-claim.txt
-    ----------------------------------
-    #include ../common/address.txt
-    #include ../common/validators.txt
-    
-    -widget: <  basic_city
-      id: patCity
-      data_context: patient.address.city
-      
-    -widget: < basic_state
-      id: patState
-      data_context: patient.address.state
-    
-    ```
-
-    * Ability to specify file to include in one Yaml to allow re-use of meta data.
-
-    * Ability to use YAML anchors @ extensions  to create template fields and only supply what was missing.   Includes adding a tutorial. 
-
-  * **Support localized labels:** with a flag in the form to specify the URI of a Label generation service where we pass the form.id and widget.id , localization parameter and it passes back the localized label.   Optional pass the actual label text, form id and localization and do the lookup.  Must take the set of these to provide lower network latency.  Provide a sample service that just returns the same labels passed or an empty set.  An empty set of return labels means there is no override.  
-
-    Implement basic support so labels can all be treated as lookup values.  This may be done as a post  processing step after the YML Parse..       In effect anyplace a label was specified it can be replaced with a value looked up.   As shown below we use interpolation values {brand}/{local} to compute the URI where the value will be retrieved.   The lookup is done by Id so the merge is a little smart since when the line in the localization file "basic_addr1: Adresse 1" it has to look through all the widgets and forms an any other item where we may specify a and look for obj.label and replace what is there with "address 1" if the ID matches what is specified.  Please update programmer guide accordingly.    When the form attribute "labels: " is defined the system will automatically attempt to perform localization when the form data is first fetched using the function:  function display_form(targetDiv, formSpecUri, dataObjId, gContext)   This means the lookup values for interpolation must be set before the form is loaded.
-
-    ```
-    -------------------------
-    -- basic-form.txt -------
-    -------------------------
-    -widget:
-        id: basic_addr1
-        data_type: text
-        type: text
-        label :Address 1
-        size: 50
-        mandatory: true
-        data_context: insurer.address1
-        class: input_field
-        ignore-case-match: true
-    
-    -widget:
-        id: basic_addr2
-        data_type: text
-        type: text
-        label :Address 2
-        size: 50
-        mandatory: true
-        data_context: insurer.address2
-        class: input_field    
-    
-    
-    - form:
-       id : basicForm
-       class: inputFrm
-       label: A Basic Form   
-       fetch:
-          uri: data/claims/{dataObjId}.JSON
-          method: GET
-          parse: JSON
-       save:
-          uri: data/claims/{dataObjId}.JSON
-          verb: PUT
-          where: body   
-       show_data_obj_div: dataObjDiv
-       labels: basic_form_localize/{brand}/{local}
-       widgets:   
-               - topFieldsGroup
-               - saveButton
-    
-    -----------------------------------
-    -- basic_form_localize/national/fr.txt
-    -----------------------------------
-    basic_addr1: Adresse 1
-    basic_addr2: Address 2
-    basic_city: ville
-    ```
-
-    
+* * 
 
   
 
@@ -571,7 +321,306 @@ Actions & Roadmap for Metadata Forms Engine
 * For fda sample page remove the right navigation payne and enlarge middle payne when  displaying on anything less than 900 px;
 * Implement toots / test  screen which validates contents of one field based on contents of another field using RegEx.  Must make it easy for developers to test regex patterns before they specify them in metadata.
 
+* 
 
+* YML Parser: Fix Array level parsing error when parsing complex RegEx Strings.:  In the example below the ^ on the front of the array elements at widget.valid_pat.pattern seems to be stripping of the first characters of the string which makes the RE pattern invalid.  See:  [../../data/forms/examples/field-validator-regex-multiple.txt](../../data/forms/examples/field-validator-regex-multiple.txt)   When fixing this remember the other fix for lines that contain comments on end.  
+
+  ```
+  -widget:
+      id: basic_zip
+      data_type: text
+      type: text
+      label :Zip
+      size: 11
+      data_context: person.zip
+      class: input_field
+      valid_pat:
+         pattern:
+           -^[0-9]{5}(?:-[0-9]{4})?$
+           -^(([\d]{2} )|(2[abAB] ))*(([\d]{2})|(2[abAB]))$
+         message : Invalid zipcode try 5 digits or zip plus 4. eg: 84401 or 84401-8178
+  
+  - form:
+     id : sample_field_validator
+     class: inputFrm
+     label: Regular Expression based Field Validator
+     show_data_obj_div: dataObjDiv
+     widgets:   
+        - basic_zip
+  ```
+
+  
+
+
+* YML Parser: Ability to use value from any previously defined data element.  Eg define phone # validator pattern and then re-use with access via get nested.  EG:    
+
+  ```yml
+  validators:
+    auth_patern: {0.9}8.\s\w\n
+  
+  widget:
+      id: preauthNumber
+      data_type: text
+      type: text
+      label : Preauthorization number
+      data_context: claim.insurance.preAuthRef
+      class: input_field
+      ignore-case-match: true
+      valid_pat: <validators.auth_pattern
+  
+  ```
+
+   Please update programmer guide accordingly.
+
+  
+
+* YML Parser: **Ability to import a base widget Def from previously defined widget** and only override what changes.  
+
+  ```yaml
+  validators:
+    auth_patern: {0.9}8.\s\w\n
+    phone: ^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$
+    zip: ^[0-9]{5}(?:-[0-9]{4})?$
+  
+  - widget: 
+    id: basic_phone
+    data_type: text
+    type: text
+    label: phone #
+    data_context: empty
+    class: input_field
+    ignore_case_match: true
+    valid_patt: <validators.phone
+    
+  -widget: <widget.basic_phone
+      id: basic_phone
+      label: Patient Phone #
+      data_context: claim.patient.phoneNum
+  
+  ```
+
+  Please update programmer guide accordingly.
+
+  
+
+* YML Parser: **Fix parser to properly handle lines truncated with a comment** 
+
+  * The text from # on should be removed and any trailing spaces trimmed from the end. 
+
+  * YML Parser:  comments trailing the data value on the line are not properly detected and removed after parsing YML.   The text after # on id: basic_zip should be removed during parsing with any trailing spaces removed.
+
+    ```
+    -widget:
+        id: basic_zip #Some comment text
+        data_type: text
+        type: text
+    ```
+
+  *  See: mforms_parse_test.html Run Test #6 for details.    This one does not declare the sub objects properly because it did not recognize and remove the comments.
+
+  * ```
+    - widget:
+      id: procedures # Code must be unique
+      type: table # Type is used to lookup rendering agent
+      total_col: # Total Column is used 
+        - arrProcFee # One of columns to total
+      columns: # List of column objects
+        - arrProcDate: # one of my columns
+             total: false # wether I should add total on this column
+             label: Procedure Date        
+        - arrProcArea:
+             total: false
+             label: Area
+             title: Procedure Area
+    ```
+
+
+
+
+* YML Parser: **Ability to import another widget definition file using a #INCLUDE directive**.  Make sure the #Include is relative to the directory containing the file where it occurs.  Included files may contain other files.  This acts just like reading the file and combining the text at the time of the directive.  In reality we make a call do the parse and inject the results into the parse tree.  The included files must  be processed in a blocking fashion because further parsing may use things referenced in them.     I would eventually implement a server side handler that would do this step but also want client side to allow complete operating with simple static file server.   Example syntax below but willing to consider alternatives.   Please update programmer guide accordingly.
+
+  ```yaml
+  ----------------------------------
+  File data/forms/validators.txt
+  ----------------------------------
+  validators:
+    auth_patern: {0.9}8.\s\w\n
+    phone: ^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$
+    zip: ^[0-9]{5}(?:-[0-9]{4})?$
+  
+  ----------------------------------
+  file data/forms/common/address.txt
+  ----------------------------------
+  -widget:
+      id: basic_addr1
+      data_type: text
+      type: text
+      label :Address 1
+      size: 50
+      mandatory: true
+      data_context: insurer.address1
+      class: input_field
+      ignore-case-match: true
+  
+  -widget:
+      id: basic_addr2
+      data_type: text
+      type: text
+      label :Address 2
+      size: 50
+      mandatory: true
+      data_context: insurer.address2
+      class: input_field    
+  
+  -widget:
+      id: basic_city
+      data_type: text
+      type: text
+      label :City
+      size: 35
+      mandatory: true
+      data_context: insurer.city
+      class: input_field
+  
+  -widget:
+      id: basic_state
+      data_type: text
+      type: text
+      label :State
+      size: 2
+      maxlength: 2
+      mandatory: true
+      data_context: insurer.state
+      class: input_field
+      valid_patt: ^[0-9]{5}(?:-[0-9]{4})?$
+      valid_fun: validate_zipcode
+  
+  ----------------------------------
+  file data/forms/dental/dental-claim.txt
+  ----------------------------------
+  #include ../common/address.txt
+  #include ../common/validators.txt
+  
+  -widget: <  basic_city
+    id: patCity
+    data_context: patient.address.city
+    
+  -widget: < basic_state
+    id: patState
+    data_context: patient.address.state
+  
+  ```
+
+  * Ability to specify file to include in one Yaml to allow re-use of meta data.
+  * Ability to use YAML anchors @ extensions  to create template fields and only supply what was missing.   Includes adding a tutorial. 
+
+
+* YML Parser: **Support Default values for widgets**.  Note:  If the support for  -widget: < apath works well enough we may be able to defer this because we could just use  -widget < default at the top level and get the same effect.
+
+```
+defaults:
+  type: text
+  data_type: text
+  size: 20
+  mandatory: false
+  class: input_field
+
+-widget:
+    id: basic_addr2
+    type: text
+    label :Address 2
+    size: 50
+    data_context: insurer.address2
+  
+ ------------------------
+ SHOULD PARSE AND PRODUCE A RECORD THAT LOOKS LIKE
+ ------------------------
+ -widget:
+    type: text
+    data_type: text
+    size:20
+    mandatory: false
+    class: input_field
+    id: basic_addr2
+    label :Address 2
+    size: 50
+    data_context: insurer.address2
+    
+ ------------------------
+ Because it merged in the Defaults from the Widget
+ for any value not specified.  This is different
+ than the -widget: < apath because defaults would
+ still be added to any widget and fill in any fields
+ not specified either directly or by the <
+ ------------------------
+
+```
+
+
+
+* 
+
+* YML Parser: **Support localized labels**:** with a flag in the form to specify the URI of a Label generation service where we pass the form.id and widget.id , localization parameter and it passes back the localized label.   Optional pass the actual label text, form id and localization and do the lookup.  Must take the set of these to provide lower network latency.  Provide a sample service that just returns the same labels passed or an empty set.  An empty set of return labels means there is no override.  
+
+  Implement basic support so labels can all be treated as lookup values.  This may be done as a post  processing step after the YML Parse..       In effect anyplace a label was specified it can be replaced with a value looked up.   As shown below we use interpolation values {brand}/{local} to compute the URI where the value will be retrieved.   The lookup is done by Id so the merge is a little smart since when the line in the localization file "basic_addr1: Adresse 1" it has to look through all the widgets and forms an any other item where we may specify a and look for obj.label and replace what is there with "address 1" if the ID matches what is specified.  Please update programmer guide accordingly.    When the form attribute "labels: " is defined the system will automatically attempt to perform localization when the form data is first fetched using the function:  function display_form(targetDiv, formSpecUri, dataObjId, gContext)   This means the lookup values for interpolation must be set before the form is loaded.
+
+  ```
+  -------------------------
+  -- basic-form.txt -------
+  -------------------------
+  -widget:
+      id: basic_addr1
+      data_type: text
+      type: text
+      label :Address 1
+      size: 50
+      mandatory: true
+      data_context: insurer.address1
+      class: input_field
+      ignore-case-match: true
+  
+  -widget:
+      id: basic_addr2
+      data_type: text
+      type: text
+      label :Address 2
+      size: 50
+      mandatory: true
+      data_context: insurer.address2
+      class: input_field    
+  
+  
+  - form:
+     id : basicForm
+     class: inputFrm
+     label: A Basic Form   
+     fetch:
+        uri: data/claims/{dataObjId}.JSON
+        method: GET
+        parse: JSON
+     save:
+        uri: data/claims/{dataObjId}.JSON
+        verb: PUT
+        where: body   
+     show_data_obj_div: dataObjDiv
+     labels: basic_form_localize/{brand}/{local}
+     widgets:   
+             - topFieldsGroup
+             - saveButton
+  
+  -----------------------------------
+  -- basic_form_localize/national/fr.txt
+  -----------------------------------
+  basic_addr1: Adresse 1
+  basic_addr2: Address 2
+  basic_city: ville
+  ```
+
+  * **Ability to import arbitrary text for a label or a paragraph from a specified URI**.  Run it through interpolation and then render into the Div.  This allows the system to modify contents of what is normally static text such as an explanation paragraph.  This would be ran through interpolation against the selected object.  This is intended to allow arbitrary markup inclusion in generated output but may not be absolutely needed.
+  
+    * TODO:  Produce a sample and use case that is not supported by the #include module above.
+  
+    
 
 # DONE:
 
