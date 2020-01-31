@@ -88,11 +88,60 @@ Useful for example when State follows city on the same line.
 
 ### Validating using A RE pattern
 
-.
+The system has the ability to automatically apply regular expressions to validate the contents of a field.   An error message will be displayed as soon the system detects data that violates the required pattern and is removed as soon as the value becomes valid.     This was an explicit design decision because it allows users to fix data early before they are frustrated latter when they try to save.
 
-### Validating using a set of RE Patterns
+The valid_pat: tag is used to specify the pattern to match and what message is displayed when the pattern based validation fails. 
 
-.
+Here is a example of the example form when the pattern validation failed.
+
+![regex field validation failed](img/sample-failed-regex-validation.jpg) 
+
+Here is an example of when the same form field has a valid value ![sucesful regext validation sample ](img/sample-sucesful-regex-field-validation.jpg)
+
+[RE Pattern example src](data/forms/examples/field-validator-regex.txt)
+
+```
+-widget:
+    id: basic_zip
+    data_type: text
+    type: text
+    label :Zip
+    size: 11
+    data_context: person.zip
+    class: input_field
+    valid_pat:
+       pattern: ^[0-9]{5}(?:-[0-9]{4})?$
+       message : Invalid zipcode try 5 digits or zip plus 4. eg: 84401 or 84401-8178
+
+- form:
+   id : sample_field_validator
+   class: inputFrm
+   label: Regular Expression based Field Validator
+   show_data_obj_div: dataObjDiv
+   widgets:   
+      - basic_zip
+      
+```
+
+#### Validating with more than one RE pattern
+
+In some instances it is necessary to perform more than one validation.  for example you may want to accept either the USA or French zipcode format.     The system supports this by allowing you to specify more than one pattern as an array.    The system will attempt to match any of he patterns and will consider a match against any single pattern as enough to consider the field value as valid.
+
+[RE  Pattern Example with multiple patterns source](field-validator-regex-multiple.txt)
+
+```
+  valid_pat:
+       pattern: 
+         -^[0-9]{5}(?:-[0-9]{4})?$
+         -^(([\d]{2} )|(2[abAB] ))*(([\d]{2})|(2[abAB]))$
+       message : Invalid zipcode try 5 digits or zip plus 4. eg: 84401 or 84401-8178
+```
+
+​	Any of the patterns being satisfied will allow us to consider the  data in the field as valid.
+
+
+
+
 
 ### Validating using a built-in validation function
 

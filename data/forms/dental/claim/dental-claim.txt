@@ -77,8 +77,6 @@
     mandatory: true
     data_context: insurer.state
     class: input_field
-    valid_patt: ^[0-9]{5}(?:-[0-9]{4})?$
-    valid_fun: validate_zipcode
 
 -widget:
     id: insuranceCompZip
@@ -89,6 +87,19 @@
     mandatory: true
     data_context: insurer.zip
     class: input_field
+    valid_pat:
+       #- {pattern: "^[0-9]{5}(?:-[0-9]{4})?$", "message" : "Invalid zipcode try 5 digits or zip plus 4. eg: 84401 or 84401-8178"}
+       pattern: ^[0-9]{5}(?:-[0-9]{4})?$
+       message : Invalid zipcode try 5 digits or zip plus 4. eg: 84401 or 84401-8178
+
+    xvalid_pat:
+       message : Invalid zipcode try 5 digits or zip plus 4. eg: 84401 or 84401-8178
+       pattern: 
+         - ^[0-9]{5}(?:-[0-9]{4})?$
+         - ^(([\d]{2} )|(2[abAB] ))*(([\d]{2})|(2[abAB]))$
+    valid_fun: 
+      - fun_name=validate_zipcode
+       message: zipcode validation failed
 
 - widget:
     id: insurerGroup

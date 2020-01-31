@@ -4,6 +4,35 @@
 
 * YML Parser
 
+  * Fix Array level parsing error:  In the example below the ^ on the front of the array elements at widget.valid_pat.pattern seems to be stripping of the first character of the string which makes the RE pattern invalid.  See:  [../../data/forms/examples/field-validator-regex-multiple.txt](../../data/forms/examples/field-validator-regex-multiple.txt)
+
+  ```
+  -widget:
+      id: basic_zip
+      data_type: text
+      type: text
+      label :Zip
+      size: 11
+      data_context: person.zip
+      class: input_field
+      valid_pat:
+         pattern:
+           -^[0-9]{5}(?:-[0-9]{4})?$
+           -^(([\d]{2} )|(2[abAB] ))*(([\d]{2})|(2[abAB]))$
+         message : Invalid zipcode try 5 digits or zip plus 4. eg: 84401 or 84401-8178
+  
+  - form:
+     id : sample_field_validator
+     class: inputFrm
+     label: Regular Expression based Field Validator
+     show_data_obj_div: dataObjDiv
+     widgets:   
+        - basic_zip
+        
+  ```
+
+  
+
   * Ability to use value from any previously defined data element.  Eg define phone # validator pattern and then re-use with access via get nested.  EG:    
 
     ```yml

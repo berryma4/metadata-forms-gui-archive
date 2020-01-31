@@ -29,14 +29,54 @@
  }
 
 
- function mformValidateDataValue(context, dataObj, widDef, fieldId, hwidget, fldVal) {
+ function mformValidateFieldValue(context, dataObj, widDef, hwidget, fldVal) {
      var dataContext = widDef.data_context;
      var widId = widDef.id;
+     if (isObject(widDef.valid_fun)) {
+         widDef.valid_fun = [widDef.valid_fun];
+     }
+     statusDiv = widDef.id + "Status";
+     // Process Validation RegEx Patterns
+     if ("valid_pat" in widDef) {
+         var vpat = widDef.valid_pat;
+         // If single validation pattern convert to array
+         // so we can treat the main logic as an array
+         if (isString(vpat.pattern)) {
+             vpat.pattern = [vpat.pattern];
+         }
 
-     // If single validation pattern
-     // If Array of Validation Patterns
-     // If single validation function
-     // if valid validation pattern.
+         // Walk the Validation patterns and apply them 
+         // if needed.
+         var numPat = vpat.pattern.length;
+         var errMsg = null;
+         for (var pndx = 0; pndx < numPat; pndx++) {
+             var pat = vpat.pattern[pndx];
+             try {
+                 var compRePat = new RegExp(pat);
+                 testRes = compRePat.test(fldVal);
+                 if (testRes == false) {
+                     errMsg = vpat.message;
+                 } else {
+                     errMsg = null; // valid at least one sucess match
+                     break;
+                 }
+             } catch (err) {
+                 console.log("L64: Error trying to apply RE pattern: " + pat + "FldVal=" + fldVal + " err=" + err);
+             }
+         }
+         // Display or hide status message as needed.
+         if (errMsg != null) {
+             showDiv(statusDiv);
+             toDiv(statusDiv, errMsg);
+             return false;
+         } else {
+             toDiv(statusDiv, "");
+             hideDiv(statusDiv);
+         }
+     } // at least one valid_pat to check.
+
+     // Process Validation Functions
+
 
  }
 
@@ -50,7 +90,6 @@
      var context = GTX.formContexts[formId][dataObjId];
      var dataObj = GTX.dataObj[dataObjId];
      var fldVal = null;
-     var isValdVal = mformValidateDataValue(context, dataObj, widDef, hwidget, fldVal)
      if (widDef.type == "radio") {
          if (hwidget.checked == true) {
              fldVal = hwidget.value;
@@ -62,6 +101,7 @@
          fldVal = hwidget.value.trim();
      }
 
+     var isValdVal = mformValidateFieldValue(context, dataObj, widDef, hwidget, fldVal)
      var oldFldVal = getNested(dataObj, dataContext, null);
      var saveFlg = true;
      if ((fldVal != oldFldVal) && (fldVal != null)) {
