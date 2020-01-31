@@ -75,7 +75,9 @@
   
   * [cspan common RE patterns](https://metacpan.org/pod/Regexp::Common)
   
-  * 
+  * [complete javascript guide to regex](https://www.w3schools.com/jsref/jsref_obj_regexp.asp)
+  
+  * [validate fields using javascript and regex](https://www.w3schools.com/jsref/jsref_obj_regexp.asp)
 
 
 

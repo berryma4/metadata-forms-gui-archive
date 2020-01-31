@@ -51,7 +51,11 @@
     
     ```
 
+    **Ability to import arbitrary text for a label or a paragraph from a specified URI**.  Run it through interpolation and then render into the Div.  This allows the system to modify contents of what is normally static text such as an explanation paragraph.  This would be ran through interpolation against the selected object.
+
     Please update programmer guide accordingly.
+
+    
 
     
 
@@ -129,9 +133,13 @@
     
     ```
 
-    
+    * Ability to specify file to include in one Yaml to allow re-use of meta data.
 
-  * Implement basic support so labels can all be treated as lookup values.  This may be done as a post  processing step after the YML Parse..       In effect anyplace a label was specified it can be replaced with a value looked up.   As shown below we use interpolation values {brand}/{local} to compute the URI where the value will be retrieved.   The lookup is done by Id so the merge is a little smart since when the line in the localization file "basic_addr1: Adresse 1" it has to look through all the widgets and forms an any other item where we may specify a and look for obj.label and replace what is there with "address 1" if the ID matches what is specified.  Please update programmer guide accordingly.    When the form attribute "labels: " is defined the system will automatically attempt to perform localization when the form data is first fetched using the function:  function display_form(targetDiv, formSpecUri, dataObjId, gContext)   This means the lookup values for interpolation must be set before the form is loaded.
+    * Ability to use YAML anchors @ extensions  to create template fields and only supply what was missing.   Includes adding a tutorial. 
+
+  * **Support localized labels:** with a flag in the form to specify the URI of a Label generation service where we pass the form.id and widget.id , localization parameter and it passes back the localized label.   Optional pass the actual label text, form id and localization and do the lookup.  Must take the set of these to provide lower network latency.  Provide a sample service that just returns the same labels passed or an empty set.  An empty set of return labels means there is no override.  
+
+    Implement basic support so labels can all be treated as lookup values.  This may be done as a post  processing step after the YML Parse..       In effect anyplace a label was specified it can be replaced with a value looked up.   As shown below we use interpolation values {brand}/{local} to compute the URI where the value will be retrieved.   The lookup is done by Id so the merge is a little smart since when the line in the localization file "basic_addr1: Adresse 1" it has to look through all the widgets and forms an any other item where we may specify a and look for obj.label and replace what is there with "address 1" if the ID matches what is specified.  Please update programmer guide accordingly.    When the form attribute "labels: " is defined the system will automatically attempt to perform localization when the form data is first fetched using the function:  function display_form(targetDiv, formSpecUri, dataObjId, gContext)   This means the lookup values for interpolation must be set before the form is loaded.
 
     ```
     -------------------------
@@ -190,6 +198,8 @@
   * 
 
   
+
+* 
 
 * Easy ability to force label to align to left or above field. 
 
@@ -410,8 +420,7 @@
 
 * Extend Forms parser to allow include loading additional files which have contents loaded at end of the existing file.    What happens in Yaml if you reload the same key a second time.
 * 
-* **Ability to import arbitrary text for a label or a paragraph from a specified URI**.  Run it through interpolation and then render into the Div.  This allows the system to modify contents of what is normally static text such as an explanation paragraph.  This would be ran through interpolation against the selected object.
-* **Support localized labels:** with a flag in the form to specify the URI of a Label generation service where we pass the form.id and widget.id , localization parameter and it passes back the localized label.   Optional pass the actual label text, form id and localization and do the lookup.  Must take the set of these to provide lower network latency.  Provide a sample service that just returns the same labels passed or an empty set.  An empty set of return labels means there is no override.  
+* 
 * Ability to transform data to entirely different structure for output.   Use a Output Path in data context. 
 * Support a expanding Detail Widget where it shows some basic text then when user clicks on a expansion icon it expands that row and allows editing and adding to an array of items.
 * Demonstrate ability to  handle multi-level nested forms eg:   Plan to list of clients to single client to list of sub clients to list of contacts to single contact with CRUD Add, Edit, Drop.
@@ -448,9 +457,8 @@
 * Add physicians list to the data set for demonstration.
 * Increase font sizes when displayed in portrait mode on android browser.
 * Add fallback of manually built date picker widget for older browsers .   Support Native Date picker on modern browsers fall back to rendered. 
-* Ability to specify file to include in one Yaml to allow re-use of meta data.
+* 
 
-* Ability to use YAML anchors @ extensions  to create template fields and only supply what was missing.   Includes adding a tutorial. 
 * Ability to take reasonable defaults when not specified.  EG:  dataType can be assumed to be string unless otherwise specified.    PlaceHolder can be assumed to be Label unless specified.  PlaceHolder can be assumed to be same as Label unless specified. 
 * Ability to parse delimited files with headers
 * Ability to parse JSON files 
@@ -495,7 +503,7 @@
 * Support loading list of values for popdown list from specified URI in form / widget
 * Ability to load CSS from file specified in the form rather than requiring it to be loaded in parent html page.
 * For fda sample page remove the right navigation payne and enlarge middle payne when  displaying on anything less than 900 px;
-* 
+* Implement toots / test  screen which validates contents of one field based on contents of another field using RegEx.  Must make it easy for developers to test regex patterns before they specify them in metadata.
 
 
 
