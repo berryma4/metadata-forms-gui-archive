@@ -6,6 +6,7 @@
 * Ensure both the Global and local context are searched during interpolation
 * Test / Demo arbitrary creation of variables at top level of Yaml to support re-use.  EG: A float  pattern would be re-usable across many fields. 
 * DONE:JOE:2020-01-26: Add userCollapsible feature to group level that renders the group with an icon to collaps with Icon to re-explode.
+* DONE:JOE:2020-01-26: Modify arrow when group is contracted to point down to expand and up when contraction is available.
 * AutoHideCollapsible feature added at the group level.  Do not render that portion if a data match does not exist eg:    {collapsible: { dataFiter: { src_data_context: person.isbuyer  compareFun: isTrue(), monitor: [persIsBuyer]}}}    Then must set a filter event or watcher so every change to one of a set Id triggers re-evaluation to add that area.  We will need the containter rendered so there is someplace to put it even if we skipped rendering it last time.     This implies we will need a list of rendered ID for the form so we can do global validation of mandatory fields that skips those fields we chose not render.
 * Switch over to using Flexbox instead of inline-block for field placement.
 * Switch over to using Label-for instad of manual label div specification.
@@ -14,6 +15,7 @@
 * Warn programmer if Requested data object can not be located.
 * Horizontal Div blocks are not properly wrapping.
 * comments trailing the data value on the line are not properly detected and removed after parsing YML
+* DONE:JOE:2020-01-26: Move Demo-page layout to separate CSS so only that CSS germane to general forms remains in meta-forms. css also move cert-of-need.css specific styling to an external file and dental specific styling to adaform.css.
 * Demo of Implement 
   * Convert CDT to CSV for rapid file transfer.
   * Create basic ADA For Fields.

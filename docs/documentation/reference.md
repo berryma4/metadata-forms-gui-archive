@@ -46,6 +46,8 @@
   * [tool to show page in different viewports](https://app.protofluid.com/#https://joeatbayes.github.io/metadata-forms-gui/)
   * [stylizing checkboxes](https://cssnewbie.com/stylize-checkboxes-and-text-fields-using-css/#.XfcRdmTYq0o)
   * [Fixing legend formatting](https://beckism.com/2008/12/display_block_legend/)
+  * [Block styling legend](https://beckism.com/2008/12/display_block_legend/)
+  * [Right align and block outline legend](https://pixy.cz/blogg/clanky/css-fieldsetandlabels.html)
   * 
 
 * ### **GO**

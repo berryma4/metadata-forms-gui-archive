@@ -1,0 +1,5 @@
+#operatorStateContainer .input_fieldLabel,
+#operatorZipContainer .input_fieldLabel {
+    width: fit-content;
+    padding-left: 0.15em;
+}

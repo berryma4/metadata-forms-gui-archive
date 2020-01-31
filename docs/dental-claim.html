@@ -3,8 +3,9 @@
 <head>  
   <meta description="Dental Claim Submission screen created using Metadata driven forms. ">
   <meta name="google-site-verification" content="myFdbACBjfzL70PhkK5FOMVF7syP7K9EE8iwF-AEL8A" />  
-  <link rel="stylesheet" type="text/css" href="css/forms.css" />
-  <link rel="stylesheet" type="text/css" href="css/mforms-demo-1.css" />
+  <link rel="stylesheet" type="text/css" href="css/demo-page-layout.css" />
+  <link rel="stylesheet" type="text/css" href="css/meta-forms.css" />
+  <link rel="stylesheet" type="text/css" href="css/adaform.css" />
   <style>
     .h3 {
       text-decoration: none;
@@ -28,7 +29,7 @@
 
 </head>
 
-<body>
+<body onLoad="display_form('mbody', 'data/forms/dental/claim/dental-claim',  null, GTX)">
   <div id="top_nav">
     <h1>Sample Dental Claims Submission</h1>
   </div>
@@ -51,8 +52,8 @@
       <!--<li><a href="#" onclick="renderCurrentTree()">Show Full Tree</a></li>-->
     </div><div id="mbody">
 
-      <h3 onclick="display_form('mbody', 'data/forms/dental/claim/dental-claim',  null, GTX)">
-        Render Dental Claim Form by clicking on Render Claim to Left </h3>
+      <!--<h3 onclick="display_form('mbody', 'data/forms/dental/claim/dental-claim',  null, GTX)">
+        Render Dental Claim Form by clicking on Render Claim to Left </h3>-->
 
     </div><!--mbody-->
     <div id="dataObjDiv"></div>

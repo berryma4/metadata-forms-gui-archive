@@ -334,7 +334,7 @@
 
          b.make("div", {
              "class": "arrow-up",
-             "onclick": "toggleDiv('" + contDivName + "')"
+             "onclick": "toggleDivEvent(this, '" + contDivName + "')"
          });
          b.start("div", {
              "id": contDivName,
