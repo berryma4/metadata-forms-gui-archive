@@ -4,6 +4,17 @@
 
 * YML Parser
 
+  * comments trailing the data value on the line are not properly detected and removed after parsing YML.   The text after # on id: basic_zip should be removed during parsing with any trailing spaces removed.
+
+    ```
+    -widget:
+        id: basic_zip #Some comment text
+        data_type: text
+        type: text
+    ```
+
+    
+
   * Fix Array level parsing error:  In the example below the ^ on the front of the array elements at widget.valid_pat.pattern seems to be stripping of the first characters of the string which makes the RE pattern invalid.  See:  [../../data/forms/examples/field-validator-regex-multiple.txt](../../data/forms/examples/field-validator-regex-multiple.txt)
 
   ```
@@ -224,11 +235,9 @@
 
     
 
-  * 
-
   
 
-* 
+* Add basic support for Rows & Columns 
 
 * Easy ability to force label to align to left or above field. 
 
@@ -254,9 +263,13 @@
 
 * Horizontal Div blocks are not properly wrapping.
 
-* comments trailing the data value on the line are not properly detected and removed after parsing YML
+* 
 
-* DONE:JOE:2020-01-26: Move Demo-page layout to separate CSS so only that CSS germane to general forms remains in meta-forms. css also move cert-of-need.css specific styling to an external file and dental specific styling to adaform.css.
+* Support calling of a user specified Function to validate field contents.
+
+* Support calling of user specified URI to validate field contents.
+
+* 
 
 * Demo of Implement 
 
@@ -300,10 +313,6 @@
 * Demo of Patient Intake form
 
 * Demo of Implement sample Client / sub client forms.
-
-* 
-
-* 
 
 * Add support for HGroup.   Horizontal Group ideally using CSS to allow same row flex placement but with a min-width  to force wrapping as the screen shrinks.  horizontal group that is not allowed to wrap widgets. EG for city, state, zip
 
@@ -480,7 +489,6 @@
 * Add physicians list to the data set for demonstration.
 * Increase font sizes when displayed in portrait mode on android browser.
 * Add fallback of manually built date picker widget for older browsers .   Support Native Date picker on modern browsers fall back to rendered. 
-* 
 
 * Ability to take reasonable defaults when not specified.  EG:  dataType can be assumed to be string unless otherwise specified.    PlaceHolder can be assumed to be Label unless specified.  PlaceHolder can be assumed to be same as Label unless specified. 
 * Ability to parse delimited files with headers
@@ -532,6 +540,7 @@
 
 # DONE:
 
+* DONE:JOE:2020-01-26: Move Demo-page layout to separate CSS so only that CSS germane to general forms remains in meta-forms. css also move cert-of-need.css specific styling to an external file and dental specific styling to adaform.css.
 * DONE:JOE:2020-01-27: Demonstrate a RegEx field Validation functionality 
 * DONE:JOE:2020-01-26: Add userCollapsible feature to group level that renders the group with an icon to collaps with Icon to re-explode.
 * DONE:JOE:2020-01-26: Modify arrow when group is contracted to point down to expand and up when contraction is available.
