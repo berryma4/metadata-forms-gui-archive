@@ -239,6 +239,38 @@
 
 * Add basic support for Rows & Columns 
 
+  * Add array level support to setNested and getNested.
+
+  * Must support column header rather than field headers.
+
+  * Support a Table for Array Element Display 
+
+    * Table Row Widget with includes Columns which support 1 or more widgets where the data binding includes the row index.   
+    * Modify get nested so if a value is passed with path as  family.children.[3].name.first that is pulls the 3rd child.  Same with updates.
+    * Demonstrate alternating color bands in table widget.
+    * Demonstrate repeated headers in a table widget
+    * Support client side sort,  
+    * Support client side scroll through a larger list, 
+    * Expand larger page to fit and return to server paging. 
+    * Add support for alternating color Table in list view with custom links to open up next table
+    * Show Fields that fail validating in a alternate background color
+    * Hide rest of fields for other insurance when it does not apply
+    * When other insurance does apply then those fields should be mandatory.
+    * 
+
+    
+
+* Switch over to using Label-for instead of manual label div specification.
+
+* Implement TAB bar widget which is very similar to top menu bar except is supports a change of visualization for the TAB that is currently open.
+
+  * Ability to defer rendering inactive TABS until the tab is displayed.  Since content on one tab could change based on actions in another tab then 
+  * Ability to show TABS that have incomplete work before record can be saved to server.
+
+* Need a list of all fields rendered for a form to make form level validation check easy.
+
+* Need to updates field_value_valid flag  at field level so we can rapidly determine if any required fields contain invalid values.  Save button should be disabled when invalid fields are present.
+
 * Easy ability to force label to align to left or above field. 
 
 * Demonstrate a company search using data from cert-of-need or from provider search. 
@@ -253,7 +285,7 @@
 
 * Switch over to using Flexbox instead of inline-block for field placement.
 
-* Switch over to using Label-for instad of manual label div specification.
+* 
 
 * Modify Date parser to accept alternative input form and reform to desired format to support date picker.
 
@@ -346,31 +378,13 @@
 
 * Demonstrate creating a POST string for send when fetching the object.
 
-* Implement TAB bar widget which is very similar to top menu bar except is supports a change of visualization for the TAB that is currently open.
-
-  * Ability to defer rendering inactive TABS until the tab is displayed.  Since content on one tab could change based on actions in another tab then 
-  * Ability to show TABS that have incomplete work before record can be saved to server.
+* * 
 
 * 
 
 * Support Generic Notion of a hideable sub form where the system can open sub form on entry or hover to parent div reflow to make fit.   Should use html detail view if feasible. Should support manual save hide.   Show status when mandatory fields are empty or hidden fields contain fields failing validation widgets. 
 
-* Support a Table for Array Element Display 
-
-  * Table Row Widget with includes Columns which support 1 or more widgets where the data binding includes the row index.   
-  * Modify get nested so if a value is passed with path as  family.children.[3].name.first that is pulls the 3rd child.  Same with updates.
-  * Demonstrate alternating color bands in table widget.
-  * Demonstrate repeated headers in a table widget
-  * Support client side sort,  
-  * Support client side scroll through a larger list, 
-  * Expand larger page to fit and return to server paging. 
-  * Add support for alternating color Table in list view with custom links to open up next table
-  * Show Fields that fail validating in a alternate background color
-  * Hide rest of fields for other insurance when it does not apply
-  * When other insurance does apply then those fields should be mandatory.
-  * 
-
-* Allow clicking on +- to show hide Div group sections make rendering the collapse functions optional.
+* DONE:JOE:2020-01-27: Allow clicking on +- to show hide Div group sections make rendering the collapse functions optional.
 
 * Add support to render list of certificates with a  metadata form widget.
 
