@@ -4,7 +4,7 @@
 
 * YML Parser
 
-  * Fix Array level parsing error:  In the example below the ^ on the front of the array elements at widget.valid_pat.pattern seems to be stripping of the first character of the string which makes the RE pattern invalid.  See:  [../../data/forms/examples/field-validator-regex-multiple.txt](../../data/forms/examples/field-validator-regex-multiple.txt)
+  * Fix Array level parsing error:  In the example below the ^ on the front of the array elements at widget.valid_pat.pattern seems to be stripping of the first characters of the string which makes the RE pattern invalid.  See:  [../../data/forms/examples/field-validator-regex-multiple.txt](../../data/forms/examples/field-validator-regex-multiple.txt)
 
   ```
   -widget:
@@ -234,17 +234,11 @@
 
 * Demonstrate a company search using data from cert-of-need or from provider search. 
 
-* Demonstrate a field validator for simple single token all alpha numeric.
-
 * Ensure both the Global and local context are searched during interpolation
 
 * Test / Demo arbitrary creation of variables at top level of Yaml to support re-use.  EG: A float  pattern would be re-usable across many fields. 
 
 * Extend showDiv, hideDiv to use the lastDisplayStyle feature so when re-showing a div we bring back it's original display status rather than block.
-
-* DONE:JOE:2020-01-26: Add userCollapsible feature to group level that renders the group with an icon to collaps with Icon to re-explode.
-
-* DONE:JOE:2020-01-26: Modify arrow when group is contracted to point down to expand and up when contraction is available.
 
 * AutoHideCollapsible feature added at the group level.  Do not render that portion if a data match does not exist eg:    {collapsible: { dataFiter: { src_data_context: person.isbuyer  compareFun: isTrue(), monitor: [persIsBuyer]}}}    Then must set a filter event or watcher so every change to one of a set Id triggers re-evaluation to add that area.  We will need the containter rendered so there is someplace to put it even if we skipped rendering it last time.     This implies we will need a list of rendered ID for the form so we can do global validation of mandatory fields that skips those fields we chose not render.
 
@@ -538,6 +532,9 @@
 
 # DONE:
 
+* DONE:JOE:2020-01-27: Demonstrate a RegEx field Validation functionality 
+* DONE:JOE:2020-01-26: Add userCollapsible feature to group level that renders the group with an icon to collaps with Icon to re-explode.
+* DONE:JOE:2020-01-26: Modify arrow when group is contracted to point down to expand and up when contraction is available.
 * Done:JOE:2020-01-25 warn programmer if data context can not be located.
 * DONE:JOE:2020-01-25: Add Default Values for Form fields when no value is supplied in the JSON
 * DONE:JOE:2020-01-25: Support null for data Obj Id which will create a object with time + random generated id.
