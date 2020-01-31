@@ -2,21 +2,92 @@
 
 # Rank Ordered Feature Work
 
+* YML Parser
+
+  * Ability to use value from any previously defined widget.  Eg define phone # validator pattern and then re-use with access via get nested.  EG:    
+
+    ```yml
+    validators:
+      auth_patern: {0.9}8.\s\w\n
+    
+    widget:
+        id: preauthNumber
+        data_type: text
+        type: text
+        label : Preauthorization number
+        data_context: claim.insurance.preAuthRef
+        class: input_field
+        ignore-case-match: true
+        valid_pat: <validators.auth_pattern
+    
+    ```
+
+    
+
+  * Ability to import a base widget Def from another defined widget and only override what changes
+
+    ```yaml
+    validators:
+      auth_patern: {0.9}8.\s\w\n
+      phone: ^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$
+      zip: ^[0-9]{5}(?:-[0-9]{4})?$
+    
+    - widget: 
+      id: basic_phone
+      data_type: text
+      type: text
+      label: phone #
+      data_context: empty
+      class: input_field
+      ignore_case_match: true
+      valid_patt: <validators.phone
+      
+    -widget: <basic_phone
+        label: Patient Phone #
+        data_context: claim.patient.phoneNum
+    
+    ```
+
+    
+
+  * Ability to import another widget definition file using a #INCLUDE directive.  Make sure the #Include is relative to the directory containing the file where it occurs. 
+
+  * Implement basic support so labels can all be treated as lookup. 
+
+* Demonstrate a company search using data from cert-of-need or from provider search. 
+
 * Demonstrate a field validator for simple single token all alpha numeric.
+
 * Ensure both the Global and local context are searched during interpolation
+
 * Test / Demo arbitrary creation of variables at top level of Yaml to support re-use.  EG: A float  pattern would be re-usable across many fields. 
+
+* Extend showDiv, hideDiv to use the lastDisplayStyle feature so when re-showing a div we bring back it's original display status rather than block.
+
 * DONE:JOE:2020-01-26: Add userCollapsible feature to group level that renders the group with an icon to collaps with Icon to re-explode.
+
 * DONE:JOE:2020-01-26: Modify arrow when group is contracted to point down to expand and up when contraction is available.
+
 * AutoHideCollapsible feature added at the group level.  Do not render that portion if a data match does not exist eg:    {collapsible: { dataFiter: { src_data_context: person.isbuyer  compareFun: isTrue(), monitor: [persIsBuyer]}}}    Then must set a filter event or watcher so every change to one of a set Id triggers re-evaluation to add that area.  We will need the containter rendered so there is someplace to put it even if we skipped rendering it last time.     This implies we will need a list of rendered ID for the form so we can do global validation of mandatory fields that skips those fields we chose not render.
+
 * Switch over to using Flexbox instead of inline-block for field placement.
+
 * Switch over to using Label-for instad of manual label div specification.
+
 * Modify Date parser to accept alternative input form and reform to desired format to support date picker.
+
 * Warn programmer if form specification can not be loaded.
+
 * Warn programmer if Requested data object can not be located.
+
 * Horizontal Div blocks are not properly wrapping.
+
 * comments trailing the data value on the line are not properly detected and removed after parsing YML
+
 * DONE:JOE:2020-01-26: Move Demo-page layout to separate CSS so only that CSS germane to general forms remains in meta-forms. css also move cert-of-need.css specific styling to an external file and dental specific styling to adaform.css.
+
 * Demo of Implement 
+
   * Convert CDT to CSV for rapid file transfer.
   * Create basic ADA For Fields.
   * Fast search filter widget to make search by codes easy.
@@ -39,7 +110,9 @@
   * set city and state from zip when the zip is not set to None.
   * Validate Zip from list of valid zipcodes.
   * 
+
 * Claim Form Deferable Enhancements
+
   * Support rendering array of procedure codes and editing inline.   Better yet always render a blank line when they start filling in a line then add another blank line.
   * Validate zipcode against presence of a zipcode file show error message when no match.
   * Default quantity to 1
@@ -51,33 +124,58 @@
   * When procedure code is entered support rapid search that pops up when they enter.  Or add a search popup that allows search and then sets the code.
   * When procedure code is entered then populate description if description does not have text in it.
   * On claim form support adding new blank lines with a +
+
 * Demo of Patient Intake form
+
 * Demo of Implement sample Client / sub client forms.
+
 * 
+
 * 
+
 * Add support for HGroup.   Horizontal Group ideally using CSS to allow same row flex placement but with a min-width  to force wrapping as the screen shrinks.  horizontal group that is not allowed to wrap widgets. EG for city, state, zip
+
 * Add support for a Widget Icon that is added in addition to the label field Widget Icon that is rendered before the actual Widget when specified.
+
 * Add support for basic validators demonstrate with zipcode and state
+
 * Add support for checkbox widget
+
 * Add support for drop down list widget
+
 * Add support for radio button widget
+
 * respect data type specifier in widget rather than keeping as text
+
 * Add Checkbox Widget
+
 * Display edit error messages below the field when validation or edit rules are violated.  Implement validation function showing an error message
+
 * Implement Top Menu Bar Widget where the menu could be display a different form  could be separate page.
+
 * When updating DOM with record value if the field fails it's validation then display error message at that time in a div that remains hidden until validation validation fails.
+
 * Switch to using HTML label-for tag rather than old approach.
+
 * Finish code to submit object back to a target URI.
+
   * Disable Save Button until the Form is Dirty.
   * Detect forms that contain unsaved data.   Warn user if they are leaving page context when there are  unsaved changes on the form. 
   * 
+
 * Demonstrate creating a POST string for send when fetching the object.
+
 * Implement TAB bar widget which is very similar to top menu bar except is supports a change of visualization for the TAB that is currently open.
+
   * Ability to defer rendering inactive TABS until the tab is displayed.  Since content on one tab could change based on actions in another tab then 
   * Ability to show TABS that have incomplete work before record can be saved to server.
+
 * 
+
 * Support Generic Notion of a hideable sub form where the system can open sub form on entry or hover to parent div reflow to make fit.   Should use html detail view if feasible. Should support manual save hide.   Show status when mandatory fields are empty or hidden fields contain fields failing validation widgets. 
+
 * Support a Table for Array Element Display 
+
   * Table Row Widget with includes Columns which support 1 or more widgets where the data binding includes the row index.   
   * Modify get nested so if a value is passed with path as  family.children.[3].name.first that is pulls the 3rd child.  Same with updates.
   * Demonstrate alternating color bands in table widget.
@@ -90,37 +188,65 @@
   * Hide rest of fields for other insurance when it does not apply
   * When other insurance does apply then those fields should be mandatory.
   * 
+
 * Allow clicking on +- to show hide Div group sections make rendering the collapse functions optional.
+
 * Add support to render list of certificates with a  metadata form widget.
+
 * Tutorial showing custom rendering agent
+
 * **Allow form display without custom HTML** - Ability to specify form display and data object in URI when driver page is loaded.  This allows demonstrating new forms without requiring any code changes.
+
 * Display indicator that form when  dirty and unsaved when a field changes from original data.
+
 * Date Widget Support
+
   * Add some of new HTML widgets like Date
   * Allow parsing of dates in common text formats into form required for the date widget. Also allow reformat into desired format for sending back to service.
+
 * Audit Widget that shows each data change that has occurred for the current data object.   Optionally show forms displayed.
+
 * Allow some fields to be disabled in metadata spec to prevent editing.
+
 * Allow some fields to be disabled for editing until a rule becomes true.  
+
 * Detect portrait mode on phone and change font size or try different font specifications such as 12px to see what shows up most consistently readable across the largest number of devices.
+
 * Support for deep linking which would load and render a stack of form along with data object in background.  To allow page to be re-displayed on a new device.
+
 * Support to feed incremental changes back to server so user can switch devices even before they submit using the deep link features. 
+
 * Ability to chain forms together into a series where all the mandatory fields in the series must be filled in before the form is saved to server.
+
 * Add support for tabs across top of page rendering sub forms into tab as they are clicked.
+
 * Hide data / JSON view when in  portrait on mobile device.
+
 * Add support to change text size when page is displayed on mobile device.
+
 * Add support for chained forms that display one after another
+
 * Add support for disabled widgets.
+
 * Add support to disable submit button when all mandatory fields are not filled in.
+
 * Ability to fetch contents of dropdown, radio, checkbox lists from remote service rather than embedding in  form.
+
 * Add Horizontal slider widget.
+
 * **Save Data back to server:** Add support to PUT or POST data back to server on save button press when all validation rules are good.   
+
   * Generic support for copying from a given getNested path in document read from server into different setNested path in preparation to send back to update web service.
   * Ability to Re-try save in to server after failure of function call.
   * Show Saving Message in browser when save Ajax Call is in process.
   * Simple semantic to allow sendBackToServer or  saveDataContext which defaults to main data context but if set to NONE will omit field from data sent back to server.
+
 * Image Display Widget
+
 * Image Upload Widget
+
 * Simple Server that can save updates for Demo purposes.
+
   * Add SSL to Simple Server
   * Save basic changes to objects in a data directory
   * Apply basic security for these objects based on JSession
@@ -129,11 +255,17 @@
   * Utility to convert arbitrary TSV file into a searchable permuted index one file per column with optional specification to combine columns such as first, last middle name.
     * File bisect server utility to find object identity from matching tokens 
     * Think about how to make this useful for publishing on a static server where I do not have server side functionality so it can be demonstrated on git.io. EG produce a list of Object ID  for each token and keep in one file per toke then the client can match.  Then create edge ngram files showing the tokens that are contained in each edge prefix to allow fast match retrieval by client.   
+
 * Utility to convert sample people to JSON and save in fireBase on google.  Also modify sample to query firebase.
+
 * **Support stylesheets specified in the form metadata**.  These are  are added at runtime by naming in the form specification.  Must support interpolation. 
+
 * **Support Alternative Style sheets by Brand**.   Ideally show that as a interpolation parameter.  Allows a single form to be rendered with different look and feel. Ability to specify custom style in uri such as abc.com#style=x3 that causes a style sheet to be added to the page.  The list of stylesheets is computed from a spec in the form and if the style parameter is present in the file is interpolated into the style URI from parameters specified in the URI.  
+
 * Display Rather than Edit Mode for Form - Support display mode which either renders the widget without the edit components or which changes the CSS selector to hide the edit field,  disables the field for editing changes the spacing to a tighter space.    Should support transition to display mode rather than edit mode as simple function call. 
+
 * Basic Tutorial - Shows how different features work. 
+
   * Demonstrate multiple image selector widget.
   * Demonstrate support for fields with labels forced to wrap 
 

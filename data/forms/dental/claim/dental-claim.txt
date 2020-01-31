@@ -77,6 +77,8 @@
     mandatory: true
     data_context: insurer.state
     class: input_field
+    valid_patt: ^[0-9]{5}(?:-[0-9]{4})?$
+    valid_fun: validate_zipcode
 
 -widget:
     id: insuranceCompZip

@@ -28,6 +28,18 @@
      console.log("in save form changes widId=", widId, "formId=", formId, " dataObjId=", dataObjId, "context=", context);
  }
 
+
+ function mformValidateDataValue(context, dataObj, widDef, fieldId, hwidget, fldVal) {
+     var dataContext = widDef.data_context;
+     var widId = widDef.id;
+
+     // If single validation pattern
+     // If Array of Validation Patterns
+     // If single validation function
+     // if valid validation pattern.
+
+ }
+
  function mformFieldChanged(hwidget) {
      var attr = hwidget.attributes;
      var widId = hwidget.id.split("-_")[0];
@@ -38,6 +50,7 @@
      var context = GTX.formContexts[formId][dataObjId];
      var dataObj = GTX.dataObj[dataObjId];
      var fldVal = null;
+     var isValdVal = mformValidateDataValue(context, dataObj, widDef, hwidget, fldVal)
      if (widDef.type == "radio") {
          if (hwidget.checked == true) {
              fldVal = hwidget.value;

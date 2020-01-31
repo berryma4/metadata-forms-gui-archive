@@ -48,6 +48,7 @@
   * [Fixing legend formatting](https://beckism.com/2008/12/display_block_legend/)
   * [Block styling legend](https://beckism.com/2008/12/display_block_legend/)
   * [Right align and block outline legend](https://pixy.cz/blogg/clanky/css-fieldsetandlabels.html)
+  * [validation patterns for phones](http://regexlib.com/Search.aspx?k=phone&AspxAutoDetectCookieSupport=1)
   * 
 
 * ### **GO**

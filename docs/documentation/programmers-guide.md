@@ -10,7 +10,9 @@
 
 * ## Define a form using the Widget
 
-* 
+* Define Groups of Widgest
+
+* D
 
 * ## Display the form
 
@@ -26,13 +28,15 @@
 
 * ## Specifying Data Path in the Sample Data
 
+* ## Suppressing the field group with Legend.
+
+* #### Using Containers only for layout rather field grouping.
+
 * 
 
 * ## Specifying  URI to Fetch Data for the form
 
-* 
-
-* ## Interpolating Data into URI
+  * ### Interpolating Data into URI
 
 * ## Redisplaying data from domain objects that have been modified but not saved.
 
@@ -77,4 +81,58 @@ Hide right nav when dispalyed on portrait mode on a phone.
 ## Changing Label Size for a subset of fields
 
 Useful for example when State follows city on the same line.
+
+
+
+### Validating using A RE pattern
+
+.
+
+### Validating using a set of RE Patterns
+
+.
+
+### Validating using a built-in validation function
+
+.
+
+### Validating using a custom function
+
+### Validating using a Web Service
+
+
+
+## Filling in Option list or drop down with Web service Results
+
+
+
+# Advanced Formatting
+
+
+
+## Supporting Columns
+
+.
+
+## Supporting groups of sections that must reflow together
+
+.
+
+## Designing to support mobile devices
+
+.
+
+## Forcing entire blocks to Reflow
+
+.
+
+## Designing to reflow individual forms
+
+
+
+Support for Subforms using TABS
+
+Adding Left Nav display of sub forms
+
+Expanding form sections that contain functions.
 
