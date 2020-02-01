@@ -339,12 +339,17 @@
          "class": cssClass + "Cont",
      }).nl();
 
+     var labelClass = widDef.class + "Label";
+     if (widDef.label_class != undefined) {
+         labelClass = widDef.label_class + " " + labelClass;
+     }
      if (("label" in widDef) && (widDef.skip_label != true) && (custParms.skip_label != true)) {
          // Add Div with Label
-         b.make("div", {
-             "class": widDef.class + "Label",
+         b.make("label", {
+             "class": labelClass,
+             "for": widId,
              "id": widId + "Label"
-         }, widDef.label).nl();
+         }, widDef.label);
      }
      return b;
  }
@@ -677,7 +682,7 @@
              colWidDef = flds[colId];
              b.start("th", {
                  "id": tblId + colId + "id",
-                 "class": colWidDef.class,
+                 "class": colWidDef.cell_class,
                  "tableId": tblId,
                  "colId": colId,
                  "onClick": "mformsColHeadClicked(" + tblId + "," + colId + ")"
@@ -695,7 +700,9 @@
          for (var colndx = 0; colndx < cols.length; colndx++) {
              colId = cols[colndx];
              if (colId in flds) {
-                 b.start("td");
+                 b.start("td", {
+                     "class": colWidDef.cell_class
+                 });
                  colWidDef = flds[colId];
                  if (colWidDef.type in widgRenderFuncs) {
                      dataContextCell = colPath = widDef.data_context + ".[" + rowndx + "]." + colWidDef.data_context;

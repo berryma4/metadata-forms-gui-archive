@@ -95,7 +95,7 @@ img.sampleImage {
 .vert_radioLabel,
 .hor_radioLabel {
   display: inline-block;
-  width: 8em;
+  xwidth: 8em;
   text-align: right;
   vertical-align: top;
   color: cadetBlue;
@@ -306,9 +306,23 @@ div.forceWrap {
   display: inline-block;
 }
 
+div.mtableCont {
+  border: inset 2px rgb(231, 228, 228);
+  background-color: #e5ebf1ee;
+  font-size: 1.0em;
+  margin-top: 0.2em;
+  margin-left: 0.2em;
+  border-radius: 4px;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  vertical-align: top;
+
+}
+
 table.mtable {
   border: outset 1px rgb(231, 228, 228);
-  background-color: #e5ebf1ee;
+  xbackground-color: #e5ebf1ee;
   font-size: 1.0em;
   margin-top: 0.2em;
   margin-left: 0.2em;
@@ -317,6 +331,7 @@ table.mtable {
 
 table.mtable th {
   font-weight: bolder;
+  background-color: rgba(94, 7, 7, 0.2);
 }
 
 
@@ -324,7 +339,11 @@ table.mtable th,
 table.mtable td {
   padding: 2px;
   text-align: left;
+  border-left: 1px solid #000;
+  xborder-right: 1px solid #000;
 }
+
+
 
 table.mtable .tdright {
   text-align: right;
@@ -351,4 +370,13 @@ div.mtableAddBut {
 
 div.mtableAddBut:hover {
   border-color: slategrey;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.allow_wrap {
+  display: block;
+  white-space: normal;
 }

@@ -18,6 +18,7 @@
     data_type: text
     type: text
     label : Preauthorization number
+    label_class: noWrap
     data_context: claim.insurance.preAuthRef
     class: input_field
     ignore-case-match: true
@@ -656,10 +657,11 @@
 - widget:
   id: arrProcDate
   type: date
-  label: proceedure_date
+  label: Proceedure Date
   isCol: true
   data_context: date
-  class: tdLeft
+  class: input_field
+  cell_class: tdright
 
 - widget:
   id: arrProcFee
@@ -669,7 +671,8 @@
   isCol: true
   col_align_class: tdRight
   data_context: fee
-  class : tdLeft
+  class : input_field
+  cell_class: tdleft
 
 - widget:
   id: procedures
