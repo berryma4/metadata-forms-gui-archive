@@ -297,13 +297,6 @@
      if (!("data_type" in widDef)) {
          widDef.data_type = "text";
      }
-     if (!("type" in widDef)) {
-         widDef.type = "text";
-     }
-     if (!("label" in widDef)) {
-         widDef.label = widDef.id;
-     }
-
 
      return widDef;
  }
@@ -339,12 +332,16 @@
 
  function mformsRenderButton(widDef, b, context, custParms) {
      mformFixupWidget(widDef, context);
+     b.start("div", {
+         "class": widDef.class + "contain"
+     });
      attr = {
          "type": "button",
          "onClick": "saveFormChanges(this)"
      };
      mformCopyAttribs(widDef, attr, mformTextFieldCopyAttr);
      b.make("button", attr, "Save");
+     b.finish("div");
  }
 
  // Start rendering the widget with common logic
@@ -734,6 +731,7 @@
                      "class": colWidDef.cell_class
                  });
                  colWidDef = flds[colId];
+                 mformFixupWidget(colWidDef, context);
                  if (colWidDef.type in widgRenderFuncs) {
                      dataContextCell = colPath = widDef.data_context + ".[" + rowndx + "]." + colWidDef.data_context;
                      try {
@@ -782,6 +780,7 @@
          var widId = widgets[i];
          if (widId in flds) {
              var widDef = flds[widId];
+             mformFixupWidget(widDef, context);
              if (widDef.type in widgRenderFuncs) {
 
                  try {

@@ -1,102 +1,102 @@
 <html>
 
-<head>  
-  <meta description="Metadata driven forms. Build CRUD forms for RIA site updated by REST JSON HTTP Tons of GUI functionality with minimal effort">
-  <meta name="google-site-verification" content="myFdbACBjfzL70PhkK5FOMVF7syP7K9EE8iwF-AEL8A" />  
-  <link rel="stylesheet" type="text/css" href="css/demo-page-layout.css" />
-  <link rel="stylesheet" type="text/css" href="css/meta-forms.css" />
-  <link rel="stylesheet" type="text/css" href="css/cert-of-need.css" />
-  <style>
-    .h3 {
-      text-decoration: none;
-    }
-  </style>
-  <script  async src="js/browser_util.js" type="text/javascript"></script>
-  <script  async src="js/simple_ajax.js" type="text/javascript"></script>
-  <!--<script src="js/basic_widgets.js" type="text/javascript"></script>-->
-  <script  async src="js/mforms.js" type="text/javascript"></script>
-  <script  async src="js/mforms_parse.js" type="text/javascript"></script>
+<head>
+    <meta description="Metadata driven forms. Build CRUD forms for RIA site updated by REST JSON HTTP Tons of GUI functionality with minimal effort">
+    <meta name="google-site-verification" content="myFdbACBjfzL70PhkK5FOMVF7syP7K9EE8iwF-AEL8A" />
+    <link rel="stylesheet" type="text/css" href="css/demo-page-layout.css" />
+    <link rel="stylesheet" type="text/css" href="css/meta-forms.css" />
+    <link rel="stylesheet" type="text/css" href="css/cert-of-need.css" />
+    <style>
+        .h3 {
+            text-decoration: none;
+        }
+    </style>
+    <script async src="js/browser_util.js" type="text/javascript"></script>
+    <script async src="js/simple_ajax.js" type="text/javascript"></script>
+    <!--<script src="js/basic_widgets.js" type="text/javascript"></script>-->
+    <script async src="js/mforms.js" type="text/javascript"></script>
+    <script async src="js/mforms_parse.js" type="text/javascript"></script>
 
-  <style>
+    <style>
 
-  </style>
+    </style>
 
-  <script>
-    /*function onLoad(GContext) {
-      //runCACREDemo();     
-    }*/
-  </script>
+    <script>
+        /*function onLoad(GContext) {
+                      //runCACREDemo();     
+                    }*/
+    </script>
 
 </head>
 
 <body onLoad="display_form('mbody', 'data/forms/cert-of-need/cneed' ,  '1023', GTX )">
-  <div id="top_nav">
-    <h1>Metadata Driven Forms Demonstration</h1>
-  </div>
-  <div id="page-vmid">
-    <div id="lbody">
-      <h3>Certificate of Need</h3>
-      <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed',  '1005', GTX)">
-        Cert #1005
-      </li>
-      <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' ,  '1011', GTX )">
-        Cert #1011</li>
-      <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' ,  '1019', GTX )">
-        Cert #1019</li>
-      <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' , '1023', GTX )">
-        Cert #1023</li>
-      <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' , '1086', GTX )">
-        Cert #1086</li>
-      <hr/>
-      <h3>Dental</h3>
-      <li><a href="dental-claim.html">Dental Claim Sample</a></li>   
-      
-      <hr/>
-      <h3>Tutorial</h3>
-        <li onclick="display_form('mbody', 'data/forms/examples/field-validator-regex' , null, GTX )">
-        RegEx based field validator</li>
+    <div id="top_nav">
+        <h1>Metadata Driven Forms Demonstration</h1>
+    </div>
+    <div id="page-vmid">
+        <div id="lbody">
+            <h3>Certificate of Need</h3>
+            <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed',  '1005', GTX)">
+                Cert #1005
+            </li>
+            <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' ,  '1011', GTX )">
+                Cert #1011</li>
+            <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' ,  '1019', GTX )">
+                Cert #1019</li>
+            <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' , '1023', GTX )">
+                Cert #1023</li>
+            <li onclick="display_form('mbody', 'data/forms/cert-of-need/cneed' , '1086', GTX )">
+                Cert #1086</li>
+            <hr/>
+            <h3>Dental</h3>
+            <li><a href="dental-claim.html">Dental Claim Sample</a></li>
 
-      <hr/>
-      <h3>Experiemental</h3>
-        <li onclick="display_form('mbody', 'data/forms/examples/field-validator-regex-multiple' , null, GTX )">
-        Multi RegEx field validator</li>
+            <hr/>
+            <h3>Tutorial</h3>
+            <li><a href="simple-form.html" target="tutorial">Simple Form</a></li>
 
-      <!--<li onclick="display_list_form('mbody', 'data/forms/cert-of-need/list-certs' , 'delim_parser'
+            <li onclick="display_form('mbody', 'data/forms/examples/field-validator-regex' , null, GTX )">
+                RegEx based field validator</li>
+
+            <hr/>
+            <h3>Experiemental</h3>
+            <li onclick="display_form('mbody', 'data/forms/examples/field-validator-regex-multiple' , null, GTX )">
+                Multi RegEx field validator</li>
+
+            <!--<li onclick="display_list_form('mbody', 'data/forms/cert-of-need/list-certs' , 'delim_parser'
         , 'data/cert-of-need/index.txt' , '^' , GTX)">
         List Certs</li><br />-->
-      <hr/>
-      <h3>Documentation</h3>
-      <li><a href="https://github.com/joeatbayes/metadata-forms-gui" target="docs">Read ME</a></li>
-      <li><a href="https://joeatbayes.github.io/metadata-forms-gui/documentation/programmers-guide.md" target="docs">Programmers Guide &amp; Syntax Tutorial</a></li>
-      <li><a href="https://github.com/joeatbayes/metadata-forms-gui/blob/master/LICENSE" target="docs">License</a>
-      </li>
-      
-      <!--<li><a href="#" onclick="renderCurrentTree()">Show Full Tree</a></li>-->
-    </div><div id="mbody">
+            <hr/>
+            <h3>Documentation</h3>
+            <li><a href="https://github.com/joeatbayes/metadata-forms-gui" target="docs">Read ME</a></li>
+            <li><a href="https://joeatbayes.github.io/metadata-forms-gui/documentation/programmers-guide.md" target="docs">Programmers Guide &amp; Syntax Tutorial</a></li>
+            <li><a href="https://github.com/joeatbayes/metadata-forms-gui/blob/master/LICENSE" target="docs">License</a>
+            </li>
 
-      <h3><a href="https://joeatbayes.github.io/metadata-forms-gui/" target="MF" class="h3">
+            <!--<li><a href="#" onclick="renderCurrentTree()">Show Full Tree</a></li>-->
+        </div>
+        <div id="mbody">
+
+            <h3><a href="https://joeatbayes.github.io/metadata-forms-gui/" target="MF" class="h3">
           Metadata Forms Scripting Engine</a>.</h3>
 
-      <p> Allow Meta-data driven forms to be
-        defined without writing Javascript while retaining
-        the full richness of HTML5 and CSS. </p>
+            <p> Allow Meta-data driven forms to be defined without writing Javascript while retaining the full richness of HTML5 and CSS. </p>
 
-      <p> Allow definition of large complex master
-        detail, detail drill down with CRUD operations backed by HTTP / JSON services.</p>
+            <p> Allow definition of large complex master detail, detail drill down with CRUD operations backed by HTTP / JSON services.</p>
 
-      <p>Our goal are to reduce person time required to design and
-        deliver these screens by over 85% while reducing code volume
-        by over 80%. </p>
+            <p>Our goal are to reduce person time required to design and deliver these screens by over 85% while reducing code volume by over 80%. </p>
 
-      <h3>Select a Form from Left-Nav To demonstrate System</h3>
-    </div><!--mbody-->
-    <div id="dataObjDiv"></div>
-  </div>
-  <div id="page_footer">MForms - Meta Data Forms Demonstration<br />
-    <small><small><small>
+            <h3>Select a Form from Left-Nav To demonstrate System</h3>
+        </div>
+        <!--mbody-->
+        <div id="dataObjDiv"></div>
+    </div>
+    <div id="page_footer">MForms - Meta Data Forms Demonstration<br />
+        <small><small><small>
           By Joseph Ellsworth CTO <a
-            href="https://www.linkedin.com/in/joe-ellsworth-68222/"></a></small></small></small>
-  </div>
+            href="https://www.linkedin.com/in/joe-ellsworth-68222/"></a></small></small>
+        </small>
+    </div>
 </body>
 
 </html>

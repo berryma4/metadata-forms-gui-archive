@@ -18,6 +18,7 @@
     data_type: text
     type: text
     label : Preauthorization number
+    label_class: noWrap
     data_context: claim.insurance.preAuthRef
     class: input_field
     ignore-case-match: true
@@ -148,7 +149,6 @@
     data_context: insurer.other.name
     class: input_field
     ignore-case-match: true
-    default: 
 
 
 -widget:
@@ -160,7 +160,6 @@
     data_context: insurer.other.gender
     class: input_field
     ignore-case-match: true
-    default: other
 
 -widget:
     id: othInsPolHoldGender
@@ -656,11 +655,59 @@
 
 
 - widget:
+  id: arrProcDate
+  type: date
+  label: Proceedure Date
+  isCol: true
+  data_context: date
+  class: input_field
+  cell_class: tdright
+
+- widget:
+  id: arrProcFee
+  type: text
+  data_type: numeric
+  label: Fee
+  isCol: true
+  col_align_class: tdRight
+  data_context: fee
+  class : input_field
+  cell_class: tdleft
+  total_cell: true
+
+- widget:
+  id: procedures
+  label: Proceedure Codes
+  type: table
+  total_col:
+    - arrProcFee
+  max_visible_rows: 10
+  min_rows: 1
+  rows_extra: 1
+  class: mtable
+  data_context: procedures
+  total_line: true
+  client_side_sotr: true
+  columns: 
+    - arrProcDate
+    #- arrProcArea
+    #- arrProcToothSystem
+    #- arrProcToothNumber
+    #- arrProcToothSurface
+    #- arrProcCode
+    #- arrProcDesc
+    - arrProcFee
+
+
+
+- widget:
     id: saveButton    
     type: button
     label : Save    
     size: 8
     class: submit_button
+    data_context: operation.proceedures
+
 
 
 
@@ -668,7 +715,6 @@
    id : dentalClaim
    class: inputFrm
    label: Dental Claim form
-   # TODO: Allow other files to be loaded here to allow re-use
    fetch:
       uri: data/claims/{dataObjId}.JSON
       method: GET
@@ -681,4 +727,5 @@
 
    widgets:   
            - topFieldsGroup
+           - procedures
            - saveButton

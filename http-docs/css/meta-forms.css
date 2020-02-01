@@ -129,10 +129,17 @@ button:focus {
     outline: none;
 }
 
+.submit_buttoncontain {
+    width: 95%;
+    align-items: right;
+    align-content: right;
+    text-align: right;
+}
+
 .submit_button {
     margin-right: 8em;
-    margin-left: 80%;
-    margin-top: 4em;
+    xmargin-left: 80%;
+    xmargin-top: 4em;
     border-radius: 4px;
 }
 
