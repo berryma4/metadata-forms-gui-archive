@@ -148,7 +148,6 @@
     data_context: insurer.other.name
     class: input_field
     ignore-case-match: true
-    default: 
 
 
 -widget:
@@ -160,7 +159,6 @@
     data_context: insurer.other.gender
     class: input_field
     ignore-case-match: true
-    default: other
 
 -widget:
     id: othInsPolHoldGender
@@ -655,20 +653,43 @@
          - topRightFieldsGroup
 
 
+- widget:
+  id: arrProcDate
+  type: date
+  label: proceedure_date
+  isCol: true
+  data_context: date
+  class: tdLeft
+
+- widget:
+  id: arrProcFee
+  type: text
+  data_type: numeric
+  label: Fee
+  isCol: true
+  col_align_class: tdRight
+  data_context: fee
+  class : tdLeft
 
 - widget:
   id: procedures
+  label: Proceedure Codes
   type: table
   total_col:
-   arrProcFee
+    - arrProcFee
+  max_visible_rows: 10
+  min_rows: 1
+  rows_extra: 1
+  class: mtable
+  data_context: procedures
   columns: 
     - arrProcDate
-    - arrProcArea
-    - arrProcToothSystem
-    - arrProcToothNumber
-    - arrProcToothSurface
-    - arrProcCode
-    - arrProcDesc
+    #- arrProcArea
+    #- arrProcToothSystem
+    #- arrProcToothNumber
+    #- arrProcToothSurface
+    #- arrProcCode
+    #- arrProcDesc
     - arrProcFee
 
 
@@ -688,7 +709,6 @@
    id : dentalClaim
    class: inputFrm
    label: Dental Claim form
-   # TODO: Allow other files to be loaded here to allow re-use
    fetch:
       uri: data/claims/{dataObjId}.JSON
       method: GET
@@ -701,4 +721,5 @@
 
    widgets:   
            - topFieldsGroup
+           - procedures
            - saveButton

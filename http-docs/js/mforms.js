@@ -85,6 +85,14 @@
      var widId = hwidget.id.split("-_")[0];
      var widDef = GTX.widgets[widId];
      var dataContext = widDef.data_context;
+     var dataContextOvr = gattr(hwidget, "data_context");
+     if (dataContextOvr > "") {
+         // override the widget data context with the 
+         // value encoded into the widget if present.
+         // needed this to support array elements that 
+         // require a differnt data context for every row of every cell.
+         dataContext = dataContextOvr;
+     }
      var formId = gattr(hwidget, "form_id");
      var dataObjId = gattr(hwidget, "dataObjId");
      var context = GTX.formContexts[formId][dataObjId];
@@ -238,8 +246,10 @@
      "button": mformsRenderButton,
      "dropdown": mformRenderDropdown,
      "radio": mformRenderRadio,
-     "date": mformsRenderTextWidget
+     "date": mformsRenderTextWidget,
+     "table": mformsRenderTable
  }
+ // "col": mformsRenderColumn
 
  var mformTextFieldCopyAttr = {
      "size": true,
@@ -285,7 +295,7 @@
      }
  }
 
- function getDataValue(dataObj, widDef, context) {
+ function getDataValue(dataObj, widDef, context, custParms) {
      var dataPath = widDef.data_context;
      if (dataPath == undefined) {
          alert("ERROR Widget Data Context is not specified " + JSON.stringify(widDef));
@@ -303,7 +313,7 @@
      return dataVal;
  }
 
- function mformsRenderButton(widDef, b, context) {
+ function mformsRenderButton(widDef, b, context, custParms) {
      attr = {
          "type": "button",
          "onClick": "saveFormChanges(this)"
@@ -314,30 +324,32 @@
 
  // Start rendering the widget with common logic
  // for label and container. 
- function mformStartWidget(widDef, b, context, skipLabel) {
+ function mformStartWidget(widDef, b, context, custParms) {
      var cssClass = widDef.class;
+     var widId = widDef.id;
+     if ("widIdRow" in custParms) {
+         widId = custParms.widIdRow;
+     }
      if (widDef.force_wrap == true) {
          cssClass = "forceWrap " + cssClass;
      }
+
      b.start("div", {
-         "id": widDef.id + "Cont",
-         "class": cssClass + "Cont"
+         "id": widId + "Cont",
+         "class": cssClass + "Cont",
      }).nl();
 
-     if (skipLabel == true) {
-         return b;
-     }
-     if ("label" in widDef) {
+     if (("label" in widDef) && (widDef.skip_label != true) && (custParms.skip_label != true)) {
          // Add Div with Label
          b.make("div", {
              "class": widDef.class + "Label",
-             "id": widDef.id + "Label"
+             "id": widId + "Label"
          }, widDef.label).nl();
      }
      return b;
  }
 
- function mformFinishWidget(widDef, b, context) {
+ function mformFinishWidget(widDef, b, context, custParms) {
      b.make("div", {
          "class": "fieldStatusMsg",
          "id": widDef.id + "Status"
@@ -346,7 +358,7 @@
      return b;
  }
 
- function mformBasicWidAttr(widDef, context) {
+ function mformBasicWidAttr(widDef, context, custParms) {
      return {
          'id': widDef.id,
          //'onblur': fieldSpec.onchange + "(" + onChgParms + ")",
@@ -359,7 +371,7 @@
      };
  }
 
- function mformsRenderGroupWidget(widDef, b, context) {
+ function mformsRenderGroupWidget(widDef, b, context, custParms) {
      var gtx = context.gbl;
      var flds = gtx.widgets;
      var parClass = parent.class;
@@ -395,7 +407,7 @@
          });
      }
 
-     mformsRenderWidgets(widDef, widDef.widgets, b, context);
+     mformsRenderWidgets(widDef, widDef.widgets, b, context, {});
      if (rendFieldSet == true) {
          b.finish("div");
          b.finish("fieldset");
@@ -403,10 +415,11 @@
      b.finish("div");
  }
 
- function mformRenderRadio(widDef, b, context) {
+ function mformRenderRadio(widDef, b, context, custParms) {
      var gtx = context.gbl;
      var widId = widDef.id;
-     mformStartWidget(widDef, b, context, true);
+     custParms.skip_label = true;
+     mformStartWidget(widDef, b, context, custParms);
      // Add the actual Text Widget
      var widAttr = mformBasicWidAttr(widDef, context);
      mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
@@ -493,10 +506,10 @@
 
 
 
- function mformRenderDropdown(widDef, b, context) {
+ function mformRenderDropdown(widDef, b, context, custParms) {
      var gtx = context.gbl;
      var widId = widDef.id;
-     mformStartWidget(widDef, b, context);
+     mformStartWidget(widDef, b, context, custParms);
      // Add the actual Text Widget
      var widAttr = mformBasicWidAttr(widDef, context);
      mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
@@ -545,23 +558,59 @@
      mformFinishWidget(widDef, b, context);
  }
 
+ function copyOverCustParms(widAttr, widDef, custParms) {
+     if ("id" in custParms) {
+         widAttr.id = custParms.id; // overlay locally computed.
+     } else if ("id" in widDef) {
+         custParms.id = widDef.id;
+         widAttr.id = widDef.id;
+     }
 
- function mformsRenderTextWidget(widDef, b, context) {
+     if ("data_context" in custParms) {
+         widAttr.data_context = custParms.data_context;
+     } else if ("data_context" in widDef) {
+         custParms.data_context = widDef.data_context;
+         widAttr.data_Context = widDef.data_context;
+     }
+
+     if ("widId" in custParms) {
+         widAttr.widId = custParms.widId; // original widget without array modifier
+     }
+ }
+
+ function mformsRenderTextWidget(widDef, b, context, custParms) {
      var gtx = context.gbl;
-     var widId = widDef.id;
-     mformStartWidget(widDef, b, context);
+     //mformsAdjustCustParms(widDef, b, context, custParms);
+     var widId = custParms.widId;
+     var colPath = custParms.dataContext;
+     mformStartWidget(widDef, b, context, custParms);
      // Add the actual Text Widget
      var widAttr = mformBasicWidAttr(widDef, context);
-     mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
 
-     // Add Initial Field Value from the Data Object
+     mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
+     copyOverCustParms(widAttr, widDef, custParms);
+     // "rowNdx": rowndx,
+     // "dataArr": dataArr,
+     //"table": widDef
+
      var widVal = "";
-     if ("dataObj" in context) {
-         widVal = getDataValue(context.dataObj, widDef, context);
-         if (widVal != null) {
-             widAttr.value = widVal;
-         } else {
-             widVal = null;
+     if (widDef.isColumn == true) {
+         var dataArr = custParms.dataArr;
+         if (dataArr.length > custParms.rowNdx) {
+             var dataRow = custParms.dataArr[custParms.rowNdx];
+             widVal = getNested(datarow, widDef.dataContext);
+         }
+         widArr.iscolumn = true;
+         widArr.data_context = colPath;
+     } else {
+         // Add Initial Field Value from the Data Object
+         if ("dataObj" in context) {
+             widVal = getDataValue(context.dataObj, widDef, context);
+             if (widVal != null) {
+                 widAttr.value = widVal;
+             } else {
+                 widVal = null;
+             }
          }
      }
      var makeEleName = "input";
@@ -570,8 +619,122 @@
      } else {
          b.make(makeEleName, widAttr);
      }
-     mformFinishWidget(widDef, b, context)
+     mformFinishWidget(widDef, b, context);
  }
+
+
+ function mformsRenderTable(widDef, b, context, custParms) {
+     var gtx = context.gbl;
+     var flds = gtx.widgets;
+     var tblId = widDef.id;
+     var cols = widDef.columns;
+     var dataObj = context.dataObj;
+     if (!("data_context" in widDef)) {
+         console.log("ERROR  data_context is mandatory for widget: " + JSON.stringify(widDef));
+         return;
+     }
+
+     mformStartWidget(widDef, b, context, custParms);
+     // TODO: determine right or left alignment
+     // by column
+
+     //b.make("div", {
+     //    "class": widDef.class + "caption"
+     //}, widDef.label);
+
+     b.start("table", {
+         "id": tblId + "tbl",
+         "class": widDef.class
+     });
+
+     // Render column Headers
+
+     b.start("tr", {
+         "id": tblId + "tblhead",
+         "class": widDef.class + "tr"
+     });
+
+     var dataArr = getNested(dataObj, widDef.data_context, []);
+     if (dataArr.length == 0) {
+         // Create the data array if there is not one.
+         setNested(dataObj, widDef.data_context, dataArr);
+     }
+     // Render the Rows of the Table
+     // We have to render the requested number
+     // of rows even if there is not that much data
+     var numRowtoRender = getNested(widDef, "min_rows", 1);
+     var rowExtra = getNested(widDef, "rows_extra", 0);
+     if (dataArr.length + rowExtra > numRowtoRender) {
+         numRowtoRender = dataArr.length + rowExtra;
+     }
+
+     var colId = null;
+     var rendFunc = null;
+     var colWidDef = null;
+     for (var i = 0; i < cols.length; i++) {
+         colId = cols[i];
+         if (colId in flds) {
+             colWidDef = flds[colId];
+             b.start("th", {
+                 "id": tblId + colId + "id",
+                 "class": colWidDef.class,
+                 "tableId": tblId,
+                 "colId": colId,
+                 "onClick": "mformsColHeadClicked(" + tblId + "," + colId + ")"
+             });
+             b.b(colWidDef.label);
+             b.finish("th");
+         }
+     }
+     b.finish("tr");
+
+
+     for (var rowndx = 0; rowndx < numRowtoRender; rowndx++) {
+         // Render the Data rows
+         b.start("tr");
+         for (var colndx = 0; colndx < cols.length; colndx++) {
+             colId = cols[colndx];
+             if (colId in flds) {
+                 b.start("td");
+                 colWidDef = flds[colId];
+                 if (colWidDef.type in widgRenderFuncs) {
+                     dataContextCell = colPath = widDef.data_context + ".[" + rowndx + "]." + colWidDef.data_context;
+                     try {
+                         rendFunc = widgRenderFuncs[colWidDef.type];
+                         rendFunc(colWidDef, b, context, {
+                             "rowNdx": rowndx,
+                             "dataArr": dataArr,
+                             "table": widDef,
+                             "id": colId + "-_" + rowndx,
+                             "data_context": dataContextCell,
+                             "skip_label": true
+                         });
+                     } catch (err) {
+                         console.log("L324: Error rendering=", err, " colWidDef=", colWidDef, " funName", rendFunc);
+                         b.b("<h6>Error Rendering See console</h6>");
+                     }
+                 } else {
+                     console.log("cound not find rendering func=", colWidDef.Type, "for id=", colId, "colWidNdx=", i, " colWidDef=", colWidDef);
+                     b.make("h6", {
+                         id: widId
+                     }, "Unkown Widget Type " + colWidDef.type + " id=" + colId + " colWidDef=" + JSON.stringify(colWidDef)).nl();
+                 }
+                 b.finish("td");
+             }
+         }
+         b.finish("tr");
+     }
+
+     b.finish("table");
+     b.make("div", {
+         "id": tblId + "-_AddBut",
+         "dataObjId": context.dataObjId,
+         "class": widDef.class + "AddBut",
+         "onClick": "addTableButton(this)"
+     }, "Add row");
+     mformFinishWidget(widDef, b, context);
+ }
+
 
 
  function mformsRenderWidgets(parent, widgets, b, context) {
@@ -586,7 +749,7 @@
 
                  try {
                      var rendFunc = widgRenderFuncs[widDef.type];
-                     rendFunc(widDef, b, context);
+                     rendFunc(widDef, b, context, {});
                  } catch (err) {
                      console.log("L324: Error rendering=", err, " widDef=", widDef, " funName", rendFunc);
                      b.b("<h6>Error Rendering See console</h6>");

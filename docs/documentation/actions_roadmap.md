@@ -14,21 +14,29 @@ Actions & Roadmap for Metadata Forms Engine
 
   * Support total columns
 
+  * Need to move the Expand Collapse rendering function to re-usable module so can use it for table or row.
+
   * Support a Table for Array Element Display 
 
+    * Ability to change sort by clicking on header
     * Table Row Widget with includes Columns which support 1 or more widgets where the data binding includes the row index.   
     * Modify get nested so if a value is passed with path as  family.children.[3].name.first that is pulls the 3rd child.  Same with updates.
     * Demonstrate alternating color bands in table widget.
     * Demonstrate repeated headers in a table widget
-    * Support client side sort,  
+    * Provide client side sort,  
     * Support client side scroll through a larger list, 
     * Expand larger page to fit and return to server paging. 
     * Add support for alternating color Table in list view with custom links to open up next table
     * Show Fields that fail validating in a alternate background color
     * Hide rest of fields for other insurance when it does not apply
     * When other insurance does apply then those fields should be mandatory.
-    * 
-
+  * Ability to left or right justify columns
+    * Ability to render a minimum number of rows even if blank
+    * Ability to add a new row.
+    * Ability to remove a row
+    * Ability to notify server of row addition
+    * Ability to notify server of row deletion
+    
     
 
 * Switch over to using Label-for instead of manual label div specification.
@@ -321,7 +329,7 @@ Actions & Roadmap for Metadata Forms Engine
 * For fda sample page remove the right navigation payne and enlarge middle payne when  displaying on anything less than 900 px;
 * Implement toots / test  screen which validates contents of one field based on contents of another field using RegEx.  Must make it easy for developers to test regex patterns before they specify them in metadata.
 
-* 
+* Add support to collapse and resize column to table. 
 
 * YML Parser: Fix Array level parsing error when parsing complex RegEx Strings.:  In the example below the ^ on the front of the array elements at widget.valid_pat.pattern seems to be stripping of the first characters of the string which makes the RE pattern invalid.  See:  [../../data/forms/examples/field-validator-regex-multiple.txt](../../data/forms/examples/field-validator-regex-multiple.txt)   When fixing this remember the other fix for lines that contain comments on end.  
 

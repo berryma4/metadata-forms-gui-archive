@@ -72,6 +72,30 @@ Hide right nav when dispalyed on portrait mode on a phone.
 
 
 
+```
+
+- widget:
+  id: procedures
+  type: table
+  total_col:
+    - arrProcFee
+   max_visible_rows: 10
+   min_rows: 8;
+  columns: 
+    - arrProcDate
+    #- arrProcArea
+    #- arrProcToothSystem
+    #- arrProcToothNumber
+    #- arrProcToothSurface
+    #- arrProcCode
+    #- arrProcDesc
+    - arrProcFee
+
+
+```
+
+
+
 ## Define Master Detail Forms
 
 
