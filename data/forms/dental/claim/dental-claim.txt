@@ -673,6 +673,7 @@
   data_context: fee
   class : input_field
   cell_class: tdleft
+  total_cell: true
 
 - widget:
   id: procedures
@@ -685,6 +686,8 @@
   rows_extra: 1
   class: mtable
   data_context: procedures
+  total_line: true
+  client_side_sotr: true
   columns: 
     - arrProcDate
     #- arrProcArea

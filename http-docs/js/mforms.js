@@ -240,16 +240,16 @@
   **** RENDERING 
   **************  */
  var widgRenderFuncs = {
-     "widgetGroup": mformsRenderGroupWidget,
-     "text": mformsRenderTextWidget,
-     "textarea": mformsRenderTextWidget,
-     "button": mformsRenderButton,
-     "dropdown": mformRenderDropdown,
-     "radio": mformRenderRadio,
-     "date": mformsRenderTextWidget,
-     "table": mformsRenderTable
- }
- // "col": mformsRenderColumn
+         "widgetGroup": mformsRenderGroupWidget,
+         "text": mformsRenderTextWidget,
+         "textarea": mformsRenderTextWidget,
+         "button": mformsRenderButton,
+         "dropdown": mformRenderDropdown,
+         "radio": mformRenderRadio,
+         "date": mformsRenderTextWidget,
+         "table": mformsRenderTable
+     }
+     // "col": mformsRenderColumn
 
  var mformTextFieldCopyAttr = {
      "size": true,
@@ -282,7 +282,31 @@
      attr.label = widDef.label;
  } */
 
+ // Check widget defenition for missing things like
+ // class and set them to reasonable defaults
+ function mformFixupWidget(widDef, context) {
+     if (!("id" in widDef)) {
+         console.log("ERROR: Widget Defenition must contain a Unique ID widDef=" + JSON.stringify(widDef));
+     }
+     if (!("class" in widDef)) {
+         widDef.class = "input_field";
+     }
+     if (!("type" in widDef)) {
+         widDef.type = "text";
+     }
+     if (!("data_type" in widDef)) {
+         widDef.data_type = "text";
+     }
+     if (!("type" in widDef)) {
+         widDef.type = "text";
+     }
+     if (!("label" in widDef)) {
+         widDef.label = widDef.id;
+     }
 
+
+     return widDef;
+ }
 
  // Copy over the Attributes we are interested in 
  // as is.
@@ -314,6 +338,7 @@
  }
 
  function mformsRenderButton(widDef, b, context, custParms) {
+     mformFixupWidget(widDef, context);
      attr = {
          "type": "button",
          "onClick": "saveFormChanges(this)"
@@ -377,6 +402,7 @@
  }
 
  function mformsRenderGroupWidget(widDef, b, context, custParms) {
+     mformFixupWidget(widDef, context);
      var gtx = context.gbl;
      var flds = gtx.widgets;
      var parClass = parent.class;
@@ -421,6 +447,7 @@
  }
 
  function mformRenderRadio(widDef, b, context, custParms) {
+     mformFixupWidget(widDef, context);
      var gtx = context.gbl;
      var widId = widDef.id;
      custParms.skip_label = true;
@@ -512,6 +539,7 @@
 
 
  function mformRenderDropdown(widDef, b, context, custParms) {
+     mformFixupWidget(widDef, context);
      var gtx = context.gbl;
      var widId = widDef.id;
      mformStartWidget(widDef, b, context, custParms);
@@ -522,7 +550,7 @@
      b.start("select", widAttr);
 
      var matchOptVal = null;
-     getDataValue(context.dataObj, widDef, context);
+     var dataVal = getDataValue(context.dataObj, widDef, context);
      var opt = null;
      var optndx = null;
      if ("option" in widDef) {
@@ -584,6 +612,7 @@
  }
 
  function mformsRenderTextWidget(widDef, b, context, custParms) {
+     mformFixupWidget(widDef, context);
      var gtx = context.gbl;
      //mformsAdjustCustParms(widDef, b, context, custParms);
      var widId = custParms.widId;
@@ -629,6 +658,7 @@
 
 
  function mformsRenderTable(widDef, b, context, custParms) {
+     mformFixupWidget(widDef, context);
      var gtx = context.gbl;
      var flds = gtx.widgets;
      var tblId = widDef.id;

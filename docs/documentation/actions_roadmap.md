@@ -6,6 +6,8 @@ Actions & Roadmap for Metadata Forms Engine
 
 * Allow extra label class to be specified.
 
+* Suppress the display of JSON or reflow move to bottom when page is too narrow
+
   
 
 * Add basic support for Rows & Columns 
@@ -624,6 +626,14 @@ defaults:
 ```
 
 
+
+* YML Parse: **Fix JSON on line with Error handling**.   At current time if a Widget contains a data value where they chose to specify encoding with embedded JSON it causes replacement of the Widgets Array with a string even though there where valid widgets before it in the file.  Proper behavior is to Detect the error and then set only that widget element.    This error could be because I encoded the entire widget as a JSON string but it should still not destroy the other valid widgets. 
+
+  ```
+  widget: { "id" : "saveButton", "type" : "button", "label" : "Save", "size" : 8, "class" : submit_button"}
+  ```
+
+  Notice the missing opening quote on submit button.    When this error occurs  when you get to rendering the form in line   if ("widget" in tObj)  in mforms.js  in mformsProcessFormSpec() the widget array contains only the string of the widget that failed to parse.  At worst case it should have been added to the array of widgets with the unparsable string as the data value.
 
 * 
 
