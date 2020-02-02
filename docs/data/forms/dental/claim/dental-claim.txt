@@ -723,7 +723,7 @@
       uri: data/claims/{dataObjId}.JSON
       verb: PUT
       where: body
-   show_data_obj_div: dataObjDiv
+   show_data_obj_div: dataObjDivBottom
 
    widgets:   
            - topFieldsGroup

@@ -84,7 +84,12 @@ The form specification metadata is saved in a text file on the server and retrie
        - {"label" : "Chevy", "value": "C"}
        - {"label" : "Tesla", "value" : "T"}
      
-- widget: { "id" : "saveButton", "type" : "button", "label" : "Save", "size" : 8, "class" : "submit_button"}
+- widget: 
+   id: saveButton
+   type : button
+   label: Save
+   size : 8
+   class : submit_button
   
 - form:
    id : simpleForm
@@ -114,7 +119,7 @@ The form specification metadata is saved in a text file on the server and retrie
 
   * **id** - a unique string used for mapping throughout the system.  When HTML is rendered 
 
-  * **type** - The type of widget to render.  Defaults to a "text" to render a  text box if not specified
+  * **type** - The type of widget to render.  Defaults to a "text" to render a  text box if not specified.   Other types are date, dropdown, select, table, submit_button, etc.   Other types will be added over time and programmers can easily add custom rendering agents to support their own widget types.
 
   * **class** - The class used to style the widget.  Defaults to "input_field" if not specified.
 
@@ -158,7 +163,6 @@ The form specification metadata is saved in a text file on the server and retrie
   * Controlling form styling
   * Customizing styling for different brands
   * Localizing labels
-  * 
 
 # Basic Form Usage
 
@@ -603,20 +607,11 @@ If the attribute is not specified then no rendering occurs.   **show_data_obj_di
 
 - form:
    id : basicForm
-   class: inputFrm
    label: A Basic Form   
-   fetch:
-      uri: data/claims/{dataObjId}.JSON
-      method: GET
-      parse: JSON
-   save:
-      uri: data/claims/{dataObjId}.JSON
-      verb: PUT
-      where: body   
+   .... OTHER ATTRIBUTES
    show_data_obj_div: dataObjDiv 
-   widgets:   
-           - topFieldsGroup
-           - saveButton
+   .... OTHER ATTRIBUTES
+
 ```
 
 

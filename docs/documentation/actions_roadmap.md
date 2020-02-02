@@ -8,6 +8,10 @@ Actions & Roadmap for Metadata Forms Engine
 
 * Suppress the display of JSON or reflow move to bottom when page is too narrow
 
+* 
+
+* 
+
   
 
 * Add basic support for Rows & Columns 
@@ -163,7 +167,7 @@ Actions & Roadmap for Metadata Forms Engine
 
 * * 
 
-* 
+* getting started guide show how to clone repo and use script to update local files while keeping things mostly separate for their own project.    EG: clone the repo then copy the js and css files over to mforms directory inside of their own docs directory.  Copy the sample_form over to mform sub directory. update their .gitignore file to not check in these directories.
 
 * Support Generic Notion of a hideable sub form where the system can open sub form on entry or hover to parent div reflow to make fit.   Should use html detail view if feasible. Should support manual save hide.   Show status when mandatory fields are empty or hidden fields contain fields failing validation widgets. 
 
@@ -391,6 +395,8 @@ Actions & Roadmap for Metadata Forms Engine
 * Implement toots / test  screen which validates contents of one field based on contents of another field using RegEx.  Must make it easy for developers to test regex patterns before they specify them in metadata.
 
 * Add support to collapse and resize column to table. 
+
+* Improved Set Nested / get nested array support.  The current version will only work if you have an object that contains an array of objects.   It would break on an array of strings or and array of arrays.   Need to handle these two use cases to provide best support for tables especially nested tables.
 
 * YML Parser: Fix Array level parsing error when parsing complex RegEx Strings.:  In the example below the ^ on the front of the array elements at widget.valid_pat.pattern seems to be stripping of the first characters of the string which makes the RE pattern invalid.  See:  [../../data/forms/examples/field-validator-regex-multiple.txt](../../data/forms/examples/field-validator-regex-multiple.txt)   When fixing this remember the other fix for lines that contain comments on end.  
 
@@ -701,7 +707,15 @@ defaults:
 
 # DONE:
 
-* SKIP:JOE:2020-01-25 Fix Parser to properly Handle Array of Sub Objects semantic: NOTE:  See Test 5 in mforms_parse_test.html   It seems to work correctly.  Need a better test use case if it is really broke.
+* DONE:JOE:2020-01-28: Consolidated CSS files and removed some redundant settings. 
+
+* DONE:JOE:2020-01-28: Modified generation of save_button using container div to keep it inside the parent div were the form is rendered.
+
+* DONE:JOE:2020-01-28:  Update Readme file to point users to getting started guide and programmers guide.  Also added the dental claim sample and removed text that would have been duplicated between the two other guides.   Updated links to take people to the meta source for the samples.
+
+* DONE:JOE:2020-01-28: Update front portion of programmers guide to show the source code needed to create a simple form. 
+
+* SKIP:JOE:2020-01-25: Fix Parser to properly Handle Array of Sub Objects semantic: NOTE:  See Test 5 in mforms_parse_test.html   It seems to work correctly.  Need a better test use case if it is really broke.
 
   ```yaml
     - widget:
