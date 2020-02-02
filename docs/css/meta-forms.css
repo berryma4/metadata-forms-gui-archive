@@ -76,12 +76,15 @@ img.sampleImage {
     width: 100%;
 }
 
+.input_fieldCont,
+.input_fieldvCont,
 .input_fieldContainer,
 .input_fieldvContainer {
     margin-top: 0.25em;
     display: inline-block;
 }
 
+.input_fieldvCont,
 .input_fieldvContainer {
     display: block;
 }
@@ -91,7 +94,6 @@ img.sampleImage {
 .vert_radioLabel,
 .hor_radioLabel {
     display: inline-block;
-    xwidth: 8em;
     text-align: right;
     vertical-align: top;
     color: cadetBlue;
@@ -101,6 +103,7 @@ img.sampleImage {
 }
 
 input.input_field,
+.input_fieldv,
 select.input_field,
 fieldset.hor_radio,
 fieldset.vert_radio,
@@ -148,18 +151,26 @@ div.vgroupcont div.hgroupcont {
     display: flex;
     margin-bottom: 0.5em;
     border-radius: 2px;
-    background-color: (226, 247, 247, 0.137);
+    background-color: rgb(226, 247, 247, 0.137);
     vertical-align: top;
 }
 
-group.legend {
+legend.vgroupLeg {
     width: auto;
-    border-color: darkgrey;
+    border: solid 1px rgb(200, 174, 160, 0.3);
     width: auto;
     margin-bottom: 0px;
     font-size: 12px;
     font-weight: bold;
     color: #1f497d;
+    margin-top: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-right: 10px;
+    border-radius: 2px;
+    background-color: rgb(226, 247, 247, 0.1);
 }
 
 fieldset.groupFS {
@@ -201,11 +212,12 @@ fieldset.hgroupFS,
 fieldset.groupFS {
     display: block;
     margin-top: 7px;
-    border-color: rgb(231, 228, 228);
-    border-width: 1.5px;
+    border-color: rgb(200, 174, 160, 0.3);
+    border-width: 3px;
     background-color: transparent;
     border-radius: 5px;
     padding-bottom: 4px;
+    margin-left: 2px;
 }
 
 legend.vgroupLabel {
