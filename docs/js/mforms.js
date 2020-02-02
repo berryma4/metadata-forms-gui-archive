@@ -16,9 +16,11 @@
  }
 
 
- /*********
-  **** INTERACTION / OnClick / EVENTS
-  **********/
+ //--------------
+ //--- INTERACTION / OnClick / EVENTS
+ //---------------
+
+
  function mformSaveFormChanges(hwidget) {
      var attr = hwidget.attributes;
      var formId = gattr(hwidget, "form_id");
@@ -80,6 +82,10 @@
 
  }
 
+ // Receive the Change events from the individual widgets.
+ // use metadata encoded in the widget to lookup a context
+ // use that context to validate data,  reformat the data,
+ // enable auto suggest and update underlying DOM model
  function mformFieldChanged(hwidget) {
      var attr = hwidget.attributes;
      var widId = hwidget.id.split("-_")[0];
@@ -108,6 +114,18 @@
          // read value like we do as text field.
          fldVal = hwidget.value.trim();
      }
+
+
+     // Apply Field Level Transforms as specified in the metadata
+     // TODO:  Create a set of wiget types as an object that should not
+     //  apply transforms so we can skip them without a complex if here
+     if ((widDef.force_upper_case == true) && (fldVal != null) && (widDef.type != "dropdown") && (widDef.type != "radio")) {
+         fldVal = fldVal.toUpperCase();
+         if (hwidget.value != fldVal) {
+             hwidget.value = fldVal;
+         }
+     }
+
 
      var isValdVal = mformValidateFieldValue(context, dataObj, widDef, hwidget, fldVal)
      var oldFldVal = getNested(dataObj, dataContext, null);
@@ -141,11 +159,12 @@
      mformFieldChanged(hwidget);
  }
 
-
+ // When a table column header is clicked default behavior is
+ // to sort the table on that column. This function receives the
+ // sort event. 
  function mformsColHeadClicked(hwidget) {
      var formId = gattr(hwidget, "form_id");
      var tblId = gattr(hwidget, "table_id");
-     var colId = gattr(hwidget, "col_id");
      var dataObjId = gattr(hwidget, "dataObjId");
      var widDef = GTX.widgets[tblId];
      var dataContext = widDef.data_context;
@@ -168,10 +187,35 @@
 
  }
 
+ function addTableRowButton(hwidget) {
+     var formId = gattr(hwidget, "form_id");
+     var tblId = gattr(hwidget, "table_id");
+     var colId = gattr(hwidget, "col_id");
+     var dataObjId = gattr(hwidget, "dataObjId");
+     var widDef = GTX.widgets[tblId];
+     var dataContext = widDef.data_context;
+     var context = GTX.formContexts[formId][dataObjId];
+     var dataObj = GTX.dataObj[dataObjId];
+     var dataArr = getNested(dataObj, dataContext);
+     // TODO: Set Sort Specification for this column
+     widDef.userSortCol = colId;
+     var targetDiv = tblId + "Cont";
+     dataArr.push({});
 
- /***************
-  **** RENDERING 
-  **************  */
+     // TODO: Re-Render the HTML for the Table and replace it in the container
+     var b = new String_builder();
+     mformsRenderEditableTable(widDef, b, context, {
+         "skip_container": true
+     });
+     b.toDiv(targetDiv);
+ }
+
+
+ // --------------
+ // ---- Rendering Support Functions 
+ // --------------
+
+
  var widgRenderFuncs = {
      "widgetGroup": mformsRenderGroupWidget,
      "text": mformsRenderTextWidget,
@@ -206,14 +250,6 @@
      "jimbo": true
  };
 
- /*function mformAddContextAttributes(attr, widDef, context) {
-     attr.dataObjId = context.dataObjId;
-     attr.form_id = context.form_id;
-     attr.id = widDef.id;
-     attr.data_context = widDef.data_context;
-     attr.class = widDef.class;
-     attr.label = widDef.label;
- } */
 
  // Check widget defenition for missing things like
  // class and set them to reasonable defaults
@@ -263,18 +299,6 @@
      return dataVal;
  }
 
- function mformsRenderButton(widDef, b, context, custParms) {
-     b.start("div", {
-         "class": widDef.class + "contain"
-     });
-     attr = {
-         "type": "button",
-         "onClick": "saveFormChanges(this)"
-     };
-     mformCopyAttribs(widDef, attr, mformTextFieldCopyAttr);
-     b.make("button", attr, "Save");
-     b.finish("div");
- }
 
  // Start rendering the widget with common logic
  // for label and container. 
@@ -334,6 +358,27 @@
      };
  }
 
+
+
+ // --------------------
+ // --- Primary Rendering Functions
+ // --------------------
+
+
+ function mformsRenderButton(widDef, b, context, custParms) {
+     b.start("div", {
+         "class": widDef.class + "contain"
+     });
+     attr = {
+         "type": "button",
+         "onClick": "saveFormChanges(this)"
+     };
+     mformCopyAttribs(widDef, attr, mformTextFieldCopyAttr);
+     copyOverCustParms(attr, widDef, custParms);
+     b.make("button", attr, "Save");
+     b.finish("div");
+ }
+
  function mformsRenderGroupWidget(widDef, b, context, custParms) {
      var gtx = context.gbl;
      var flds = gtx.widgets;
@@ -386,6 +431,7 @@
      // Add the actual Text Widget
      var widAttr = mformBasicWidAttr(widDef, context);
      mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
+     copyOverCustParms(widAttr, widDef, custParms);
      var fldName = widDef.id + "Name";
      widAttr.name = fldName;
      //widAttr["-webkit-appearance"] = "none";
@@ -477,6 +523,8 @@
      // Add the actual Text Widget
      var widAttr = mformBasicWidAttr(widDef, context);
      mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
+     copyOverCustParms(widAttr, widDef, custParms);
+     delete widAttr.onInput; // We do not need this handler for drop down
      //widAttr["-webkit-appearance"] = "none";
      b.start("select", widAttr);
 
@@ -542,14 +590,7 @@
      }
  }
 
- // Iterate records in the data array
- // build a index by the values of the data field
- // sort them and return the sorted index.  Use the Column
- // specified data types to determine if we should be 
- // converting or padding sort key for proper numeric sort.
- function mformsBuildSortKey(widDef, context, custParms) {
 
- }
 
  function mformsRenderTextWidget(widDef, b, context, custParms) {
      mformFixupWidget(widDef, context);
@@ -596,6 +637,17 @@
      mformFinishWidget(widDef, b, context, custParms);
  }
 
+ //-------------
+ //-- EDIT TABLE RENDERING
+ //-------------
+ // Iterate records in the data array
+ // build a index by the values of the data field
+ // sort them and return the sorted index.  Use the Column
+ // specified data types to determine if we should be 
+ // converting or padding sort key for proper numeric sort.
+ function mformsBuildSortKey(widDef, context, custParms) {
+
+ }
 
  function mformsRenderEditableTable(widDef, b, context, custParms) {
      mformFixupWidget(widDef, context);
@@ -717,15 +769,19 @@
      });
      b.make("button", {
          "id": tblId + "-_AddBut",
+         "table_id": tblId,
+         "form_id": context.form_id,
          "dataObjId": context.dataObjId,
          "class": widDef.class + "AddBut",
-         "onClick": "addTableButton(this)"
+         "onClick": "addTableRowButton(this)"
      }, "<b>+</b>Add row");
      b.finish("div");
      mformFinishWidget(widDef, b, context, custParms);
  }
 
-
+ //-----
+ //-- MAIN RENDERING SECTION
+ //-----
  function mformsRenderWidgets(parent, widgets, b, context) {
      var gtx = context.gbl;
      var flds = gtx.widgets;
@@ -761,6 +817,10 @@
      }
  }
 
+
+ //-------------
+ //-- Data & Form Retrieval Event Handlers
+ //-------------
  // save complete context from rendering 
  // request so we can retrieve it latter 
  // using the combination for form_id
@@ -814,7 +874,17 @@
      }
  }
 
- // Process message header data received from server
+
+
+ //------------------------
+ //-- mforms AJAX support for fetching Data Objects
+ //------------------------
+
+
+ // AJAX Event handler to receive data objects requested
+ // by the form.   Once data has arrived will also 
+ // trigger rendering of the form which had to be delayed
+ // until we had data to populate it. 
  function mformGetDataObjOnData(data, httpObj, parms) {
      if (parms.uri in parms.context.gbl.filesLoading) {
          delete parms.context.gbl.filesLoading[parms.uri];
@@ -849,7 +919,10 @@
 
 
 
- // Load script file from server
+ // AJAX Request to fetch a User Object based on the
+ // Fetch specification in the Metadata.  Supports interpolation
+ // to fill in the request URI: 
+ // TODO:  Need to allow creation of a POST STRING HERE
  function mformGetDataObj(form, context) {
      var parms = {};
      if (context.dataObjId == null) {
@@ -872,6 +945,13 @@
  }
 
 
+ //--------------
+ //-- mforms AJAX support for fetching Form Spec
+ //--------------
+
+ // Process the forms spec once received from server
+ // or if needed trigger request for an associated
+ // data record to render.
  function mformsProcessFormSpec(data, context) {
      var gtx = context.gbl;
      for (var i = 0; i < data.length; i++) {
@@ -902,7 +982,8 @@
      }
  }
 
- // Process message header data received from server
+ // Event handler to Parse Forms data once received from
+ // the server. 
  function mformsGetDefOnData(data, httpObj, parms) {
      if (parms.uri in parms.context.gbl.filesLoading) {
          delete parms.context.gbl.filesLoading[parms.uri];
@@ -919,7 +1000,7 @@
      }
  }
 
- // Load script file from server
+ // Make Ajax Call to Load script file from server
  function mformsGetDef(scriptId, context) {
      var parms = {};
      var req_uri = scriptId + ".txt?ti=" + Date.now();
@@ -937,6 +1018,9 @@
      simpleGet(req_uri, mformsGetDefOnData, parms);
  }
 
+ //----------
+ //-- Main Driver for MForms Interface
+ //----------
  function display_form(targetDiv, formSpecUri, dataObjId, gContext) {
      //"dataSourceUri": dataSourceUri,
      console.log(" display_form() targetDiv=", targetDiv, " formSpecUri=", formSpecUri, " dataObjId=", dataObjId)

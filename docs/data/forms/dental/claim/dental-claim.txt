@@ -653,6 +653,9 @@
          - topLeftFieldsGroup
          - topRightFieldsGroup
 
+#-------------
+#--- Proceedure Codes
+#-------------
 
 - widget:
   id: arrProcDate
@@ -662,6 +665,109 @@
   data_context: date
   class: input_field
   cell_class: tdright
+
+
+- widget:
+  id: arrProcArea
+  type: dropdown
+  data_type: text
+  label: Area of Oral Cavity
+  isCol: true
+  col_align_class: tdLeft
+  data_context: area_oral_cavity
+  class : input_field
+  cell_class: tdleft
+  option:
+       - {"label" : "unknown", "value" : "-"}
+       - {"label" : "Maxillary", "value" : "01"}
+       - {"label" : "Mandibular", "value": "02"}
+       - {"label" : "Up Right Quad", "value" : "10"}
+       - {"label" : "Up Left Quad", "value" : "20"}
+       - {"label" : "Low Left Quad", "value" : "30"}
+       - {"label" : "Low Right Quad", "value" : "40"}
+  
+  
+- widget:
+  id: arrProcToothSystem
+  type: text
+  data_type: text
+  label: Tooth System
+  title: UR - Upper right, UL - upper left, LR - lower right, LL - Lower Left
+  isCol: true
+  col_align_class: tdLeft
+  data_context: tooth.system
+  class : input_field
+  cell_class: tdleft
+  size: 5
+  force_upper_case: true
+  valid_pat:
+     pattern: UR|UL|LR|LL
+     message : Invalid
+
+
+- widget:
+  id: arrToothNumber
+  type: text
+  data_type: text
+  label: Tooth Numbers
+  title: Tooth Number(s) or letter(s) separate by , or space.
+  isCol: true
+  col_align_class: tdLeft
+  data_context: tooth.number
+  class : input_field
+  cell_class: tdleft
+  #valid_fun: validate_tooth_number;
+  total_cell: true
+  size: 8
+
+- widget:
+  id: arrToothSurface
+  type: dropdown
+  data_type: text
+  label: Tooth Surface
+  isCol: true
+  col_align_class: tdLeft
+  data_context: tooth.surface
+  class : input_field
+  cell_class: tdleft
+  option:
+       - {"label" : "Unkown", "value" : "-"}
+       - {"label" : "Distal", "value" : "D"}
+       - {"label" : "Facial Labial", "value": "FL"}
+       - {"label" : "Facial Buccal", "value" : "FB"}
+       - {"label" : "Incisal", "value" : "I"}
+       - {"label" : "Linqual", "value" : "L"}
+       - {"label" : "Mesial", "value" : "M"}
+       - {"label" : "Occlusal", "value" : "O"}
+       - {"label" : "Proximal", "value" : "P"}
+  
+  
+
+- widget:
+  id: arrProcCode
+  type: text
+  data_type: text
+  label: Proceedure Code
+  isCol: true
+  col_align_class: tdLeft
+  data_context: proc_code
+  class : input_field
+  cell_class: tdleft
+  xxvalid_fun: validate_tooth_surface;
+  size: 10
+
+- widget:
+  id: arrProcDesc
+  type: text
+  data_type: text
+  label: Description
+  isCol: true
+  col_align_class: tdLeft
+  data_context: description
+  class : input_field
+  cell_class: tdleft
+  size: 40
+  #valid_fun: validate_tooth_surface;
 
 - widget:
   id: arrProcFee
@@ -674,13 +780,15 @@
   class : input_field
   cell_class: tdleft
   total_cell: true
+  size: 10
+
 
 - widget:
   id: procedures
   label: Proceedure Codes
   type: table
-  total_col:
-    - arrProcFee
+  total_col: 
+    -arrProcFee
   max_visible_rows: 10
   min_rows: 1
   rows_extra: 1
@@ -690,12 +798,12 @@
   client_side_sotr: true
   columns: 
     - arrProcDate
-    #- arrProcArea
-    #- arrProcToothSystem
-    #- arrProcToothNumber
-    #- arrProcToothSurface
-    #- arrProcCode
-    #- arrProcDesc
+    - arrProcArea
+    - arrProcToothSystem
+    - arrToothNumber
+    - arrToothSurface
+    - arrProcCode
+    - arrProcDesc
     - arrProcFee
 
 
