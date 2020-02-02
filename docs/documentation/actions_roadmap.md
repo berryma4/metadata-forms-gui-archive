@@ -2,9 +2,9 @@ Actions & Roadmap for Metadata Forms Engine
 
 # Rank Ordered Feature Work
 
-* Horizontal wrap of label options seems to be broken for transaction type on Detnal Claim form.
+* Demonstrate easy way of forcing labels to wrap the field so they are above the field instead of to the left.
 
-* Allow extra label class to be specified.
+* DONE:JOE:2020-02-01: Allow extra label class to be specified.
 
 * Suppress the display of JSON or reflow move to bottom when page is too narrow
 
@@ -22,7 +22,9 @@ Actions & Roadmap for Metadata Forms Engine
 
   * Support total columns
 
-  * Need to move the Expand Collapse rendering function to re-usable module so can use it for table or row.
+  * Need to move the Expand Collapse rendering function to re-usable module so can use it for table or row or include the table in a field set where we get that behavior for free. The table Label with be better done as field set label anyway.
+
+  * DONE:JOE:2020-02-01: Fix Add row so it is rendered as a button rather than Div also added container div to keep it inside the parent div without float:right
 
   * Support a Table for Array Element Display 
 

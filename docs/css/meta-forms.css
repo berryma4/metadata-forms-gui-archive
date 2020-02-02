@@ -130,16 +130,15 @@ button:focus {
 }
 
 .submit_buttoncontain {
-    width: 95%;
+    width: 100%;
     align-items: right;
     align-content: right;
     text-align: right;
+    background-color: transparent;
 }
 
 .submit_button {
-    margin-right: 8em;
-    xmargin-left: 80%;
-    xmargin-top: 4em;
+    margin: 8px;
     border-radius: 4px;
 }
 
@@ -352,18 +351,22 @@ table.mtable .tdcenter {
     text-align: center;
 }
 
-div.mtableAddBut {
-    float: right;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-weight: 600;
-    background-color: lightgray;
-    border: solid rgb(224, 221, 221) 3px;
-    border-radius: 3px;
-    padding: 5px;
-    margin-right: 20px;
+div.mtableaddRowCont {
+    width: 100%;
+    text-align: right;
+    background-color: transparent;
 }
 
-div.mtableAddBut:hover {
+button.mtableAddBut {
+    font-weight: 600;
+    border: solid rgb(224, 221, 221) 3px;
+    border-radius: 3px;
+    padding: 3px;
+    max-width: 80px;
+    margin: 5px;
+}
+
+button.mtableAddBut:hover {
     border-color: slategrey;
 }
 

@@ -700,6 +700,9 @@
          numRowtoRender = dataArr.length + rowExtra;
      }
 
+     // -----
+     //--- Render Table Header
+     //------
      var colId = null;
      var rendFunc = null;
      var colWidDef = null;
@@ -720,7 +723,9 @@
      }
      b.finish("tr");
 
-
+     //------------
+     //--- Render Table Body
+     //------------
      for (var rowndx = 0; rowndx < numRowtoRender; rowndx++) {
          // Render the Data rows
          b.start("tr");
@@ -759,14 +764,21 @@
          }
          b.finish("tr");
      }
-
      b.finish("table");
-     b.make("div", {
+
+     //----------
+     //--- Render the Table Add Row button
+     //----------
+     b.start("div", {
+         "class": widDef.class + "addRowCont"
+     });
+     b.make("button", {
          "id": tblId + "-_AddBut",
          "dataObjId": context.dataObjId,
          "class": widDef.class + "AddBut",
          "onClick": "addTableButton(this)"
-     }, "Add row");
+     }, "<b>+</b>Add row");
+     b.finish("div");
      mformFinishWidget(widDef, b, context);
  }
 
