@@ -141,6 +141,11 @@
      mformFieldChanged(hwidget);
  }
 
+
+ function mformsColHeadClicked(hwidget) {
+
+ }
+
  /*
  // Ieterate the form to find all input fields and
  // then map their ID to the model.  Use this to
