@@ -165,6 +165,7 @@
  function mformsColHeadClicked(hwidget) {
      var formId = gattr(hwidget, "form_id");
      var tblId = gattr(hwidget, "table_id");
+     var colId = gattr(hwidget, "col_id");
      var dataObjId = gattr(hwidget, "dataObjId");
      var widDef = GTX.widgets[tblId];
      var dataContext = widDef.data_context;

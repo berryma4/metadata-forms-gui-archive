@@ -32,6 +32,7 @@ Actions & Roadmap for Metadata Forms Engine
 * Support Form stack where new forms can be displayed on top of other forms with some control over positioning then when the other form is finished the form immediately below it is restored.  Ability to chain forms together into a series where all the mandatory fields in the series must be filled in before the form is saved to server.
 * Add support to allow multiple forms to be defined in a single file and only the one marked master.
 * Edit Table: Easy ability to force label to align to left or above field. 
+* Edit table: Support Notion to validate entire row so and show edit failure at row level rather  than field level. 
 * Save Data: Need to updates field_value_valid flag  at field level so we can rapidly determine if any required fields contain invalid values.  Save button should be disabled when invalid fields are present.
 * SaveData: Display indicator that form when  dirty and unsaved when a field changes from original data.
 * Editable Table: Support for Remove Row button

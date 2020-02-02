@@ -318,7 +318,7 @@ div.forceWrap {
 
 div.mtableCont {
     border: inset 2px rgb(231, 228, 228);
-    background-color: #e5ebf1ee;
+    background-color: rgb(231, 228, 228, 0.1);
     font-size: 1.0em;
     margin-top: 0.2em;
     margin-left: 0.2em;
@@ -327,11 +327,12 @@ div.mtableCont {
     align-content: center;
     text-align: center;
     vertical-align: top;
+    padding: 2px;
 }
 
 table.mtable {
     border: outset 1px rgb(231, 228, 228);
-    xbackground-color: #e5ebf1ee;
+    background-color: transparent;
     font-size: 1.0em;
     margin-top: 0.2em;
     margin-left: 0.2em;
@@ -350,7 +351,7 @@ table.mtable td {
     text-align: left;
     xborder-left: 1px solid #000;
     xborder-right: 1px solid #000;
-    background-color: rgba(200, 190, 180, 0.4);
+    background-color: rgba(200, 190, 180, 0.1);
 }
 
 table.mtable .tdright {
