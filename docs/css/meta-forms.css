@@ -121,6 +121,10 @@ fieldset.radio {
     font-size: 1em;
 }
 
+input.input_date {
+    font-size: 1.2em;
+}
+
 div.input_fieldCont {
     display: inline-block;
 }

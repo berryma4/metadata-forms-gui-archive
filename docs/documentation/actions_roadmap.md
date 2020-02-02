@@ -3,15 +3,13 @@ Actions & Roadmap for Metadata Forms Engine
 # Rank Ordered Feature Work
 
 * Demonstrate easy way of forcing labels to wrap the field so they are above the field instead of to the left.
-* DONE:JOE:2020-02-01: Allow extra label class to be specified.
 * Implement TAB bar widget which is very similar to top menu bar except is supports a change of visualization for the TAB that is currently open.
   * Ability to defer rendering inactive TABS until the tab is displayed.  Since content on one tab could change based on actions in another tab then 
   * Ability to show TABS that have incomplete work before record can be saved to server.
-* Editable Table: Support total columns
 * Implement Basic Save Object Function
 * Implement Top Menu Bar Widget where the menu could be display a different form  could be separate page.
 * Modify Date parser to accept alternative input form and reform to desired format to support date picker.
-* Add Checkbox Widget
+* Support Checkbox Widget
 * Demo: Dental Claim:Create basic ADA For Fields.
 * Demo: Dental Claim Add rest of fields from ADA form that exist below the Procedure codes.
 * EditTable: Add support for Total Row where only some fields are totaled.
@@ -27,7 +25,6 @@ Actions & Roadmap for Metadata Forms Engine
 * SaveData: Need a list of all fields rendered for a form to make form level validation check easy.
 * Ensure both the Global and local context are searched during interpolation
 * SaveData: Reject or Disable Save to server:  when Some Fields fail the validation rules. 
-* 
 * Tutorial: Simple Sample Form that shows rendering a person with friends in a table that retrieves data objects from server to populate the table.    
 * Support Form stack where new forms can be displayed on top of other forms with some control over positioning then when the other form is finished the form immediately below it is restored.  Ability to chain forms together into a series where all the mandatory fields in the series must be filled in before the form is saved to server.
 * Add support to allow multiple forms to be defined in a single file and only the one marked master.
@@ -47,7 +44,6 @@ Actions & Roadmap for Metadata Forms Engine
 * Edit Table: When adding a row should scroll the table to make the row added visible.
 * Editable Table: When last row is still empty need to disable add row as an optional parameter.
 * Editable Table: Add a way to group multiple widgets in a single cell when the table would otherwise be too wide.
-* DONE: JOE:2020-02-01: Editable Table: To allow resort we need to be able to replace the table in the div container  which means we need to be able to render it without the container so we can to a toDiv into that container.
 * Demo Dental Claim:  When user enters any portion of a procedure code or  description of code show list of codes 5  that could fit.    Implement as re-usable functionality. 
 * Editable Table: Demonstrate alternating color bands in table widget.
 * Editable Table: Demonstrate repeated headers in a table widget
@@ -133,6 +129,7 @@ Actions & Roadmap for Metadata Forms Engine
 * Save To Server: Editable Table:  Ability to call service when row added, when row removed, when row changed and user leaves that row. 
 * Image Display Widget
 * Image Upload Widget
+* Text widget when num_dec has been specified should reformat to fit the specification when it looses format.  In reality this should be implemented as a general purpose function that allows a reformat pattern to do this work. 
 * Simple Server that can save updates for Demo purposes.
 
   * Add SSL to Simple Server
@@ -180,7 +177,6 @@ Actions & Roadmap for Metadata Forms Engine
 * Demonstrate server with save functionality using serverless agent.   [Most likely using Google Firestore with Python server less functions](https://cloud.google.com/firestore/docs/quickstart-servers) [basic serverless tutorial](https://read.iopipe.com/the-right-way-to-do-serverless-in-python-e99535574454)  [googles managed container](https://cloud.google.com/run/docs/quickstarts/build-and-deploy)  [google serverless cloud functions](https://cloud.google.com/functions/) [google cloud function quick start](https://cloud.google.com/functions/docs/quickstart-console) [google cloud functions with data storage](https://cloud.google.com/functions/docs/tutorials/storage)  [streaming data from cloud storage into cloud functions using BigQuery](https://cloud.google.com/solutions/streaming-data-from-cloud-storage-into-bigquery-using-cloud-functions)  [Cloud functions for Firebase](https://firebase.google.com/docs/functions)  [google bigtable getting started](https://cloud.google.com/bigtable/docs/samples) [Google simple function to use Bigtable](https://github.com/GoogleCloudPlatform/golang-samples/tree/master/bigtable/helloworld)  [google firestore](https://cloud.google.com/firestore/) [google firestore getting started](https://cloud.google.com/firestore/docs/quickstart-servers)
 * Demo Claim: Demonstrate displaying data from a FHIR service.
 * Demo Claim: Add sample using a publicly available REST API to source the data.
-* DONE:JOE:2020-02-01: Extend the Tables widget to provide custom widgets in the tables.
 * Edit Table: Extend tables widget to allow a multi-level sort functionality by Shift click on different headers.  Show shift click instruction on hover or some other multi-level sort function
 * **DEMO** [Configure custom domain](https://help.github.com/en/github/working-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site) for github pages site
 * Add support to change context on right hand # of uri at top of browser as user selects different widgets.
@@ -546,6 +542,18 @@ defaults:
     
 
 # DONE:
+
+* DONE:JOE:2020-02-01: Allow extra label class to be specified.
+
+* DONE:JOE:2020-02-02: Fixed: Drop downs in table cell are not keeping value in domain object when table is refreshed.
+
+* DONE: JOE:2020-02-02: Editable Table: Support total columns
+
+* DONE:JOE:2020-02-02: Support fixed decimal formatting for table cell columns
+
+* DONE: JOE:2020-02-01: Editable Table: To allow resort we need to be able to replace the table in the div container  which means we need to be able to render it without the container so we can to a toDiv into that container.
+
+* DONE:JOE:2020-02-01: Extend the Tables widget to provide custom widgets in the tables.
 
 * DONE:JOE:2020-01-30: Horizontal Div blocks are not properly wrapping.
 

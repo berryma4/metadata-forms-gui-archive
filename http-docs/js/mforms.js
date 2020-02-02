@@ -147,6 +147,9 @@
              }
          }
      }
+     if (widDef.isCol == true) {
+         tableCellChanged(hwidget);
+     }
      // console.log("FieldChanged", widId, "fldVal=", fldVal, "formId=", formId,
      //   " dataObjId=", dataObjId, "context=", context, "dataObj", dataObj);
 
@@ -186,6 +189,31 @@
      });
      b.toDiv(targetDiv);
 
+ }
+
+ // when table cells change we may need to do 
+ // special things like update totals
+ function tableCellChanged(hwidget) {
+     var widId = hwidget.id.split("-_")[0];
+     //var colId = gattr(hwidget, "col_id");
+     var widDef = GTX.widgets[widId];
+     if ((widDef.isCol == true) && (widDef.total_cell)) {
+         var formId = gattr(hwidget, "form_id");
+         var tblId = gattr(hwidget, "table_id");
+         var tblDef = GTX.widgets[tblId];
+         var dataObjId = gattr(hwidget, "dataObjId");
+         var eleId = formId + tblId + widId + "total";
+         var tblDataContext = tblDef.data_context;
+         //var context = GTX.formContexts[formId][dataObjId];
+         var dataObj = GTX.dataObj[dataObjId];
+         var dataArr = getNested(dataObj, tblDataContext);
+         var newTotal = mformsCalcArrTotal(dataArr, widDef.data_context);
+         var outStr = newTotal;
+         if (widDef.num_dec != undefined) {
+             outStr = newTotal.toFixed(widDef.num_dec);
+         }
+         toDiv(eleId, outStr);
+     }
  }
 
  function addTableRowButton(hwidget) {
@@ -287,15 +315,13 @@
      if (dataPath == undefined) {
          alert("ERROR Widget Data Context is not specified " + JSON.stringify(widDef));
      }
+     if ("data_context" in custParms) {
+         dataPath = custParms.data_context;
+     }
      var dataVal = getNested(dataObj, dataPath, null);
-     if (dataVal == null) {
-         // If no data value is found in the source object
-         // then set based on field default specified in 
-         // widget defenition. 
-         dataVal = getNested(widDef, "default", null);
-         if (dataVal != null) {
-             setNested(dataObj, dataPath, dataVal)
-         }
+     if ((dataVal == null) && (widDef.default != undefined)) {
+         dataVal = widDef.default;
+         setNested(dataObj, dataPath, dataVal);
      }
      return dataVal;
  }
@@ -452,7 +478,7 @@
      var matchOptVal = null;
 
      var dataObj = context.dataObj;
-     var dataVal = getDataValue(dataObj, widDef, context);
+     var dataVal = getDataValue(dataObj, widDef, context, custParms);
 
      var opt = null;
      var optndx = null;
@@ -530,7 +556,7 @@
      b.start("select", widAttr);
 
      var matchOptVal = null;
-     var dataVal = getDataValue(context.dataObj, widDef, context);
+     var dataVal = getDataValue(context.dataObj, widDef, context, custParms);
      var opt = null;
      var optndx = null;
      if ("option" in widDef) {
@@ -579,6 +605,19 @@
          widAttr.id = widDef.id;
      }
 
+     if ("col_Id" in custParms) {
+         widAttr.col_id = custParms.colId;
+     }
+     if ("form_id" in custParms) {
+         widAttr.form_id = custParms.form_id;
+     }
+     if ("table_id" in custParms) {
+         widAttr.table_id = custParms.table_id;
+     }
+     if ("data_arr_path" in custParms) {
+         widAttr.data_arr_path = custParms.data_arr_path;
+     }
+
      if ("data_context" in custParms) {
          widAttr.data_context = custParms.data_context;
      } else if ("data_context" in widDef) {
@@ -598,7 +637,7 @@
      var gtx = context.gbl;
      //mformsAdjustCustParms(widDef, b, context, custParms);
      var widId = custParms.widId;
-     var colPath = custParms.dataContext;
+     var colPath = custParms.data_context;
      mformStartWidget(widDef, b, context, custParms);
      // Add the actual Text Widget
      var widAttr = mformBasicWidAttr(widDef, context);
@@ -610,26 +649,36 @@
      //"table": widDef
 
      var widVal = "";
-     if (widDef.isColumn == true) {
-         var dataArr = custParms.dataArr;
-         if (dataArr.length > custParms.rowNdx) {
-             var dataRow = custParms.dataArr[custParms.rowNdx];
-             widVal = getNested(datarow, widDef.dataContext);
-         }
-         widArr.iscolumn = true;
-         widArr.data_context = colPath;
+     if (widDef.isCol == true) {
+         widVal = getNested(context.dataObj, custParms.data_context, null);
+         widAttr.iscolumn = true;
+         widAttr.data_context = colPath;
+
      } else {
          // Add Initial Field Value from the Data Object
          if ("dataObj" in context) {
-             widVal = getDataValue(context.dataObj, widDef, context);
-             if (widVal != null) {
-                 widAttr.value = widVal;
-             } else {
-                 widVal = null;
-             }
+             widVal = getDataValue(context.dataObj, widDef, context, custParms);
          }
      }
+
+     // Format with fixed decimal points if requested
+     // in the metadata
+     var numDec = widDef.num_dec;
+     if ((numDec != undefined) && (numDec >= 0) && (numDec <= 20) && (widVal != null)) {
+         widVal = parseFloat(widVal).toFixed(numDec);
+     }
+
+     // If we have a valid value then save to the widget for rendering
+     if (widVal != null) {
+         widAttr.value = widVal;
+     } else {
+         widVal = null;
+     }
+
      var makeEleName = "input";
+     if (widDef.type == "date") {
+         widAttr.class = "input_date " + widAttr.class;
+     }
      if (widDef.type == "textarea") {
          b.make("textarea", widAttr, widVal);
      } else {
@@ -650,6 +699,17 @@
 
  }
 
+ function mformsCalcArrTotal(dataArr, data_context) {
+     var totVal = 0;
+     for (rowndx = 0; rowndx < dataArr.length; rowndx++) {
+         dataRow = dataArr[rowndx];
+         fldVal = getNested(dataRow, data_context, 0);
+         fldVal = Number.parseFloat(fldVal);
+         totVal += fldVal;
+     }
+     return totVal;
+ }
+
  function mformsRenderEditableTable(widDef, b, context, custParms) {
      mformFixupWidget(widDef, context);
      var gtx = context.gbl;
@@ -661,7 +721,8 @@
          console.log("ERROR  data_context is mandatory for widget: " + JSON.stringify(widDef));
          return;
      }
-
+     var colndx = null;
+     var rowndx = null;
      mformStartWidget(widDef, b, context, custParms);
      // TODO: determine right or left alignment
      // by column
@@ -722,16 +783,16 @@
      //------------
      //--- Render Table Body
      //------------
-     for (var rowndx = 0; rowndx < numRowtoRender; rowndx++) {
+     for (rowndx = 0; rowndx < numRowtoRender; rowndx++) {
          // Render the Data rows
          b.start("tr");
-         for (var colndx = 0; colndx < cols.length; colndx++) {
+         for (colndx = 0; colndx < cols.length; colndx++) {
              colId = cols[colndx];
              if (colId in flds) {
+                 colWidDef = flds[colId];
                  b.start("td", {
                      "class": colWidDef.cell_class
                  });
-                 colWidDef = flds[colId];
                  mformFixupWidget(colWidDef, context);
                  if (colWidDef.type in widgRenderFuncs) {
                      dataContextCell = colPath = widDef.data_context + ".[" + rowndx + "]." + colWidDef.data_context;
@@ -741,6 +802,8 @@
                              "rowNdx": rowndx,
                              "dataArr": dataArr,
                              "table": widDef,
+                             "col_id": colId,
+                             "table_id": tblId,
                              "id": colId + "-_" + rowndx,
                              "data_context": dataContextCell,
                              "skip_label": true
@@ -760,7 +823,46 @@
          }
          b.finish("tr");
      }
+
+     if (widDef.total_line == true) {
+         // Add the Total Row 
+         b.start("tr", {
+             "id": tblId + "tblTotRow",
+             "class": widDef.class + "tr" + " " + widDef.class + "totRow"
+         });
+         var numEmptyCellRendered = 0;
+         for (colndx = 0; colndx < cols.length; colndx++) {
+             colId = cols[colndx];
+             if (colId in flds) {
+                 colWidDef = flds[colId];
+                 if (colWidDef.total_cell != true) {
+                     // just render a empty cell on the total row if not a total cell.
+                     var tmpOutStr = "";
+                     if (numEmptyCellRendered < 1) {
+                         tmpOutStr = "Totals";
+                     }
+                     b.make("th", {}, tmpOutStr);
+                     numEmptyCellRendered++;
+                 } else {
+                     b.start("th", {
+                         "class": colWidDef.cell_class + " " + colWidDef.class + "total",
+                         "id": context.form_id + tblId + colId + "total"
+                     });
+                     var totVal = mformsCalcArrTotal(dataArr, colWidDef.data_context);
+                     var numDec = colWidDef.numDec;
+                     if (numDec == undefined) {
+                         numDec = 2;
+                     }
+                     // TODO: Add formatting of output field.
+                     b.b(totVal.toFixed(numDec));
+                     b.finish("td");
+                 }
+             }
+         }
+         b.finish("tr");
+     }
      b.finish("table");
+
 
      //----------
      //--- Render the Table Add Row button

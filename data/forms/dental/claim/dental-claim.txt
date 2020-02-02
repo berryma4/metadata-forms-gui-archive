@@ -702,7 +702,7 @@
   force_upper_case: true
   valid_pat:
      pattern: UR|UL|LR|LL
-     message : Invalid
+     message : Invalid try UR UL LR LL
 
 
 - widget:
@@ -717,7 +717,6 @@
   class : input_field
   cell_class: tdleft
   #valid_fun: validate_tooth_number;
-  total_cell: true
   size: 8
 
 - widget:
@@ -780,6 +779,7 @@
   class : input_field
   cell_class: tdleft
   total_cell: true
+  num_dec: 2
   size: 10
 
 

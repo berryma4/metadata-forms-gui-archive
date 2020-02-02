@@ -221,13 +221,14 @@ function scrollDivBottom(divId) {
   }
 }
 
-function getFormValue(divId) {
+function getFormValue(divId, defVal) {
   var tdiv = document.getElementById(divId);
   if ((tdiv !== undefined) && (tdiv !== null)) {
     return tdiv.value;
   }
-  return undefined;
+  return defVal;
 }
+
 
 function setFormValue(divId, value) {
   var tdiv = document.getElementById(divId);
