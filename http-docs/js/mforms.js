@@ -143,118 +143,46 @@
 
 
  function mformsColHeadClicked(hwidget) {
+     var formId = gattr(hwidget, "form_id");
+     var tblId = gattr(hwidget, "table_id");
+     var colId = gattr(hwidget, "col_id");
+     var dataObjId = gattr(hwidget, "dataObjId");
+     var widDef = GTX.widgets[tblId];
+     var dataContext = widDef.data_context;
+     var context = GTX.formContexts[formId][dataObjId];
+     var dataObj = GTX.dataObj[dataObjId];
+     var dataArr = getNested(dataObj, dataContext);
+     // TODO: Set Sort Specification for this column
+     widDef.userSortCol = colId;
+     var targetDiv = tblId + "Cont";
+
+     // TODO: Set Build The Sort Keys with pointers to data records
+
+
+     // TODO: Re-Render the HTML for the Table and replace it in the container
+     var b = new String_builder();
+     mformsRenderEditableTable(widDef, b, context, {
+         "skip_container": true
+     });
+     b.toDiv(targetDiv);
 
  }
 
- /*
- // Ieterate the form to find all input fields and
- // then map their ID to the model.  Use this to
- // set the value for all form fields based on the
- // domain objects current values.
- function mformUpdateFormValuesFromModel(formId, model) {
-     var aform = document.getElementById(formId);
-     var elems = aform.elements;
-     var numEle = elems.length;
-     for (var i = 0; i < numEle; i++) {
-         var ele = elems[i];
-         var eleId = ele.id
-         if (eleId.startsWith("frm_")) {
-             var fld_name = eleId.replace("frm_", "");
-             var aval = getNested(model, fld_name);
-             if (aval != null) {
-                 ele.value = aval;
-                 // custom method to convert datetime to string
-                 // custom method for checkbox
-                 // custom method for radio button
-                 // custom method for select box
-             }
-         }
-     }
- }
-
-
- // Ieterate the form to find all input fields and
- // for each field that starts with frm_ update
- // the supplied DOM object.  This is not normally
- // required when automatic update via click handlers
- // is provided.
- function mformUpdateModelFromForm(formId, model) {
-     var aform = document.getElementById(formId);
-     var elems = aform.elements;
-     var numEle = elems.length;
-     for (var i = 0; i < numEle; i++) {
-         var ele = elems[i];
-         var eleId = ele.id
-         if (eleId.startsWith("frm_")) {
-             var fld_name = eleId.replace("frm_", "");
-             var aval = setNested(model, fld_name);
-             if (aval != null) {
-                 ele.value = aval;
-                 // custom method to convert datetime to string
-                 // custom method for checkbox
-                 // custom method for radio button
-                 // custom method for select box
-             }
-         }
-     }
- }
-
- // Call by the validate function in the on click handler.
- // diplays a error message if value is empty and returns false.
- // otherwise clears the error message and returns true.
- function mformValidateNotEmpty(fld, fldName, model, validateFun) {
-     var fldVal = fld.value;
-     var errName = "frm_msg_" + fldName
-     if (fldVal <= "") {
-         toDiv(errName, fldName + " May not be empty");
-         return false;
-     } else {
-         toDiv(errName, "");
-         return true;
-     }
- }
-
-
- // On Field Change handler to process changes as fields are
- // processed.   Calls the defiined validate function if
- // present.
- function mformFieldOnChange(fld, fldName, context, validateFun) {
-     var fldVal = fld.value.trim();
-     if (validateFun) {
-         var tRes = validateFun(fld, fldName, context, validateFun)
-         if (tRes === false) {
-             return false;
-         }
-     }
-     if (context !== null) {
-         var currVal = getNested(context.model, fldName);
-         if (currVal !== fldVal) {
-             // Field really has changed
-             setNested(context.model, fldName, fldVal);
-             context.isDirty = true;
-             if (context.onDirty) {
-                 context.onDirty(fld, fldName, context);
-             }
-         }
-         toDiv("show_domain_obj", "Model as JSON" + JSON.stringify(context.model));
-     }
- }
- */
 
  /***************
   **** RENDERING 
   **************  */
  var widgRenderFuncs = {
-         "widgetGroup": mformsRenderGroupWidget,
-         "text": mformsRenderTextWidget,
-         "textarea": mformsRenderTextWidget,
-         "button": mformsRenderButton,
-         "dropdown": mformRenderDropdown,
-         "radio": mformRenderRadio,
-         "date": mformsRenderTextWidget,
-         "table": mformsRenderTable
-     }
-     // "col": mformsRenderColumn
+     "widgetGroup": mformsRenderGroupWidget,
+     "text": mformsRenderTextWidget,
+     "textarea": mformsRenderTextWidget,
+     "button": mformsRenderButton,
+     "dropdown": mformRenderDropdown,
+     "radio": mformRenderRadio,
+     "date": mformsRenderTextWidget,
+     "table": mformsRenderEditableTable
+ }
+ // "col": mformsRenderColumn
 
  var mformTextFieldCopyAttr = {
      "size": true,
@@ -336,7 +264,6 @@
  }
 
  function mformsRenderButton(widDef, b, context, custParms) {
-     mformFixupWidget(widDef, context);
      b.start("div", {
          "class": widDef.class + "contain"
      });
@@ -361,10 +288,12 @@
          cssClass = "forceWrap " + cssClass;
      }
 
-     b.start("div", {
-         "id": widId + "Cont",
-         "class": cssClass + "Cont",
-     }).nl();
+     if (custParms.skip_container != true) {
+         b.start("div", {
+             "id": widId + "Cont",
+             "class": cssClass + "Cont",
+         }).nl();
+     }
 
      var labelClass = widDef.class + "Label";
      if (widDef.label_class != undefined) {
@@ -386,7 +315,9 @@
          "class": "fieldStatusMsg",
          "id": widDef.id + "Status"
      }).nl();
-     b.finish("div").nl();
+     if (custParms.skip_container != true) {
+         b.finish("div").nl();
+     }
      return b;
  }
 
@@ -404,7 +335,6 @@
  }
 
  function mformsRenderGroupWidget(widDef, b, context, custParms) {
-     mformFixupWidget(widDef, context);
      var gtx = context.gbl;
      var flds = gtx.widgets;
      var parClass = parent.class;
@@ -449,7 +379,6 @@
  }
 
  function mformRenderRadio(widDef, b, context, custParms) {
-     mformFixupWidget(widDef, context);
      var gtx = context.gbl;
      var widId = widDef.id;
      custParms.skip_label = true;
@@ -534,7 +463,7 @@
 
      } // if options defined
      b.finish("fieldset").nl();
-     mformFinishWidget(widDef, b, context)
+     mformFinishWidget(widDef, b, context, custParms);
      b.nl();
  }
 
@@ -590,7 +519,7 @@
      } // if options defined
 
      b.finish("select");
-     mformFinishWidget(widDef, b, context);
+     mformFinishWidget(widDef, b, context, custParms);
  }
 
  function copyOverCustParms(widAttr, widDef, custParms) {
@@ -611,6 +540,15 @@
      if ("widId" in custParms) {
          widAttr.widId = custParms.widId; // original widget without array modifier
      }
+ }
+
+ // Iterate records in the data array
+ // build a index by the values of the data field
+ // sort them and return the sorted index.  Use the Column
+ // specified data types to determine if we should be 
+ // converting or padding sort key for proper numeric sort.
+ function mformsBuildSortKey(widDef, context, custParms) {
+
  }
 
  function mformsRenderTextWidget(widDef, b, context, custParms) {
@@ -655,11 +593,11 @@
      } else {
          b.make(makeEleName, widAttr);
      }
-     mformFinishWidget(widDef, b, context);
+     mformFinishWidget(widDef, b, context, custParms);
  }
 
 
- function mformsRenderTable(widDef, b, context, custParms) {
+ function mformsRenderEditableTable(widDef, b, context, custParms) {
      mformFixupWidget(widDef, context);
      var gtx = context.gbl;
      var flds = gtx.widgets;
@@ -683,8 +621,6 @@
          "id": tblId + "tbl",
          "class": widDef.class
      });
-
-     // Render column Headers
 
      b.start("tr", {
          "id": tblId + "tblhead",
@@ -718,9 +654,11 @@
              b.start("th", {
                  "id": tblId + colId + "id",
                  "class": colWidDef.cell_class,
-                 "tableId": tblId,
-                 "colId": colId,
-                 "onClick": "mformsColHeadClicked(" + tblId + "," + colId + ")"
+                 "table_id": tblId,
+                 "col_id": colId,
+                 "form_id": context.form_id,
+                 "dataObjId": context.dataObjId,
+                 "onClick": "mformsColHeadClicked(this)"
              });
              b.b(colWidDef.label);
              b.finish("th");
@@ -784,9 +722,8 @@
          "onClick": "addTableButton(this)"
      }, "<b>+</b>Add row");
      b.finish("div");
-     mformFinishWidget(widDef, b, context);
+     mformFinishWidget(widDef, b, context, custParms);
  }
-
 
 
  function mformsRenderWidgets(parent, widgets, b, context) {

@@ -18,6 +18,8 @@ Actions & Roadmap for Metadata Forms Engine
 
   * Add array level support to setNested and getNested.
 
+  * To allow resort we need to be able to replace the table in the div container  which means we need to be able to render it without the container so we can to a toDiv into that container.
+
   * Must support column header rather than field headers.
 
   * Support total columns
