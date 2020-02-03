@@ -40,16 +40,20 @@
  }
 
 
- @media screen and (max-width: 768px) {
+ @media only screen and (max-width: 768px) {
 
      #topRightFieldsGroupcont,
      #topLeftFieldsGroupcont,
      #lowerLeftGroupcont,
      #lowerRightGroupCont {
-         width: 100%;
+         width: 99% !important;
+         max-width: 99% !important;
+         min-width: 99% !important;
      }
 
      #proceduresCont {
          width: 100%;
+         max-width: 100%;
+         min-width: 100%;
      }
  }
