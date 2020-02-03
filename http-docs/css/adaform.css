@@ -38,3 +38,18 @@
      /* Firefox, other Gecko */
      box-sizing: border-box;
  }
+
+
+ @media screen and (max-width: 768px) {
+
+     #topRightFieldsGroupcont,
+     #topLeftFieldsGroupcont,
+     #lowerLeftGroupcont,
+     #lowerRightGroupCont {
+         width: 100%;
+     }
+
+     #proceduresCont {
+         width: 100%;
+     }
+ }
