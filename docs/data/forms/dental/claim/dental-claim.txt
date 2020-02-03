@@ -619,39 +619,7 @@
          - patAccountNumber
 
 
-###### 
-## Top Fields 
-#######
-- widget:
-    id: topLeftFieldsGroup
-    type: widgetGroup
-    class: silent_group
-    renderFieldset: false
-    widgets:
-         - transType
-         - preauthNumber
-         - insurerGroup
-         - otherInsurerGroup
 
-- widget:
-    id: topRightFieldsGroup
-    type: widgetGroup
-    class: silent_group
-    renderFieldset: false
-    widgets:
-         - polHolderGroup
-         - patGroup
-
-- widget:
-    id: topFieldsGroup
-    labelxx: top fields
-    type: widgetGroup
-    class: silent_group
-    layout: vertical
-    renderFieldset: false
-    widgets:
-         - topLeftFieldsGroup
-         - topRightFieldsGroup
 
 #-------------
 #--- Proceedure Codes
@@ -817,6 +785,361 @@
     data_context: operation.proceedures
 
 
+#####
+## Dentist Information 
+#####
+
+-widget:
+    id: billProvName
+    data_type: text
+    type: text
+    label: Name
+    title: Dentist Name (Last, First, Middle Init, Suffix)
+    size: 50
+    data_context: provider.bill.name
+    class: input_field
+    ignore-case-match: true
+
+-widget:
+    id: billProvAddr1
+    data_type: text
+    type: text
+    label :Address 1
+    size: 50
+    data_context: provider.bill.address1
+    class: input_field
+    ignore-case-match: true
+
+-widget:
+    id: billProvAddr2
+    data_type: text
+    type: text
+    label :Address 2
+    size: 50
+    mandatory: true
+    data_context: provider.bill.address2
+    class: input_field    
+
+-widget:
+    id: billProvCity
+    data_type: text
+    type: text
+    label :City
+    size: 35
+    data_context: provider.bill.city
+    class: input_field
+
+-widget:
+    id: billProvState
+    data_type: text
+    type: text
+    label :State
+    size: 2
+    maxlength: 2
+    mandatory: true
+    data_context: provider.bill.state
+    class: input_field
+
+-widget:
+    id: billProvZip
+    data_type: text
+    type: text
+    label :Zip
+    size: 11
+    mandatory: true
+    data_context: provider.bill.zip
+    class: input_field
+
+-widget:
+    id: billProvNPI
+    data_type: text
+    type: text
+    label: NPI
+    data_context: provider.bill.npi
+    class: input_field
+    ignore-case-match: true
+
+
+-widget:
+    id: billProvLicense
+    data_type: text
+    type: text
+    label : License Num    
+    data_context: provider.bill.license
+    class: input_field
+    ignore-case-match: true
+
+-widget:
+    id: billProvTIN
+    data_type: text
+    type: text
+    size: 25
+    label : TIN or SSN
+    title: Provider TIN or SSN
+    data_context: provider.bill.tin
+    class: input_field
+    ignore-case-match: true
+
+-widget:
+    id: billProvAddInfo
+    data_type: text
+    type: text
+    label : Additonal INfo
+    data_context: provider.bill.additInfo
+    class: input_field
+    ignore-case-match: true
+    
+
+-widget:
+    id: billProvPhone
+    data_type: text
+    type: text
+    label : Phone Number
+    data_context: provider.bill.phone
+    class: input_field
+    ignore-case-match: true
+
+
+- widget:
+    id: billProvGroup
+    label: Billing Provider / Dentist Information
+    type: widgetGroup
+    class: vgroup
+    layout: horizontal
+    widgets: 
+         - billProvName  
+         - billProvAddr1
+         - billProvAddr2
+         - billProvCity
+         - billProvState
+         - billProvZip
+         - billProvNPI
+         - billProvLicense
+         - billProvTIN
+         - billProvPhone
+         - billProvAddInfo
+
+
+##################
+### Treating Provider
+##################
+
+-widget:
+    id: treatProvName
+    data_type: text
+    type: text
+    label: Name
+    title: Dentist Name (Last, First, Middle Init, Suffix)
+    size: 50
+    data_context: provider.treat.name
+    class: input_field
+    
+
+-widget:
+    id: treatCertifies
+    data_type: text
+    type: text
+    label: Certifies Services
+    title: Treating Dentist certifies procedures as indicated by date are in progress or have been completed.
+    size: 20
+    data_context: provider.treat.certifies.sig
+    class: input_field
+    
+
+-widget:
+    id: treatCertifiesDate
+    data_type: text
+    type: date
+    label: Certifies Date
+    data_context: provider.treat.certifies.date
+    class: input_field
+    
+
+
+-widget:
+    id: treatProvAddr1
+    data_type: text
+    type: text
+    label :Address 1
+    size: 50
+    data_context: provider.treat.address1
+    class: input_field
+    ignore-case-match: true
+
+-widget:
+    id: treatProvAddr2
+    data_type: text
+    type: text
+    label :Address 2
+    size: 50
+    mandatory: true
+    data_context: provider.treat.address2
+    class: input_field    
+
+-widget:
+    id: treatProvCity
+    data_type: text
+    type: text
+    label :City
+    size: 35
+    data_context: provider.treat.city
+    class: input_field
+
+-widget:
+    id: treatProvState
+    data_type: text
+    type: text
+    label :State
+    size: 2
+    maxlength: 2
+    mandatory: true
+    data_context: provider.treat.state
+    class: input_field
+
+-widget:
+    id: treatProvZip
+    data_type: text
+    type: text
+    label :Zip
+    size: 11
+    mandatory: true
+    data_context: provider.treat.zip
+    class: input_field
+
+-widget:
+    id: treatProvNPI
+    data_type: text
+    type: text
+    label: NPI
+    data_context: provider.treat.npi
+    class: input_field
+    ignore-case-match: true
+
+
+-widget:
+    id: treatProvLicense
+    data_type: text
+    type: text
+    label : License Num    
+    data_context: provider.treat.license
+    class: input_field
+    ignore-case-match: true
+
+-widget:
+    id: treatProvTIN
+    data_type: text
+    type: text
+    size: 25
+    label : TIN or SSN
+    title: Provider TIN or SSN
+    data_context: provider.treat.tin
+    class: input_field
+    ignore-case-match: true
+
+-widget:
+    id: treatProvAddInfo
+    data_type: text
+    type: text
+    label : Additonal INfo
+    data_context: provider.treat.additInfo
+    class: input_field
+    ignore-case-match: true
+    
+
+-widget:
+    id: treatProvPhone
+    data_type: text
+    type: text
+    label : Phone Number
+    data_context: provider.treat.phone
+    class: input_field
+    ignore-case-match: true
+
+
+- widget:
+    id: treatProvGroup
+    label: Treating Provider / Dentist Information
+    type: widgetGroup
+    class: vgroup
+    layout: horizontal
+    widgets: 
+         - treatProvName 
+         - treatCertifies 
+         - treatCertifiesDate
+         - treatProvAddr1
+         - treatProvAddr2
+         - treatProvCity
+         - treatProvState
+         - treatProvZip
+         - treatProvNPI
+         - treatProvLicense
+         - treatProvTIN
+         - treatProvPhone
+         - treatProvAddInfo
+
+###### 
+## Define Top Payne above Proceedures
+#######
+- widget:
+    id: topLeftFieldsGroup
+    type: widgetGroup
+    class: silent_group
+    renderFieldset: false
+    widgets:
+         - transType
+         - preauthNumber
+         - insurerGroup
+         - otherInsurerGroup
+
+- widget:
+    id: topRightFieldsGroup
+    type: widgetGroup
+    class: silent_group
+    renderFieldset: false
+    widgets:
+         - polHolderGroup
+         - patGroup
+
+- widget:
+    id: topFieldsGroup
+    labelxx: top fields
+    type: widgetGroup
+    class: silent_group
+    layout: vertical
+    renderFieldset: false
+    widgets:
+         - topLeftFieldsGroup
+         - topRightFieldsGroup
+
+#################
+## Define Lower Payne below proceedures table
+#################
+- widget:
+    id: lowerLeftGroup
+    type: widgetGroup
+    class: silent_group
+    renderFieldset: false    
+    widgets: 
+         - billProvGroup
+
+- widget:
+    id: lowerRightGroup
+    type: widgetGroup
+    class: silent_group
+    renderFieldset: false
+    widgets: 
+         - treatProvGroup
+
+
+- widget:
+    id: lowerGroup
+    type: widgetGroup
+    class: silent_group
+    layout: vertical
+    renderFieldset: false
+    widgets: 
+         - lowerLeftGroup
+         - lowerRightGroup
 
 
 - form:
@@ -836,4 +1159,5 @@
    widgets:   
            - topFieldsGroup
            - procedures
+           - lowerGroup
            - saveButton

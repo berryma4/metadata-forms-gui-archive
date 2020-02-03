@@ -1,17 +1,25 @@
- #topFieldsGroupcont {
-      border: none;
-      margin: 0px;
-      padding: 0px;
-      width: auto;
-  }
+ #topFieldsGroupcont,
+ #lowerGroupcont {
+     border: none;
+     margin: 0px;
+     padding: 0px;
+     width: auto;
+ }
 
-  #topRightFieldsGroupcont,
-  #topLeftFieldsGroupcont {
-      display: inline-block;
-      max-width: 540px;
-      min-width: 400px;
-      border: none;
-      margin: 0px;
-      padding: 0px;
-      width: auto;
-  }
+ #topRightFieldsGroupcont,
+ #topLeftFieldsGroupcont,
+ #lowerLeftGroupcont,
+ #lowerRightGroupCont {
+     display: inline-block;
+     max-width: 650px;
+     min-width: 350px;
+     border: none;
+     margin: 0px;
+     padding: 0px;
+     width: auto;
+ }
+
+ #proceduresCont {
+     min-width: 800px;
+     max-width: 1330px;
+ }
