@@ -63,7 +63,7 @@
     data_type: text
     type: text
     label :City
-    size: 35
+    size: 30
     mandatory: true
     data_context: insurer.city
     class: input_field
@@ -246,7 +246,7 @@
     data_type: text
     type: text
     label :City
-    size: 35
+    size: 30
     data_context: insurer.other.city
     class: input_field
 
@@ -346,7 +346,7 @@
     data_type: text
     type: text
     label :City
-    size: 35
+    size: 30
     data_context: insured.city
     class: input_field
 
@@ -508,7 +508,7 @@
     data_type: text
     type: text
     label :City
-    size: 35
+    size: 30
     data_context: patient.city
     class: input_field
 
@@ -825,7 +825,7 @@
     data_type: text
     type: text
     label :City
-    size: 35
+    size: 30
     data_context: provider.bill.city
     class: input_field
 
@@ -981,7 +981,7 @@
     data_type: text
     type: text
     label :City
-    size: 35
+    size: 30
     data_context: provider.treat.city
     class: input_field
 

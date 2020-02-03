@@ -12,8 +12,8 @@
  #lowerLeftGroupcont,
  #lowerRightGroupCont {
      display: inline-block;
-     max-width: 650px;
-     min-width: 350px;
+     max-width: 550px;
+     min-width: 300px;
      border: none;
      margin: 0px;
      padding: 0px;
