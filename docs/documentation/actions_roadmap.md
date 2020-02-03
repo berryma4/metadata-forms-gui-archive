@@ -2,26 +2,24 @@ Actions & Roadmap for Metadata Forms Engine
 
 # Rank Ordered Feature Work
 
-* Demonstrate easy way of forcing labels to wrap the field so they are above the field instead of to the left.
+* Validation error messages in table are displaying on wrong row.  Probably need to add row ndx to id of status widget.
 * Implement TAB bar widget which is very similar to top menu bar except is supports a change of visualization for the TAB that is currently open.
   * Ability to defer rendering inactive TABS until the tab is displayed.  Since content on one tab could change based on actions in another tab then 
   * Ability to show TABS that have incomplete work before record can be saved to server.
-* Implement Basic Save Object Function
+* Support  save_start, save_success, save_fail callback function specified in metadata so the programmer can easily change GUI state. 
 * Implement Top Menu Bar Widget where the menu could be display a different form  could be separate page.
 * Modify Date parser to accept alternative input form and reform to desired format to support date picker.
 * Support Checkbox Widget
 * Demo: Dental Claim:Create basic ADA For Fields.
 * Demo: Dental Claim Add rest of fields from ADA form that exist below the Procedure codes.
 * EditTable: Add support for Total Row where only some fields are totaled.
-* Demo: Dental Claim:Form field which Sums other fields on the form.
-* **Save Data back to server:** Add support to PUT or POST data back to server on save button press when all validation rules are good.   
+* **Save Data back to server:** Add Prevent Save Call until all validation rules for all widgets are successful.
 * Demo Dental Claim: Editable Table: Numeric field FEE is not rendering right aligned and it should be.
 * Editable Table: Header alignment should match the cell alignment.
 * Edit Table support a limited number of visible rows to force scroll of table. Editable Table: Support client side scroll through a larger list, 
-* SaveData: Finish code to submit object back to a target URI.
 * SaveData: Disable Save Button until the Form is Dirty.
 * SaveDAta: Detect forms that contain unsaved data.   Warn user if they are leaving page context when there are  unsaved changes on the form. 
-* SaveData: Demonstrate creating a POST string for send when fetching the object.
+* FetchData: Demonstrate creating a POST string for send when fetching the object.
 * SaveData: Need a list of all fields rendered for a form to make form level validation check easy.
 * Ensure both the Global and local context are searched during interpolation
 * SaveData: Reject or Disable Save to server:  when Some Fields fail the validation rules. 
@@ -65,6 +63,7 @@ Actions & Roadmap for Metadata Forms Engine
 * Demo: Dental Claim: Hook up validator for tooth numbers.
 * Demo: Dental Claim: Hookup lookup service for procedure codes with auto suggest similar to [listbox-combo](https://www.w3.org/TR/wai-aria-practices/examples/combobox/aria1.1pattern/listbox-combo.html) but type ahead is obtained by query against the server.
 * Demo: Dental Claim:Demonstrate a company search using data from cert-of-need or from provider search. 
+* Demo: Dental Claim:Form field which Sums other fields on the form.  Even when those fields are not part of table
 * Test / Demo arbitrary creation of variables at top level of Yaml to support re-use.  EG: A float  pattern would be re-usable across many fields. 
 * Extend showDiv, hideDiv in display-util to use the lastDisplayStyle feature so when re-showing a div we bring back it's original display status rather than block.  Otherwise will mess up formating when users are using flex-box or other new formatting structures.
 * AutoHideCollapsible feature added at the group level.  Do not render that portion if a data match does not exist eg:    {collapsible: { dataFiter: { src_data_context: person.isbuyer  compareFun: isTrue(), monitor: [persIsBuyer]}}}    Then must set a filter event or watcher so every change to one of a set Id triggers re-evaluation to add that area.  We will need the containter rendered so there is someplace to put it even if we skipped rendering it last time.     This implies we will need a list of rendered ID for the form so we can do global validation of mandatory fields that skips those fields we chose not render.
@@ -77,8 +76,8 @@ Actions & Roadmap for Metadata Forms Engine
 * DONE:JOE:2020-01-30: Demo: Dental Claim: Download sample CDT Codes to populate drop down.
 * Demo: Dental Claim: Fast search filter widget to make search by codes easy. AND Filter dropdown list of CDT codes as user types the code.
 * Demo: Dental Claim: Need to Allow update or refresh of a given form field based on actions taken in other form fields.  EG: A search set a member identity field based on the results of a search field. 
-* 
-* Demo: Dental Claim:Support display only field. 
+* Demo: Dental Claim:Support display only field.   Also support initial state of disable for a form widget.
+* Demo: Disable state for a given widget depending on the state of another widget. Allow some fields to be disabled in metadata spec to prevent editing. Allow some fields to be disabled for editing until a rule becomes true.  
 * Support hidden fields that will create the default value at a given path to fill out a valid structure.
 * Demo: Dental Claim:Will have to create a Potential claim ID so we have something to save can probably use timestamp.
 * Demo: set city and state from zip when the zip is not set to None.
@@ -111,8 +110,7 @@ Actions & Roadmap for Metadata Forms Engine
 * Add some of new HTML widgets like Date
 * Support Audit Widget that shows each data change that has occurred for the current data object.   Optionally show forms displayed.
 * Main Index Page: Suppress the display of JSON from Data Object or reflow move to bottom when page is too narrow
-* Allow some fields to be disabled in metadata spec to prevent editing.
-* Allow some fields to be disabled for editing until a rule becomes true.  
+* 
 * Detect portrait mode on phone and change font size or try different font specifications such as 12px to see what shows up most consistently readable across the largest number of devices.
 * Support for deep linking which would load and render a stack of form along with data object in background.  To allow page to be re-displayed on a new device.
 * Support to feed incremental changes back to server so user can switch devices even before they submit using the deep link features. 
@@ -140,7 +138,6 @@ Actions & Roadmap for Metadata Forms Engine
   * Utility to convert arbitrary TSV file into a searchable permuted index one file per column with optional specification to combine columns such as first, last middle name.
     * File bisect server utility to find object identity from matching tokens 
     * Think about how to make this useful for publishing on a static server where I do not have server side functionality so it can be demonstrated on git.io. EG produce a list of Object ID  for each token and keep in one file per toke then the client can match.  Then create edge ngram files showing the tokens that are contained in each edge prefix to allow fast match retrieval by client.   
-* 
 * Consider offering alternative Table structure using the editable content feature rather than rendering the input fields.   Problem there is we can not use the built in feature sets.
 * **Support stylesheets specified in the form metadata**.  These are  are added at runtime by naming in the form specification.  Must support interpolation. 
 * **Support Alternative Style sheets by Brand**.   Ideally show that as a interpolation parameter.  Allows a single form to be rendered with different look and feel. Ability to specify custom style in uri such as abc.com#style=x3 that causes a style sheet to be added to the page.  The list of stylesheets is computed from a spec in the form and if the style parameter is present in the file is interpolated into the style URI from parameters specified in the URI.  
@@ -542,6 +539,12 @@ defaults:
     
 
 # DONE:
+
+* DONE:JOE:2020-02-02: Add a counter of how many objects auto created during this RIA session and append to end of auto gen ID as additional cache buster.
+
+* DONE:JOE:2020-02-02: Implement Basic Save Object Function that can post or PUT back to server.  SaveData: Finish code to submit object back to a target URI.
+
+* DONE:JOE:2020-02-02: Demonstrate easy way of forcing labels to wrap the field so they are above the field instead of to the left.
 
 * DONE:JOE:2020-02-01: Allow extra label class to be specified.
 

@@ -5,7 +5,7 @@
      filesLoaded: {}, // list of files already loaded used to avoid reload by uri
      widgets: {}, // list of  widgets already loaded by widget Id
      dataObj: {}, // list of dataObj already loaded by Object Id
-
+     newObIdCnt: 0,
      user: {
          "accessToken": "282872727" // Will need to get a real access token
      }
@@ -396,12 +396,11 @@
      b.start("div", {
          "class": widDef.class + "contain"
      });
-     attr = {
-         "type": "button",
-         "onClick": "saveFormChanges(this)"
-     };
+     var attr = mformBasicWidAttr(widDef, context);
      mformCopyAttribs(widDef, attr, mformTextFieldCopyAttr);
      copyOverCustParms(attr, widDef, custParms);
+     attr.type = "button";
+     attr.onClick = "saveFormChanges(this)";
      b.make("button", attr, "Save");
      b.finish("div");
  }
@@ -920,6 +919,118 @@
      }
  }
 
+ //-------------
+ //-- Data Save & Retrieval Funcations
+ //-------------
+ function saveFormChanges(hwidget) {
+     var attr = hwidget.attributes;
+     var widId = hwidget.id.split("-_")[0];
+     var widDef = GTX.widgets[widId];
+     var dataContext = widDef.data_context;
+     var dataContextOvr = gattr(hwidget, "data_context");
+     if (dataContextOvr > "") {
+         // override the widget data context with the 
+         // value encoded into the widget if present.
+         // needed this to support array elements that 
+         // require a differnt data context for every row of every cell.
+         dataContext = dataContextOvr;
+     }
+     var formId = gattr(hwidget, "form_id");
+     var formDef = GTX.forms[formId];
+     var dataObjId = gattr(hwidget, "dataObjId");
+     var context = GTX.formContexts[formId][dataObjId];
+     var dataObj = GTX.dataObj[dataObjId];
+
+     var saveSpec = formDef.save;
+     if (saveSpec == undefined) {
+         alert("Err: No Save Section defined in metadata");
+     }
+
+     // TODO: Insert Logic here to produce a different 
+     // form of Post body based on transform spec embedded in 
+     // the save spec.
+     var postString = JSON.stringify(dataObj);
+
+     // Setup the AJAX CAll
+     var parms = {};
+     var req_uri = InterpolateStr(saveSpec.uri, [context, dataObj, formDef]);
+     console.log("L263: saveFormChanges req_uri=", req_uri);
+     parms.req_headers = {
+         'Content-Type': "application/json",
+         'Authorization': context.gbl.user.accessToken
+     };
+     parms.req_method = saveSpec.verb;
+     parms.context = context;
+     parms.form_id = formId;
+     parms.form_def = formDef;
+     parms.dataObjId = context.dataObjId;
+     parms.uri = req_uri;
+     context.gbl.filesLoading[req_uri] = true;
+     // TODO: Call the user specified save start function so they can change GUI state.
+     simplePost(req_uri, postString, mformSaveDataObjOnData, parms, saveSpec.verb);
+     toDiv(saveSpec.status_div, "AJAX Sending " + saveSpec.method + " uri=" + req_uri + " body=" + postString);
+ }
+
+
+ // AJAX Event handler to receive data objects requested
+ // by the form.   Once data has arrived will also 
+ // trigger rendering of the form which had to be delayed
+ // until we had data to populate it. 
+ function mformSaveDataObjOnData(data, httpObj, parms) {
+     if (parms.uri in parms.context.gbl.filesLoading) {
+         delete parms.context.gbl.filesLoading[parms.uri];
+     }
+     var objId = parms.context.dataObjId;
+     var gtx = parms.context.gbl;
+     var formDef = parms.form_def;
+     var statDiv = formDef.save.status_div;
+     var basicStatStr = " status=" + httpObj.status + " message=" + httpObj.statusText + " dataObjId=" + parms.dataObjId;
+     if (httpObj.status != 200) {
+         toDiv(statDiv, "Error Saving " + parms.uri + basicStatStr + " uri" + parms.uri);
+         // TODO: Call the user specified save error function to indicate save failed.
+         return;
+     } else {
+         toDiv(statDiv, basicStatStr);
+         console.log("uri=" + parms.uri + " " + basicStatStr);
+
+         if (data <= "") {
+             console.log("L5: mformSaveDataObjOnData err=" + httpObj);
+             toDiv(statDiv, "No Data Recieved from save operation uri=" + parms.uri + " verb=" + req_method)
+         } else {
+             console.log("L991: mformSaveDataObjOnData get data=", data, " uri=", parms.uri);
+             toDiv(statDiv, "Success save " + basicStatStr + " body=" + data);
+             // TODO: Call the user specified Wait Notification Function to indicate save sucess
+
+             // TODO: Add in some real logic to handle the results 
+
+             /*
+             // TODO: Add support for alternative parsers.
+             var pdata = null;
+             try {
+                 pdata = JSON.parse(data);
+             } catch (err) {
+                 console.log("error parsing=", err, " data=", data);
+                 pdata = {};
+             }
+             /// PUT Proper Processing HERE
+             gtx.dataObj[objId] = pdata;
+             parms.context.dataObj = pdata;
+             parms.context.gbl.filesLoaded[parms.uri] = pdata;
+             parms.widVal =
+                 console.log(" parsed dataObj=", pdata, " context=", parms.context);
+             mformsRenderForm(context.form, context);
+             if ('show_data_obj_div' in context.form) {
+                 toDiv(context.form.show_data_obj_div, "<pre>" + JSON.stringify(pdata, null, 2) + "</pre>");
+             }
+             */
+         }
+     }
+ }
+
+
+
+
+
 
  //-------------
  //-- Data & Form Retrieval Event Handlers
@@ -1133,11 +1244,12 @@
          // so we can skip a fetch on the server.  This assumes
          // that all fields have reasonable defaults specified in 
          // their form spec.
-         dataObjId = "AUTO" + (0 - curr_time()) + "-" + (Math.floor(Math.random() * 1000));
+         dataObjId = "AUTO" + (0 - curr_time()) + "-" + (Math.floor(Math.random() * 1000)) + "-" + gContext.newObIdCnt;
          var dataObj = {
              "_id": dataObjId,
              "_client_created": true
          };
+         gContext.newObIdCnt++;
          gContext.dataObj[dataObjId] = dataObj;
      }
 

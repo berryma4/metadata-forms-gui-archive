@@ -381,7 +381,7 @@
     data_context: insured.gender
     class: input_field
     ignore-case-match: true
-    default: other
+    
 
 -widget:
     id: polHoldGender
@@ -542,7 +542,7 @@
     data_context: patient.gender
     class: input_field
     ignore-case-match: true
-    default: other
+    
 
 -widget:
     id: patGender
@@ -782,7 +782,6 @@
     label : Save    
     size: 8
     class: submit_button
-    data_context: operation.proceedures
 
 
 #####
@@ -1221,13 +1220,16 @@
    class: inputFrm
    label: Dental Claim form
    fetch:
-      uri: data/claims/{dataObjId}.JSON
+      uri: data/claims/{dataObjId}
       method: GET
       parse: JSON
    save:
-      uri: data/claims/{dataObjId}.JSON
-      verb: PUT
+      uri: data/claims/{dataObjId}
+      verb: POST
       where: body
+      status_div: save_status
+      save_result_fun: dental_claim_save_result
+
    show_data_obj_div: dataObjDivBottom
 
    widgets:   
