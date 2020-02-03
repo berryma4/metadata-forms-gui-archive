@@ -1077,6 +1077,78 @@
          - treatProvPhone
          - treatProvAddInfo
 
+################
+## Ancillary Claim / Treatment Information
+################
+- widget:
+  id: AncPlaceOfTreat
+  type: dropdown
+  data_type: text
+  label: Place Of Treatment
+  data_context: anc.place_of_treatment
+  class : input_field
+  option:
+       - {"label" : "Providers Office", "value" : "P"}
+       - {"label" : "Hospital", "value" : "H"}
+       - {"label" : "ECF", "value": "ECF"}
+       - {"label" : "Other", "value" : "other"}
+
+- widget:
+  id: AncTreatResultFrom
+  type: dropdown
+  data_type: text
+  label: Treatment Resulting From
+  data_context: anc.treat_result_from
+  class : input_field
+  default: other
+  option:
+       - {"label" : "Occupational injury", "value" : "O"}
+       - {"label" : "Auto Accident", "value" : "A"}
+       - {"label" : "Other", "value": "other"}
+
+- widget:
+  id: AncAccidentDate
+  type: date
+  data_type: text
+  label: Date of Accident
+  data_context: anc.accident.date
+  class : input_field
+
+
+- widget:
+  id: AncAccidentState
+  type: text
+  data_type: text
+  label: Date of Accident
+  data_context: anc.accident.state
+  size: 2
+  class : input_field
+
+- widget:
+    id: AncGroup
+    label: Ancillary Claim / Treatment Information
+    type: widgetGroup
+    class: vgroup
+    layout: horizontal
+    widgets: 
+         - AncPlaceOfTreat 
+         - AncTreatResultFrom
+         - AncAccidentDate
+         - AncAccidentState
+
+
+- widget:
+  id: claimRemarks
+  type: textarea
+  data_type: text
+  label: Remarks
+  label_class: label_wrap
+  cols: 120
+  rows: 3
+  data_context: remarks
+  class : input_field
+
+
 ###### 
 ## Define Top Payne above Proceedures
 #######
@@ -1127,8 +1199,9 @@
     type: widgetGroup
     class: silent_group
     renderFieldset: false
-    widgets: 
-         - treatProvGroup
+    widgets:
+       - AncGroup 
+       - treatProvGroup  
 
 
 - widget:
@@ -1138,6 +1211,7 @@
     layout: vertical
     renderFieldset: false
     widgets: 
+         - claimRemarks
          - lowerLeftGroup
          - lowerRightGroup
 

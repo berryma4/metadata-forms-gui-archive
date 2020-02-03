@@ -4,6 +4,7 @@
      margin: 0px;
      padding: 0px;
      width: auto;
+
  }
 
  #topRightFieldsGroupcont,
@@ -22,4 +23,18 @@
  #proceduresCont {
      min-width: 800px;
      max-width: 1330px;
+ }
+
+ #claimRemarksCont {
+     width: 98%;
+     max-width: 1330px;
+ }
+
+ #claimRemarks {
+     width: 100%;
+     -webkit-box-sizing: border-box;
+     /* Safari/Chrome, other WebKit */
+     -moz-box-sizing: border-box;
+     /* Firefox, other Gecko */
+     box-sizing: border-box;
  }

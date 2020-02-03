@@ -94,7 +94,7 @@ img.sampleImage {
 .vert_radioLabel,
 .hor_radioLabel {
     display: inline-block;
-    text-align: right;
+    text-align: left;
     vertical-align: top;
     color: cadetBlue;
     padding-left: 0.05em;
@@ -127,6 +127,9 @@ input.input_date {
 
 div.input_fieldCont {
     display: inline-block;
+    align-items: left;
+    text-align: left;
+    align-content: left;
 }
 
 input:focus,
@@ -157,6 +160,8 @@ div.vgroupcont div.hgroupcont {
     border-radius: 2px;
     background-color: rgb(226, 247, 247, 0.137);
     vertical-align: top;
+    align-items: left;
+    text-align: left;
 }
 
 legend.vgroupLeg {
@@ -396,4 +401,8 @@ button.mtableAddBut:hover {
 .allow_wrap {
     display: block;
     white-space: normal;
+}
+
+.label_wrap {
+    display: block;
 }
