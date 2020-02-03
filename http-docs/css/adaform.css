@@ -60,9 +60,15 @@
      }
  }
 
- @media screen and (device-device-width: 640px) {
+ @media screen and (max-device-width: 640px) {
      .body {
          font-size: 14pt;
+     }
+ }
+
+ @media screen and (max-device-width: 360px) {
+     .body {
+         font-size: 18pt;
      }
  }
 
