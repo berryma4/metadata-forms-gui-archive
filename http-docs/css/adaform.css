@@ -50,26 +50,39 @@
      #lowerRightGroupCont {
          width: 82%;
          max-width: 82%;
-         min-width: 82%;
+         min-width: 40%;
      }
 
      #proceduresCont {
          width: 82%;
          max-width: 82%;
-         min-width: 82%;
+         min-width: 40%;
+     }
+ }
+
+ @media screen and (max-width: 812px) {
+     .body {
+         font-size: 16px;
+     }
+
+     .input_fieldLabel,
+     .input_fieldvLabel,
+     .vert_radioLabel,
+     .hor_radioLabel {
+         display: block;
      }
  }
 
  @media screen and (max-device-width: 640px) {
      .body {
-         font-size: 14pt;
+         font-size: 16px;
      }
  }
 
  @media screen and (max-device-width: 360px),
  screen and (max-device-width: 414px) {
      .body {
-         font-size: 18pt;
+         font-size: 18px;
      }
  }
 
