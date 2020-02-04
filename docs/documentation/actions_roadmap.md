@@ -346,6 +346,7 @@ Actions & Roadmap for Metadata Forms Engine
 
 
 * YML Parser: **Ability to import another widget definition file using a #INCLUDE directive**.  Make sure the #Include is relative to the directory containing the file where it occurs.  Included files may contain other files.  This acts just like reading the file and combining the text at the time of the directive.  In reality we make a call do the parse and inject the results into the parse tree.  The included files must  be processed in a blocking fashion because further parsing may use things referenced in them.     I would eventually implement a server side handler that would do this step but also want client side to allow complete operating with simple static file server.   Example syntax below but willing to consider alternatives.   Please update programmer guide accordingly.
+  * 
 
   ```yaml
   ----------------------------------
@@ -417,6 +418,80 @@ Actions & Roadmap for Metadata Forms Engine
     id: patState
     data_context: patient.address.state
   
+------------  
+-- Interpolation parameters should be fully
+-- supported during interpolation for both widget 
+-- re-use and for file interplation: EG:
+-----------
+expinp:
+ gpath: patient
+ gid: Patient
+ glable: Patient
+ 
+-widget:
+    type: text
+    data_type: text
+    size:20
+    mandatory: false
+    class: input_field
+    id: {expinp.gid}_addr2
+    label :{expinp.glabel}Address 2
+    size: 50
+    data_context: insurer.{expinp.gpath}address2
+    _id: AddressPatt
+--- Note creation of _id which we need because we are
+--- going to fill in the main ID with the original values
+--- and will not be findable after expansion.   Alternatively
+--- we index the pre-expansion pattern and then use it for
+--- the import but then it becomes unclear when the system
+--- should apply interpolation.
+------
+--- since the most recent defenition of expinp replaces 
+--- any prior version the next time we use it will contian
+--- any new or changed parameters.
+--------
+---- 
+--  Now we should be able to re-use the parameter group
+--  by re-importing It should also work for re-use.
+----
+expinp:
+  gid: provider.Addr
+  glabel: Provider Adddress
+
+< _id:AddressPatt
+---------
+Should produce
+---------
+-widget:
+    type: text
+    data_type: text
+    size:20
+    mandatory: false
+    class: input_field
+    id: {expinp.gid}_addr2
+    label :{expinp.glabel}Address 2
+    size: 50
+    data_context: insurer.{expinp.gpath}address2
+    _id: AddressPatt
+
+-- NOTE: Alternatively we may be better of using proper support
+--- for Anchors and then import from them rather than introduce the
+--- the _id semantic which is really action like an anchor.
+
+-- NOTE:  I really wanted a way to import the entire address group
+--   and change it only by the interpolation parameters without
+--   having to re-import it as a file but the file version will work
+--   fine provided we cache the pre-interpolation file so we can reprocess
+--   it without additional network overhead.
+
+
+--- Interplation extended for
+--- redefining a group.  If a group is defined in an
+--- external file then interplation should just work and the
+--- file imported multiple time with different interpolation 
+--- parameters will create repeated groups that vary only by
+--- the expansions.
+
   ```
 
   * Ability to specify file to include in one Yaml to allow re-use of meta data.
@@ -461,6 +536,7 @@ defaults:
  still be added to any widget and fill in any fields
  not specified either directly or by the <
  ------------------------
+
 
 ```
 
