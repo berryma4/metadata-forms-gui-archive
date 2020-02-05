@@ -2,6 +2,11 @@ Actions & Roadmap for Metadata Forms Engine
 
 # Rank Ordered Feature Work
 
+* Eric:  Evaluate what is missing to support edit functionality for screens supplied by MarkBo and propose new general purpose features or help adjust prioritize features from below.
+* Update stylesheets to reflect those provided by MarkBo at least for the dental samples.
+* Implement screens inspired by MarkBo supplied screens including sample data.  This will require form chaining with backout and Top of page tabs also needs validation of all forms across multiple forms in stack.  Also requires ability to expand a row in table with edit fields that can colllapse kind of like I did the general group but takes less space when collapsed I think we should avoid form chaining when table expansion will work.   Will need file upload functionality and implementation of paging client side for fee tables but I suspect the fee tables are small enough to render them all client side if we implement non-edit tables where the rows expand to all in-table edit rather than rendering entire row as editable.
+* Implement basic support for OIDC to allow real data access.   This only needs  to run once a OIDC session has been established they can use login from other screens provided it is in the same domain.  Otherwise will need login screens.
+* 
 * Validation error messages in table are displaying on wrong row.  Probably need to add row ndx to id of status widget.
 * Implement TAB bar widget which is very similar to top menu bar except is supports a change of visualization for the TAB that is currently open.
   * Ability to defer rendering inactive TABS until the tab is displayed.  Since content on one tab could change based on actions in another tab then 
