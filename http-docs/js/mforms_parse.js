@@ -258,15 +258,15 @@ function mformsParseMeta(aStr, refObj) {
         var c = tline.charCodeAt(position);
         while (c !== 0 && !isNaN(c)){
             c = tline.charCodeAt(++position);
-            // # TODO: allow comments throughout
-            // if (c === 0x23) {
-            //     _position = position;
-            //     do { c = tline.charCodeAt(++position); }
-            //     while (c !== 0 && !isEOL(c) && !isNaN(c));
-            //     tline = tline.slice(0,_position);
-            //     tleft = tleft.slice(0,_position);
-            //     break;
-            // }
+            // #
+            if (c === 0x23) {
+                //_position = position;
+                //do { c = tline.charCodeAt(++position); }
+                //while (c !== 0 && !isEOL(c) && !isNaN(c));
+                tline = tline.slice(0,position).trimRight();
+                tleft = tline.trimLeft();
+            }
+            // &
             if(c ==0x26){
                 var endOfElement=tarr.slice(i).length;
                 for (j=1 ; j<tarr.slice(i).length;j++){
