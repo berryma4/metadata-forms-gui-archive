@@ -152,7 +152,62 @@ var testStrPerson4 = `
       - nancy:
            living: false
 `;
+var testMerge1 = `
+---
+- &CENTER { x: 1, y: 2 }
+- &LEFT { x: 0, y: 2 }
+- &BIG { r: 10 }
+- &SMALL { r: 1 }
 
+# All the following maps are equal:
+
+# Explicit keys
+- widget:
+    x: 1
+    y: 2
+    r: 10
+    label: center/big
+
+# Merge one map
+- widget:
+    << : *CENTER
+    r: 10
+    label: center/big
+
+# Merge multiple maps
+- widget:
+    << : [ *CENTER, *BIG ]
+    label: center/big
+
+# Override
+- widget:
+    << : [ *BIG, *LEFT, *SMALL ]
+    x: 1
+    label: center/big
+`;
+
+var testMerge2 = `
+validators:
+      auth_patern: {0.9}8.\s\w\n
+      phone: ^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$
+      zip: ^[0-9]{5}(?:-[0-9]{4})?$
+
+- &ANCHOR widget: 
+      id: basic_phone
+      data_type: text
+      type: text
+      label: phone #
+      data_context: empty
+      class: input_field
+      ignore_case_match: true
+      valid_patt: <validators.phone
+      
+- widget: 
+      << : *ANCHOR
+      id: basic_phone_1
+      label: Patient Phone #
+      data_context: claim.patient.phoneNum
+`;
 
 function mParserTest(label, dataStr) {
   var tres = mforms.mformsParseMeta(dataStr, {});
@@ -169,5 +224,6 @@ if (typeof require != "undefined") {
   // containment eg {" person" : {}}
   mParserTest("test single person dict object", testStrPerson3);
   mParserTest("test single dict at outer level", testStrPerson4);
-
+  mParserTest("test merge 1", testMerge1);
+  mParserTest("test merge 2", testMerge2);
 }

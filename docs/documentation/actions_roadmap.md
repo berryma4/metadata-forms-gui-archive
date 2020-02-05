@@ -34,8 +34,8 @@
       phone: ^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$
       zip: ^[0-9]{5}(?:-[0-9]{4})?$
     
-    - widget: 
-      id: basic_phone
+    - &ANCHOR widget: 
+      id: basic_phone_1
       data_type: text
       type: text
       label: phone #
@@ -44,7 +44,8 @@
       ignore_case_match: true
       valid_patt: <validators.phone
       
-    -widget: <widget.basic_phone
+    -widget: 
+        << : *ANCHOR
         id: basic_phone
         label: Patient Phone #
         data_context: claim.patient.phoneNum
