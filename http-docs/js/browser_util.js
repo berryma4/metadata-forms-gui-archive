@@ -221,13 +221,14 @@ function scrollDivBottom(divId) {
   }
 }
 
-function getFormValue(divId) {
+function getFormValue(divId, defVal) {
   var tdiv = document.getElementById(divId);
   if ((tdiv !== undefined) && (tdiv !== null)) {
     return tdiv.value;
   }
-  return undefined;
+  return defVal;
 }
+
 
 function setFormValue(divId, value) {
   var tdiv = document.getElementById(divId);
@@ -671,6 +672,34 @@ function parseDateAdjustedToEST(aDateStr) {
 /* #########################
 ### Dynamic Form Binding to DOM
 ############################ */
+/* Return true if the specified character is a digit
+otherwise return false */
+function isDigit(pchar) {
+  if ((pchar < '0') || (pchar > '9')) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+/* parse a key segment either as a string or as
+a numeric address if the segment name starts is
+surounded with [] such as [28] which means the 28th
+element. */
+function parseKeySeg(fname) {
+  if ((fname.startsWith("[")) && (fname.endsWith("]"))) {
+    fname = fname.slice(1, fname.length - 1);
+    var tmp = parseInt(fname, 10);
+    if (isNaN(tmp)) {
+      return fname;
+    } else {
+      return tmp;
+    }
+  } else {
+    return fname;
+  }
+}
+
 
 // Spliet path on __ and lookup sub objects
 // for each path segment.  Create a empty
@@ -684,47 +713,42 @@ function parseDateAdjustedToEST(aDateStr) {
 function setNested(model, path, value) {
   var segs = path.split(".");
   var sobj = model;
-  for (ndx in segs) {
-    var fldName = segs[ndx];
+  var addNdx = -1;
+  for (var ndx in segs) {
+    var fldName = parseKeySeg(segs[ndx]);
     if (ndx >= segs.length - 1) {
       // last seg so just assign to fldName
       sobj[fldName] = value;
     } else {
       // still walking the tree;
       if (fldName in sobj) {
-        // sub obj already exists so just use it
+        // sub obj already exists in a hash table record so just use it
+        sobj = sobj[fldName];
+      } else if ((Number.isInteger(fldName)) && (Array.isArray(sobj))) {
+        for (addNdx = sobj.length; addNdx <= fldName; addNdx++) {
+          sobj.push({});
+        }
         sobj = sobj[fldName];
       } else {
         // sub obj does not exist to must create it
-        sobj[fldName] = {};
+        var tobj = {};
+        if (Number.isInteger(fldName)) {
+          // Create it as an array and create
+          // array elements as hash objects 
+          // until we reach our target Number
+          tobj = [];
+          for (addNdx = 0; addNdx <= fldName; addNdx++) {
+            tobj.push({});
+          }
+        }
+        sobj[fldName] = tobj;
         sobj = sobj[fldName];
       }
     }
   }
 }
 
-/* Return true if the specified character is a digit
-otherwise return false */
-function isDigit(pchar) {
-  if ((pchar < '0') || (pchar > '9')) {
-    return false;
-  } else {
-    return true;
-  }
-}
 
-/* parse a key segment either as a string or as
-a numeric address if the segment name starts with
-a Zero.  */
-function parseKeySeg(fname) {
-  if (isDigit(fname[0])) {
-    var tmp = parseInt(fname, 10);
-    if (tmp !== NaN) {
-      return tmp;
-    }
-  }
-  return fname;
-}
 
 
 // Spit path on __ and then lookup path segments

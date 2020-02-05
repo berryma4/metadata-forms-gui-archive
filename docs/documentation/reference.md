@@ -79,7 +79,9 @@
   
   * [validate fields using javascript and regex](https://www.w3schools.com/jsref/jsref_obj_regexp.asp)
 
+* ### html
 
+  * [make a div element editable](https://www.tutorialrepublic.com/codelab.php?topic=faq&file=html5-make-element-editable)
 
 
 

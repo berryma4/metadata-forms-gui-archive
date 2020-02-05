@@ -18,6 +18,7 @@
     data_type: text
     type: text
     label : Preauthorization number
+    label_class: noWrap
     data_context: claim.insurance.preAuthRef
     class: input_field
     ignore-case-match: true
@@ -62,7 +63,7 @@
     data_type: text
     type: text
     label :City
-    size: 35
+    size: 30
     mandatory: true
     data_context: insurer.city
     class: input_field
@@ -77,8 +78,6 @@
     mandatory: true
     data_context: insurer.state
     class: input_field
-    valid_patt: ^[0-9]{5}(?:-[0-9]{4})?$
-    valid_fun: validate_zipcode
 
 -widget:
     id: insuranceCompZip
@@ -89,6 +88,19 @@
     mandatory: true
     data_context: insurer.zip
     class: input_field
+    valid_pat:
+       #- {pattern: "^[0-9]{5}(?:-[0-9]{4})?$", "message" : "Invalid zipcode try 5 digits or zip plus 4. eg: 84401 or 84401-8178"}
+       pattern: ^[0-9]{5}(?:-[0-9]{4})?$
+       message : Invalid zipcode try 5 digits or zip plus 4. eg: 84401 or 84401-8178
+
+    xvalid_pat:
+       message : Invalid zipcode try 5 digits or zip plus 4. eg: 84401 or 84401-8178
+       pattern: 
+         - ^[0-9]{5}(?:-[0-9]{4})?$
+         - ^(([\d]{2} )|(2[abAB] ))*(([\d]{2})|(2[abAB]))$
+    valid_fun: 
+      - fun_name=validate_zipcode
+       message: zipcode validation failed
 
 - widget:
     id: insurerGroup
@@ -137,7 +149,6 @@
     data_context: insurer.other.name
     class: input_field
     ignore-case-match: true
-    default: 
 
 
 -widget:
@@ -149,7 +160,6 @@
     data_context: insurer.other.gender
     class: input_field
     ignore-case-match: true
-    default: other
 
 -widget:
     id: othInsPolHoldGender
@@ -236,7 +246,7 @@
     data_type: text
     type: text
     label :City
-    size: 35
+    size: 30
     data_context: insurer.other.city
     class: input_field
 
@@ -336,7 +346,7 @@
     data_type: text
     type: text
     label :City
-    size: 35
+    size: 30
     data_context: insured.city
     class: input_field
 
@@ -371,7 +381,7 @@
     data_context: insured.gender
     class: input_field
     ignore-case-match: true
-    default: other
+    
 
 -widget:
     id: polHoldGender
@@ -498,7 +508,7 @@
     data_type: text
     type: text
     label :City
-    size: 35
+    size: 30
     data_context: patient.city
     class: input_field
 
@@ -532,7 +542,7 @@
     data_context: patient.gender
     class: input_field
     ignore-case-match: true
-    default: other
+    
 
 -widget:
     id: patGender
@@ -609,8 +619,537 @@
          - patAccountNumber
 
 
+
+
+#-------------
+#--- Proceedure Codes
+#-------------
+
+- widget:
+  id: arrProcDate
+  type: date
+  label: Proceedure Date
+  isCol: true
+  data_context: date
+  class: input_field
+  cell_class: tdright
+
+
+- widget:
+  id: arrProcArea
+  type: dropdown
+  data_type: text
+  label: Area of Oral Cavity
+  isCol: true
+  col_align_class: tdLeft
+  data_context: area_oral_cavity
+  class : input_field
+  cell_class: tdleft
+  option:
+       - {"label" : "unknown", "value" : "-"}
+       - {"label" : "Maxillary", "value" : "01"}
+       - {"label" : "Mandibular", "value": "02"}
+       - {"label" : "Up Right Quad", "value" : "10"}
+       - {"label" : "Up Left Quad", "value" : "20"}
+       - {"label" : "Low Left Quad", "value" : "30"}
+       - {"label" : "Low Right Quad", "value" : "40"}
+  
+  
+- widget:
+  id: arrProcToothSystem
+  type: text
+  data_type: text
+  label: Tooth System
+  title: UR - Upper right, UL - upper left, LR - lower right, LL - Lower Left
+  isCol: true
+  col_align_class: tdLeft
+  data_context: tooth.system
+  class : input_field
+  cell_class: tdleft
+  size: 5
+  force_upper_case: true
+  valid_pat:
+     pattern: UR|UL|LR|LL
+     message : Invalid try UR UL LR LL
+
+
+- widget:
+  id: arrToothNumber
+  type: text
+  data_type: text
+  label: Tooth Numbers
+  title: Tooth Number(s) or letter(s) separate by , or space.
+  isCol: true
+  col_align_class: tdLeft
+  data_context: tooth.number
+  class : input_field
+  cell_class: tdleft
+  #valid_fun: validate_tooth_number;
+  size: 8
+
+- widget:
+  id: arrToothSurface
+  type: dropdown
+  data_type: text
+  label: Tooth Surface
+  isCol: true
+  col_align_class: tdLeft
+  data_context: tooth.surface
+  class : input_field
+  cell_class: tdleft
+  option:
+       - {"label" : "Unkown", "value" : "-"}
+       - {"label" : "Distal", "value" : "D"}
+       - {"label" : "Facial Labial", "value": "FL"}
+       - {"label" : "Facial Buccal", "value" : "FB"}
+       - {"label" : "Incisal", "value" : "I"}
+       - {"label" : "Linqual", "value" : "L"}
+       - {"label" : "Mesial", "value" : "M"}
+       - {"label" : "Occlusal", "value" : "O"}
+       - {"label" : "Proximal", "value" : "P"}
+  
+  
+
+- widget:
+  id: arrProcCode
+  type: text
+  data_type: text
+  label: Proceedure Code
+  isCol: true
+  col_align_class: tdLeft
+  data_context: proc_code
+  class : input_field
+  cell_class: tdleft
+  xxvalid_fun: validate_tooth_surface;
+  size: 10
+
+- widget:
+  id: arrProcDesc
+  type: text
+  data_type: text
+  label: Description
+  isCol: true
+  col_align_class: tdLeft
+  data_context: description
+  class : input_field
+  cell_class: tdleft
+  size: 40
+  #valid_fun: validate_tooth_surface;
+
+- widget:
+  id: arrProcFee
+  type: text
+  data_type: numeric
+  label: Fee
+  isCol: true
+  col_align_class: tdRight
+  data_context: fee
+  class : input_field
+  cell_class: tdleft
+  total_cell: true
+  num_dec: 2
+  size: 10
+
+
+- widget:
+  id: procedures
+  label: Proceedure Codes
+  type: table
+  total_col: 
+    -arrProcFee
+  max_visible_rows: 10
+  min_rows: 1
+  rows_extra: 1
+  class: mtable
+  data_context: procedures
+  total_line: true
+  client_side_sotr: true
+  columns: 
+    - arrProcDate
+    - arrProcArea
+    - arrProcToothSystem
+    - arrToothNumber
+    - arrToothSurface
+    - arrProcCode
+    - arrProcDesc
+    - arrProcFee
+
+
+
+- widget:
+    id: saveButton    
+    type: button
+    label : Save    
+    size: 8
+    class: submit_button
+
+
+#####
+## Dentist Information 
+#####
+
+-widget:
+    id: billProvName
+    data_type: text
+    type: text
+    label: Name
+    title: Dentist Name (Last, First, Middle Init, Suffix)
+    size: 50
+    data_context: provider.bill.name
+    class: input_field
+    ignore-case-match: true
+
+-widget:
+    id: billProvAddr1
+    data_type: text
+    type: text
+    label :Address 1
+    size: 50
+    data_context: provider.bill.address1
+    class: input_field
+    ignore-case-match: true
+
+-widget:
+    id: billProvAddr2
+    data_type: text
+    type: text
+    label :Address 2
+    size: 50
+    mandatory: true
+    data_context: provider.bill.address2
+    class: input_field    
+
+-widget:
+    id: billProvCity
+    data_type: text
+    type: text
+    label :City
+    size: 30
+    data_context: provider.bill.city
+    class: input_field
+
+-widget:
+    id: billProvState
+    data_type: text
+    type: text
+    label :State
+    size: 2
+    maxlength: 2
+    mandatory: true
+    data_context: provider.bill.state
+    class: input_field
+
+-widget:
+    id: billProvZip
+    data_type: text
+    type: text
+    label :Zip
+    size: 11
+    mandatory: true
+    data_context: provider.bill.zip
+    class: input_field
+
+-widget:
+    id: billProvNPI
+    data_type: text
+    type: text
+    label: NPI
+    data_context: provider.bill.npi
+    class: input_field
+    ignore-case-match: true
+
+
+-widget:
+    id: billProvLicense
+    data_type: text
+    type: text
+    label : License Num    
+    data_context: provider.bill.license
+    class: input_field
+    ignore-case-match: true
+
+-widget:
+    id: billProvTIN
+    data_type: text
+    type: text
+    size: 25
+    label : TIN or SSN
+    title: Provider TIN or SSN
+    data_context: provider.bill.tin
+    class: input_field
+    ignore-case-match: true
+
+-widget:
+    id: billProvAddInfo
+    data_type: text
+    type: text
+    label : Additonal INfo
+    data_context: provider.bill.additInfo
+    class: input_field
+    ignore-case-match: true
+    
+
+-widget:
+    id: billProvPhone
+    data_type: text
+    type: text
+    label : Phone Number
+    data_context: provider.bill.phone
+    class: input_field
+    ignore-case-match: true
+
+
+- widget:
+    id: billProvGroup
+    label: Billing Provider / Dentist Information
+    type: widgetGroup
+    class: vgroup
+    layout: horizontal
+    widgets: 
+         - billProvName  
+         - billProvAddr1
+         - billProvAddr2
+         - billProvCity
+         - billProvState
+         - billProvZip
+         - billProvNPI
+         - billProvLicense
+         - billProvTIN
+         - billProvPhone
+         - billProvAddInfo
+
+
+##################
+### Treating Provider
+##################
+
+-widget:
+    id: treatProvName
+    data_type: text
+    type: text
+    label: Name
+    title: Dentist Name (Last, First, Middle Init, Suffix)
+    size: 50
+    data_context: provider.treat.name
+    class: input_field
+    
+
+-widget:
+    id: treatCertifies
+    data_type: text
+    type: text
+    label: Certifies Services
+    title: Treating Dentist certifies procedures as indicated by date are in progress or have been completed.
+    size: 20
+    data_context: provider.treat.certifies.sig
+    class: input_field
+    
+
+-widget:
+    id: treatCertifiesDate
+    data_type: text
+    type: date
+    label: Certifies Date
+    data_context: provider.treat.certifies.date
+    class: input_field
+    
+
+
+-widget:
+    id: treatProvAddr1
+    data_type: text
+    type: text
+    label :Address 1
+    size: 50
+    data_context: provider.treat.address1
+    class: input_field
+    ignore-case-match: true
+
+-widget:
+    id: treatProvAddr2
+    data_type: text
+    type: text
+    label :Address 2
+    size: 50
+    mandatory: true
+    data_context: provider.treat.address2
+    class: input_field    
+
+-widget:
+    id: treatProvCity
+    data_type: text
+    type: text
+    label :City
+    size: 30
+    data_context: provider.treat.city
+    class: input_field
+
+-widget:
+    id: treatProvState
+    data_type: text
+    type: text
+    label :State
+    size: 2
+    maxlength: 2
+    mandatory: true
+    data_context: provider.treat.state
+    class: input_field
+
+-widget:
+    id: treatProvZip
+    data_type: text
+    type: text
+    label :Zip
+    size: 11
+    mandatory: true
+    data_context: provider.treat.zip
+    class: input_field
+
+-widget:
+    id: treatProvNPI
+    data_type: text
+    type: text
+    label: NPI
+    data_context: provider.treat.npi
+    class: input_field
+    ignore-case-match: true
+
+
+-widget:
+    id: treatProvLicense
+    data_type: text
+    type: text
+    label : License Num    
+    data_context: provider.treat.license
+    class: input_field
+    ignore-case-match: true
+
+-widget:
+    id: treatProvTIN
+    data_type: text
+    type: text
+    size: 25
+    label : TIN or SSN
+    title: Provider TIN or SSN
+    data_context: provider.treat.tin
+    class: input_field
+    ignore-case-match: true
+
+-widget:
+    id: treatProvAddInfo
+    data_type: text
+    type: text
+    label : Additonal INfo
+    data_context: provider.treat.additInfo
+    class: input_field
+    ignore-case-match: true
+    
+
+-widget:
+    id: treatProvPhone
+    data_type: text
+    type: text
+    label : Phone Number
+    data_context: provider.treat.phone
+    class: input_field
+    ignore-case-match: true
+
+
+- widget:
+    id: treatProvGroup
+    label: Treating Provider / Dentist Information
+    type: widgetGroup
+    class: vgroup
+    layout: horizontal
+    widgets: 
+         - treatProvName 
+         - treatCertifies 
+         - treatCertifiesDate
+         - treatProvAddr1
+         - treatProvAddr2
+         - treatProvCity
+         - treatProvState
+         - treatProvZip
+         - treatProvNPI
+         - treatProvLicense
+         - treatProvTIN
+         - treatProvPhone
+         - treatProvAddInfo
+
+################
+## Ancillary Claim / Treatment Information
+################
+- widget:
+  id: AncPlaceOfTreat
+  type: dropdown
+  data_type: text
+  label: Place Of Treatment
+  data_context: anc.place_of_treatment
+  class : input_field
+  option:
+       - {"label" : "Providers Office", "value" : "P"}
+       - {"label" : "Hospital", "value" : "H"}
+       - {"label" : "ECF", "value": "ECF"}
+       - {"label" : "Other", "value" : "other"}
+
+- widget:
+  id: AncTreatResultFrom
+  type: dropdown
+  data_type: text
+  label: Treatment Resulting From
+  data_context: anc.treat_result_from
+  class : input_field
+  default: other
+  option:
+       - {"label" : "Occupational injury", "value" : "O"}
+       - {"label" : "Auto Accident", "value" : "A"}
+       - {"label" : "Other", "value": "other"}
+
+- widget:
+  id: AncAccidentDate
+  type: date
+  data_type: text
+  label: Date of Accident
+  data_context: anc.accident.date
+  class : input_field
+
+
+- widget:
+  id: AncAccidentState
+  type: text
+  data_type: text
+  label: Date of Accident
+  data_context: anc.accident.state
+  size: 2
+  class : input_field
+
+- widget:
+    id: AncGroup
+    label: Ancillary Claim / Treatment Information
+    type: widgetGroup
+    class: vgroup
+    layout: horizontal
+    widgets: 
+         - AncPlaceOfTreat 
+         - AncTreatResultFrom
+         - AncAccidentDate
+         - AncAccidentState
+
+
+- widget:
+  id: claimRemarks
+  type: textarea
+  data_type: text
+  label: Remarks
+  label_class: label_wrap
+  cols: 120
+  rows: 3
+  data_context: remarks
+  class : input_field
+
+
 ###### 
-## Top Fields 
+## Define Top Payne above Proceedures
 #######
 - widget:
     id: topLeftFieldsGroup
@@ -643,31 +1182,58 @@
          - topLeftFieldsGroup
          - topRightFieldsGroup
 
+#################
+## Define Lower Payne below proceedures table
+#################
+- widget:
+    id: lowerLeftGroup
+    type: widgetGroup
+    class: silent_group
+    renderFieldset: false    
+    widgets: 
+         - billProvGroup
 
 - widget:
-    id: saveButton    
-    type: button
-    label : Save    
-    size: 8
-    class: submit_button
+    id: lowerRightGroup
+    type: widgetGroup
+    class: silent_group
+    renderFieldset: false
+    widgets:
+       - AncGroup 
+       - treatProvGroup  
 
+
+- widget:
+    id: lowerGroup
+    type: widgetGroup
+    class: silent_group
+    layout: vertical
+    renderFieldset: false
+    widgets: 
+         - claimRemarks
+         - lowerLeftGroup
+         - lowerRightGroup
 
 
 - form:
    id : dentalClaim
    class: inputFrm
    label: Dental Claim form
-   # TODO: Allow other files to be loaded here to allow re-use
    fetch:
-      uri: data/claims/{dataObjId}.JSON
+      uri: data/claims/{dataObjId}
       method: GET
       parse: JSON
    save:
-      uri: data/claims/{dataObjId}.JSON
-      verb: PUT
+      uri: data/claims/{dataObjId}
+      verb: POST
       where: body
-   show_data_obj_div: dataObjDiv
+      status_div: save_status
+      save_result_fun: dental_claim_save_result
+
+   show_data_obj_div: dataObjDivBottom
 
    widgets:   
            - topFieldsGroup
+           - procedures
+           - lowerGroup
            - saveButton

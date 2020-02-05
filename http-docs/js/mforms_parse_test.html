@@ -86,9 +86,33 @@
 
     function runTest4() {
       var tout = runTest("Test array with json nodes", testStrOptArr);
+      // TODO: Add checks to see if data arrived in proper location
+    }
+    
+    
+    function runTest5() {
+      var tout = runTest("Test array with Nested Object", testStrNestedObj);
+      // TODO: Add checks to see if data arrived in proper location
     }
 
-    function runTest5() {
+    
+    function runTest6() {
+      var tout = runTest("Test array with Nested Object", testStrObjectCommentOnEOL);
+      if (tout[0].widget.type !== "table") {
+        addTestRes("FAIL: Expected tout[0].widget.type to contain 'table' but it contained '" + tout[0].widget.type + "'");
+      }
+      try {
+      if (tout[0].widget.columns[0].arrProcDate.label !== "Procedure Date") {
+        addTestRes("FAIL: Expected tout[0].widget.columns[0].arrProcDate.label to contain 'Procedure Date' but it contained '" + tout[0].widget.columns[0].arrProcDate.label  + "'");
+      }
+      } catch(err) {
+        addTestRes("FAIL: Attempting to access tout[0].widget.columns[0].arrProcDate.label err=" + err );
+      }
+
+      // TODO: Add checks to see if data arrived in proper with comments truncated
+    }
+
+    function runTest7() {
       var tout = runTest("Test Merge", testMerge1);
       tout.forEach(element => {
         if(element.widget.x != 1) {
@@ -106,7 +130,7 @@
       });
     }
 
-    function runTest6() {
+    function runTest8() {
       var tout = runTest("Test Merge 2", testMerge2);
 
       var strig = `
@@ -170,8 +194,10 @@
     <ul><a href="#" onClick="runTest2()">Run test 2 people simple</a></ul>
     <ul><a href="#" onClick="runTest3()">Run test 3 people with label</a></ul>
     <ul><a href="#" onClick="runTest4()">Run Test 4 option array of javascript</a></ul>
-    <ul><a href="#" onClick="runTest5()">Run Test 5 merge 1</a></ul>
-    <ul><a href="#" onClick="runTest6()">Run Test 6 merge 2</a></ul>
+    <ul><a href="#" onClick="runTest5()">Run Test 5 Object containing array of Nested Objects</a></ul>
+    <ul><a href="#" onClick="runTest6()">Run Test 6 Object containing Data Value with Comment on end of line</a></ul>
+    <ul><a href="#" onClick="runTest7()">Run Test 5 merge 1</a></ul>
+    <ul><a href="#" onClick="runTest8()">Run Test 6 merge 2</a></ul>
     <div>
       <div id="testResult"></div>
       <div id="sourceData"></div>

@@ -1,72 +1,47 @@
 # 
 # Meta data driven forms GUI for REST services
-###### ***Status: Pre-Alpha-Dev** - Please do not use as basic for your project until it reaches Alpha state.*    
+###### ***Status: Alpha-Dev** - Ready to use in projects but some features may need enhancements.*   
 
 Building forms based GUI to CRUD operations.  Provide a Meta data based system to deliver highly Git Demo functional user interfaces for editing, viewing and updating data in REST based services.   Can dramatically reduce the Labor required to build and maintain custom GUI while retaining sufficient flexibility to deliver a pleasant and efficient user experience.  
 
-* **[simple demo]( https://joeatbayes.github.io/metadata-forms-gui/)** on github pages.  Only allow form display.   If you wish to demonstrate saving data via REST calls then a server capable of processing PUT and POST commands must be available.  See: [httpServer](httpServer)
+* **[simple demo]( https://joeatbayes.github.io/metadata-forms-gui/)** on github pages.  Gitpages only allow form display and will not accept updates.   If you wish to demonstrate saving data via REST calls then a server capable of processing PUT and POST commands must be available.  See: [httpServer](httpServer)
 
 Please file a Issue to request enhancements.  You can also reach me on Linked-in [Contact](https://www.linkedin.com/in/joe-ellsworth-68222/)   main Git Repo URI:   [metadata-forms-gui](https://github.com/joeatbayes/metadata-forms-gui) 
 
 # Sample Screen
 
+> ### Certificate of Need
+
 ![Sample Screen for FDA Project Certificate Of Need](docs/documentation/samples/fda-cert-of-need.jpg)
+
+[Live Version]( https://joeatbayes.github.io/metadata-forms-gui/)  [metadata source](data/forms/cert-of-need/cneed.txt)  [html source](http-docs/index.html)
+
+> ### Dental Claim Form
+
+![dental Claim Form](docs/documentation/img/dental-claim-form-1.jpg)
+[Live Version](https://joeatbayes.github.io/metadata-forms-gui/dental-claim.html)   [metadata source](data/forms/dental/claim/dental-claim.txt)    [html source](http-docs/dental-claim.html)
+
+> ### Simple Form
+
+![Simple Form](docs/documentation/img/simple-form-demo-1.jpg)
+
+[Live Version](https://joeatbayes.github.io/metadata-forms-gui/simple-form.html)  [metadata source](data/forms/examples/simple-form.txt) [html source](http-docs/simple-form.html)
+
+> ### Simple Form Demonstrating field level Validation
+
+
+
+![field level validation](docs/documentation/img/sample-failed-regex-validation.jpg)
+
+[metadata source](data/forms/examples/field-validator-regex.txt)
 
 
 
 ## Getting Started
 
-### Sample Script
+* ### [Programmers Guide](docs/documentation/programmers-guide.md) to get Started creating Forms
 
-* #### Define a Widget
-
-* 
-
-* #### Define a form using the Widget
-
-* 
-
-* #### Display the form
-
-* 
-
-* #### Modifying CSS to control form look & Feel
-
-* 
-
-* #### Example JSON Sample Data
-
-* 
-
-* #### Specifying Data Path in the Sample Data
-
-* 
-
-* #### Specifying  URI to Fetch Data for the form
-
-* 
-
-* #### Interpolating Data into URI
-
-  
-
-  
-
-# 
-
-#Build and install
-
-## Basic HTTP REST server
-
-### Why do we need a custom server:
-
-We do not really need a custom server but we do need a HTTP listener to demonstrate features of the system because the system uses AJAX calls to fetch data needed to render the forms.  It also uses AJAX calls to fetch data from the underlying system and save data back to the server.  The build in HTTP server provides this function with some mapped virtual directories.  It could easily be replaced with any HTTP server such as Apache,  HAProxy,  Tomcat etc provided the same directories are mapped to the underlying forms data.
-
-One feature this server provides is a custom handler which if passed a directory will walk that directory assemble all the data elements defined to build a set of screens and passes back the fully assembled text as a single service call.  This reduces the back and forth AJAX calls and can improve overall response time. 
-
-#### Why do we need the MDS server:
-
-We do not really need the MDS server but we do need REST server that can save data with HTTP PUT and fetch data with HTTP GET and HTTP POST operations.     In normal operation a set of custom REST services would be provided that could deliver this functionality.  For example rather than storing data in the MDS server you may use a Azure FHIR storage service.
+* ### [Getting Started Guide](docs/documentation/getting-started.md)
 
 
 
@@ -76,6 +51,7 @@ We do not really need the MDS server but we do need REST server that can save da
 
 - [Programmers & Syntax documentation](docs/documentation/programmers-guide.md)
 - [Requirements & Future Actions](docs/documentation/actions_roadmap.md)
+- [Getting Started Guide](docs/documentation/getting-started.md)
 
 ## Directories 
 
@@ -94,9 +70,10 @@ We do not really need the MDS server but we do need REST server that can save da
 
 ## Main mForms Implementation
 
-* [Main Javascript code](http-docs/js)
+* [mforms.js Main Javascript code](http-docs/js/mforms.js) - Main Javascript implementation That drives the Metadata forms engine.
 * [mforms_parse.js](http-docs/js/mforms_parse.js) - Main parser for YAML like syntax used to specify screens
-* 
+* [browserutil.js](http-docs/js/browser_util.js) - common utilities that make generating high speed RIA applications easy.
+* [simple_ajax.js](http-docs/js/simple_ajax.js) - A drop dead simple but fast and highly portable AJAX library.
 
 
 
