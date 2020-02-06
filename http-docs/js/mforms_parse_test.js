@@ -187,26 +187,43 @@ var testMerge1 = `
 `;
 
 var testMerge2 = `
-validators:
+- validators:
       auth_patern: {0.9}8.\s\w\n
       phone: ^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$
       zip: ^[0-9]{5}(?:-[0-9]{4})?$
+
+- &GENDER widget:
+      data_type: text
+      type: radio
+      label : Gender    
+      class: hor_radio
+      ignore-case-match: true
+      default: M
+      option:
+         - {"label" : "Male", "value" : "M"}
+         - {"label" : "Female", "value": "F"}
 
 - &ANCHOR widget: 
       id: basic_phone
       data_type: text
       type: text
-      label: phone #
+      label: phone
       data_context: empty
       class: input_field
       ignore_case_match: true
       valid_patt: <validators.phone
-      
+
 - widget: 
       << : *ANCHOR
       id: basic_phone_1
-      label: Patient Phone #
+      label: Patient Phone
       data_context: claim.patient.phoneNum
+
+- widget: 
+      << : *GENDER
+      id: gender_1
+      data_context: claim.patient.gender
+
 `;
 
 var testStrNestedObj = `

@@ -199,6 +199,16 @@ function parseStringToObject(o, s) {
     s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
     s = s.replace(/^\./, '');           // strip a leading dot
     var a = s.split('.');
+    if (Array.isArray(o)){
+        var val;
+        o.forEach(r => val = iterateObject(r,a));
+        return val;
+    } else {
+        return iterateObject(o,a)
+    }
+}
+
+function iterateObject(o,a) {
     for (var i = 0, n = a.length; i < n; ++i) {
         var k = a[i];
         if (k in o) {
@@ -270,8 +280,13 @@ function mformsParseMeta(aStr, refObj) {
             if(c ==0x26){
                 var endOfElement=tarr.slice(i).length;
                 for (j=1 ; j<tarr.slice(i).length;j++){
-                    var emptyLine = tarr.slice(i)[j].trim();
-                    if(emptyLine[0]=="-"){
+                    var _position = 0;
+                    var line = tarr.slice(i)[j];
+                    c = line.charCodeAt(_position)
+                    while(isWS(c)){
+                        c = line.charCodeAt(++_position)
+                    }
+                    if(_position <= position){
                         endOfElement=i+j;
                         break;
                     }

@@ -133,51 +133,38 @@
     function runTest8() {
       var tout = runTest("Test Merge 2", testMerge2);
 
-      var strig = `
-      "widget": {
-    "id": "basic_phone_1",
-    "data_type": "text",
-    "type": "text",
-    "label": "Patient Phone #",
-    "data_context": "claim.patient.phoneNum",
-    "class": "input_field",
-    "ignore_case_match": true,
-    "valid_patt": "^([0-9]( |-)?)?((?[0-9]{3})?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$"
-  }
-      `;
-
-      if(tout.widget.id != "basic_phone_1") {
+      if(tout[1].widget.id != "basic_phone_1") {
         addTestRes("FAIL: id should be \"basic_phone_1\" but found " + tout.widget.id);
       }
-      if(tout.widget.data_type != "text") {
+      if(tout[1].widget.data_type != "text") {
         addTestRes("FAIL: data_type should be \"text\" but found " + tout.widget.data_type);
       }
-      if(tout.widget.type != "text") {
-        addTestRes("FAIL: type should be \"text\" but found " + tout.widget.type);
+      if(tout[1].widget.type != "text") {
+        addTestRes("FAIL: type should be \"text\" but found " + tout[1].widget.type);
       }
-      if(tout.widget.label != "Patient Phone #") {
-        addTestRes("FAIL: label should be \"Patient Phone #\" but found " + tout.widget.label);
+      if(tout[1].widget.label != "Patient Phone") {
+        addTestRes("FAIL: label should be \"Patient Phone\" but found " + tout[1].widget.label);
       }
-      if(tout.widget.data_context != "claim.patient.phoneNum") {
-        addTestRes("FAIL: data_context should be \"claim.patient.phoneNum\" but found " + tout.widget.data_context);
+      if(tout[1].widget.data_context != "claim.patient.phoneNum") {
+        addTestRes("FAIL: data_context should be \"claim.patient.phoneNum\" but found " + tout[1].widget.data_context);
       }
-      if(tout.widget.class != "input_field") {
-        addTestRes("FAIL: class should be \"input_field\" but found " + tout.widget.class);
+      if(tout[1].widget.class != "input_field") {
+        addTestRes("FAIL: class should be \"input_field\" but found " + tout[1].widget.class);
       }
-      if(tout.widget.ignore_case_match != true) {
-        addTestRes("FAIL: ignore_case_match should be \"true\" but found " + tout.widget.ignore_case_match);
+      if(tout[1].widget.ignore_case_match != true) {
+        addTestRes("FAIL: ignore_case_match should be \"true\" but found " + tout[1].widget.ignore_case_match);
       }
-      if(tout.widget.valid_patt != "^([0-9]( |-)?)?((?[0-9]{3})?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$") {
-        addTestRes("FAIL: valid_patt should be \"^([0-9]( |-)?)?((?[0-9]{3})?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$\" but found " + tout.widget.valid_patt);
+      if(tout[1].widget.valid_patt != "^([0-9]( |-)?)?((?[0-9]{3})?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$") {
+        addTestRes("FAIL: valid_patt should be \"^([0-9]( |-)?)?((?[0-9]{3})?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$\" but found " + tout[1].widget.valid_patt);
       }
-      if(Object.keys(tout.widget).length != 8) {
-        addTestRes("FAIL: should be 8 elements in widget but found " + Object.keys(tout.widget).length);
+      if(Object.keys(tout[1].widget).length != 8) {
+        addTestRes("FAIL: should be 8 elements in widget but found " + Object.keys(tout[1].widget).length);
       }
-      if(Object.keys(tout.validators).length != 3) {
-        addTestRes("FAIL: should be 3 elements in validators but found " + Object.keys(tout.validators).length);
+      if(Object.keys(tout[0].validators).length != 3) {
+        addTestRes("FAIL: should be 3 elements in validators but found " + Object.keys(tout[0].validators).length);
       }
-      if(Object.keys(tout).length != 2) {
-        addTestRes("FAIL: should be 2 elements in object but found " + Object.keys(tout).length);
+      if(Object.keys(tout).length != 3) {
+        addTestRes("FAIL: should be 3 elements in object but found " + Object.keys(tout).length);
       }
 
     }
