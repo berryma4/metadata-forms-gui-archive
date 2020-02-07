@@ -295,7 +295,7 @@ Actions & Roadmap for Metadata Forms Engine
     phone: ^([0-9]( |-)?)?(\(?[0-9]{3}\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$
     zip: ^[0-9]{5}(?:-[0-9]{4})?$
   
-  - widget: 
+  - &ANCHOR widget: 
     id: basic_phone
     data_type: text
     type: text
@@ -305,7 +305,8 @@ Actions & Roadmap for Metadata Forms Engine
     ignore_case_match: true
     valid_patt: <validators.phone
     
-  -widget: <widget.basic_phone
+  -widget: 
+      << : *ANCHOR
       id: basic_phone
       label: Patient Phone #
       data_context: claim.patient.phoneNum
