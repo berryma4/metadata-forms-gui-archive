@@ -303,7 +303,7 @@
    label: FDA Project Certificate of Need
    # TODO: Allow other files to be loaded here to allow re-use
    fetch:
-      uri: /data/cert-of-need/{dataObjId}.JSON
+      uri: ../../data/cert-of-need/{dataObjId}.JSON
       method: GET
       parse: JSON
    save:

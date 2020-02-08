@@ -1,6 +1,26 @@
+
 function mformInterpolate(aStr, parms) {
     // TODO: Copy Interpolate functionality from GOUtil.
 }
+
+function isEOL(charCode) {
+    //LF CR
+    return (charCode === 0x0A) || (charCode === 0x0D);
+}
+
+function isWS(charCode) {
+    // tab space
+    return (charCode === 0x09) || (charCode === 0x20);
+}
+
+function isValueSet(charCode) {
+    // , [ ] { }
+    return charCode === 0x2C ||
+        charCode === 0x5B ||
+        charCode === 0x5D ||
+        charCode === 0x7B ||
+        charCode === 0x7D;
+  }
 
 function isAlphaNumeric(str) {
     var code, i, len, dotCnt;
@@ -106,6 +126,100 @@ function parseCoerceDataValues(dataVal) {
     return dataVal;
 }
 
+function parseAnchor(input, anchorMap, position, outObj){
+    var c;
+    var _position;
+    if(typeof input !== 'string' || input == ""){
+        return {
+            isAnchor: false,
+            map: anchorMap
+        };
+    }
+    c = input.charCodeAt(position)
+    // &
+    if(c !== 0x26) {
+        return {
+            isAnchor: false,
+            map: anchorMap
+        };
+    }
+    c = input.charCodeAt(position++)
+    _position = position;
+    while (c !== 0 && !isWS(c) && !isEOL(c) && !isValueSet(c) && !isNaN(c)) {
+        c = input.charCodeAt(++position);
+    }
+    var name = input.slice(_position,position);
+    c = input.charCodeAt(++position);
+    while (c !== 0 && !isWS(c) && !isEOL(c) && !isValueSet(c) && !isNaN(c)) {
+        c = input.charCodeAt(++position);
+    }
+    var obj = input.slice(position);
+    anchorMap[name.trim()] = mformsParseMeta(obj,outObj);
+    return {
+        isAnchor: true,
+        map: anchorMap
+    };
+}
+
+function parseAnchorAssign(input, assignMap ,position){
+    var c;
+    var _position;
+    c = input.charCodeAt(position)
+
+    if(isNaN(c)) {
+        return assignMap;
+    }
+    while (c === 0 || isWS(c) || isValueSet(c)) {
+        c = input.charCodeAt(++position);
+    }
+    _position = position;
+    while (c !== 0 && (!isWS(c) || !isEOL(c)) && !isValueSet(c) && !isNaN(c)) {
+        c = input.charCodeAt(++position);
+    }
+    
+    var name = input.slice(_position,position);
+    var position_end = name.length-1;
+    c = name.charCodeAt(position_end)
+    while(isWS(c) || isValueSet(c)){
+        c = name.charCodeAt(--position_end)
+    }
+    name = name.slice(0,position_end+1);
+    // *
+    while(name.charCodeAt(0) === 0x2A) {
+        name = name.substr(1);
+    }
+    if(name === '') {
+        return assignMap;
+    }
+    assignMap.push(name);
+    return parseAnchorAssign(input.slice(position),assignMap,0);
+}
+
+function parseStringToObject(o, s) {
+    s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+    s = s.replace(/^\./, '');           // strip a leading dot
+    var a = s.split('.');
+    if (Array.isArray(o)){
+        var val;
+        o.forEach(r => val = iterateObject(r,a));
+        return val;
+    } else {
+        return iterateObject(o,a)
+    }
+}
+
+function iterateObject(o,a) {
+    for (var i = 0, n = a.length; i < n; ++i) {
+        var k = a[i];
+        if (k in o) {
+            o = o[k];
+        } else {
+            return;
+        }
+    }
+    return o;
+}
+
 /* Parse a YAML like script returning a nested object 
   expand any interpolated values found from parms.
 ..Note this parser does not attempt to provide full
@@ -115,7 +229,8 @@ function parseCoerceDataValues(dataVal) {
   Design Note:  Internally manipulate stack for descent unwiding 
     to avoid overhead of recursive javascript calls.
 */
-function mformsParseMeta(aStr, parms) {
+function mformsParseMeta(aStr, refObj) {
+    // Make a general state object
     var outObj = null; // leave as null until we know what kind of object we are parsing
     var state = pStates.begin;
     var objStack = [];
@@ -127,9 +242,19 @@ function mformsParseMeta(aStr, parms) {
     var currKey = null;
     var stackObj = {};
 
+    anchorMap = [];
+    outerloop:
     for (var i = 0; i < tarr.length; i++) {
         var tline = tarr[i].trimRight();
         if (tline.length < 1) {
+            continue;
+        }
+        // start of document
+        if (tline == "---") {
+            continue;
+        }
+        // end of document
+        if (tline == "...") {
             continue;
         }
         var tleft = tline.trimLeft();
@@ -139,7 +264,42 @@ function mformsParseMeta(aStr, parms) {
         if (tleft[0] == "#") {
             continue; // comment line detected
         }
-
+        var position=0;
+        var c = tline.charCodeAt(position);
+        while (c !== 0 && !isNaN(c)){
+            c = tline.charCodeAt(++position);
+            // #
+            if (c === 0x23) {
+                //_position = position;
+                //do { c = tline.charCodeAt(++position); }
+                //while (c !== 0 && !isEOL(c) && !isNaN(c));
+                tline = tline.slice(0,position).trimRight();
+                tleft = tline.trimLeft();
+            }
+            // &
+            if(c ==0x26){
+                var endOfElement=tarr.slice(i).length;
+                for (j=1 ; j<tarr.slice(i).length;j++){
+                    var _position = 0;
+                    var line = tarr.slice(i)[j];
+                    c = line.charCodeAt(_position)
+                    while(isWS(c)){
+                        c = line.charCodeAt(++_position)
+                    }
+                    if(_position <= position){
+                        endOfElement=i+j;
+                        break;
+                    }
+                }
+                const {isAnchor,map} = parseAnchor(tarr.slice(i,endOfElement).join('\n'),anchorMap, position,JSON.parse(JSON.stringify(outObj)));
+                if(isAnchor){
+                    anchorMap = map;
+                    i=endOfElement-1;
+                    continue outerloop;
+                }
+            }
+        }
+        
         var leadSpace = tline.length - tleft.length;
         var firstChar = tleft[0];
         var lastChar = tleft[tleft.length - 1];
@@ -150,10 +310,12 @@ function mformsParseMeta(aStr, parms) {
         var secondChar = remainAfterFirstChar[0];
         if (lastChar == ':') {
             varName = tleft.slice(0, -1);
-        } else if ((firstChar == "-") && ((secondChar == "{") || (secondChar == "]"))) {
+        } else if ((firstChar == "-") && ((secondChar == "{") || (secondChar == "["))) {
             // array element starting with dash immediatly followed
             // by '{'            
             dataVal = remainAfterFirstChar;
+        } else if ((firstChar == "{") || (firstChar == "[")) {
+            dataVal = JSON.stringify(eval("("+tleft.trim()+")"));
         } else if (firstColon != -1) {
             varName = tleft.slice(0, firstColon).trim();
             dataVal = tleft.slice(firstColon + 1).trim();
@@ -167,6 +329,7 @@ function mformsParseMeta(aStr, parms) {
         if ((varName != null) && (varName[0] == "-")) {
             varName = varName.slice(1).trim();
         }
+        
         dataVal = parseCoerceDataValues(dataVal);
         //console.log("L149: tline=", tline, "leadSpace=", leadSpace, 'firstChar=', firstChar, 'lastChar=', lastChar, "varName=", varName, "dataVal=", dataVal);
 
@@ -262,12 +425,27 @@ function mformsParseMeta(aStr, parms) {
             //console.log("L119: lastObj=", JSON.stringify(lastObj), "lastKey=", lastKey, "stackObj=", JSON.stringify(stackObj));
             continue;
         }
-
+        
         // Save values at current level
         if (Array.isArray(currObj)) {
             currObj.push(dataVal);
         } else {
+            // <
+            if(typeof dataVal === 'string' && dataVal.charCodeAt(0) === 0x3C){
+                dataVal = dataVal.substr(1);
+                Object.assign(refObj,outObj,currObj);
+                dataVal = parseStringToObject(refObj,dataVal);
+            }
+            if (varName ==  '<<'){
+                var assign_keys = parseAnchorAssign(dataVal,[],0);
+                var merged_values =[];
+                assign_keys.reverse().forEach(element => Object.assign(merged_values,anchorMap[element]));
+                Object.assign(currObj,merged_values);
+            } else if (((firstChar == "{") || (firstChar == "["))) {
+                Object.assign(currObj,dataVal);
+            } else {
             currObj[varName] = dataVal;
+            }
         }
         // }
 

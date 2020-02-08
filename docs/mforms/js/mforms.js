@@ -400,8 +400,9 @@
      mformCopyAttribs(widDef, attr, mformTextFieldCopyAttr);
      copyOverCustParms(attr, widDef, custParms);
      attr.type = "button";
-     attr.onClick = "saveFormChanges(this)";
-     b.make("button", attr, "Save");
+     attr.onClick = InterpolateStr(widDef.action, [context.dataObj, context, context.form_def, context.gContext]);
+     //"saveFormChanges(this)";
+     b.make("button", attr, widDef.label);
      b.finish("div");
  }
 

@@ -40,6 +40,10 @@
      box-sizing: border-box;
  }
 
+ div.input_fieldCont {
+     margin-left: 2em;
+ }
+
  @media only screen and (min-width: 1025px) {
 
      #topRightFieldsGroupcont,
