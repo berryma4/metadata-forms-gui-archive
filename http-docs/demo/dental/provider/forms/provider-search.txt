@@ -282,6 +282,7 @@
       save_result_fun: dental_claim_save_result
 
    show_data_obj_div: dataObjDivBottom
+   autocomplete: false
 
    widgets:   
            - provSearchLastName

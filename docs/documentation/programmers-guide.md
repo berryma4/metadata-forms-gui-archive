@@ -6,13 +6,13 @@
 
 ### Page that was rendered:
 
-* This page appears simple but it demonstrates a text box,  radio button select list, two way data binding,  Instant update of the underlying domain model.  [live version](/simple-form.html)![basic_demo_screen](img/simple-form-demo-1.jpg)
+* This page appears simple but it demonstrates a text box,  radio button select list, two way data binding,  Instant update of the underlying domain model.  [live version](https://frigateforms.com/)![basic_demo_screen](img/simple-form-demo-1.jpg)
 
 
 
 ### HTML Required to render page
 
-The meta-forms.css,  browser_util.js, simple_ajaj.js, mforms.js and mforms_parse.js are the supporting libraries that drive the mforms  system.  They are required for every HTML page that want to render a form using the system.  In RIA applications one page may render hundreds of different forms   [source code](...)
+The meta-forms.css,  browser_util.js, simple_ajaj.js, mforms.js and mforms_parse.js are the supporting libraries that drive the mforms  system.  They are required for every HTML page that want to render a form using the system.  In RIA applications one page may render hundreds of different forms   [source code](https://github.com/joeatbayes/metadata-forms-gui/blob/master/http-docs/demo/examples/simple-form.html)
 
 ```html
 <html>
@@ -35,7 +35,7 @@ The meta-forms.css,  browser_util.js, simple_ajaj.js, mforms.js and mforms_parse
 The main work in this HTML is performed by the display_form function which is called in the body onLoad event.
 
 ```html
-<body onLoad="display_form('form_div', 'data/forms/examples/simple-form',  null, GTX)">
+<body onLoad="display_form('form_div', 'forms/simple-form',  null, GTX)">
 ```
 
 * The first parameter "form_div" tells the system what <div> on the page to render the form into.  This allows the system to only deliver a portion of the functionality of the page.  Notice that an empty <div> with an id that matches "form_div" was created on the page prior to calling display_form().
@@ -45,7 +45,7 @@ The main work in this HTML is performed by the display_form function which is ca
 
 ### Form Specification to render sample
 
-The form specification metadata is saved in a text file on the server and retrieved based on the name given when the display_form() method is called.   [sourcecode](....)
+The form specification metadata is saved in a text file on the server and retrieved based on the name given when the display_form() method is called.   [sourcecode](https://github.com/joeatbayes/metadata-forms-gui/blob/master/http-docs/demo/examples/forms/simple-form.txt)
 
 ```yaml
 -widget:
@@ -163,6 +163,8 @@ The form specification metadata is saved in a text file on the server and retrie
   * Controlling form styling
   * Customizing styling for different brands
   * Localizing labels
+
+* 
 
 # Basic Form Usage
 
@@ -307,6 +309,18 @@ The form specification metadata is saved in a text file on the server and retrie
   * Example:  When user selects state then change the set of available zipcodes based on the state selected.  This can be done from sub setting data supplied at the time the form was loaded or by calling a  web service and modifying the affected fields widgets.   Introduces the notion of dependent fields or fields that are affected by actions of other fields.   As a general concept we prefer including the field ID for fields that could affect the operating of the current field. 
 
   
+
+### Controlling / Disable Autocomplete
+
+Autocomplete is a great feature but every so often such as advanced search forms we do not want fields filled in based on the selection of other fields.  In other instances the browser can choose to fill in incorrect values.    Mforms provides the ability to disable autocomplete with the autocomplete:  flag set at the form level.     When it is set, it sets the HTML attribute for the form to false and also generates a unique string for each field's auto complete.  This can help the browser avoid filling incorrect data into the fields. 
+
+```yaml
+- form:
+   id : ProvSearchForm
+   .... OTHER ATTRIBUTES 
+```
+
+
 
 ## Using Custom CSS 
 
@@ -619,3 +633,24 @@ If the attribute is not specified then no rendering occurs.   **show_data_obj_di
 ## Testing the YML Parser
 
 .
+
+## Creating a New repository
+
+It can be useful to create a repository that contains only the code necessary to use mforms  and have an easy way to accept enhancements to mforms without risking overwritting your data.  The script [update-other-repo.sh](../../update-other-repo.sh) will copy the mforms directory and the sample page over to a new directory of your naming.  
+
+The sequence of use is:
+
+1. Create a Repository for the new project (I use github or bitbucket)
+2. Clone that repository to a local directory
+3. Run update-other-repo.sh naming that directory.
+4. Create your own forms and HTML pages to render them.
+
+```
+#update-other-repo.sh targetDirectory
+bash update-other-repo.sh ../demo-dir-2
+```
+
+* Note:  If you are publishing with gitpages auto publishing from the docs directory the HTML samples and forms must be present in the repo directory /docs directory.    You must enable this in the github settings page. Here is what ours looks like: ![gitpages config sample](img/git-pages-configuration.jpg) 
+  We used a custom domain but it works pretty much the same if you use their default pages.    Notice the master branch /docs  this is what tells gitpages to publish from the docs directory.  You can also publish from a branch.  Since our demo's use gitpages we copy everything you will need in the docs directory.
+* It must be ran with the current directory set to the same directory where update-other-repo.sh is located on the local computer.   
+* It will create the target directory if it does not exist.

@@ -2,9 +2,21 @@ Actions & Roadmap for Metadata Forms Engine
 
 # Rank Ordered Feature Work
 
-* Python to convert sample dentists into searchable format with simple handler to do the search but preferrably make it work entirely client side.
+* Python to convert sample dentists into searchable format with simple handler to do the search but preferably make it work entirely client side.
 
-* Demonstrate auto_suggest form sends the URI for each token generates a  edge ngram file which contains the expanded tokens that can expand from the current string.  Eg;  if  typing sm the system can return smith, smyth, smell.  The return format should be the token with highest number where number could be number of clicks or number of occurences  and should be sorted in order highest count to lowest.  eg: smyith\109 then smith\31.   The field queries the database and pulls back all matches and renders them as a  autosuggest for that field.   Should only keep the first 20 most common expansions.  System should handle multi-token with combined set.
+* Demonstrate use of a custom rendering function.
+
+* DONE: JOE:2020-02-08: Allow a group to be autohid on initial rendering.  Need to support advanced search.
+
+* Feature to prevent rendering a section until the container or another section receives focus.  It would be better to not even render the advanced search functions until the user requests that feature.
+
+* DONE:JOE:2020-02-08: Implement auto complete disable feature to prevent browser from filling in incorrect data.   Need to support advanced search because it was incorrectly filling in data for advanced search fields even though it was not initially rendered.
+
+* DONE:JOE:2020-02-08: Move forms specs over closer to the demo HTML that uses them out of the Data directory.  Also move the demo forms into their own directories using their own CSS so a change in one demo page does not change behavior of others.
+
+* Script to copy over basic form contents to create a new repo directory or clone a new one with minimum contents to successfully render forms. 
+
+* Demonstrate auto_suggest form sends the URI for each token generates a  edge ngram file which contains the expanded tokens that can expand from the current string.  Eg;  if  typing sm the system can return smith, smyth, smell.  The return format should be the token with highest number where number could be number of clicks or number of occurrences  and should be sorted in order highest count to lowest.  eg: smyith\109 then smith\31.   The field queries the database and pulls back all matches and renders them as a  autosuggest for that field.   Should only keep the first 20 most common expansions.  System should handle multi-token with combined set.
 
 * Implement the render dropdown form service call. 
 
@@ -12,7 +24,7 @@ Actions & Roadmap for Metadata Forms Engine
 
 * Demonstrate basic search functionality
 
-* Script to create a new dependant directory that will be using the library.  Should also update it.  EG:   update dependant  ../test1  should create a new directory ../test1.  It should checkout ../mformsproto then copy the right files from the docs, js, etc directory create a new .gitignore if it does not exist and copy over the http server if it des not exist.  Any of these files that are copied over should by default not be saved in the local reposiotory.  Will need to move the docs,js,styles inside of docs/mforms to keep them isolated from the local repo files.
+* Script to create a new dependent directory that will be using the library.  Should also update it.  EG:   update dependant  ../test1  should create a new directory ../test1.  It should checkout ../mformsproto then copy the right files from the docs, js, etc directory create a new .gitignore if it does not exist and copy over the http server if it des not exist.  Any of these files that are copied over should by default not be saved in the local repository.  Will need to move the docs,js,styles inside of docs/mforms to keep them isolated from the local repo files.
 
 * Eric:  Evaluate what is missing to support edit functionality for screens supplied by MarkBo and propose new general purpose features or help adjust prioritize features from below.
 
