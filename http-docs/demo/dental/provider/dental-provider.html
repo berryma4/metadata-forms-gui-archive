@@ -4,24 +4,24 @@
     <meta description="Dental Claim Submission screen created using Metadata driven forms. ">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="google-site-verification" content="myFdbACBjfzL70PhkK5FOMVF7syP7K9EE8iwF-AEL8A" />
-    <link rel="stylesheet" type="text/css" href="css/demo-page-layout.css" />
-    <link rel="stylesheet" type="text/css" href="css/meta-forms.css" />
-    <link rel="stylesheet" type="text/css" href="css/adaform.css" />
+    <link rel="stylesheet" type="text/css" href="/mforms/css/meta-forms.css" />
+    <link rel="stylesheet" type="text/css" href="css/page-layout.css" />
+    <link ren="stylesheet" type="text/css" href="css/provider.css"/>
     <style>
         .h3 {
             text-decoration: none;
         }
     </style>
-    <script async src="js/browser_util.js" type="text/javascript"></script>
-    <script async src="js/simple_ajax.js" type="text/javascript"></script>
+    <script async src="/mforms/js/browser_util.js" type="text/javascript"></script>
+    <script async src="/mforms/js/simple_ajax.js" type="text/javascript"></script>
     <!--<script src="js/basic_widgets.js" type="text/javascript"></script>-->
-    <script async src="js/mforms.js" type="text/javascript"></script>
-    <script async src="js/mforms_parse.js" type="text/javascript"></script>
+    <script async src="/mforms/js/mforms.js" type="text/javascript"></script>
+    <script async src="/mforms/js/mforms_parse.js" type="text/javascript"></script>
 </head>
 
-<body onLoad="display_form('mbody', 'data/forms/dental/claim/dental-claim',  null, GTX)">
+<body onLoad="display_form('mbody', 'forms/provider-search',  null, GTX)">
     <div id="top_nav">
-        <h1>Sample Dental Claims Submission</h1>
+        <h1>Provider</h1>
     </div>
     <div id="page-vmid">
         <div id="lbody">
@@ -29,10 +29,10 @@
                 <a href="index.html">Other Samples</a>
             </li>
 
-            <h3>Dental Forms</h3>
-            <li onclick="display_form('mbody', 'data/forms/dental/claim/dental-claim',  null, GTX)">
-                Empty claim
-            </li>
+            <h3>Provider</h3>
+            <li onclick="display_form('mbody', 'forms/provider-search',  null, GTX)">
+                Provider Search</li>
+
 
             <!--<li onclick="display_list_form('mbody', 'data/forms/cert-of-need/list-certs' , 'delim_parser'
         , 'data/cert-of-need/index.txt' , '^' , GTX)">

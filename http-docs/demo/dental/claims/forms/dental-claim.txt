@@ -782,6 +782,7 @@
     label : Save    
     size: 8
     class: submit_button
+    action_fun: saveFormChanges(this);
 
 
 #####

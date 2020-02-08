@@ -1,0 +1,294 @@
+- widget:
+    id: provSearchLastName
+    data_type: text
+    type: text
+    label : Last Name
+    label_class: wrap
+    size: 35
+    data_context: prov.search.last_name
+    class: input_field
+
+
+- widget:
+    id: provSearchFirstName
+    data_type: text
+    type: text
+    label : First Name
+    label_class: wrap
+    size: 35
+    data_context: prov.search.first_name
+    class: input_field
+    
+
+- widget:
+    id: provSearchLicenseStateNumber
+    data_type: text
+    type: text
+    label : License State Number
+    label_class: wrap
+    size: 25
+    data_context: prov.search.license_number
+    class: input_field
+    ignore-case-match: true
+
+
+- widget:
+    id: provSearchLicenseState
+    data_type: text
+    type: dropdown
+    label : License State 
+    label_class: wrap
+    data_context: prov.search.license_state
+    class: input_field
+    option:
+       - {"label" : "Michigan", "value" : "MI"}
+       - {"label" : "Indiana", "value": "IN"}
+       - {"label" : "Arkansas", "value" : "AK"}
+
+
+- widget:
+    id: provSearchLicenseStateNumber
+    data_type: text
+    type: text
+    label : License State Number
+    label_class: wrap
+    data_context: prov.search.license_number
+    class: input_field
+    ignore-case-match: true
+
+#-------------------
+#--- ADVANCED SEARCH
+#-------------------
+- widget:
+    id: provSearchNPI
+    data_type: text
+    type: text
+    label : NPI
+    label_class: wrap
+    size: 15
+    data_context: prov.search.NPI
+    class: input_field
+
+- widget:
+    id: provSearchTIN
+    data_type: text
+    type: text
+    label : TIN or SSN
+    label_class: wrap
+    size: 15
+    data_context: prov.search.TIN
+    class: input_field
+
+- widget:
+    id: provSearchSpecialty
+    data_type: dropdown
+    type: text
+    label : Specialty
+    label_class: wrap
+    data_context: prov.search.specialty
+    class: input_field
+    ignore-case-match: true
+    data_source=data/dental/lookup/specialty-codes.tsv
+       option:
+       - {"label" : "None", "value" : "NULL"}
+       - {"label" : "Dentist", "value" : "122300000X "}
+       - {"label" : "Dental Public Health", "value": "1223D0001X"}
+       - {"label" : "Endodontics", "value" : "1223E0200X"}
+    #TODO: Fill this in from https://www.ada.org/~/media/ADA/Member%20Center/FIles/topics_npi_taxonomy.pdf?la=en
+
+
+- widget:
+    id: provSearchSSN
+    data_type: text
+    type: text
+    label : SSN
+    label_class: wrap
+    data_context: prov.search.SSN
+    size: 20
+    class: input_field
+
+
+- widget:
+    id: provSearchNetwork
+    data_type: dropdown
+    type: text
+    label : Network
+    label_class: wrap
+    data_context: prov.search.network
+    class: input_field
+
+
+- widget:
+    id: provSearchBusinessName
+    data_type: text
+    type: text
+    label : Business Name
+    label_class: wrap
+    size: 35
+    data_context: prov.search.business_name
+    class: input_field
+
+
+- widget:
+    id: provSearchOfficePhoneNum
+    data_type: text
+    type: text
+    label : Phone Number
+    label_class: wrap
+    data_context: prov.search.phone
+    size: 18
+    class: input_field
+
+
+- widget:
+    id: provSearchOfficeEmail
+    data_type: text
+    type: text
+    label : Office Email
+    label_class: wrap
+    size: 25
+    data_context: prov.search.office_email
+    class: input_field
+
+
+- widget:
+    id: provSearchOfficeAddr
+    data_type: text
+    type: text
+    label : Office Addresss
+    label_class: wrap
+    data_context: prov.search.office_address
+    class: input_field
+    size: 35
+
+#- widget:
+#    id: provSearchOfficeAddr
+#    data_type: text
+#    type: text
+#    label : Office Addresss
+#    label_class: wrap
+#    data_context: prov.search.office_address
+#    class: input_field
+
+- widget:
+    id: provSearchCity
+    data_type: text
+    type: text
+    label : City
+    label_class: wrap
+    data_context: prov.search.office_city
+    class: input_field
+    size: 22
+
+- widget:
+    id: provSearchState
+    data_type: text
+    type: dropdown
+    label : State
+    label_class: wrap
+    data_context: prov.search.office_state
+    class: input_field
+    data_source=data/dental/lookup/states.tsv
+
+
+- widget:
+    id: provSearchCounty 
+    data_type: dropdown
+    type: text
+    label : County
+    label_class: wrap
+    data_context: prov.search.office_county
+    class: input_field
+    data_source=data/dental/lookup/counties/{prov_search.office.state}.tsv
+
+- widget:
+    id: provSearchCountry
+    data_type: text
+    type: dropdown
+    label : Country
+    label_class: wrap
+    data_context: prov.search.office_country
+    class: input_field
+    data_source=data/dental/lookup/countries.tsv
+
+
+- widget:
+    id: provSearchZip
+    data_type: text
+    type: text
+    label : State
+    label_class: wrap
+    data_context: prov.search.office_country
+    class: input_field
+    size: 12
+
+
+
+- widget:
+    id: provSearchAdvancedGroup
+    label: Advanced Search
+    type: widgetGroup
+    class: vgroup
+    layout: horizontal
+    collapsed: true
+    widgets: 
+         - provSearchNPI
+         - provSearchSSN
+         - provSearchSpecialty
+         - provSearchNetwork
+         - provSearchTIN
+         - provSearchBusinessName
+         - provSearchOfficePhoneNum  
+         - provSearchOfficeEmail
+         - provSearchOfficeAddr
+         - provSearchCity
+         - provSearchState
+         - provSearchCounty
+         - provSearchCountry
+         - provSearchZip
+
+-widget:
+  id: provSearchReset
+  type: button
+  label: RESET
+  class: submit_button
+  action: reset_form(); 
+
+
+-widget:
+  id: provSearchDoSearch
+  type: button
+  label: SEARCH
+  class: submit_button
+  action_uri: 
+    uri: provider/search(this);
+    verb: POST
+    where: body
+    serialize: uri
+# serialize  uri - encode object by walking top level fields as  uri encoded string, json - encode data object as json, 
+# where - body - send data object in post body,  uri - encode it on the url.
+# verb - passed straight through as a the HTTP verb.
+
+
+- form:
+   id : ProvSearchForm
+   class: inputFrm
+   label: Provider Search
+   save:
+      uri: data/claims/{dataObjId}
+      verb: POST
+      where: body
+      status_div: save_status
+      save_result_fun: dental_claim_save_result
+
+   show_data_obj_div: dataObjDivBottom
+
+   widgets:   
+           - provSearchLastName
+           - provSearchFirstName
+           - provSearchLicenseStateNumber
+           - provSearchLicenseState
+           - provSearchAdvancedGroup
+           - provSearchReset
+           - provSearchDoSearch
+
