@@ -20,7 +20,6 @@
  //--- INTERACTION / OnClick / EVENTS
  //---------------
 
-
  function mformSaveFormChanges(hwidget) {
      var attr = hwidget.attributes;
      var formId = gattr(hwidget, "form_id");
@@ -76,10 +75,7 @@
              hideDiv(statusDiv);
          }
      } // at least one valid_pat to check.
-
      // Process Validation Functions
-
-
  }
 
  // Receive the Change events from the individual widgets.
@@ -432,14 +428,24 @@
              "class": cssClass + "Leg",
          }, widDef.label);
 
-         b.make("div", {
-             "class": "arrow-up",
-             "onclick": "toggleDivEvent(this, '" + contDivName + "')"
-         });
-         b.start("div", {
+         var arrowClass = "arrow-up";
+
+         var contDivAttr = {
              "id": contDivName,
              "class": "groupContentDiv"
+         };
+         if (widDef.collapsed == true) {
+             contDivAttr.style = "display:None;";
+             arrowClass = "arrow-down";
+         }
+
+         b.make("div", {
+             "class": arrowClass,
+             "onclick": "toggleDivEvent(this, '" + contDivName + "')"
          });
+
+
+         b.start("div", contDivAttr);
      }
 
      mformsRenderWidgets(widDef, widDef.widgets, b, context, {});
@@ -675,6 +681,9 @@
          widVal = null;
      }
 
+     if ((form.autocomplete == false) && (widVal == null)) {
+         widAttr.autocomplete = "IX" + widDef.id;
+     }
      var makeEleName = "input";
      if (widDef.type == "date") {
          widAttr.class = "input_date " + widAttr.class;
@@ -1058,14 +1067,20 @@
      var flds = gtx.widgets;
      context.form_id = form.id;
      mformSetFormContext(form, context);
+
      b.start("div", {
          "id": form.id + "cont",
          "class": form.class
      });
-     b.start("form", {
-         "id": form.id
-     });
 
+     formAttr = {
+         "id": form.id
+     };
+     mformCopyAttribs(form, formAttr, mformTextFieldCopyAttr);
+     if (form.autocomplete == false) {
+         formAttr.autocomplete = false;
+     }
+     b.start("form", formAttr);
      b.make("h3", {
          "id": form.id + "Head",
          class: form.class + "Head"
