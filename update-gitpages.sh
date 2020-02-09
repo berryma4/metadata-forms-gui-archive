@@ -10,5 +10,7 @@ mkdir data
 rm -Rf docs/data/forms
 rm -Rf docs/js
 rm -Rf docs/css
+
 cp -r http-docs/* docs
 cp -r data docs
+rm -Rf docs/data/raw-download

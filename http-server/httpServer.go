@@ -216,15 +216,16 @@ func main() {
 
 	http.Handle("/", http.FileServer(http.Dir("../http-docs")))
 	http.Handle("/data/", http.StripPrefix("/data/", http.FileServer(http.Dir("../data"))))
+	http.Handle("/data/dental/provider/", http.StripPrefix("/data/dental/provider/", http.FileServer(http.Dir("../docs/data/dental/provider"))))
 
 	// When path ends with "/" it is treated as a tree root
 	// which allos the handler to pick up the path and any
 	// sub paths such as /ping/apple.
 	fmt.Println("Listening on port 9831")
 	cwd, _ := os.Getwd()
-    fmt.Println("cwd=", cwd)  // for example /home/user
+	fmt.Println("cwd=", cwd) // for example /home/user
 
-	http.HandleFunc("/ping/", ping)          // set router
+	http.HandleFunc("/ping/", ping) // set router
 	http.HandleFunc("/api/save-cert-of-need/", api_save_cert_of_need)
 	// Test:  http://127.0.0.1:9601/api/save-cert-of-need?id=1004
 	//  should return a 200
@@ -233,6 +234,5 @@ func main() {
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
-
 
 }

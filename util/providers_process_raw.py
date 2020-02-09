@@ -7,9 +7,21 @@
 # disk to approximate interacting with a list of
 # providers from intelligent services.
 #
-# TODO: Modify to allow reading all import files in a directory
-#  rather than processing a single file. 
-
+# NOTE: This utiliity creates a search index file by unique token
+#  and auto suggest tokens for last_name,first name, license number
+#  npi.  we would normaly use server side functionality and a
+#  more compact storage format but we wanted the basic search
+#  to run with only client side search logic off the static gitpages
+#  server so used this brute force mechanism.
+#
+# WARNING: After these files are generated you may need to
+#  manually add them with git from the command line because
+#  sourcetree panics with this many files.
+#
+# TODO: Modify the logic to use 3 letter seprate for deeper
+# directory tree instead of having a lot of files in a single
+# directory.
+#
 
 import json
 import time
