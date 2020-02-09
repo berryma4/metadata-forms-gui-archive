@@ -265,6 +265,7 @@
     verb: POST
     where: body
     serialize: uri
+    next: display_form("prov_search_res")
 # serialize  uri - encode object by walking top level fields as  uri encoded string, json - encode data object as json, 
 # where - body - send data object in post body,  uri - encode it on the url.
 # verb - passed straight through as a the HTTP verb.
@@ -274,13 +275,6 @@
    id : ProvSearchForm
    class: inputFrm
    label: Provider Search
-   save:
-      uri: data/claims/{dataObjId}
-      verb: POST
-      where: body
-      status_div: save_status
-      save_result_fun: dental_claim_save_result
-
    show_data_obj_div: dataObjDivBottom
    autocomplete: false
 

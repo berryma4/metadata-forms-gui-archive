@@ -2,9 +2,43 @@ Actions & Roadmap for Metadata Forms Engine
 
 # Rank Ordered Feature Work
 
-* Python to convert sample dentists into searchable format with simple handler to do the search but preferably make it work entirely client side.
+* ProvDemo: Update CSS to match mockup
+
+* ProvDemo:  Tab Bar with Sub Tab Bar as nicely shown in  screen 75 Credentialing & Hospital Association.  Provide a alternating Icon for each tab that chooses one of a set of images based status of the tab.     Will need a notion of VerifyTab or VerifySubForm so we can also do server side validation.
+
+* ProvDemo:  Execute search and render results.    This requires a read only table with alternating rows where the row is clickable or individual sub widgets are render able.  Supports hover over row and scroll box on bottom of row.  Screen-8
+
+* ProvDemo:  Generic Status display screen for a process flow This is like a table but process but should support as a generic status object. screen 70.
+
+* ProvDemo:  Fix reset button so on same page with Search.
+
+* ProvDemo: Update Button CSS to reflect what is required for the mockup.
+
+* ProvDemo:  Add the Add new provider screen
+
+* ProvDemo:  Python to convert sample dentists into searchable format with simple handler to do the search but preferably make it work entirely client side.
+
+* ProvDemo:  Ability to string Dialog Pop over forms into a sequence.
+
+* ProvDemo:  Popover: Add New Provider Screens 10 to 12
+
+* ProvDemo:  Popover: Provider Already Exists Screen 13 - This is better done as display of first couple found.
+
+* ProvDemo: Main Provider Screen - provider tab - screens 14-17
+
+* ProvDemo:  When a group is hidden it should remove the bottom line or some other change to save vertical space while still showing the label.   and clicking anywhere on the group should expand.  Also option to have the expansion arrow show on end of ledend instead of end of group.
+
+* ProvDemo:  Need a non editing text box to display long messages. 
+
+* ProvDemo Need ability to display a large text box area above main widgets in the form. Screen 13:
+
+* ProvDemo: Need ability to support Back button that moves forward or backward through a string a dialog forms.
+
+* ProvDemo: Ability for Button to displaynext form.
 
 * Demonstrate use of a custom rendering function.
+
+* Utility showing data mapping to field ID to make it easier to see how the Data map will be rendered.
 
 * Make the Tab order on android work correctly for Text Area and radio forms.   If the user is advancing with TAB through a form we do not want to break the flow and make them close the android keyboard to advance past these fields. 
 
@@ -12,29 +46,38 @@ Actions & Roadmap for Metadata Forms Engine
 
 * DONE:JOE:2020-02-08: updated CSS for  /index.html to better support media selector.  It now renders correctly on moto gs in both portrait and landscape mode.
 
-* Feature to prevent rendering a section until the container or another section receives focus.  It would be better to not even render the advanced search functions until the user requests that feature.
+* ProvDemo:  Implement Top Menu Bar Widget where the menu could be display a different form  could be separate page.
+
+* ProvDemo: Implement TAB bar widget which is very similar to top menu bar except is supports a change of visualization for the TAB that is currently open.
+
+  * Ability to defer rendering inactive TABS until the tab is displayed.  Since content on one tab could change based on actions in another tab then 
+  * Ability to show TABS that have incomplete work before record can be saved to server.
+
+* ProvDemo: Feature to prevent rendering a section until the container or another section receives focus.  It would be better to not even render the advanced search functions until the user requests that feature. 
 
 * DONE:JOE:2020-02-08: Implement auto complete disable feature to prevent browser from filling in incorrect data.   Need to support advanced search because it was incorrectly filling in data for advanced search fields even though it was not initially rendered.
 
 * DONE:JOE:2020-02-08: Move forms specs over closer to the demo HTML that uses them out of the Data directory.  Also move the demo forms into their own directories using their own CSS so a change in one demo page does not change behavior of others.
 
-* Script to copy over basic form contents to create a new repo directory or clone a new one with minimum contents to successfully render forms. 
+* ProvDemo: Update stylesheets to reflect those provided by MarkBo at least for the dental samples.
 
-* Demonstrate auto_suggest form sends the URI for each token generates a  edge ngram file which contains the expanded tokens that can expand from the current string.  Eg;  if  typing sm the system can return smith, smyth, smell.  The return format should be the token with highest number where number could be number of clicks or number of occurrences  and should be sorted in order highest count to lowest.  eg: smyith\109 then smith\31.   The field queries the database and pulls back all matches and renders them as a  autosuggest for that field.   Should only keep the first 20 most common expansions.  System should handle multi-token with combined set.
+* ProvDemo: Implement screens inspired by MarkBo supplied screens including sample data.  This will require form chaining with backout and Top of page tabs also needs validation of all forms across multiple forms in stack.  Also requires ability to expand a row in table with edit fields that can colllapse kind of like I did the general group but takes less space when collapsed I think we should avoid form chaining when table expansion will work.   Will need file upload functionality and implementation of paging client side for fee tables but I suspect the fee tables are small enough to render them all client side if we implement non-edit tables where the rows expand to all in-table edit rather than rendering entire row as editable.
 
-* Implement the render dropdown form service call. 
+* ProvDemo:Demonstrate auto_suggest form sends the URI for each token generates a  edge ngram file which contains the expanded tokens that can expand from the current string.  Eg;  if  typing sm the system can return smith, smyth, smell.  The return format should be the token with highest number where number could be number of clicks or number of occurrences  and should be sorted in order highest count to lowest.  eg: smyith\109 then smith\31.   The field queries the database and pulls back all matches and renders them as a  autosuggest for that field.   Should only keep the first 20 most common expansions.  System should handle multi-token with combined set.
 
-* Demonstrate render dropdown but wait to get contents until field gains context.
+* ProvDemo: Implement the render dropdown form service call. 
 
-* Demonstrate basic search functionality
+* ProvDemo: Demonstrate render dropdown but wait to get contents until field gains context.
 
-* Script to create a new dependent directory that will be using the library.  Should also update it.  EG:   update dependant  ../test1  should create a new directory ../test1.  It should checkout ../mformsproto then copy the right files from the docs, js, etc directory create a new .gitignore if it does not exist and copy over the http server if it des not exist.  Any of these files that are copied over should by default not be saved in the local repository.  Will need to move the docs,js,styles inside of docs/mforms to keep them isolated from the local repo files.
+* ProvDemo: Demonstrate basic search functionality
+
+* Script to copy over basic form contents to create a new repo directory or clone a new one with minimum contents to successfully render forms.   Script to create a new dependent directory that will be using the library.  Should also update it.  EG:   update dependant  ../test1  should create a new directory ../test1.  It should checkout ../mformsproto then copy the right files from the docs, js, etc directory create a new .gitignore if it does not exist and copy over the http server if it des not exist.  Any of these files that are copied over should by default not be saved in the local repository.  Will need to move the docs,js,styles inside of docs/mforms to keep them isolated from the local repo files.
 
 * Eric:  Evaluate what is missing to support edit functionality for screens supplied by MarkBo and propose new general purpose features or help adjust prioritize features from below.
 
-* Update stylesheets to reflect those provided by MarkBo at least for the dental samples.
+* 
 
-* Implement screens inspired by MarkBo supplied screens including sample data.  This will require form chaining with backout and Top of page tabs also needs validation of all forms across multiple forms in stack.  Also requires ability to expand a row in table with edit fields that can colllapse kind of like I did the general group but takes less space when collapsed I think we should avoid form chaining when table expansion will work.   Will need file upload functionality and implementation of paging client side for fee tables but I suspect the fee tables are small enough to render them all client side if we implement non-edit tables where the rows expand to all in-table edit rather than rendering entire row as editable.
+* 
 
 * Implement basic support for OIDC to allow real data access.   This only needs  to run once a OIDC session has been established they can use login from other screens provided it is in the same domain.  Otherwise will need login screens.
 
@@ -42,13 +85,11 @@ Actions & Roadmap for Metadata Forms Engine
 
 * Validation error messages in table are displaying on wrong row.  Probably need to add row ndx to id of status widget.
 
-* Implement TAB bar widget which is very similar to top menu bar except is supports a change of visualization for the TAB that is currently open.
-  * Ability to defer rendering inactive TABS until the tab is displayed.  Since content on one tab could change based on actions in another tab then 
-  * Ability to show TABS that have incomplete work before record can be saved to server.
+* 
   
 * Support  save_start, save_success, save_fail callback function specified in metadata so the programmer can easily change GUI state. 
 
-* Implement Top Menu Bar Widget where the menu could be display a different form  could be separate page.
+* 
 
 * Modify Date parser to accept alternative input form and reform to desired format to support date picker.
 
