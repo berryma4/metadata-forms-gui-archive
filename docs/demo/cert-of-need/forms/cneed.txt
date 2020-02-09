@@ -65,7 +65,7 @@
     data_context: review_level
     required: true    
     #class: input_field vradio fsblock
-    class: input_field 
+    class: hor_radio
     # Add the vradio syle to force vertical radio buttons.
     ignore-case-match: true
     # Add the fsblock to force a group widget like radio button
@@ -213,9 +213,8 @@
     type: textarea
     label : Description
     placeholder: Enter Project Description
-    size: 45
     rows: 7
-    cols: 60
+    cols: 40
     data_context: project.description  
     required: true
     maxlength: 500

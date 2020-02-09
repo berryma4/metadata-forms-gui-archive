@@ -6,6 +6,8 @@ Actions & Roadmap for Metadata Forms Engine
 
 * Demonstrate use of a custom rendering function.
 
+* Make the Tab order on android work correctly for Text Area and radio forms.   If the user is advancing with TAB through a form we do not want to break the flow and make them close the android keyboard to advance past these fields. 
+
 * DONE: JOE:2020-02-08: Allow a group to be autohid on initial rendering.  Need to support advanced search.
 
 * Feature to prevent rendering a section until the container or another section receives focus.  It would be better to not even render the advanced search functions until the user requests that feature.
