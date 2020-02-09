@@ -1,0 +1,46 @@
+body {
+    font-size: 14pt;
+}
+
+h1 {
+    font-size: 1.3em;
+}
+
+#links {
+    display: inline-block;
+    vertical-align: top;
+    background-color: WhiteSmoke;
+    color: darkgrey;
+    font-size: 0.8em;
+    min-width: 18em;
+    max-width: 20em;
+    word-wrap: break-word;
+}
+
+#links li {
+    max-width: 95%;
+}
+
+#form_div {
+    width: auto;
+    max-width: 98%;
+    display: inline-block;
+    vertical-align: top;
+    margin: 0.1em;
+    margin-top: 0em;
+    background-color: #FAFAFA;
+    padding: 0.5em;
+    border: 2px outset #F1F1FF;
+    align-items: center;
+}
+
+
+#dataObjDiv {
+    display: block;
+    background-color: silver;
+    max-width: 95%;
+    overflow: hidden;
+    font-size: 0.7em;
+    word-wrap: break-word;
+    margin-top: 2em;
+}
