@@ -10,6 +10,8 @@ Actions & Roadmap for Metadata Forms Engine
 
 * DONE: JOE:2020-02-08: Allow a group to be autohid on initial rendering.  Need to support advanced search.
 
+* DONE:JOE:2020-02-08: updated CSS for  /index.html to better support media selector.  It now renders correctly on moto gs in both portrait and landscape mode.
+
 * Feature to prevent rendering a section until the container or another section receives focus.  It would be better to not even render the advanced search functions until the user requests that feature.
 
 * DONE:JOE:2020-02-08: Implement auto complete disable feature to prevent browser from filling in incorrect data.   Need to support advanced search because it was incorrectly filling in data for advanced search fields even though it was not initially rendered.

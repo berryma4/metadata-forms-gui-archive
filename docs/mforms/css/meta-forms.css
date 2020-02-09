@@ -1,9 +1,9 @@
 .inputFrm {
     width: auto;
     height: auto;
-    font-family: Verdana, Vivaldi, 'Vladimir Script';
+    xfont-family: Verdana, Vivaldi, 'Vladimir Script';
     background-color: transparent;
-    font-size: 0.8em;
+    xfont-size: 0.8em;
     padding: 0px;
     margin: 0px;
     border: none;
@@ -28,14 +28,14 @@ select {
 
 input.input_text {
     min-width: 50px;
-    font-size: 0.9em;
+    xfont-size: 0.9em;
     max-width: 98%;
 }
 
 textarea.input_text {
     min-width: 50px;
     max-width: 95%;
-    font-size: 0.9em;
+    xfont-size: 0.9em;
     ;
     outline-color: silver;
     resize: none;
@@ -50,7 +50,7 @@ textarea.input_text {
 }
 
 input.next_button {
-    font-size: 0.9em;
+    xfont-size: 0.9em;
     border-radius: 2px;
     text-align: center;
     vertical-align: middle;
@@ -117,12 +117,12 @@ fieldset.radio {
     margin: 0.05em;
     margin-left: 0.06em;
     color: rgb(13, 85, 9);
-    font-size: 1em;
+    xfont-size: 1em;
     background-color: #F7F8FA;
 }
 
 input.input_date {
-    font-size: 1.2em;
+    xfont-size: 1.2em;
 }
 
 div.input_fieldCont {
@@ -184,7 +184,7 @@ legend.vgroupLeg {
 
 fieldset.groupFS {
     display: inline-block;
-    margin-top: 7px;
+    margin-top: 0.1em;
     border-color: rgb(231, 228, 228);
     background-color: transparent;
     border-radius: 3px;
@@ -211,7 +211,7 @@ vgroup.legend {
     background-color: lightgrey;
     width: auto;
     margin-bottom: 1px;
-    font-size: 12px;
+    font-size: 1.2em;
     font-weight: bold;
     color: #1f497d;
 }
@@ -328,7 +328,7 @@ div.forceWrap {
 div.mtableCont {
     border: inset 2px rgb(231, 228, 228);
     background-color: rgb(231, 228, 228, 0.1);
-    font-size: 1.0em;
+    xfont-size: 1.0em;
     margin-top: 0.2em;
     margin-left: 0.2em;
     border-radius: 4px;
@@ -342,7 +342,7 @@ div.mtableCont {
 table.mtable {
     border: outset 1px rgb(231, 228, 228);
     background-color: transparent;
-    font-size: 1.0em;
+    xfont-size: 1.0em;
     margin-top: 0.2em;
     margin-left: 0.2em;
     border-radius: 4px;

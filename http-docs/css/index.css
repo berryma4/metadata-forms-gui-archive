@@ -1,6 +1,6 @@
   body {
       font-family: veranda, arial, sans-serif;
-
+      font-size: 12pt;
   }
 
   li:hover {
@@ -16,28 +16,28 @@
   #links {
       display: inline-block;
       min-width: 18em;
-      xmax-width: 30%;
+      max-width: 100%;
       vertical-align: top;
       background-color: WhiteSmoke;
       color: darkgrey;
       font-size: 0.8em;
-      padding-left: 1em;
+      padding-left: 0em;
   }
 
   #form_div {
       width: auto;
-      xmax-width: 55%;
+      max-width: 100%;
       display: inline-block;
       vertical-align: top;
-      margin-left: 3em;
+      margin-left: 0.1em;
       background-color: #FAFAFA;
-      padding: 2em;
-      border: 2px outset #F1F1FF;
+      padding: 0px;
       align-items: center;
+      border: none;
   }
 
   #simpleFormcont {
-      max-width: 40em;
+      max-width: 100%;
       border: solid darkred 1px;
       padding: 1em;
   }
@@ -46,39 +46,75 @@
       max-width: 50em;
   }
 
+  /* this one was breaking our sizing on the browser due to 
+  long text not wrapping and the browser attempting to 
+  resize.   Fixed by disabling overflow */
   #dataObjDiv {
       display: inline-block;
       background-color: snow;
+      max-width: 95%;
+      overflow: hidden;
+      font-size: 0.7em;
+      word-wrap: break-word;
   }
 
-  @media screen and (max-device-width: 360px),
-  screen and (max-device-width: 414px) {
-      .body {
-          font-size: 18pt;
-      }
-
+  /* For larger screens we can add some spacing
+  to make the form pop a little more */
+  @media only screen and (min-width : 1025px) {
       #links {
-          padding-left: 0.2em;
-      }
-
-
-
-      #simpleFormcont {
-          max-width: none;
-          border: none;
+          max-width: 30%;
+          padding-left: 1em;
       }
 
       #form_div {
-          max-width: none;
-          padding: 0.1em;
-          border: none;
-          margin-left: 0.1em;
-          width: auto;
+          xmax-width: 55%;
+          margin-left: 3em;
+          padding: 2em;
+          border: 2px outset #F1F1FF;
+      }
+
+      #simpleFormcont {
+          max-width: 40em;
+          border: solid darkred 1px;
+          padding: 1em;
       }
 
       #cert_needcont {
-          max-width: none;
+          max-width: 50em;
+      }
+  }
+
+  /* Smartphones (landscape) ----------- */
+  @media only screen and (max-width : 321px) {
+      body {
+          font-size: 12pt;
       }
 
+      #form_div {
 
+          max-width: 100%;
+          overflow: hidden;
+      }
+
+      #simpleFormcont {
+          max-width: 100%;
+          padding: 0px;
+          border: none;
+          margin: 0px;
+          overflow: hidden;
+      }
+
+      #cert_needcont {
+          max-width: 100%;
+          padding: 0px;
+          margin: 0px;
+          border: none;
+          overflow: hidden;
+      }
+
+      dataObjDiv {
+          width: 100%;
+      }
+
+      /* Styles */
   }
