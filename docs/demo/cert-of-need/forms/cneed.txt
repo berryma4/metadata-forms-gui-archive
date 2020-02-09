@@ -31,7 +31,7 @@
     type: text
     label : Project Cost
     placeholder: Enter Cost
-    size: 35
+    size: 25
     data_context: total_project_cost  
     required: true
     maxlength: 18
@@ -87,7 +87,7 @@
     type: text
     label : Facility ID 
     placeholder: Facility ID
-    size: 35
+    size: 30
     data_context: facility_id
     required: true
     maxlength: 50
@@ -99,7 +99,7 @@
     type: text
     label : Facility Name 
     placeholder: Enter Facility Name
-    size: 45
+    size: 36
     data_context: facility_name  
     required: true
     maxlength: 50
@@ -112,7 +112,7 @@
     type: text
     label : Facility Type 
     placeholder: 
-    size: 45
+    size: 36
     data_context: facility_type  
     required: true
     maxlength: 50
@@ -143,10 +143,10 @@
     type: text
     label : Name 
     placeholder: Enter Name
-    size: 45
+    size: 36
     data_context: current_operator.name  
     required: true
-    maxlength: 50
+    maxlength: 45
     class: input_fieldv
 
 - widget:
@@ -155,10 +155,10 @@
     type: text
     label : Address
     placeholder: Enter Address
-    size: 45
+    size: 36
     data_context: current_operator.address_line1
     required: true
-    maxlength: 50
+    maxlength:40
     class: input_fieldv
 
 - widget:
@@ -214,7 +214,7 @@
     label : Description
     placeholder: Enter Project Description
     rows: 7
-    cols: 40
+    cols: 39
     data_context: project.description  
     required: true
     maxlength: 500

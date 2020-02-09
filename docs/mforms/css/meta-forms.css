@@ -78,9 +78,11 @@ img.sampleImage {
 .input_fieldCont,
 .input_fieldvCont,
 .input_fieldContainer,
-.input_fieldvContainer {
-    margin-top: 0.25em;
+.input_fieldvContainer,
+.vert_radioCont {
+    margin-top: 0.1em;
     display: inline-block;
+    margin-bottom: 0.5em;
 }
 
 .input_fieldvCont,

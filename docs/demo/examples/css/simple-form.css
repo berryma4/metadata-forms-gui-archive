@@ -1,5 +1,6 @@
 body {
     font-size: 14pt;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 h1 {
@@ -37,10 +38,17 @@ h1 {
 
 #dataObjDiv {
     display: block;
-    background-color: silver;
+    background-color: smoke;
     max-width: 95%;
     overflow: hidden;
     font-size: 0.7em;
     word-wrap: break-word;
     margin-top: 2em;
+}
+
+.input_fieldLabel,
+.input_fieldvLabel,
+.vert_radioLabel,
+.hor_radioLabel {
+    display: block;
 }

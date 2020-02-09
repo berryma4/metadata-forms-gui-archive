@@ -3,6 +3,11 @@
       font-size: 12pt;
   }
 
+  h1 {
+      font-size: 1.3em;
+      color: rebeccapurple;
+  }
+
   li:hover {
       text-decoration: underline;
 
@@ -58,12 +63,17 @@
       word-wrap: break-word;
   }
 
+  div.input_text_area {
+      display: block;
+  }
+
   /* For larger screens we can add some spacing
   to make the form pop a little more */
   @media only screen and (min-width : 1025px) {
       #links {
           max-width: 30%;
           padding-left: 1em;
+          margin-left: 1.2em;
       }
 
       #form_div {
@@ -82,38 +92,58 @@
       #cert_needcont {
           max-width: 50em;
       }
+
+
   }
 
   /* Smartphones (landscape) ----------- */
-  @media only screen and (max-width : 321px) {
+  @media only screen and (max-width : 680px) {
       body {
-          font-size: 12pt;
+          font-size: 14pt;
       }
 
-      #form_div {
 
-          max-width: 100%;
-          overflow: hidden;
+      #form_div {
+          max-width: auto;
+          xmax-width: 100%;
+          xoverflow: hidden;
       }
 
       #simpleFormcont {
-          max-width: 100%;
+          xmax-width: 99%;
+          max-width: auto;
           padding: 0px;
           border: none;
           margin: 0px;
-          overflow: hidden;
+          overflow: none;
       }
 
       #cert_needcont {
-          max-width: 100%;
           padding: 0px;
           margin: 0px;
           border: none;
-          overflow: hidden;
+          overflow: non;
       }
 
       dataObjDiv {
-          width: 100%;
+          width: 98%;
+      }
+
+      .input_fieldCont,
+      .input_fieldvCont,
+      .input_fieldContainer,
+      .input_fieldvContainer,
+      .vert_radioCont {
+          xmargin-top: 0.1em;
+          xdisplay: inline-block;
+          xmargin-bottom: 0.95em;
+      }
+
+      .input_fieldLabel,
+      .input_fieldvLabel,
+      .vert_radioLabel,
+      .hor_radioLabel {
+          display: block;
       }
 
       /* Styles */
