@@ -28,6 +28,7 @@ import time
 import glob
 import os
 
+tab = "\t"
 def parseBool(avar):
   if avar == "Y":
     return True
@@ -37,24 +38,36 @@ def parseBool(avar):
     return None
 
 def makeFiNameSafe(astr):
-      tout = astr.strip()
-      tout = tout.replace("/","_fs_").replace("\\","_bs_")
-      tout = tout.replace(" ","_").replace("&","_amp_")
-      tout = tout.replace("@","_at_").replace("#","_pnd_")
-      tout = tout.replace("(","_po_").replace(")","_pc_")
-      tout = tout.replace("[","_bo_").replace("]","bc")
-      tout = tout.replace("<","_lt_").replace(">","_gt_")
-      tout = tout.replace("=","_eq_").replace("|","_pip_")
-      tout = tout.replace("{","_ob_").replace("}","_cb_")
-      tout = tout.replace("%","_pct_").replace("$","_dlr_")
-      tout = tout.replace("^","_car_").replace("+","_pls_")
-      tout = tout.replace(",","_cma_").replace("?","_que_")
-      tout = tout.replace("\n","").replace("\t","_tab_")
+      # TODO: Modify to use RegEx instead of
+      # duplicate replaces.
+      tout = astr.strip().upper()
+      tout = tout.replace("/",".").replace("\\",".")
+      tout = tout.replace(" ","_").replace("",".")
+      tout = tout.replace("@",".").replace("#",".")
+      tout = tout.replace("(",".").replace(")",".")
+      tout = tout.replace("[",".").replace("]",".")
+      tout = tout.replace("<",".").replace(">",".")
+      tout = tout.replace("=",".").replace("|",".")
+      tout = tout.replace("{",".").replace("}",".")
+      tout = tout.replace("%",".").replace("$",".")
+      tout = tout.replace("^",".").replace("+",".")
+      tout = tout.replace(",",".").replace("?",".")
+      tout = tout.replace("\n","").replace("\t","_")
       tout = tout.replace("\r","").replace("\c","")
-      tout = tout.replace("\f","").replace("\"","")
-      tout = tout.replace("\'","_sq_").replace("\`","_ap_")
-      tout = tout.replace("~","_tld_").replace("!","_ex_")
-      tout = tout.replace(".","_per_")
+      tout = tout.replace("\f","").replace("\"",".")
+      tout = tout.replace("\'",".").replace("\`",".")
+      tout = tout.replace("~",".").replace("!",".")
+      tout = (tout.replace("._", "_")
+                .replace("_.", "_")
+                .replace("....",".")
+                .replace("...",".")
+                .replace("..",".")
+                .replace("____","_")
+                .replace("___", "_")
+                .replace("__", "_")
+                .replace("---","-")
+                .replace("--", "-")                
+              )
       return tout
 
         
@@ -81,7 +94,7 @@ def loadZips(fiName):
       pass # Some military zipcodes are known to fail
   return tout
 
-indexFields = ["First Name", "Last Name"]
+
 indexByFirstName = {}
 indexByLastName = {}
 #indexByName = {}
@@ -91,6 +104,7 @@ indexByCity = {}
 indexBySpecial = {}
 indexByBusinessName = {}
 indexByState = {}
+indexByZip = {}
 
 start = time.time()
 zipcodes = loadZips("../data/raw-download/zipcodes-geo.tsv")
@@ -119,19 +133,7 @@ def processFile(fiName, outDir, doWrite):
   
   if not os.path.exists(outDir):
     os.makedirs(outDir)
-    
-  #outFi = open(outDir + "/jsonsrecs.txt", "w")  
-  jsonDir = outDir + "/recs"
-  searchDir = outDir + "/search"
-  searchByName=outDir + "/search/name"
-  autoSugByName = outDir + "auto/name"
-  if not os.path.exists(jsonDir):
-     os.makedirs(jsonDir)
-  if not os.path.exists(searchDir):
-    os.makedirs(searchDir)
-  if not os.path.exists(autoSugByName):
-    os.makedirs(autoSugByName)
-   
+      
   errFi = open(fiName + ".err", "w")
   firstLine = f.readline().strip()
   fldNames = firstLine.split("\t")
@@ -301,6 +303,7 @@ def processFile(fiName, outDir, doWrite):
       updateIndex(indexByBusinessName,  trec["orgName"], trec)
       updateIndex(indexByState,  trec["addr"]["bus"]["state"], trec)
       updateIndex(indexByCity,  trec["addr"]["bus"]["city"], trec)
+      updateIndex(indexByZip,   trec["addr"]["bus"]["zip5"], trec)
 
 
       #trec["combName"] = stn["last"] + ", " + stn["first"] + " " + stn["middle"]
@@ -312,24 +315,14 @@ def processFile(fiName, outDir, doWrite):
 
       # Save individual JSON file for practioner
       if doWrite == True:
-        safeId=makeFiNameSafe(trec["licNum"])
-        recOutDir = jsonDir + "/json"
-        if not os.path.exists(recOutDir):
-          os.makedirs(recOutDir)
-        fiOutName = recOutDir + "/" + safeId
+        safeId=makeFiNameSafe(trec["licNum"])        
+        fiOutName = outDir + "/" + safeId + ".json"
         fout = open(fiOutName, "w")
         fout.write(jsonRecStr)
         fout.close()
         print("wrote ", len(jsonRecStr), " bytes to " + fiOutName)
                      
-      # Save the record as part of a larger binary
-      # searchable index
-      # outFi.write(trec["npi"] + "=" + jsonRecStr + "\n")
       totRecAdd += 1
-                  
-        
-      # TODO: Update and output the Name Index
-      # TODO: Update and output the Tokens for Auto suggest
                    
     except ValueError:
       errCnt += 1
@@ -338,7 +331,7 @@ def processFile(fiName, outDir, doWrite):
   #outFi.close()
   errFi.close()
 
-tab = "\t"
+
 
 # Generate a series of files that for each unique
 # value Last Name write a set of search records
@@ -351,7 +344,7 @@ def makeIndexByKey(index, outDir):
     #print("key=", key)
     safeKey = makeFiNameSafe(key)
     safeKey = safeKey.replace("_cma_", "").replace("_sq_", "").replace("_dq_","").replace("_per_","")
-    toutName = outDir + "/" + safeKey
+    toutName = outDir + "/" + safeKey + ".txt"
     
     fo = open(toutName, "w")
     fo.write("lastName\tfirstName\tlicNum\taddress\tcity\tstate\n")
@@ -403,7 +396,7 @@ def makeStemIndex(index, stemOutDir, maxStemToken):
   # Save our Stem Index
   for aStem, tokens in stemNdx.items():
     #print("aStem=", aStem, " tokens=", tokens)
-    sname = stemOutDir + "/" + aStem
+    sname = stemOutDir + "/" + aStem + ".txt"
     fo = open(sname, "w")
     # Sort Tokens into which Token had highest count
     tarr = []
@@ -435,7 +428,7 @@ print("inDir=", inDir, " fnames=", fnames)
 
 for fname in fnames:
   print ("fname=", fname)
-  processFile(fname, "../docs/data/dental/provider", True)
+  processFile(fname, "../docs/data/dental/provider/recs", True)
 
 
 
@@ -447,6 +440,8 @@ print("make search indexes")
 
 makeIndexByKey(indexByFirstName, "../docs/data/dental/provider/index/first_name")
 makeIndexByKey(indexByLastName, "../docs/data/dental/provider/index/last_name")
+makeIndexByKey(indexByCity, "../docs/data/dental/provider/index/city")
+makeIndexByKey(indexByZip, "../docs/data/dental/provider/index/zip")
 
 makeStemIndex(indexByFirstName, "../docs/data/dental/provider/autosug/first_name", 100)
 makeStemIndex(indexByLastName, "../docs/data/dental/provider/autosug/last_name", 100)
@@ -456,6 +451,7 @@ makeStemIndex(indexBySpecial, "../docs/data/dental/provider/autosug/specialty", 
 makeStemIndex(indexByBusinessName, "../docs/data/dental/provider/autosug/bus_name", 50)
 makeStemIndex(indexByState, "../docs/data/dental/provider/autosug/state", 50)
 makeStemIndex(indexByCity, "../docs/data/dental/provider/autosug/city", 50)
+makeStemIndex(indexByZip, "../docs/data/dental/provider/autosug/zip", 50)
 
 
 

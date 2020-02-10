@@ -89,11 +89,15 @@ Actions & Roadmap for Metadata Forms Engine
 
 * Move documentation director out of the docs directory so edited elsewhere and is only updated when the update-gitpages.sh is ran.  This will prevent the gitpages pipeline from being triggered when not needed.
 
-* 
+* ProvDemo: Modify data parser to generate file extensions that git can recognize as text files. Also make sure that we are not coercing data to upper case.   
+
+* ProvDemo: Add Arkansas and TN, Indiana to the provider data set.
 
 * **OIDC for existing Session** - Implement basic support for OIDC to allow real data access.   This only needs  to run once a OIDC session has been established they can use login from other screens provided it is in the same domain.  Otherwise will need login screens.
 
-* 
+* AutoSuggest:  Find a way to preserve original values for display even though we must remove punctuation and uppercase to normalize for storage.
+
+* AutoSuggest: Find a way to allow prefilter eg:  Filter on FirstName based on Presence of Zipcode.
 
 * Validation error messages in table are displaying on wrong row.  Probably need to add row ndx to id of status widget.
 
