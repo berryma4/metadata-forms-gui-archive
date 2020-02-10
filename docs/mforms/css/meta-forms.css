@@ -412,3 +412,26 @@ button.mtableAddBut:hover {
 .label_wrap {
     display: block;
 }
+
+div.auto_sug_items:hover {
+    border: 1px solid silver;
+    background-color: rgb(60, 60, 60, 0.1);
+    padding: 1px;
+    border-radius: 2px;
+}
+
+div.auto_sug_itemscont {
+    z-index: 99;
+    display: none;
+    background-color: rgb(220, 228, 228);
+    border-radius: 5px;
+    font-size: 0.9em;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+    font-family: 'Tahoma', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    position: absolute;
+
+}

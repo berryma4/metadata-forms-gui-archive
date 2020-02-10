@@ -232,28 +232,32 @@ def processFile(fiName, outDir, doWrite):
       #   indexByName[combName] = [trec]
 
       # Add a record index by first name
-      if name["first"] in indexByFirstName:
-        indexByFirstName[name["first"]].append(trec)
+      fval = name["first"].upper();
+      if fval in indexByFirstName:
+        indexByFirstName[fval].append(trec)
       else:
-        indexByFirstName[name["first"]] = [trec]
+        indexByFirstName[fval] = [trec]
 
       # Add a record index by last name
-      if name["last"] in indexByLastName:
-        indexByLastName[name["last"]].append(trec)
+      fval = name["last"].upper();
+      if fval in indexByLastName:
+        indexByLastName[fval].append(trec)
       else:
-        indexByLastName[name["last"]] = [trec]
+        indexByLastName[fval] = [trec]
 
       #indexByLicNum = {}
-      if trec["licNum"] in indexByLicNum:
-        indexByLicNum[trec["licNum"]].append(trec)
+      fval = trec["licNum"].upper();        
+      if fval in indexByLicNum:
+        indexByLicNum[fval].append(trec)
       else:
-        indexByLicNum[trec["licNum"]] = [trec]
+        indexByLicNum[fval] = [trec]
 
       #indexByNPI = {}
-      if trec["npi"] in indexByNPI:
-        indexByNPI[trec["npi"]].append(trec)
+      fval = trec["npi"].upper();                
+      if fval in indexByNPI:
+        indexByNPI[fval].append(trec)
       else:
-        indexByNPI[trec["npi"]] = [trec]
+        indexByNPI[fval] = [trec]
 
 
       #TODO: Need to Find a Data source to approximate TIN

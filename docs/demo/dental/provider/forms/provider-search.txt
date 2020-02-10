@@ -7,6 +7,10 @@
     size: 35
     data_context: prov.search.last_name
     class: input_field
+    suggest:
+      uri: /data/dental/provider/autosug/last_name/{prov.search.last_name}
+      parse: tsv
+      class: auto_sug_items
 
 
 - widget:
@@ -18,7 +22,10 @@
     size: 35
     data_context: prov.search.first_name
     class: input_field
-    
+    suggest:
+      uri: /data/dental/provider/autosug/first_name/{prov.search.first_name}
+      parse: tsv
+      class: auto_sug_items
 
 - widget:
     id: provSearchLicenseStateNumber
@@ -30,7 +37,10 @@
     data_context: prov.search.license_number
     class: input_field
     ignore-case-match: true
-
+    suggest:
+      uri: /data/dental/provider/autosug/lic_num/{prov.search.license_number}
+      parse: tsv
+      class: auto_sug_items
 
 - widget:
     id: provSearchLicenseState
@@ -45,17 +55,6 @@
        - {"label" : "Indiana", "value": "IN"}
        - {"label" : "Arkansas", "value" : "AK"}
 
-
-- widget:
-    id: provSearchLicenseStateNumber
-    data_type: text
-    type: text
-    label : License State Number
-    label_class: wrap
-    data_context: prov.search.license_number
-    class: input_field
-    ignore-case-match: true
-
 #-------------------
 #--- ADVANCED SEARCH
 #-------------------
@@ -68,6 +67,10 @@
     size: 15
     data_context: prov.search.NPI
     class: input_field
+    suggest:
+      uri: /data/dental/provider/autosug/npi/{prov.search.NPI}
+      parse: tsv
+      class: auto_sug_items
 
 - widget:
     id: provSearchTIN
@@ -265,6 +268,7 @@
     verb: POST
     where: body
     serialize: uri
+    next: display_form("prov_search_res")
 # serialize  uri - encode object by walking top level fields as  uri encoded string, json - encode data object as json, 
 # where - body - send data object in post body,  uri - encode it on the url.
 # verb - passed straight through as a the HTTP verb.
@@ -274,13 +278,6 @@
    id : ProvSearchForm
    class: inputFrm
    label: Provider Search
-   save:
-      uri: data/claims/{dataObjId}
-      verb: POST
-      where: body
-      status_div: save_status
-      save_result_fun: dental_claim_save_result
-
    show_data_obj_div: dataObjDivBottom
    autocomplete: false
 
