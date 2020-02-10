@@ -2,15 +2,19 @@ Actions & Roadmap for Metadata Forms Engine
 
 # Rank Ordered Feature Work
 
-* ProvDemo: Update CSS to match mockup
+* Utility to combine JS files into a single output to allow individual editing but static serving.  Then break the mforms  into separate widget .js files to make it easier to edit.
 
-* provDemo: Need to be able to exist auto suggest with escape. 
+* ProvDemo: **Update CSS to match mockup**.  Update stylesheets to reflect those provided by MarkBo at least for the dental samples.
+
+* provDemo: Need to be able to exit and hide auto suggest with escape. 
 
 * provDemo:  Need to be able to move down in auto sug with arrow and select with enter.
 
 * ProvDemo:  Execute search and render results.    This requires a read only table with alternating rows where the row is clickable or individual sub widgets are render able.  Supports hover over row and scroll box on bottom of row.  Screen-8
 
-* DONE:JOE:2020-02-09:ProvDemo: Auto Suggest values displayed should have _ converted to space for display
+* DONE:JOE:2020-02-09: Auto Suggest values displayed should have _ converted to space for display
+
+* DONE:JOE:2020-02-10: Auto Suggest must hide when the widget looses focus.
 
 * Add auto suggest index for provider zip
 
@@ -69,11 +73,11 @@ Actions & Roadmap for Metadata Forms Engine
 
 * DONE:JOE:2020-02-08: Move forms specs over closer to the demo HTML that uses them out of the Data directory.  Also move the demo forms into their own directories using their own CSS so a change in one demo page does not change behavior of others.
 
-* ProvDemo: Update stylesheets to reflect those provided by MarkBo at least for the dental samples.
+* ProvDemo:   Evaluate what is missing to support edit functionality for screens supplied by MarkBo and propose new general purpose features or help adjust prioritize features from below.
 
 * ProvDemo: Implement screens inspired by MarkBo supplied screens including sample data.  This will require form chaining with backout and Top of page tabs also needs validation of all forms across multiple forms in stack.  Also requires ability to expand a row in table with edit fields that can colllapse kind of like I did the general group but takes less space when collapsed I think we should avoid form chaining when table expansion will work.   Will need file upload functionality and implementation of paging client side for fee tables but I suspect the fee tables are small enough to render them all client side if we implement non-edit tables where the rows expand to all in-table edit rather than rendering entire row as editable.
 
-* ProvDemo:Demonstrate auto_suggest form sends the URI for each token generates a  edge ngram file which contains the expanded tokens that can expand from the current string.  Eg;  if  typing sm the system can return smith, smyth, smell.  The return format should be the token with highest number where number could be number of clicks or number of occurrences  and should be sorted in order highest count to lowest.  eg: smyith\109 then smith\31.   The field queries the database and pulls back all matches and renders them as a  autosuggest for that field.   Should only keep the first 20 most common expansions.  System should handle multi-token with combined set.
+* DONE:JOE:2020-02-09: **Auto Suggest** - Demonstrate auto_suggest form sends the URI for each token generates a  edge ngram file which contains the expanded tokens that can expand from the current string.  Eg;  if  typing sm the system can return smith, smyth, smell.  The return format should be the token with highest number where number could be number of clicks or number of occurrences  and should be sorted in order highest count to lowest.  eg: smyith\109 then smith\31.   The field queries the database and pulls back all matches and renders them as a  autosuggest for that field.   Should only keep the first 20 most common expansions.  System should handle multi-token with combined set.
 
 * ProvDemo: Implement the render dropdown form service call. 
 
@@ -83,13 +87,11 @@ Actions & Roadmap for Metadata Forms Engine
 
 * Script to copy over basic form contents to create a new repo directory or clone a new one with minimum contents to successfully render forms.   Script to create a new dependent directory that will be using the library.  Should also update it.  EG:   update dependant  ../test1  should create a new directory ../test1.  It should checkout ../mformsproto then copy the right files from the docs, js, etc directory create a new .gitignore if it does not exist and copy over the http server if it des not exist.  Any of these files that are copied over should by default not be saved in the local repository.  Will need to move the docs,js,styles inside of docs/mforms to keep them isolated from the local repo files.
 
-* Eric:  Evaluate what is missing to support edit functionality for screens supplied by MarkBo and propose new general purpose features or help adjust prioritize features from below.
-
 * 
 
 * 
 
-* Implement basic support for OIDC to allow real data access.   This only needs  to run once a OIDC session has been established they can use login from other screens provided it is in the same domain.  Otherwise will need login screens.
+* **OIDC for existing Session** - Implement basic support for OIDC to allow real data access.   This only needs  to run once a OIDC session has been established they can use login from other screens provided it is in the same domain.  Otherwise will need login screens.
 
 * 
 

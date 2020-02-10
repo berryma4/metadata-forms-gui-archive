@@ -29,6 +29,18 @@
      console.log("in save form changes widId=", widId, "formId=", formId, " dataObjId=", dataObjId, "context=", context);
  }
 
+ /* Recieves callback when the the inut widget looses focus
+ used mainly to hide auto suggest when visible */
+ function widgetLooseFocus(hwidget) {
+     var widId = hwidget.id.split("-_")[0];
+     var widDef = GTX.widgets[widId];
+
+     if ("suggest" in widDef) {
+         var sugContId = widDef.id + "sugCont";
+         toDiv(sugContId, "");
+         hideDiv(sugContId);
+     }
+ }
 
  function mformValidateFieldValue(context, dataObj, widDef, hwidget, fldVal) {
      var dataContext = widDef.data_context;
@@ -694,6 +706,8 @@
              widVal = getDataValue(context.dataObj, widDef, context, custParms);
          }
      }
+
+     widAttr.onblur = "widgetLooseFocus(this)";
 
      // Format with fixed decimal points if requested
      // in the metadata
