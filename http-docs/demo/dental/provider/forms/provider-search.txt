@@ -188,7 +188,7 @@
     class: input_field
     size: 22
     suggest:
-      uri: /data/dental/provider/autosug/city/{auto_sug_value}
+      uri: /data/dental/provider/autosug/city/{auto_sug_value}.txt
       parse: tsv
       class: auto_sug_items
 

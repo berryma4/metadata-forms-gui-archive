@@ -105,7 +105,7 @@ Actions & Roadmap for Metadata Forms Engine
   
 * Support  save_start, save_success, save_fail callback function specified in metadata so the programmer can easily change GUI state. 
 
-* AutoSuggest: Set cursor and end of text input after selection has been made.
+* AutoSuggest: Set cursor and end of text input after selection has been made. [See selection range](https://www.endyourif.com/set-cursor-position-of-textarea-with-javascript/)
 
 * Modify Date parser to accept alternative input form and reform to desired format to support date picker.
 

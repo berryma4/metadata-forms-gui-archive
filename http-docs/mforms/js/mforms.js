@@ -1,3 +1,4 @@
+ 'use strict';
  var GTX = {
      forms: {}, // A list of forms by Id that have been loaded
      formContexts: {},
@@ -70,7 +71,7 @@
      if (isObject(widDef.valid_fun)) {
          widDef.valid_fun = [widDef.valid_fun];
      }
-     statusDiv = widDef.id + "Status";
+     var statusDiv = widDef.id + "Status";
      // Process Validation RegEx Patterns
      if ("valid_pat" in widDef) {
          var vpat = widDef.valid_pat;
@@ -189,7 +190,7 @@
                      "auto_sug_value": dispVal
                  };
                  var suguri = InterpolateStr(sug.uri, [extParms, widDef, context.dataObj, context, context.form_def, context.gContext]);
-                 rparms = {
+                 var rparms = {
                      "id": sugContId,
                      "widId": widDef.id,
                      "context": context,
@@ -362,7 +363,7 @@
  // as is.
  function mformCopyAttribs(widDef, widAttr, copySpec) {
      for (var atname in widDef) {
-         lcname = atname.toLowerCase();
+         var lcname = atname.toLowerCase();
          if (lcname in copySpec) {
              widAttr[atname] = stripQuotes(widDef[atname]);
          }
@@ -713,7 +714,7 @@
      mformStartWidget(widDef, b, context, custParms);
      // Add the actual Text Widget
      var widAttr = mformBasicWidAttr(widDef, context);
-
+     var form = context.form;
      mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
      copyOverCustParms(widAttr, widDef, custParms);
      // "rowNdx": rowndx,
@@ -771,7 +772,7 @@
          var sugClass = sug.class;
          var sugContClass = sugClass + "cont";
 
-         sugAttr = {
+         var sugAttr = {
              "id": sugId,
              "class": sugContClass,
              "widId": widId,
@@ -1027,7 +1028,7 @@
          "class": form.class
      });
 
-     formAttr = {
+     var formAttr = {
          "id": form.id
      };
      mformCopyAttribs(form, formAttr, mformTextFieldCopyAttr);
@@ -1126,7 +1127,7 @@
                  var sugStr = flds[0];
                  var sugCnt = flds[1];
                  var sugDispVal = sugStr.replace("_", " ");
-                 sugAttr = {
+                 var sugAttr = {
                      "id": widDef.id + "autoSug" + sugStr,
                      "sug_val": sugDispVal,
                      "wid_id": widDef.id,
@@ -1135,13 +1136,13 @@
                      "class": sug.class,
                      "onClick": "autoSugClicked(this);"
                  };
-                 b.make("div", sugAttr, sugDispVal);
+                 b.make("div", sugAttr, sugDispVal + "<small> - " + sugCnt + "</small>");
              }
 
              b.toDiv(targetDiv);
              showDiv(targetDiv);
          } catch (err) {
-             console.log("error parsing=", err, " data=", data);
+             Console.log("error parsing=", err, " data=", data);
              pdata = {};
          }
          /// PUT Proper Processing HERE
@@ -1149,6 +1150,7 @@
  }
 
  function requestAutoSuggest(parmsin) {
+     var context = parmsin.context;
      var parms = {
          "context": parmsin
      };
@@ -1382,13 +1384,13 @@
      for (var i = 0; i < data.length; i++) {
          var tObj = data[i];
          if ("widget" in tObj) {
-             widg = tObj.widget;
+             var widg = tObj.widget;
              gtx.widgets[widg.id] = widg;
              if ("data_context" in widg) {
                  widg.data_context = widg.data_context.trim();
              }
          } else if ("form" in tObj) {
-             form = tObj.form;
+             var form = tObj.form;
              gtx.forms[form.id] = form;
              context.form = form;
              // Check to see if the data object is loaded after
@@ -1468,7 +1470,7 @@
      // Create a new context but keep a copy of the Global context
      // passed in to allow us to access things like total list of
      // files already loaded and the users access token
-     context = {
+     var context = {
          "targetDiv": targetDiv,
          "formSpecUri": formSpecUri,
          "dataObjId": dataObjId,
