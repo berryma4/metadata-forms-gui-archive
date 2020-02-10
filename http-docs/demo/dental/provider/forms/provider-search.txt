@@ -84,7 +84,7 @@
 
 - widget:
     id: provSearchSpecialty
-    data_type: dropdown
+    data_type: text
     type: text
     label : Specialty
     label_class: wrap
@@ -92,12 +92,17 @@
     class: input_field
     ignore-case-match: true
     data_source=data/dental/lookup/specialty-codes.tsv
-       option:
-       - {"label" : "None", "value" : "NULL"}
-       - {"label" : "Dentist", "value" : "122300000X "}
-       - {"label" : "Dental Public Health", "value": "1223D0001X"}
-       - {"label" : "Endodontics", "value" : "1223E0200X"}
-    #TODO: Fill this in from https://www.ada.org/~/media/ADA/Member%20Center/FIles/topics_npi_taxonomy.pdf?la=en
+    suggest:
+      uri: /data/dental/provider/autosug/specialty/{auto_sug_value}
+      parse: tsv
+      class: auto_sug_items
+
+#       option:
+#       - {"label" : "None", "value" : "NULL"}
+#       - {"label" : "Dentist", "value" : "122300000X "}
+#       - {"label" : "Dental Public Health", "value": "1223D0001X"}
+#       - {"label" : "Endodontics", "value" : "1223E0200X"}
+#    #TODO: Fill this in from https://www.ada.org/~/media/ADA/Member%20Center/FIles/topics_npi_taxonomy.pdf?la=en
 
 
 - widget:
@@ -182,16 +187,24 @@
     data_context: prov.search.office_city
     class: input_field
     size: 22
+    suggest:
+      uri: /data/dental/provider/autosug/city/{auto_sug_value}
+      parse: tsv
+      class: auto_sug_items
 
 - widget:
     id: provSearchState
     data_type: text
-    type: dropdown
+    type: text
     label : State
     label_class: wrap
     data_context: prov.search.office_state
     class: input_field
     data_source=data/dental/lookup/states.tsv
+    suggest:
+      uri: /data/dental/provider/autosug/state/{auto_sug_value}
+      parse: tsv
+      class: auto_sug_items
 
 
 - widget:
@@ -219,12 +232,11 @@
     id: provSearchZip
     data_type: text
     type: text
-    label : State
+    label : Zip
     label_class: wrap
-    data_context: prov.search.office_country
+    data_context: prov.search.office.zip
     class: input_field
     size: 12
-
 
 
 - widget:

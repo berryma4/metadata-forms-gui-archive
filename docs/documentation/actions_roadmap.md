@@ -4,15 +4,19 @@ Actions & Roadmap for Metadata Forms Engine
 
 * ProvDemo: Update CSS to match mockup
 
-* 
+* provDemo: Need to be able to exist auto suggest with escape. 
+
+* provDemo:  Need to be able to move down in auto sug with arrow and select with enter.
 
 * ProvDemo:  Execute search and render results.    This requires a read only table with alternating rows where the row is clickable or individual sub widgets are render able.  Supports hover over row and scroll box on bottom of row.  Screen-8
 
-* ProvDemo:  Add Auto suggest for NPI, Specialty,  city, state
+* DONE:JOE:2020-02-09:ProvDemo: Auto Suggest values displayed should have _ converted to space for display
+
+* Add auto suggest index for provider zip
+
+* DONE:JOE:2020-02-09: ProvDemo:  Add Auto suggest for NPI, Specialty,  city, state
 
 * ProvDemo:  Tab Bar with Sub Tab Bar as nicely shown in  screen 75 Credentialing & Hospital Association.  Provide a alternating Icon for each tab that chooses one of a set of images based status of the tab.     Will need a notion of VerifyTab or VerifySubForm so we can also do server side validation.
-
-* 
 
 * ProvDemo:  Generic Status display screen for a process flow This is like a table but process but should support as a generic status object. screen 70.
 
@@ -22,7 +26,7 @@ Actions & Roadmap for Metadata Forms Engine
 
 * ProvDemo:  Add the Add new provider screen
 
-* ProvDemo:  Python to convert sample dentists into searchable format with simple handler to do the search but preferably make it work entirely client side.
+* DONE:JOE:2020-02-09: ProvDemo:  Python to convert sample dentists into searchable format with simple handler to do the search but preferably make it work entirely client side.
 
 * ProvDemo:  Ability to string Dialog Pop over forms into a sequence.
 

@@ -137,16 +137,17 @@
                  }
                  var sugStr = flds[0];
                  var sugCnt = flds[1];
+                 var sugDispVal = sugStr.replace("_", " ");
                  sugAttr = {
                      "id": widDef.id + "autoSug" + sugStr,
-                     "sug_val": sugStr,
+                     "sug_val": sugDispVal,
                      "wid_id": widDef.id,
                      "form_id": widContext.form_id,
                      "dataObjId": widContext.dataObjId,
                      "class": sug.class,
                      "onClick": "autoSugClicked(this);"
                  };
-                 b.make("div", sugAttr, sugStr);
+                 b.make("div", sugAttr, sugDispVal);
              }
              var targetDiv = widDef.id + "sugCont";
              b.toDiv(targetDiv);
