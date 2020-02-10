@@ -30,3 +30,4 @@ people.txt
 *.suo
 
 log/*
+data/raw-download/dental/provider/*.err

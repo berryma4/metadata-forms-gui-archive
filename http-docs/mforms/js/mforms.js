@@ -6,6 +6,7 @@
      widgets: {}, // list of  widgets already loaded by widget Id
      dataObj: {}, // list of dataObj already loaded by Object Id
      newObIdCnt: 0,
+     activeAugoSug: {},
      user: {
          "accessToken": "282872727" // Will need to get a real access token
      }
@@ -34,13 +35,34 @@
  function widgetLooseFocus(hwidget) {
      var widId = hwidget.id.split("-_")[0];
      var widDef = GTX.widgets[widId];
+     // Add some logic to cleanup if needed.
 
-     if ("suggest" in widDef) {
-         var sugContId = widDef.id + "sugCont";
-         toDiv(sugContId, "");
-         hideDiv(sugContId);
+
+     // Note: Can not put auto suggest hide
+     // here because text box  loose focus when 
+     // selecting from auto suggest.
+ }
+
+ function widgetGainFocus(hwidget) {
+     var widId = hwidget.id.split("-_")[0];
+     var widDef = GTX.widgets[widId];
+     // hide any other widgets that have
+     // auto suggest open
+     var delkey = [];
+     for (var widWithAutoSug in GTX.activeAugoSug) {
+         if (widWithAutoSug != widId) {
+             var asugId = GTX.activeAugoSug[widWithAutoSug];
+             toDiv(asugId, "");
+             hideDiv(asugId);
+             delkey.push(asugId);
+         }
+     }
+     for (var tndx in delkey) {
+         var tid = delkey[tndx];
+         delete GTX.activeAugoSug[tid];
      }
  }
+
 
  function mformValidateFieldValue(context, dataObj, widDef, hwidget, fldVal) {
      var dataContext = widDef.data_context;
@@ -168,6 +190,7 @@
                  };
                  var suguri = InterpolateStr(sug.uri, [extParms, widDef, context.dataObj, context, context.form_def, context.gContext]);
                  rparms = {
+                     "id": sugContId,
                      "widId": widDef.id,
                      "context": context,
                      "uri": suguri,
@@ -378,7 +401,10 @@
      if (custParms.skip_container != true) {
          b.start("div", {
              "id": widId + "Cont",
-             "class": cssClass + "Cont",
+             "class": cssClass + "Cont"
+             //"wid_id": widId,
+             //"form_id": context.form_id,
+             //"dataObjId": context.dataObjId,
          }).nl();
      }
 
@@ -707,7 +733,7 @@
          }
      }
 
-     widAttr.onblur = "widgetLooseFocus(this)";
+
 
      // Format with fixed decimal points if requested
      // in the metadata
@@ -726,6 +752,8 @@
      if ((form.autocomplete == false) && (widVal == null)) {
          widAttr.autocomplete = "IX" + widDef.id;
      }
+     widAttr.onblur = "widgetLooseFocus(this);";
+     widAttr.onfocus = "widgetGainFocus(this);";
 
      var makeEleName = "input";
      if (widDef.type == "date") {
@@ -1075,7 +1103,7 @@
          toDiv(targetDiv, "");
          hideDiv(targetDiv);
      } else {
-         console.log("L92: mformsAutoSuggestOnData get data=", data, " parms=", parms);
+         //console.log("L92: mformsAutoSuggestOnData get data=", data, " parms=", parms);
          var objId = widContext.dataObjId;
          var gtx = widContext.gbl;
 
@@ -1126,7 +1154,7 @@
      };
      var req_uri = parmsin.uri; // ".txt?ti=" + Date.now();
      //req_uri = req_uri.replace("//", "/");
-     console.log("L25: mformsGetDef req_uri=", req_uri);
+     //console.log("L25: mformsGetDef req_uri=", req_uri);
      parms.req_headers = {
          'Content-Type': "application/json",
          'Authorization': context.gbl.user.accessToken
@@ -1134,6 +1162,7 @@
      parms.req_method = "GET";
      parms.uri = req_uri;
      context.gbl.filesLoading[req_uri] = true;
+     context.gbl.activeAugoSug[parmsin.widId] = parmsin.id;
      simpleGet(req_uri, mformsAutoSuggestOnData, parms);
  }
 
@@ -1385,12 +1414,12 @@
          delete parms.context.gbl.filesLoading[parms.uri];
      }
      if (data <= "") {
-         console.log("L5: mformsGetDefOnData err=" + httpObj);
+         console.log("L1417: mformsGetDefOnData err=" + httpObj);
          toDiv("ErrorMsg", "Failure mformsGetDefOnData\n" + httpObj);
      } else {
-         console.log("L8: mformsGetDefOnData get data=", data, " parms=", parms);
+         //console.log("L1420: mformsGetDefOnData get data=", data, " parms=", parms);
          var pdata = mformsParseMeta(data);
-         console.log(" parsed form data=", pdata, " context=", parms.context);
+         //console.log("L1422 parsed form data=", pdata, " context=", parms.context);
          parms.context.gbl.filesLoaded[parms.uri] = pdata;
          mformsProcessFormSpec(pdata, parms.context);
      }
@@ -1401,7 +1430,7 @@
      var parms = {};
      var req_uri = scriptId + ".txt?ti=" + Date.now();
      req_uri = req_uri.replace("//", "/");
-     console.log("L25: mformsGetDef req_uri=", req_uri);
+     console.log("L1433: mformsGetDef req_uri=", req_uri);
      parms.req_headers = {
          'Content-Type': "application/json",
          'Authorization': context.gbl.user.accessToken

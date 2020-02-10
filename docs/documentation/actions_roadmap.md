@@ -6,9 +6,9 @@ Actions & Roadmap for Metadata Forms Engine
 
 * ProvDemo: **Update CSS to match mockup**.  Update stylesheets to reflect those provided by MarkBo at least for the dental samples.
 
-* provDemo: Need to be able to exit and hide auto suggest with escape. 
+* AutoSuggest: Need to be able to exit and hide auto suggest with escape. 
 
-* provDemo:  Need to be able to move down in auto sug with arrow and select with enter.
+* AutoSuggest:  Need to be able to move down in auto sug with arrow and select with enter.
 
 * ProvDemo:  Execute search and render results.    This requires a read only table with alternating rows where the row is clickable or individual sub widgets are render able.  Supports hover over row and scroll box on bottom of row.  Screen-8
 
@@ -16,7 +16,7 @@ Actions & Roadmap for Metadata Forms Engine
 
 * DONE:JOE:2020-02-10: Auto Suggest must hide when the widget looses focus.
 
-* Add auto suggest index for provider zip
+* DONE:JOE:2020-02-10: Add auto suggest index for provider zip
 
 * DONE:JOE:2020-02-09: ProvDemo:  Add Auto suggest for NPI, Specialty,  city, state
 
@@ -89,19 +89,23 @@ Actions & Roadmap for Metadata Forms Engine
 
 * Move documentation director out of the docs directory so edited elsewhere and is only updated when the update-gitpages.sh is ran.  This will prevent the gitpages pipeline from being triggered when not needed.
 
-* 
+* DONE:JOE:2020-02-10: ProvDemo: Modify data parser to generate file extensions that git can recognize as text files. Also make sure that we are not coercing data to upper case.   
+
+* DONE:JOE:2020-02-10: ProvDemo: Add Arkansas and TN, Indiana to the provider data set.
 
 * **OIDC for existing Session** - Implement basic support for OIDC to allow real data access.   This only needs  to run once a OIDC session has been established they can use login from other screens provided it is in the same domain.  Otherwise will need login screens.
 
-* 
+* AutoSuggest:  Find a way to preserve original values for display even though we must remove punctuation and uppercase to normalize for storage.
+
+* AutoSuggest: Find a way to allow prefilter eg:  Filter on FirstName based on Presence of Zipcode.
 
 * Validation error messages in table are displaying on wrong row.  Probably need to add row ndx to id of status widget.
 
-* 
+* Allow custom rendering agent / widget  for auto suggest
   
 * Support  save_start, save_success, save_fail callback function specified in metadata so the programmer can easily change GUI state. 
 
-* 
+* AutoSuggest: Set cursor and end of text input after selection has been made.
 
 * Modify Date parser to accept alternative input form and reform to desired format to support date picker.
 

@@ -8,7 +8,7 @@
     data_context: prov.search.last_name
     class: input_field
     suggest:
-      uri: /data/dental/provider/autosug/last_name/{auto_sug_value}
+      uri: /data/dental/provider/autosug/last_name/{auto_sug_value}.txt
       parse: tsv
       class: auto_sug_items
 
@@ -23,7 +23,7 @@
     data_context: prov.search.first_name
     class: input_field
     suggest:
-      uri: /data/dental/provider/autosug/first_name/{auto_sug_value}
+      uri: /data/dental/provider/autosug/first_name/{auto_sug_value}.txt
       parse: tsv
       class: auto_sug_items
 
@@ -38,7 +38,7 @@
     class: input_field
     ignore-case-match: true
     suggest:
-      uri: /data/dental/provider/autosug/lic_num/{auto_sug_value}
+      uri: /data/dental/provider/autosug/lic_num/{auto_sug_value}.txt
       parse: tsv
       class: auto_sug_items
 
@@ -68,7 +68,7 @@
     data_context: prov.search.NPI
     class: input_field
     suggest:
-      uri: /data/dental/provider/autosug/npi/{auto_sug_value}
+      uri: /data/dental/provider/autosug/npi/{auto_sug_value}.txt
       parse: tsv
       class: auto_sug_items
 
@@ -93,7 +93,7 @@
     ignore-case-match: true
     data_source=data/dental/lookup/specialty-codes.tsv
     suggest:
-      uri: /data/dental/provider/autosug/specialty/{auto_sug_value}
+      uri: /data/dental/provider/autosug/specialty/{auto_sug_value}.txt
       parse: tsv
       class: auto_sug_items
 
@@ -202,7 +202,7 @@
     class: input_field
     data_source=data/dental/lookup/states.tsv
     suggest:
-      uri: /data/dental/provider/autosug/state/{auto_sug_value}
+      uri: /data/dental/provider/autosug/state/{auto_sug_value}.txt
       parse: tsv
       class: auto_sug_items
 
@@ -237,6 +237,11 @@
     data_context: prov.search.office.zip
     class: input_field
     size: 12
+    suggest:
+      uri: /data/dental/provider/autosug/zip/{auto_sug_value}.txt
+      parse: tsv
+      class: auto_sug_items
+
 
 
 - widget:
