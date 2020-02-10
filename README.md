@@ -39,9 +39,9 @@ Please file a Issue to request enhancements.  You can also reach me on Linked-in
 
 ## Getting Started
 
-* ### [Programmers Guide](docs/documentation/programmers-guide.md) to get Started creating Forms
+* ### [Programmers Guide](documentation/programmers-guide.md) to get Started creating Forms
 
-* ### [Getting Started Guide](docs/documentation/getting-started.md)
+* ### [Getting Started Guide](documentation/getting-started.md)
 
 
 
@@ -49,9 +49,9 @@ Please file a Issue to request enhancements.  You can also reach me on Linked-in
 
 ## Documentation
 
-- [Programmers & Syntax documentation](docs/documentation/programmers-guide.md)
-- [Requirements & Future Actions](docs/documentation/actions_roadmap.md)
-- [Getting Started Guide](docs/documentation/getting-started.md)
+- [Programmers & Syntax documentation](documentation/programmers-guide.md)
+- [Requirements & Future Actions](documentation/actions_roadmap.md)
+- [Getting Started Guide](documentation/getting-started.md)
 
 ## Directories 
 
