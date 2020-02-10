@@ -87,6 +87,10 @@ indexByLastName = {}
 #indexByName = {}
 indexByLicNum = {}
 indexByNPI = {}
+indexByCity = {}
+indexBySpecial = {}
+indexByBusinessName = {}
+indexByState = {}
 
 start = time.time()
 zipcodes = loadZips("../data/raw-download/zipcodes-geo.tsv")
@@ -94,6 +98,15 @@ totRecAdd = 0
 recNum = -1
 outNames = []
 errCnt = 0
+
+def updateIndex(ndx, fval, trec):
+  # Add a record index by last name
+  fval = fval.upper().strip();
+  if fval in ndx:
+    ndx[fval].append(trec)
+  else:
+    ndx[fval] = [trec]
+    
 
 # Produce a JSON file for each dentist in the import file.
 # with TIN as the file name.  Also create a index by unique
@@ -224,41 +237,9 @@ def processFile(fiName, outDir, doWrite):
          combName +=  "," + name["first"]
       if "middle" in name:
          combName += "," + name["middle"]
+
+      trec["orgName"] = fvals[pOrgName].strip()
          
-      # Add the record to the index by name
-      #if combName in indexByName:
-      #   indexByName[combName].append(trec)
-      #else:
-      #   indexByName[combName] = [trec]
-
-      # Add a record index by first name
-      fval = name["first"].upper();
-      if fval in indexByFirstName:
-        indexByFirstName[fval].append(trec)
-      else:
-        indexByFirstName[fval] = [trec]
-
-      # Add a record index by last name
-      fval = name["last"].upper();
-      if fval in indexByLastName:
-        indexByLastName[fval].append(trec)
-      else:
-        indexByLastName[fval] = [trec]
-
-      #indexByLicNum = {}
-      fval = trec["licNum"].upper();        
-      if fval in indexByLicNum:
-        indexByLicNum[fval].append(trec)
-      else:
-        indexByLicNum[fval] = [trec]
-
-      #indexByNPI = {}
-      fval = trec["npi"].upper();                
-      if fval in indexByNPI:
-        indexByNPI[fval].append(trec)
-      else:
-        indexByNPI[fval] = [trec]
-
 
       #TODO: Need to Find a Data source to approximate TIN
       #  For now we will construct a TIN from combination
@@ -311,19 +292,21 @@ def processFile(fiName, outDir, doWrite):
       if fvals[pBusAddrFax] > " ":                   
         cda["fax"] = fvals[pBusAddrFax].strip()
 
+      # Add a record index by first name
+      updateIndex(indexByFirstName,  name["first"], trec)
+      updateIndex(indexByLastName,  name["last"], trec)
+      updateIndex(indexByLicNum,  trec["licNum"], trec)
+      updateIndex(indexByNPI,  trec["npi"], trec)
+      updateIndex(indexBySpecial,  trec["specialization"], trec)
+      updateIndex(indexByBusinessName,  trec["orgName"], trec)
+      updateIndex(indexByState,  trec["addr"]["bus"]["state"], trec)
+      updateIndex(indexByCity,  trec["addr"]["bus"]["city"], trec)
 
 
-      stn = {}                   
-      trec["name"] = stn
-      stn["last"] = fvals[pNameLast].strip()
-      stn["middle"] = fvals[pNameMiddle].strip()
-      stn["first"] = fvals[pNameFirst].strip()
-      stn["suffix"] = fvals[pNameSuffix].strip()
-      trec["orgName"] = fvals[pOrgName].strip()
-      trec["combName"] = stn["last"] + ", " + stn["first"] + " " + stn["middle"]
-      trec["combName"] = trec["combName"].replace("  ", " ").strip()
-      if trec["orgName"] < " ":
-        trec["orgName"] = trec["combName"]
+      #trec["combName"] = stn["last"] + ", " + stn["first"] + " " + stn["middle"]
+      #trec["combName"] = trec["combName"].replace("  ", " ").strip()
+      #if trec["orgName"] < " ":
+      #  trec["orgName"] = trec["combName"]
 
       jsonRecStr = json.dumps(trec)
 
@@ -469,6 +452,11 @@ makeStemIndex(indexByFirstName, "../docs/data/dental/provider/autosug/first_name
 makeStemIndex(indexByLastName, "../docs/data/dental/provider/autosug/last_name", 100)
 makeStemIndex(indexByNPI,  "../docs/data/dental/provider/autosug/npi", 50)
 makeStemIndex(indexByLicNum, "../docs/data/dental/provider/autosug/lic_num", 50)
+makeStemIndex(indexBySpecial, "../docs/data/dental/provider/autosug/specialty", 50)
+makeStemIndex(indexByBusinessName, "../docs/data/dental/provider/autosug/bus_name", 50)
+makeStemIndex(indexByState, "../docs/data/dental/provider/autosug/state", 50)
+makeStemIndex(indexByCity, "../docs/data/dental/provider/autosug/city", 50)
+
 
 
 curr = time.time()
