@@ -78,104 +78,6 @@
      // Process Validation Functions
  }
 
- function autoSugClicked(hwidget) {
-     var id = hwidget.id;
-     var sugVal = gattr(hwidget, "sug_val");
-     var widId = gattr(hwidget, "wid_id");
-     var formId = gattr(hwidget, "form_id");
-     var dataObjId = gattr(hwidget, "dataObjId");
-     var context = GTX.formContexts[formId][dataObjId];
-     var widDef = GTX.widgets[widId];
-     var dataObj = GTX.dataObj[dataObjId];
-     var dataContext = widDef.data_context;
-     var dataContextOvr = gattr(hwidget, "data_context");
-     if (dataContextOvr > "") {
-         // override the widget data context with the 
-         // value encoded into the widget if present.
-         // needed this to support array elements that 
-         // require a differnt data context for every row of every cell.
-         dataContext = dataContextOvr;
-     }
-     setNested(dataObj, dataContext, sugVal);
-     setFormValue(widDef.id, sugVal);
-     var targetDiv = widDef.id + "sugCont";
-     toDiv(targetDiv, "");
-     hideDiv(targetDiv);
-
- }
-
- function mformsAutoSuggestOnData(data, httpObj, parms) {
-     var reqContext = parms.context;
-     var widContext = reqContext.context;
-     if (parms.uri in widContext.gbl.filesLoading) {
-         delete widContext.gbl.filesLoading[parms.uri];
-     }
-     if (data <= "") {
-         console.log("L88: mformsAutoSuggestOnData err=" + httpObj);
-         toDiv("ErrorMsg", "Failure mformsAutoSuggestOnData  uri=" + parms.uri + "\n" + httpObj);
-     } else {
-         console.log("L92: mformsAutoSuggestOnData get data=", data, " parms=", parms);
-         var objId = widContext.dataObjId;
-         var gtx = widContext.gbl;
-
-         // TODO: Add support for alternative parsers.
-         var pdata = null;
-         try {
-             //pdata = tsvParse(data);
-             var widDef = reqContext.widDef;
-             var sug = widDef.suggest;
-             var b = new String_builder();
-             var rows = data.split("\n");
-             for (var rowndx in rows) {
-                 if (rowndx > 20) {
-                     break;
-                 }
-                 var arow = rows[rowndx].trim();
-                 var flds = arow.split("\t");
-                 if (flds.length != 2) {
-                     continue;
-                 }
-                 var sugStr = flds[0];
-                 var sugCnt = flds[1];
-                 var sugDispVal = sugStr.replace("_", " ");
-                 sugAttr = {
-                     "id": widDef.id + "autoSug" + sugStr,
-                     "sug_val": sugDispVal,
-                     "wid_id": widDef.id,
-                     "form_id": widContext.form_id,
-                     "dataObjId": widContext.dataObjId,
-                     "class": sug.class,
-                     "onClick": "autoSugClicked(this);"
-                 };
-                 b.make("div", sugAttr, sugDispVal);
-             }
-             var targetDiv = widDef.id + "sugCont";
-             b.toDiv(targetDiv);
-             showDiv(targetDiv);
-         } catch (err) {
-             console.log("error parsing=", err, " data=", data);
-             pdata = {};
-         }
-         /// PUT Proper Processing HERE
-     }
- }
-
- function requestAutoSuggest(parmsin) {
-     var parms = {
-         "context": parmsin
-     };
-     var req_uri = parmsin.uri; // ".txt?ti=" + Date.now();
-     //req_uri = req_uri.replace("//", "/");
-     console.log("L25: mformsGetDef req_uri=", req_uri);
-     parms.req_headers = {
-         'Content-Type': "application/json",
-         'Authorization': context.gbl.user.accessToken
-     };
-     parms.req_method = "GET";
-     parms.uri = req_uri;
-     context.gbl.filesLoading[req_uri] = true;
-     simpleGet(req_uri, mformsAutoSuggestOnData, parms);
- }
 
  // Receive the Change events from the individual widgets.
  // use metadata encoded in the widget to lookup a context
@@ -245,22 +147,28 @@
          // Process Auto Suggest
          if ("suggest" in widDef) {
              var sug = widDef.suggest;
-             var sugContId = sug + widDef.id + "sugCont";
-             var extParms = {
-                 "wid_value": fldVal.trim(),
-                 "auto_sug_value": fldVal.toUpperCase().trim()
+             var sugContId = widDef.id + "sugCont";
+             var dispVal = fldVal.toUpperCase().trim();
+             if (dispVal > " ") {
+                 var extParms = {
+                     "wid_value": fldVal.trim(),
+                     "auto_sug_value": dispVal
+                 };
+                 var suguri = InterpolateStr(sug.uri, [extParms, widDef, context.dataObj, context, context.form_def, context.gContext]);
+                 rparms = {
+                     "widId": widDef.id,
+                     "context": context,
+                     "uri": suguri,
+                     "widDef": widDef,
+                     "dataObj": dataObj,
+                     "value": dispVal,
+                     "targetDiv": sugContId
+                 };
+                 requestAutoSuggest(rparms);
+             } else {
+                 toDiv(sugContId, "");
+                 hideDiv(sugContId);
              }
-             var suguri = InterpolateStr(sug.uri, [extParms, widDef, context.dataObj, context, context.form_def, context.gContext]);
-             rparms = {
-                 "widId": widDef.id,
-                 "context": context,
-                 "uri": suguri,
-                 "widDef": widDef,
-                 "dataObj": dataObj,
-                 "value": fldVal.toUpperCase().trim(),
-                 "targetDiv": sugContId
-             };
-             requestAutoSuggest(rparms);
          }
      }
      if (widDef.isCol == true) {
@@ -1106,6 +1014,113 @@
      if ('show_data_obj_div' in context.form) {
          toDiv(context.form.show_data_obj_div, "<pre>" + JSON.stringify(context.dataObj, null, 2) + "</pre>");
      }
+ }
+
+ //------------
+ //--- Auto Suggest Handlers
+ //------------
+ function autoSugClicked(hwidget) {
+     var id = hwidget.id;
+     var sugVal = gattr(hwidget, "sug_val");
+     var widId = gattr(hwidget, "wid_id");
+     var formId = gattr(hwidget, "form_id");
+     var dataObjId = gattr(hwidget, "dataObjId");
+     var context = GTX.formContexts[formId][dataObjId];
+     var widDef = GTX.widgets[widId];
+     var dataObj = GTX.dataObj[dataObjId];
+     var dataContext = widDef.data_context;
+     var dataContextOvr = gattr(hwidget, "data_context");
+     if (dataContextOvr > "") {
+         // override the widget data context with the 
+         // value encoded into the widget if present.
+         // needed this to support array elements that 
+         // require a differnt data context for every row of every cell.
+         dataContext = dataContextOvr;
+     }
+     setNested(dataObj, dataContext, sugVal);
+     setFormValue(widDef.id, sugVal);
+     var targetDiv = widDef.id + "sugCont";
+     toDiv(targetDiv, "");
+     hideDiv(targetDiv);
+
+ }
+
+ function mformsAutoSuggestOnData(data, httpObj, parms) {
+     var reqContext = parms.context;
+     var widContext = reqContext.context;
+     var widDef = reqContext.widDef;
+     var targetDiv = widDef.id + "sugCont";
+     if (parms.uri in widContext.gbl.filesLoading) {
+         delete widContext.gbl.filesLoading[parms.uri];
+     }
+     if (data <= "") {
+         //console.log("L88: mformsAutoSuggestOnData err=" + httpObj);
+         //toDiv("ErrorMsg", "Failure mformsAutoSuggestOnData  uri=" + parms.uri + "\n" + httpObj);
+         // No Suggestions found or error trying to locate
+         // them
+         toDiv(targetDiv, "");
+         hideDiv(targetDiv);
+     } else {
+         console.log("L92: mformsAutoSuggestOnData get data=", data, " parms=", parms);
+         var objId = widContext.dataObjId;
+         var gtx = widContext.gbl;
+
+         // TODO: Add support for alternative parsers.
+         var pdata = null;
+         try {
+             //pdata = tsvParse(data);
+             var sug = widDef.suggest;
+             var b = new String_builder();
+             var rows = data.split("\n");
+             for (var rowndx in rows) {
+                 if (rowndx > 20) {
+                     break;
+                 }
+                 var arow = rows[rowndx].trim();
+                 var flds = arow.split("\t");
+                 if (flds.length != 2) {
+                     continue;
+                 }
+                 var sugStr = flds[0];
+                 var sugCnt = flds[1];
+                 var sugDispVal = sugStr.replace("_", " ");
+                 sugAttr = {
+                     "id": widDef.id + "autoSug" + sugStr,
+                     "sug_val": sugDispVal,
+                     "wid_id": widDef.id,
+                     "form_id": widContext.form_id,
+                     "dataObjId": widContext.dataObjId,
+                     "class": sug.class,
+                     "onClick": "autoSugClicked(this);"
+                 };
+                 b.make("div", sugAttr, sugDispVal);
+             }
+
+             b.toDiv(targetDiv);
+             showDiv(targetDiv);
+         } catch (err) {
+             console.log("error parsing=", err, " data=", data);
+             pdata = {};
+         }
+         /// PUT Proper Processing HERE
+     }
+ }
+
+ function requestAutoSuggest(parmsin) {
+     var parms = {
+         "context": parmsin
+     };
+     var req_uri = parmsin.uri; // ".txt?ti=" + Date.now();
+     //req_uri = req_uri.replace("//", "/");
+     console.log("L25: mformsGetDef req_uri=", req_uri);
+     parms.req_headers = {
+         'Content-Type': "application/json",
+         'Authorization': context.gbl.user.accessToken
+     };
+     parms.req_method = "GET";
+     parms.uri = req_uri;
+     context.gbl.filesLoading[req_uri] = true;
+     simpleGet(req_uri, mformsAutoSuggestOnData, parms);
  }
 
  //-------------
