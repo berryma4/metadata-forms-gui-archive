@@ -245,7 +245,11 @@
          if ("suggest" in widDef) {
              var sug = widDef.suggest;
              var sugContId = sug + widDef.id + "sugCont";
-             var suguri = InterpolateStr(sug.uri, [widDef, context.dataObj, context, context.form_def, context.gContext]);
+             var extParms = {
+                 "wid_value": fldVal.trim(),
+                 "auto_sug_value": fldVal.toUpperCase().trim()
+             }
+             var suguri = InterpolateStr(sug.uri, [extParms, widDef, context.dataObj, context, context.form_def, context.gContext]);
              rparms = {
                  "widId": widDef.id,
                  "context": context,

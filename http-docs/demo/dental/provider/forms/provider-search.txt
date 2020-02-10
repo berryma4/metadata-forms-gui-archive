@@ -8,7 +8,7 @@
     data_context: prov.search.last_name
     class: input_field
     suggest:
-      uri: /data/dental/provider/autosug/last_name/{prov.search.last_name}
+      uri: /data/dental/provider/autosug/last_name/{auto_sug_value}
       parse: tsv
       class: auto_sug_items
 
@@ -23,7 +23,7 @@
     data_context: prov.search.first_name
     class: input_field
     suggest:
-      uri: /data/dental/provider/autosug/first_name/{prov.search.first_name}
+      uri: /data/dental/provider/autosug/first_name/{auto_sug_value}
       parse: tsv
       class: auto_sug_items
 
@@ -38,7 +38,7 @@
     class: input_field
     ignore-case-match: true
     suggest:
-      uri: /data/dental/provider/autosug/lic_num/{prov.search.license_number}
+      uri: /data/dental/provider/autosug/lic_num/{auto_sug_value}
       parse: tsv
       class: auto_sug_items
 
