@@ -1,3 +1,50 @@
- div.input_fieldCont {
-     margin-left: 12em;
- }
+/*https://www.w3schools.com/cssref/css_websafe_fonts.asp*/
+
+body {
+    font-family: "Gotham Medium", "Lucida Sans Unicode",
+        "Lucida Grande", Geneva, "Calibri", "Arial Narrow",
+        Tahoma,
+        "Trebuchet MS", Veranda, Geneva,
+        sans-serif;
+
+}
+
+
+div.input_fieldCont {
+    margin-left: 1.22em;
+}
+
+.input_fieldCont,
+.input_fieldvCont,
+.input_fieldContainer,
+.input_fieldvContainer,
+.vert_radioCont {}
+
+.input_fieldLabel,
+.input_fieldvLabel,
+.vert_radioLabel,
+.hor_radioLabel {
+    font-family: Charcoal,
+        Helvetica,
+        "Trebuchet MS",
+        sans-serif;
+
+    font-weight: 600;
+    font-size: 0.8em;
+    color: dimgrey;
+}
+
+
+input.input_field,
+.input_fieldv,
+select.input_field,
+fieldset.hor_radio,
+fieldset.vert_radio,
+fieldset.radio {
+    background-color: #F7F8FA;
+    border: 1px solid #7D8083;
+    border-radius: 3px;
+    padding: 0.3em;
+    height: 2.4em;
+
+}

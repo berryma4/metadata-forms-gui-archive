@@ -10,7 +10,7 @@ Actions & Roadmap for Metadata Forms Engine
 
 * AutoSuggest:  Need to be able to move down in auto sug with arrow and select with enter.
 
-* ProvDemo:  Execute search and render results.    This requires a read only table with alternating rows where the row is clickable or individual sub widgets are render able.  Supports hover over row and scroll box on bottom of row.  Screen-8
+* ProvDemo:  Execute search and render results.    This requires a read only table with alternating rows where the row is clickable or individual sub widgets are render able.  Supports hover over row and scroll box on bottom of row.  Screen-8.  OK so we have a main search area any of city, last_name, first_name changing could trigger a search that can return a list of record. if more than one of them are filled in then we can only do the search on one and filter on the rest or search on all and then merge.   the other fields will be driven based as filters.  If we new from autosug results which one has the smallest # of times then we could use it to get the shortest search results. For easy implementation then simply use the others as filter records.
 
 * DONE:JOE:2020-02-09: Auto Suggest values displayed should have _ converted to space for display
 
@@ -88,6 +88,8 @@ Actions & Roadmap for Metadata Forms Engine
 * Script to copy over basic form contents to create a new repo directory or clone a new one with minimum contents to successfully render forms.   Script to create a new dependent directory that will be using the library.  Should also update it.  EG:   update dependant  ../test1  should create a new directory ../test1.  It should checkout ../mformsproto then copy the right files from the docs, js, etc directory create a new .gitignore if it does not exist and copy over the http server if it des not exist.  Any of these files that are copied over should by default not be saved in the local repository.  Will need to move the docs,js,styles inside of docs/mforms to keep them isolated from the local repo files.
 
 * Move documentation director out of the docs directory so edited elsewhere and is only updated when the update-gitpages.sh is ran.  This will prevent the gitpages pipeline from being triggered when not needed.
+
+* ProvDemo: Support notion of page that is not a form but contain forms. For search results the space to hold search results is not part of the search form. 
 
 * DONE:JOE:2020-02-10: ProvDemo: Modify data parser to generate file extensions that git can recognize as text files. Also make sure that we are not coercing data to upper case.   
 

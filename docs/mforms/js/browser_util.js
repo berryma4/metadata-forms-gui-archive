@@ -637,6 +637,34 @@ function parseAssocArray(dataStr) {
   return tobj;
 }
 
+// Parses a TSV file with headers into an
+// array of objects with field names that
+// match the header field names.
+function parseTSV(data) {
+  var rows = data.split("\n");
+  var header = rows.shift();
+  var headArr = header.split("\t");
+  for (var headndx in headArr) {
+    headArr[headndx] = headArr[headndx].trim();
+  }
+
+  var numHeadFld = headArr.length;
+  var tout = [];
+  for (var rowndx in rows) {
+    var arow = rows[rowndx];
+    var flds = arow.split("\t");
+    var tobj = {};
+    for (var fldNdx in flds) {
+      if (fldNdx < numHeadFld) {
+        var fldVal = flds[fldNdx].trim();
+        var fldName = headArr[fldNdx];
+        tobj[fldName] = fldVal;
+      }
+    }
+    tout.push(tobj);
+  }
+  return tout;
+}
 
 var barDateRE = /^\d\d\d\d-\d\d-\d\d$/;
 

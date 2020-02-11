@@ -435,3 +435,43 @@ div.auto_sug_itemscont {
     position: absolute;
 
 }
+
+div.simpleSearchcont {
+    display: flex;
+    overflow-y: auto;
+    max-height: 30em;
+    width: 100%;
+
+
+}
+
+table.simpleSearchtbl {
+    font-size: 0.8em;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.simpleSearchtbl th {
+    background-color: rgb(60, 60, 60, 0.2);
+}
+
+table.simpleSearchtbl tr:nth-child(even) {
+    background: #F7F8FA;
+}
+
+table.simpleSearchtbl tr:nth-child(even):hover {
+    outline: thin solid grey;
+}
+
+table.simpleSearchtbl tr:nth-child(odd):hover {
+    outline: thin solid grey;
+}
+
+table.simpleSearchtbl tr:first-child {
+    background-color: rgb(60, 60, 60, 0.2);
+}
+
+table.simpleSearchtbl tr:first-child:hover {
+    outline: thin solid transparent;
+
+}

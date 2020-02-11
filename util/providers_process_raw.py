@@ -347,7 +347,7 @@ def makeIndexByKey(index, outDir):
     toutName = outDir + "/" + safeKey + ".txt"
     
     fo = open(toutName, "w")
-    fo.write("lastName\tfirstName\tlicNum\taddress\tcity\tstate\n")
+    fo.write("lastName\tfirstName\tlicNum\ttin\taddress\tcity\tstate\n")
     for rec in recs:
       addr = rec["addr"]["bus"]
       tstr = (rec["name"]["last"] + tab + rec["name"]["first"] + tab 
@@ -442,6 +442,7 @@ makeIndexByKey(indexByFirstName, "../docs/data/dental/provider/index/first_name"
 makeIndexByKey(indexByLastName, "../docs/data/dental/provider/index/last_name")
 makeIndexByKey(indexByCity, "../docs/data/dental/provider/index/city")
 makeIndexByKey(indexByZip, "../docs/data/dental/provider/index/zip")
+makeIndexByKey(indexByLicNum, "../docs/data/dental/provider/index/license")
 
 makeStemIndex(indexByFirstName, "../docs/data/dental/provider/autosug/first_name", 100)
 makeStemIndex(indexByLastName, "../docs/data/dental/provider/autosug/last_name", 100)
