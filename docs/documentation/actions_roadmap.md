@@ -10,7 +10,17 @@ Actions & Roadmap for Metadata Forms Engine
 
 * AutoSuggest:  Need to be able to move down in auto sug with arrow and select with enter.
 
-* ProvDemo:  Execute search and render results.    This requires a read only table with alternating rows where the row is clickable or individual sub widgets are render able.  Supports hover over row and scroll box on bottom of row.  Screen-8.  OK so we have a main search area any of city, last_name, first_name changing could trigger a search that can return a list of record. if more than one of them are filled in then we can only do the search on one and filter on the rest or search on all and then merge.   the other fields will be driven based as filters.  If we new from autosug results which one has the smallest # of times then we could use it to get the shortest search results. For easy implementation then simply use the others as filter records.
+* ProvDemo:  Execute search and render results.    This requires a read only table with alternating rows where the row is clickable or individual sub widgets are render able.  Supports hover over row and scroll box on bottom of row.  Screen-8.  OK so we have a main search area any of city, last_name, first_name changing could trigger a search that can return a list of record. if more than one of them are filled in then we can only do the search on one and filter on the rest or search on all and then merge.   the other fields will be driven based as filters.  If we new from autosug results which one has the smallest # of times then we could use it to get the shortest search results. For easy implementation then simply use the others as filter records.  Apply search set retrieval in this order only use lower priority items to drive initial search higher priority items are empty.  last_name, first_name,  city, specialty.
+
+* Move Client Side Search Spec to the widget that will trigger rendering and convert part of onclick in form to array of widgets to notify.
+
+* Client side search needs to render headers from widget spec.
+
+* Client side search needs to render columns based on a named widget spec.
+
+* Client side search needs option to change heading repeat spec.
+
+* Client side search needs to filter records based on other fields that are filled in.
 
 * DONE:JOE:2020-02-09: Auto Suggest values displayed should have _ converted to space for display
 
