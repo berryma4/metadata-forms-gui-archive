@@ -255,25 +255,32 @@
 
     widgets: 
          - provSearchNPI
-         - provSearchSSN
+         #- provSearchSSN
          - provSearchSpecialty
          - provSearchNetwork
          - provSearchTIN
          - provSearchBusinessName
          - provSearchOfficePhoneNum  
          - provSearchOfficeEmail
-         - provSearchOfficeAddr
-         - provSearchCity
+         - provSearchOfficeAddr 
          - provSearchState
-         - provSearchCounty
-         - provSearchCountry
-         - provSearchZip
-
+         #- provSearchCounty
+         #- provSearchCountry
+         
+- widget:
+    id: searchButtons
+    type: widgetGroup
+    class: searchButtons
+    renderFieldset: false 
+    widgets: 
+         - provSearchReset
+         - provSearchDoSearch
+ 
 -widget:
   id: provSearchReset
   type: button
   label: RESET
-  class: submit_button
+  class: hbutton
   action: reset_form(); 
 
 
@@ -281,7 +288,7 @@
   id: provSearchDoSearch
   type: button
   label: SEARCH
-  class: submit_button
+  class: hbutton
   action_uri: 
     uri: provider/search(this);
     verb: POST
@@ -381,10 +388,12 @@
    widgets:   
            - provSearchLastName
            - provSearchFirstName
-           - provSearchLicenseStateNumber
-           - provSearchLicenseState
+           - provSearchCity
+           - provSearchZip
+           - provSearchState
+           #- provSearchLicenseStateNumber
+           #- provSearchLicenseState
            - provSearchAdvancedGroup
-           - provSearchReset
-           - provSearchDoSearch
+           - searchButtons
            - provSearchResults
 

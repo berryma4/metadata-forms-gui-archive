@@ -438,9 +438,9 @@ div.auto_sug_itemscont {
 
 div.simpleSearchcont {
     display: flex;
-    overflow-y: auto;
-    max-height: 30em;
-    width: 100%;
+    xoverflow-y: auto;
+    xmax-height: 30em;
+    xwidth: 100%;
 
 
 }

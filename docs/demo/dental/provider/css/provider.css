@@ -55,6 +55,30 @@ fieldset.radio {
 
 }
 
+@media only screen and (min-width : 800px) {
+    div.simpleSearchcont {
+        display: flex;
+        overflow-y: auto;
+        max-height: 30em;
+        width: fit-content;
+        max-width: 100%;
+        overflow-x: wrap;
+    }
+}
+
+.hbuttoncontain {
+    display: inline-block;
+}
+
+.searchButtonscont {
+    display: block;
+    width: 98%;
+    text-align: end;
+    margin-bottom: 1em;
+}
+
+
+
 
 /* Smartphones (landscape) ----------- */
 @media only screen and (max-width : 800px) {
@@ -64,6 +88,25 @@ fieldset.radio {
 
     #page-vmid {
         flex-wrap: wrap;
+        max-width: 100%;
+    }
+
+    #mbody {
+        max-width: 100%;
+    }
+
+    .inputFrm {
+        max-width: 100%;
+    }
+
+    table.simpleSearchtbl {
+        min-width: 800px;
+    }
+
+    div.simpleSearchcont {
+        max-width: 100%;
+        overflow-x: auto;
+        max-height: none;
     }
 
 }
