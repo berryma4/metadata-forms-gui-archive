@@ -810,9 +810,9 @@ function mformsBuildSortKey(widDef, context, custParms) {
 
 function mformsCalcArrTotal(dataArr, data_context) {
     var totVal = 0;
-    for (rowndx = 0; rowndx < dataArr.length; rowndx++) {
-        dataRow = dataArr[rowndx];
-        fldVal = getNested(dataRow, data_context, 0);
+    for (var rowndx = 0; rowndx < dataArr.length; rowndx++) {
+        var dataRow = dataArr[rowndx];
+        var fldVal = getNested(dataRow, data_context, 0);
         fldVal = Number.parseFloat(fldVal);
         totVal += fldVal;
     }
@@ -908,7 +908,7 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
                 });
                 mformFixupWidget(colWidDef, context);
                 if (colWidDef.type in widgRenderFuncs) {
-                    dataContextCell = colPath = widDef.data_context + ".[" + rowndx + "]." + colWidDef.data_context;
+                    var dataContextCell = widDef.data_context + ".[" + rowndx + "]." + colWidDef.data_context;
                     try {
                         rendFunc = widgRenderFuncs[colWidDef.type];
                         rendFunc(colWidDef, b, context, {
@@ -1225,7 +1225,6 @@ function mformsSimpleSearchResRowClick(hwidget) {
     var turi = InterpolateStr(startUri, interpArr);
     var objId = InterpolateStr(onch.rowclick.objId, interpArr);
     alert("TODO: open data object uri=" + turi + " for " + JSON.stringify(dataRow));
-
 
 }
 
@@ -1552,6 +1551,7 @@ function mformGetDataObjOnData(data, httpObj, parms) {
         console.log("L5: mformGetDataObjOnData err=" + httpObj);
         toDiv("ErrorMsg", "Failure mformGetDataObjOnData  uri=" + parms.uri + "\n" + httpObj);
     } else {
+        var context = parms.context;
         var objId = parms.context.dataObjId;
         var gtx = parms.context.gbl;
         console.log("L8: mformsGetDefOnData get data=", data, " parms=", parms);
@@ -1565,10 +1565,9 @@ function mformGetDataObjOnData(data, httpObj, parms) {
         }
         /// PUT Proper Processing HERE
         gtx.dataObj[objId] = pdata;
-        parms.context.dataObj = pdata;
-        parms.context.gbl.filesLoaded[parms.uri] = pdata;
-        parms.widVal =
-            console.log(" parsed dataObj=", pdata, " context=", parms.context);
+        context.dataObj = pdata;
+        context.gbl.filesLoaded[parms.uri] = pdata;
+        console.log(" parsed dataObj=", pdata, " context=", context);
         mformsRenderForm(context.form, context);
         if ('show_data_obj_div' in context.form) {
             toDiv(context.form.show_data_obj_div, "<pre>" + JSON.stringify(pdata, null, 2) + "</pre>");
