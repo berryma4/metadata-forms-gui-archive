@@ -1215,16 +1215,50 @@ function mformsSimpleSearchResRowClick(hwidget) {
     if (dataRow == undefined) {
         return;
     }
-
     var onch = form.onchange;
-    var startUri = onch.rowclick.uri;
-    if (startUri == undefined) {
+    if (onch == undefined) {
         return;
     }
-    var interpArr = [dataRow, context.dataObj, widDef, context, context.form, context.gbl];
-    var turi = InterpolateStr(startUri, interpArr);
-    var objId = InterpolateStr(onch.rowclick.objId, interpArr);
-    alert("TODO: open data object uri=" + turi + " for " + JSON.stringify(dataRow));
+    var rowclick = onch.rowclick;
+    if (rowclick == undefined) {
+        return;
+    }
+    var action = rowclick.action;
+    if (action == undefined) {
+        return;
+    }
+
+    if (action == "display_form") {
+        var interpArr = [dataRow, context.dataObj, widDef, context, context.form, context.gbl];
+        var targForm = rowclick.form_id;
+        var startUri = rowclick.uri;
+        if (startUri == undefined) {
+            return;
+        }
+        var localContext = {
+            "_safe": {}
+        };
+        var clickContext = rowclick.context;
+        for (var ckey in clickContext) {
+            var constr = clickContext[ckey];
+            var intstr = InterpolateStr(constr, interpArr);
+            localContext[ckey] = intstr;
+            // TODO: Add local interpolation here
+            if (isString(intstr)) {
+                localContext._safe[ckey] = intstr.trim().toUpperCase();
+            }
+        }
+
+        var turi = InterpolateStr(startUri, interpArr);
+        //var objId = InterpolateStr(onch.rowclick.objId, interpArr);
+        var formUri = InterpolateStr(formId, interpArr);
+
+        display_form(targetDiv, turi, localContext, context.gbl);
+
+        alert("TODO: display_form data object uri=" + turi + " for " + JSON.stringify(dataRow));
+    }
+
+
 
 }
 

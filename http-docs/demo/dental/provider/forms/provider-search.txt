@@ -322,6 +322,9 @@
    show_data_obj_div: dataObjDivBottom
    autocomplete: false
 
+    # TODO: Move this to widget and list
+    # the set of widgets to consult for 
+    # onchange behavior.
     onchange:
       function: client_side_search
       target_div: provSearchResultscont
@@ -331,15 +334,24 @@
       # a primary key. 
       rowclick:
          uri: /data/dental/provider/recs/{licNum}.json
-         action: open_form
-         objId: provider-{licNum}
+         action: display_form
+         target_div: mbody
+         form_id: forms/provider-detail
+         context: 
+            # TODO: What if I wanted to just pass through the entire search object or a branch of
+            #  the current data object.
+            dataObjId: {licNum}
+            tin: {tin}
+            city: {city}
+            state: {state}
+
 
       parser:tsv
       # Filters are applied to search results retrieved
       # from server to filter out any records that do not
       # qualify.  This is to allow static server to server
       # up records based on an index and then apply locally
-      # normally would be applied server side.
+      # normally this feature is computed server side.
       filters:
         - field:
              form_context: prov.search.last_name

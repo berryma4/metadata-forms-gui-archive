@@ -1,0 +1,76 @@
+- widget:
+    id: provLastName
+    data_type: text
+    type: text
+    label : Last Name
+    label_class: wrap
+    size: 35
+    data_context: prov.name.last
+    class: input_field
+    suggest:
+      uri: /data/dental/provider/autosug/last_name/{auto_sug_value}.txt
+      parse: tsv
+      class: auto_sug_items
+
+
+- widget:
+    id: provFirstName
+    data_type: text
+    type: text
+    label : First Name
+    label_class: wrap
+    size: 35
+    data_context: prov.name.first
+    class: input_field
+    suggest:
+      uri: /data/dental/provider/autosug/first_name/{auto_sug_value}.txt
+      parse: tsv
+      class: auto_sug_items
+
+- widget:
+    id: provLicenseNumber
+    data_type: text
+    type: text
+    label : License State Number
+    label_class: wrap
+    size: 25
+    data_context: prov.license.licNum
+    class: input_field
+    ignore-case-match: true
+    suggest:
+      uri: /data/dental/provider/autosug/lic_num/{auto_sug_value}.txt
+      parse: tsv
+      class: auto_sug_items
+
+- widget:
+    id: provLicenseState
+    data_type: text
+    type: dropdown
+    label : License State 
+    label_class: wrap
+    data_context: prov.license.state
+    class: input_field
+    option:
+       - {"label" : "Michigan", "value" : "MI"}
+       - {"label" : "Indiana", "value": "IN"}
+       - {"label" : "Arkansas", "value" : "AK"}
+
+
+
+- form:
+   id : ProvDetailForm
+   class: inputFrm
+   label: Provider Detail Form
+   show_data_obj_div: dataObjDivBottom
+   autocomplete: false
+   fetch:
+      uri: data/claims/{dataObjId}
+      method: GET
+      parse: JSON
+
+   widgets:   
+     - provFirstName
+     - provLastName
+     - provCity
+     - provState
+      
