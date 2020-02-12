@@ -21,9 +21,11 @@
      width: auto;
  }
 
+
  #proceduresCont {
-     min-width: 800px;
-     max-width: 1330px;
+     xmin-width: 800px;
+     max-width: fit-content;
+     overflow-x: auto;
  }
 
  #claimRemarksCont {
@@ -44,7 +46,7 @@
      margin-left: 2em;
  }
 
- @media only screen and (min-width: 1025px) {
+ @media only screen and (min-width: 1125px) {
 
      #topRightFieldsGroupcont,
      #topLeftFieldsGroupcont,
@@ -55,24 +57,59 @@
      }
  }
 
+
+ @media only screen and (max-width: 1450px) {
+     proceduresCont {
+         max-width: 100%;
+         overflow-x: auto;
+     }
+ }
+
+
  @media only screen and (max-width: 1024px),
  only screen and (max-device-width: 812px),
  only screen and (max-device-width: 640px),
  only screen and (max-width: 1300px) {
+
+     #mbody {
+         max-width: 100%;
+     }
+
+     .inputFrm {
+         max-width: 100%;
+     }
+
+     #dentalClaimcont {
+         max-width: 100%;
+     }
+
+     #botFieldsGroupCont,
+     #topFieldsGroupCont {
+         max-width: 100%;
+     }
 
      #topRightFieldsGroupcont,
      #topLeftFieldsGroupcont,
      #lowerLeftGroupcont,
      #lowerRightGroupCont {
          xwidth: 82%;
-         xmax-width: 82%;
-         xmin-width: 40%;
+         max-width: fit-content;
+         min-width: 40%;
+         overflow-x: hidden;
      }
 
      #proceduresCont {
          xwidth: 82%;
-         xmax-width: 82%;
+         max-width: 100%;
+         overflow-x: auto;
          xmin-width: 40%;
+     }
+
+     #page-vmid {
+         max-height: none;
+         flex-wrap: wrap-reverse;
+         vertical-align: top;
+         max-width: 100%;
      }
  }
 

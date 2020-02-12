@@ -6,7 +6,7 @@ body {
         Tahoma,
         "Trebuchet MS", Veranda, Geneva,
         sans-serif;
-
+    flex-wrap: wrap;
 }
 
 
@@ -46,5 +46,24 @@ fieldset.radio {
     border-radius: 3px;
     padding: 0.3em;
     height: 2.4em;
+
+}
+
+#page {
+    display: flex;
+    flex-wrap: nowrap;
+
+}
+
+
+/* Smartphones (landscape) ----------- */
+@media only screen and (max-width : 800px) {
+    body {
+        font-size: 14pt;
+    }
+
+    #page-vmid {
+        flex-wrap: wrap;
+    }
 
 }

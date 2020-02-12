@@ -31,14 +31,16 @@
 }
 
 #page-vmid {
-    width: 100%;
-    max-height: 100%;
+    xmax-height: 100%;
     display: flex;
+    xflex-wrap: wrap;
     background-color: transparent;
     margin: 0px;
     border: none;
     padding: 0px;
     vertical-align: top;
+    max-width: 100%;
+    overflow-x: none;
 }
 
 #lbody {
@@ -124,6 +126,8 @@
     padding: 0px;
     margin: 0px;
     font-size: 0.8em;
+    text-align: left;
+    ;
 }
 
 #dataObjDiv {
@@ -135,4 +139,9 @@
     font-size: 0.78em;
     background-color: rgb(223, 222, 221);
 
+}
+
+#page {
+    display: flex;
+    flex-wrap: wrap;
 }
