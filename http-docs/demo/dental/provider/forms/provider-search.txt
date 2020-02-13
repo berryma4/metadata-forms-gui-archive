@@ -336,7 +336,7 @@
          uri: /data/dental/provider/recs/{licNum}.json
          action: display_form
          target_div: mbody
-         form_id: forms/provider-detail
+         form_id: forms/provider-main
          context: 
             # TODO: What if I wanted to just pass through the entire search object or a branch of
             #  the current data object.

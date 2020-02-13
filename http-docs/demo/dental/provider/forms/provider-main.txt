@@ -1,0 +1,93 @@
+- widget:
+  id: provLicenseTab
+  class: tabbar subtab
+  icon: none
+  type: tabbar
+  -tab: 
+     id: tabProvLicLic
+     label: License
+     icon: none
+     active: true
+     form: forms/prov-license
+  - tab:
+     id: tabProvSpecialty
+     label: specialty
+     icon: none
+     active: false
+     form: forms/prov-specialty
+  - tab:
+     id: tabProvPermit
+     label: Permit
+     icon: none
+     active: false
+     form: forms/prov-Permit
+  - label: sanctions
+     id: tabProvSanctions
+     label: sanctions
+     icon: none
+     active: false
+     form: forms/prov-sanctions
+
+# Add a notion of a boolean flag to change icon.
+
+- widget:
+  id: provMainTabBar
+  class: tabbar
+  type: tabbar
+  # content Div is a child div id
+  # created to render child pages or 
+  # forms into.
+  content_div: mainTabSubBar
+  tabs:
+   - tab:
+       label: Summary
+       icon:
+         -data_context: prov.status.providerTab
+         -state:
+            -symbol: &#10003;
+            match: true
+            class: tabGood
+       form: forms/provider-summary
+       active: true
+   - tab:
+      label: Provider
+      icon: none
+      form: forms/provider-provider
+   - tab:
+      label: License
+      icon: none
+      child:  provLicenseTab
+
+   - tab:
+       label: Special Programs
+       icon: none
+       form: forms/special-Programs
+
+   - tab:
+        label: Business & Office
+        icon: none
+        form: forms/business-Office
+   - tab:
+        label: Participation
+        icon: none
+        label: Credentialing
+   - tab:
+        label: Claims Deductions
+        icon: none
+        child: provClaimDeduct
+
+
+- form:
+   id : ProvMainPage
+   class: inputFrm
+   xlabel: Provider Main Page
+   show_data_obj_div: dataObjDivBottom
+   autocomplete: false
+   fetch:
+      uri: /data/dental/provider/recs/{dataObjId}.json
+      method: GET
+      parse: JSON
+
+   widgets:   
+    - provMainTabBar
+ 

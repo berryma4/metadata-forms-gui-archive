@@ -325,7 +325,8 @@ var widgRenderFuncs = {
     "radio": mformRenderRadio,
     "date": mformsRenderTextWidget,
     "table": mformsRenderEditableTable,
-    "simple_search_res": mformsSimpleSearchRes
+    "simple_search_res": mformsSimpleSearchRes,
+    "tabbar": mformsRenderTabBar
 };
 // "col": mformsRenderColumn
 
@@ -794,6 +795,40 @@ function mformsRenderTextWidget(widDef, b, context, custParms) {
         };
         b.make("div", sugAttr);
     }
+    mformFinishWidget(widDef, b, context, custParms);
+}
+
+function mformsRenderTabBar(widDef, b, context, custParms) {
+    mformFixupWidget(widDef, context);
+    var gtx = context.gbl;
+    //mformsAdjustCustParms(widDef, b, context, custParms);
+    var widId = custParms.widId;
+    var colPath = custParms.data_context;
+    mformStartWidget(widDef, b, context, custParms);
+    // Add the actual Text Widget
+    var widAttr = mformBasicWidAttr(widDef, context);
+    var form = context.form;
+    mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
+    copyOverCustParms(widAttr, widDef, custParms);
+    b.start("ul", widAttr);
+    var tabs = widDef.tab;
+    for (var tabndx in tabs) {
+        var atab = tabs[tabndx];
+        var tabattr = {
+            "id": "" + widId + tabndx,
+            "class": widDef.class,
+            "onclick": "activateTab(this)",
+            "form_id": context.form_id,
+            "dataObjId": context.dataObjId,
+            "parent_id": widId
+        };
+        b.make("li", tabattr, atab.label);
+    }
+    b.make("div", {
+        "id": widId + "tabContent",
+        "class": widDef.class + "tabContent"
+    });
+    b.finish("ul");
     mformFinishWidget(widDef, b, context, custParms);
 }
 

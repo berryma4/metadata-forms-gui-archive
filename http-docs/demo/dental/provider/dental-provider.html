@@ -26,9 +26,22 @@
     <body onLoad="display_form('mbody', 'forms/provider-search', null, GTX)">
  <a href="/"><img src="/img/frigate-forms-logo.png" style="z-index:3; top:-2px;
   right: 1px; margin: 1em; position: absolute;" width="65px" ></img></a>
-        <div id="top_nav">
-            <h1>Provider</h1>
+      
+        
+        <div class="tabbar">
+          <ul>
+            <li onclick= "home();">Home</li>
+            <li onclick= "news();" class="active">&#10003;News</li>
+            <li onclick= "contact();">Contact</li>
+            <li onclick="about();">About</li>
+          </ul>
         </div>
+
+
+        <div id="top_nav">
+          <h1>Provider</h1>
+        </div>
+
         <div id="page-vmid">
             <div id="mbody">
 

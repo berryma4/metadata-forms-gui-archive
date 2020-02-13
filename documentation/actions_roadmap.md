@@ -2,6 +2,12 @@ Actions & Roadmap for Metadata Forms Engine
 
 # Rank Ordered Feature Work
 
+* tabBar:
+
+  * When child exits should render the next line but only when active.
+  * When tab is selected the children should show.  This may be a display: none, display:block type scenario so each tab can render all children up front.  When a tab is active and specifieds a form or a widget then that widget will be rendered into the div created by the parent div.   Since data could have changed in the display then must re-render child form content at time of display or when tab is activated.
+  * 
+
 * Utility to combine JS files into a single output to allow individual editing but static serving.  Then break the mforms  into separate widget .js files to make it easier to edit.
 
 * ProvDemo: **Update CSS to match mockup**.  Update stylesheets to reflect those provided by MarkBo at least for the dental samples.
@@ -9,6 +15,8 @@ Actions & Roadmap for Metadata Forms Engine
 * AutoSuggest: Need to be able to exit and hide auto suggest with escape. 
 
 * AutoSuggest:  Need to be able to move down in auto sug with arrow and select with enter.
+
+* ProvDemo: When adding a provider render search results for the license number of state they have have entered rather than the shown flow.
 
 * ProvDemo:  Execute search and render results.    This requires a read only table with alternating rows where the row is clickable or individual sub widgets are render able.  Supports hover over row and scroll box on bottom of row.  Screen-8.  OK so we have a main search area any of city, last_name, first_name changing could trigger a search that can return a list of record. if more than one of them are filled in then we can only do the search on one and filter on the rest or search on all and then merge.   the other fields will be driven based as filters.  If we new from autosug results which one has the smallest # of times then we could use it to get the shortest search results. For easy implementation then simply use the others as filter records.  Apply search set retrieval in this order only use lower priority items to drive initial search higher priority items are empty.  last_name, first_name,  city, specialty.
 
