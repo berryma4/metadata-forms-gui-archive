@@ -89,7 +89,7 @@ function mformValidateFieldValue(context, dataObj, widDef, hwidget, fldVal) {
             var pat = vpat.pattern[pndx];
             try {
                 var compRePat = new RegExp(pat);
-                testRes = compRePat.test(fldVal);
+                var testRes = compRePat.test(fldVal);
                 if (testRes == false) {
                     errMsg = vpat.message;
                 } else {
@@ -1231,6 +1231,10 @@ function mformsSimpleSearchResRowClick(hwidget) {
     if (action == "display_form") {
         var interpArr = [dataRow, context.dataObj, widDef, context, context.form, context.gbl];
         var targForm = rowclick.form_id;
+        var targDiv = rowclick.target_div;
+        if (targDiv == null) {
+            targDiv = "default";
+        }
         var startUri = rowclick.uri;
         if (startUri == undefined) {
             return;
@@ -1249,16 +1253,14 @@ function mformsSimpleSearchResRowClick(hwidget) {
             }
         }
 
-        var turi = InterpolateStr(startUri, interpArr);
+        //var turi = InterpolateStr(startUri, interpArr);
         //var objId = InterpolateStr(onch.rowclick.objId, interpArr);
-        var formUri = InterpolateStr(formId, interpArr);
+        var formUri = InterpolateStr(targForm, interpArr);
 
-        display_form(targetDiv, turi, localContext, context.gbl);
+        display_form(targDiv, formUri, localContext, context.gbl);
 
-        alert("TODO: display_form data object uri=" + turi + " for " + JSON.stringify(dataRow));
+        //alert("TODO: display_form data object uri=" + turi + " for " + JSON.stringify(dataRow));
     }
-
-
 
 }
 
@@ -1662,7 +1664,7 @@ function mformsProcessFormSpec(data, context) {
             // we have the form spec and fetch it if not and
             // then render it.  If it is already loaded then
             // simply render the form for that data Object.
-            if (context.dataObjId in gtx.dataObj) {
+            if ((context.dataObjId in gtx.dataObj) || (context.skip_fetch == true)) {
                 // Data Object is already loaded so skip to render
                 context.dataObj = gtx.dataObj[context.dataObjId];
                 mformsRenderForm(context.form, context);
@@ -1713,36 +1715,59 @@ function mformsGetDef(scriptId, context) {
 //----------
 //-- Main Driver for MForms Interface
 //----------
-function display_form(targetDiv, formSpecUri, dataObjId, gContext) {
+function display_form(targetDiv, formSpecUri, localContext, gContext) {
     //"dataSourceUri": dataSourceUri,
-    console.log(" display_form() targetDiv=", targetDiv, " formSpecUri=", formSpecUri, " dataObjId=", dataObjId)
+    console.log(" display_form() targetDiv=", targetDiv, " formSpecUri=", formSpecUri, " localContext=", localContext)
+    if (((isNum(localContext)) || (isString(localContext)) || (localContext == null))) {
+        localContext = {
+            "dataObjId": localContext
+        };
+    } else if (!(isObject(localContext))) {
+        console.log("L1719: display_form() ERROR localContext is not a object localContext=", localContext);
+        return;
+    }
 
+    var dataObjId = localContext.dataObjId;
     if (dataObjId == null) {
+        // When dataObjId is set to null it is an indicator
+        // that we want the system to auomatically create 
+        // a data object on it's behalf.
+        //
         // Initialize empty data object with fabricated Id 
         // so we can skip a fetch on the server.  This assumes
         // that all fields have reasonable defaults specified in 
         // their form spec.
         dataObjId = "AUTO" + (0 - curr_time()) + "-" + (Math.floor(Math.random() * 1000)) + "-" + gContext.newObIdCnt;
+        localContext.dataObjId = dataObjId;
         var dataObj = {
             "_id": dataObjId,
             "_client_created": true
         };
+        if (localContext.skip_fetch == undefined) {
+            localContext.skip_fetch = true;
+        }
         gContext.newObIdCnt++;
         gContext.dataObj[dataObjId] = dataObj;
     }
 
+    // Upgrade the local context object to include
+    // mandatory parameters we will need latter but if the 
+    // caller defined them, then use those they specified.
+    if (localContext.targetDiv == undefined) {
+        localContext.targetDiv = targetDiv;
+    }
+    if (localContext.formSpec == null) {
+        localContext.formSpecUri = formSpecUri;
+    }
+    if (localContext.gbl == undefined) {
+        localContext.gbl = gContext;
+    }
+    if (localContext.queries == undefined) {
+        localContext.queries = {};
+    }
+    if (dataObjId != undefined) {
+        localContext.dataObjId = dataObjId;
+    }
 
-    // Create a new context but keep a copy of the Global context
-    // passed in to allow us to access things like total list of
-    // files already loaded and the users access token
-    var context = {
-        "targetDiv": targetDiv,
-        "formSpecUri": formSpecUri,
-        "dataObjId": dataObjId,
-        //"dataSourceUri": dataSourceUri,
-        "gbl": gContext,
-        "queries": {}
-    };
-
-    mformsGetDef(formSpecUri, context);
+    mformsGetDef(formSpecUri, localContext);
 }
