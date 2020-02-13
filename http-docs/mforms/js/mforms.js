@@ -7,7 +7,8 @@ var GTX = {
     widgets: {}, // list of  widgets already loaded by widget Id
     dataObj: {}, // list of dataObj already loaded by Object Id
     newObIdCnt: 0,
-    activeAugoSug: {},
+    activeAugoSug: {}, // List of form contexts rendered to 
+    formStack: {},
     user: {
         "accessToken": "282872727" // Will need to get a real access token
     }
