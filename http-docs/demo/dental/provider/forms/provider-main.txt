@@ -41,6 +41,7 @@
   tabs:
    - tab:
        label: Summary
+       symbol: &#10003;
        icon:
          -data_context: prov.status.providerTab
          -state:

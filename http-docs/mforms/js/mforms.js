@@ -811,18 +811,26 @@ function mformsRenderTabBar(widDef, b, context, custParms) {
     mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
     copyOverCustParms(widAttr, widDef, custParms);
     b.start("ul", widAttr);
-    var tabs = widDef.tab;
+    var tabs = widDef.tabs;
     for (var tabndx in tabs) {
-        var atab = tabs[tabndx];
+        var atab = tabs[tabndx].tab;
         var tabattr = {
             "id": "" + widId + tabndx,
-            "class": widDef.class,
+            "tab_num": tabndx,
             "onclick": "activateTab(this)",
             "form_id": context.form_id,
             "dataObjId": context.dataObjId,
             "parent_id": widId
         };
-        b.make("li", tabattr, atab.label);
+        if ("class" in atab) {
+            tabattr.class = atab.class;
+        }
+        b.start("li", tabattr);
+        if ("symbol" in atab) {
+            b.b(atabl.symbol);
+        }
+        b.b(atab.label);
+        b.finish("li");
     }
     b.make("div", {
         "id": widId + "tabContent",
