@@ -166,8 +166,21 @@
       if(Object.keys(tout).length != 3) {
         addTestRes("FAIL: should be 3 elements in object but found " + Object.keys(tout).length);
       }
-
     }
+
+
+   function runTest9() {
+      var tout = runTest("Test Proper Array Detection", testProperArrayDetections);
+      try {
+      if(tout[0].widget.tab[1].label != "provider") {
+        addTestRes("FAIL: Expected Provider 1 to have label of provider");
+      }
+      } catch(err) {
+        addTestRes("FAIL: Validation check failed err=" +  err);
+      }
+   } 
+
+    
   </script>
 
 </head>
@@ -183,8 +196,9 @@
     <ul><a href="#" onClick="runTest4()">Run Test 4 option array of javascript</a></ul>
     <ul><a href="#" onClick="runTest5()">Run Test 5 Object containing array of Nested Objects</a></ul>
     <ul><a href="#" onClick="runTest6()">Run Test 6 Object containing Data Value with Comment on end of line</a></ul>
-    <ul><a href="#" onClick="runTest7()">Run Test 5 merge 1</a></ul>
-    <ul><a href="#" onClick="runTest8()">Run Test 6 merge 2</a></ul>
+    <ul><a href="#" onClick="runTest7()">Run Test 7 merge 1</a></ul>
+    <ul><a href="#" onClick="runTest8()">Run Test 8 merge 2</a></ul>
+    <ul><a href="#" onClick="runTest9()">Run Test 9 Proper Array Detection</a></ul>
     <div>
       <div id="testResult"></div>
       <div id="sourceData"></div>

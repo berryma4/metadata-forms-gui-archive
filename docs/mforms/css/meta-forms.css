@@ -436,6 +436,10 @@ div.auto_sug_itemscont {
 
 }
 
+/*--------------
+--- Basic Styling for simple clickable row 
+--- search Table
+----------------*/
 div.simpleSearchcont {
     display: flex;
     xoverflow-y: auto;
@@ -474,4 +478,88 @@ table.simpleSearchtbl tr:first-child {
 table.simpleSearchtbl tr:first-child:hover {
     outline: thin solid transparent;
 
+}
+
+/* ------------
+-- TAB Menu style
+---------------
+https: //www.w3schools.com/css/css_navbar.asp*/
+
+div.tabbarCont {
+    width: fit-content;
+    align-content: center;
+    display: flex;
+    margin-right: 2em;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+ul.tabbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #0F2B52;
+    xposition: fixed;
+    xtop: 0;
+    width: fit-content;
+    padding-left: 0.1em;
+    padding-right: 0.1em;
+    margin-right: 1em;
+    display: flex;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    flex-wrap: wrap;
+    align-items: stretch;
+
+}
+
+ul.tabbar li {
+    display: flex;
+    color: white;
+    text-align: center;
+    padding: 0.2em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    text-decoration: none;
+    border-right: solid 1px rgb(127, 100, 255, 0.5);
+    margin-right: 1px;
+}
+
+ul.tabbar li:last-child {
+    padding-right: 0.2em;
+    border: none;
+}
+
+
+ul.tabbar li:hover {
+    background-color: rgb(0, 0, 255, 0.2);
+}
+
+/*
+div.tabbar li:hover:not(.active) {
+    background-color: #111;
+}*/
+
+ul.tabbar li.active {
+    background-color: rgb(0, 0, 255, 0.3);
+}
+
+ul.tabbar li.active:hover {
+    background-color: rgb(0, 0, 255, 0.2);
+}
+
+ul.tabbar li span.symbol {
+    padding-right: 0.5em;
+}
+
+ul.subtab {
+    border-radius: 0px;
+    width: fit-content;
+    display: flex;
+}
+
+ul.subtab li {
+    background-color: rgb(0, 0, 255, 0.3);
+    display: flex;
 }

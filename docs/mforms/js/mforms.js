@@ -7,7 +7,8 @@ var GTX = {
     widgets: {}, // list of  widgets already loaded by widget Id
     dataObj: {}, // list of dataObj already loaded by Object Id
     newObIdCnt: 0,
-    activeAugoSug: {},
+    activeAugoSug: {}, // List of form contexts rendered to 
+    formStack: {},
     user: {
         "accessToken": "282872727" // Will need to get a real access token
     }
@@ -324,7 +325,8 @@ var widgRenderFuncs = {
     "radio": mformRenderRadio,
     "date": mformsRenderTextWidget,
     "table": mformsRenderEditableTable,
-    "simple_search_res": mformsSimpleSearchRes
+    "simple_search_res": mformsSimpleSearchRes,
+    "tabbar": mformsRenderTabBar
 };
 // "col": mformsRenderColumn
 
@@ -794,6 +796,116 @@ function mformsRenderTextWidget(widDef, b, context, custParms) {
         b.make("div", sugAttr);
     }
     mformFinishWidget(widDef, b, context, custParms);
+}
+
+function mformActivateTab(hwidget) {
+    var id = hwidget.id;
+    var tabNum = gattr(hwidget, "tab_num");
+    var widId = gattr(hwidget, "wid_id");
+    var formId = gattr(hwidget, "form_id");
+    var dataObjId = gattr(hwidget, "dataObjId");
+    var parentId = gattr("parent_id");
+    var context = GTX.formContexts[formId][dataObjId];
+    var form = context.form;
+    var widDef = GTX.widgets[widId];
+    var dataObj = GTX.dataObj[dataObjId];
+    var dataContext = widDef.data_context;
+    // find old tab active
+
+    // change sub payned defenition to make the child
+    // active. 
+
+    // if no children for either old or new tab active
+    // then just change the color of the div.
+
+    // if children in either one then need to re-render the
+    // the menuue.
+
+    // Open a new form if one is defined for the child tab.
+
+
+    alert("mwidget activate tab");
+}
+
+function mformsRenderTabBar(widDef, b, context, custParms) {
+    mformFixupWidget(widDef, context);
+    var gtx = context.gbl;
+    //mformsAdjustCustParms(widDef, b, context, custParms);
+    var widId = widDef.id;
+    var colPath = widDef.data_Context;
+    mformStartWidget(widDef, b, context, custParms);
+    // Add the actual Text Widget
+    var widAttr = mformBasicWidAttr(widDef, context);
+    var form = context.form;
+    mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
+    copyOverCustParms(widAttr, widDef, custParms);
+    b.start("ul", widAttr);
+    var tabs = widDef.tabs;
+    var activeTab = null;
+
+    for (var tabndx in tabs) {
+        var atab = tabs[tabndx].tab;
+        var activeStr = "";
+
+        if (atab.active == true) {
+            activeTab = atab;
+            activeStr = " active";
+        }
+        var tabattr = {
+            "id": "" + widId + tabndx,
+            "tab_num": tabndx,
+            "onclick": "mformsActivateTab(this)",
+            "form_id": context.form_id,
+            "dataObjId": context.dataObjId,
+            "parent_id": widId
+        };
+        if ("class" in atab) {
+            tabattr.class = atab.class + activeStr;
+        } else if (atab.active == true) {
+            tabattr.class = activeStr;
+        }
+        b.start("li", tabattr);
+        if ("symbol" in atab) {
+            b.start("span", {
+                "class": "symbol"
+            });
+            b.b("&#" + atab.symbol);
+            b.finish("span");
+        }
+        b.b(atab.label);
+        b.finish("li");
+    }
+    b.finish("ul");
+    mformFinishWidget(widDef, b, context, custParms);
+
+
+    // Now find our active Tab and cause it to render
+    // the child tabs.
+    if ((activeTab !== null) && ("child" in activeTab)) {
+        var cwid = gtx.widgets[activeTab.child];
+        if (cwid != undefined) {
+            mformsRenderTabBar(cwid, b, context, custParms);
+        }
+    }
+    var contentDivId = widId + "tabContent";
+    b.make("div", {
+        "id": contentDivId,
+        "class": widDef.class + "tabContent"
+    });
+
+    if ((activeTab != null) && ("form" in activeTab)) {
+        var localContext = [];
+        for (var akey in context) {
+            localContext[akey] = context[akey];
+        }
+        delete localContext.form;
+        delete localContext.form_id;
+        localContext = {
+            "dataObjId": context.dataObjId,
+        };
+        display_form(contentDivId, activeTab.form, localContext, context.gbl);
+    }
+
 }
 
 //-------------
@@ -1753,12 +1865,12 @@ function display_form(targetDiv, formSpecUri, localContext, gContext) {
     // Upgrade the local context object to include
     // mandatory parameters we will need latter but if the 
     // caller defined them, then use those they specified.
-    if (localContext.targetDiv == undefined) {
-        localContext.targetDiv = targetDiv;
-    }
-    if (localContext.formSpec == null) {
-        localContext.formSpecUri = formSpecUri;
-    }
+    //if (localContext.targetDiv == undefined) {
+    localContext.targetDiv = targetDiv;
+    //}
+    //if (localContext.formSpec == null) {
+    localContext.formSpecUri = formSpecUri;
+    //}
     if (localContext.gbl == undefined) {
         localContext.gbl = gContext;
     }
