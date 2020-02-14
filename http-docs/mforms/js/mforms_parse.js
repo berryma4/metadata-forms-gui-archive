@@ -12,6 +12,15 @@ function isWS(charCode) {
     return (charCode === 0x09) || (charCode === 0x20);
 }
 
+function isQuote(charCode) {
+    // " '
+    return (charCode === 0x22) || (charCode === 0x27);
+}
+
+function isOdd(num) { 
+    return num & 1;
+}
+
 function isValueSet(charCode) {
     // , [ ] { }
     return charCode === 0x2C ||
@@ -59,7 +68,10 @@ function isStrInt(str) {
     return true;
 }
 
-
+function setCharAt(str, index, chr) {
+            if (index > str.length - 1) return str;
+            return str.substr(0, index) + chr + str.substr(index + 1);
+}
 
 function countLeadingSpace(astr) {
     return myString.length - myString.trimLeft().length;
@@ -83,6 +95,14 @@ function parseCoerceDataValues(dataVal) {
     }
     if (isString(dataVal) == false) {
         return dataVal;
+    }
+    // "
+    if (dataVal.charCodeAt(0) === 0x22 && dataVal.charCodeAt(dataVal.length - 1) === 0x22) {
+        dataVal = dataVal.substr(1,dataVal.length -2);
+    }
+    // '
+    if (dataVal.charCodeAt(0) === 0x27 && dataVal.charCodeAt(dataVal.length - 1) === 0x27) {
+        dataVal = dataVal.substr(1,dataVal.length -2);
     }
     //console.log("L65: dataVal=" + dataVal);
     trimDataVal = dataVal.trim(dataVal);
@@ -266,11 +286,36 @@ function mformsParseMeta(aStr, refObj) {
                 continue; // comment line detected
             }
             var position = 0;
+            var doubleQuote = 0;
+            var singleQuote = 0;
             var c = tline.charCodeAt(position);
             while (c !== 0 && !isNaN(c)) {
                 c = tline.charCodeAt(++position);
+                if (isQuote(c)){
+                    switch (c) {
+                        // "
+                        case 0x22:
+                            // \ escaped
+                            if(tline.charCodeAt(position - 1) === 0x5C){
+                                tline = setCharAt(tline,position - 1,'');
+                                --position;
+                            } else {
+                                ++doubleQuote;
+                            }
+                        break;
+                        // '
+                        case 0x27:
+                            // ' escaped
+                            if(tline.charCodeAt(position + 1) === 0x27){
+                                tline = setCharAt(tline,position + 1,'');
+                            } else {
+                                ++singleQuote;
+                            }
+                        break;
+                    }
+                }
                 // #
-                if (c === 0x23) {
+                if (c === 0x23 && !isOdd(doubleQuote) && !isOdd(singleQuote)) {
                     //_position = position;
                     //do { c = tline.charCodeAt(++position); }
                     //while (c !== 0 && !isEOL(c) && !isNaN(c));
@@ -278,7 +323,7 @@ function mformsParseMeta(aStr, refObj) {
                     tleft = tline.trimLeft();
                 }
                 // &
-                if (c == 0x26) {
+                if (c == 0x26 && !isOdd(doubleQuote) && !isOdd(singleQuote)) {
                     var endOfElement = tarr.slice(i).length;
                     for (j = 1; j < tarr.slice(i).length; j++) {
                         var _position = 0;

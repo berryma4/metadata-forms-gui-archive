@@ -252,12 +252,12 @@ var testStrObjectCommentOnEOL = `
     - arrProcFee # One of columns to total
   columns: # List of column objects
     - arrProcDate: # one of my columns
-         total: false # wether I should add total on this column
+         total: false # whether I should add total on this column
          label: Procedure Date        
     - arrProcArea:
          total: false
-         label: Area
-         title: Procedure Area
+         label: 'Area '' #54' # hash in single quotes with escaped single quote
+         title: "Procedure Area \\" &" # ampersand in double quotes with escaped double quote
      
 `;
 
