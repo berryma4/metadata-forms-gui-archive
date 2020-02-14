@@ -1168,10 +1168,12 @@ function mformsRenderForm(form, context) {
         formAttr.autocomplete = false;
     }
     b.start("form", formAttr);
-    b.make("h3", {
-        "id": form.id + "Head",
-        class: form.class + "Head"
-    }, form.label);
+    if (form.label != undefined) {
+        b.make("h3", {
+            "id": form.id + "Head",
+            class: form.class + "Head"
+        }, form.label);
+    }
 
     mformsRenderWidgets(form, form.widgets, b, context);
     /*

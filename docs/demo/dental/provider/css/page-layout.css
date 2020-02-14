@@ -19,7 +19,7 @@
     text-align: center;
     vert-align: center;
     padding-top: 0.03em;
-    padding-bottom: 0.03em;
+    padding-bottom: 0px;
     overflow: hidden;
     margin: 0px;
     border: none;
@@ -27,6 +27,8 @@
 
 #top_nav>h1 {
     font-size: 0.8em;
+    margin: 0px;
+    padding: 0px;
 }
 
 #page-vmid {
