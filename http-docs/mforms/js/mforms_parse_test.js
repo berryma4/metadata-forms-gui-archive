@@ -264,24 +264,25 @@ var testStrObjectCommentOnEOL = `
 
 // Should produce and array of tab inside the widget.
 var testProperArrayDetections = `
--widget:
+- widget:
   id: provMainTabBar
   class: tabbar
   type: tabbar
   content_div: mainTabSubBar
-  -tab:
-     label: Summary
-     class: tabGood
-     form: forms/provider-summary
-     active: true
-  - tab:
-      label: Provider
-      icon: none
-      form: forms/provider-provider
-  - tab:
-      label: License
-      icon: none
-      child:  provLicenseTab
+  tabs: 
+    - tab:
+        label: Summary
+        class: tabGood
+        form: forms/provider-summary
+        active: true
+    - tab:
+        label: Provider
+        icon: none
+        form: forms/provider-provider
+    - tab:
+        label: License
+        icon: none
+        child:  provLicenseTab
 `;
 
 function mParserTest(label, dataStr) {

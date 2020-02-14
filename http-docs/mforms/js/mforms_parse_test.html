@@ -172,8 +172,8 @@
    function runTest9() {
       var tout = runTest("Test Proper Array Detection", testProperArrayDetections);
       try {
-      if(tout[0].widget.tab[1].label != "provider") {
-        addTestRes("FAIL: Expected Provider 1 to have label of provider");
+      if(tout[0].widget.tabs[1].tab.label != "Provider") {
+        addTestRes("FAIL: Expected Provider 1 to have label of provider but found "+ tout[0].widget.tabs[1].tab.label);
       }
       } catch(err) {
         addTestRes("FAIL: Validation check failed err=" +  err);

@@ -43,7 +43,7 @@ function isAlphaNumeric(str) {
     return true;
 }
 
-// REturns true if string contain only contains
+// Returns true if string contain only contains
 // numbers and a "-"
 function isStrInt(str) {
     tres = isAlphaNumeric(str);
