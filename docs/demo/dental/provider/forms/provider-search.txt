@@ -4,7 +4,7 @@
     type: text
     label : Last Name
     label_class: wrap
-    size: 35
+    size: 25
     data_context: prov.search.last_name
     class: input_field
     suggest:
@@ -19,7 +19,7 @@
     type: text
     label : First Name
     label_class: wrap
-    size: 35
+    size: 25
     data_context: prov.search.first_name
     class: input_field
     suggest:
@@ -254,6 +254,8 @@
     # Support Automatic Search Rendering
 
     widgets: 
+         - provSearchZip
+         - provSearchState
          - provSearchNPI
          #- provSearchSSN
          - provSearchSpecialty
@@ -266,6 +268,7 @@
          - provSearchState
          #- provSearchCounty
          #- provSearchCountry
+          - searchButtons
          
 - widget:
     id: searchButtons
@@ -401,11 +404,8 @@
            - provSearchLastName
            - provSearchFirstName
            - provSearchCity
-           - provSearchZip
-           - provSearchState
            #- provSearchLicenseStateNumber
            #- provSearchLicenseState
            - provSearchAdvancedGroup
-           - searchButtons
            - provSearchResults
 

@@ -10,9 +10,6 @@ body {
 }
 
 
-div.input_fieldCont {
-    margin-left: 1.22em;
-}
 
 .input_fieldCont,
 .input_fieldvCont,
@@ -46,7 +43,6 @@ fieldset.radio {
     border-radius: 3px;
     padding: 0.3em;
     height: 2.4em;
-
 }
 
 #page {
@@ -66,6 +62,22 @@ fieldset.radio {
     }
 }
 
+@media only screen and (min-width : 1024px) {
+    div.simpleSearchcont {
+        display: flex;
+        overflow-y: auto;
+        max-height: 30em;
+        width: fit-content;
+        max-width: 100%;
+        overflow-x: wrap;
+    }
+
+    div.input_fieldCont {
+        margin-left: 1.22em;
+    }
+
+}
+
 .hbuttoncontain {
     display: inline-block;
 }
@@ -78,12 +90,10 @@ fieldset.radio {
 }
 
 
-
-
 /* Smartphones (landscape) ----------- */
 @media only screen and (max-width : 800px) {
     body {
-        font-size: 14pt;
+        font-size: 12pt;
     }
 
     #page-vmid {
@@ -109,4 +119,45 @@ fieldset.radio {
         max-height: none;
     }
 
+
+    input.input_field,
+    .input_fieldv,
+    select.input_field,
+    fieldset.hor_radio,
+    fieldset.vert_radio,
+    fieldset.radio {
+        background-color: #F7F8FA;
+        border: 1px solid #7D8083;
+        border-radius: 2px;
+        padding: 0px;
+        height: auto;
+        font-size: 1.1em;
+        width: auto;
+    }
+
+    div.input_fieldCont {
+        margin-left: 0px;
+    }
+
+    .input_fieldCont,
+    .input_fieldvCont,
+    .input_fieldContainer,
+    .input_fieldvContainer,
+    .vert_radioCont {
+        margin: 0px;
+        padding: 0px;
+        display: flex;
+    }
+
+    div.auto_sug_items {
+        padding-bottom: 0.4em;
+    }
+
+
 }
+
+/* Smartphones (landscape) ----------- */
+@media only screen and (max-width : 400px) {
+    body {
+        font-size: 13pt;
+    }
