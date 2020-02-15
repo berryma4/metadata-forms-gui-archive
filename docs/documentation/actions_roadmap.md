@@ -6,6 +6,8 @@ Actions & Roadmap for Metadata Forms Engine
 
 * provPython: Speciality should be an array with first item as primary to allow show in search.      Languages should be an array.     Format Dates as Javascript standard
 
+* ProvDemo: Status in dropdown must allow specification of a class to show in green.
+
 * ProvDemo: License:  An editable table where each row is composed of a multi-field block that is not presented in an array.  
 
 * ProvDemo: Permits should be an array 

@@ -62,6 +62,34 @@ fieldset.radio {
     margin-bottom: 1em;
 }
 
+#provLicenseTableCont {
+    border: none;
+    background-color: transparent;
+}
+
+#provLicenseTabletbl {
+    border: none;
+    background-color: transparent;
+    border-spacing: 0em 2em;
+}
+
+#provLicenseTabletbl td {
+    border: none;
+    background-color: transparent;
+
+}
+
+#provLicenseTabletbl tr {}
+
+
+#provLicRowGroupcont {
+    flex-wrap: nowrap;
+}
+
+#provLicLeftcont {
+    flex-wrap: wrap;
+}
+
 @media only screen and (min-width : 800px) {
     div.simpleSearchcont {
         display: flex;

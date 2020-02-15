@@ -154,6 +154,12 @@ button:focus {
     border-radius: 4px;
 }
 
+div.groupCont,
+div.vgroupCont,
+div.hgroupCont,
+.groupFS,
+.vgroupCont,
+.hgroupCont,
 div.groupcont,
 div.vgroupcont div.hgroupcont {
     width: auto;
@@ -161,10 +167,24 @@ div.vgroupcont div.hgroupcont {
     margin-bottom: 0.5em;
     border-radius: 2px;
     background-color: rgb(226, 247, 247, 0.137);
+    background-color: transparent;
     vertical-align: top;
     align-items: left;
     text-align: left;
 }
+
+    {
+    border-radius: 2px;
+}
+
+div.silent_groupcont {
+    border: 0px;
+    border-style: none;
+    display: flex;
+    vertical-align: top;
+}
+
+
 
 legend.vgroupLeg {
     width: auto;
@@ -243,22 +263,6 @@ legend.vgroupLabel {
     margin-left: 0.2em;
 }
 
-div.groupCont,
-div.vgroupCont,
-div.hgroupCont,
-.groupFS,
-.vgroupCont,
-.hgroupCont {
-    border-radius: 2px;
-    background-color: transparent;
-}
-
-div.silent_groupcont {
-    border: 0px;
-    border-style: none;
-    display: inline-block;
-    vertical-align: top;
-}
 
 fieldset.inputFrm {
     margin-left: 4em;
@@ -375,6 +379,10 @@ table.mtable .tdleft {
 
 table.mtable .tdcenter {
     text-align: center;
+}
+
+table.mtable tr:nth-child(even) {
+    background: rgb(174, 182, 199, 0.2);
 }
 
 div.mtableaddRowCont {

@@ -1014,7 +1014,6 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
             "id": tblId + "tblhead",
             "class": widDef.class + "tr"
         });
-
         // -----
         //--- Render Table Header
         //------
@@ -1063,8 +1062,13 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
                             "table_id": tblId,
                             "id": colId + "-_" + rowndx,
                             //"data_context": dataContextCell,
-                            "skip_label": true
                         };
+                        if (colWidDef.isCol == true) {
+                            // If it is a simple column then we should
+                            // not render label because it will be in the
+                            // table header.
+                            custContext.skip_label = true;
+                        }
                         var dcontextEle = {
                             "path": dcontext,
                             "ndx": rowndx
