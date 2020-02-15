@@ -82,6 +82,9 @@
 * ### html
 
   * [make a div element editable](https://www.tutorialrepublic.com/codelab.php?topic=faq&file=html5-make-element-editable)
+  * [html symbols by character code](https://www.toptal.com/designers/htmlarrows/symbols/)
+  * [CSS Navigation Bars](https://www.w3schools.com/css/css_navbar.asp)
+  * 
 
 
 

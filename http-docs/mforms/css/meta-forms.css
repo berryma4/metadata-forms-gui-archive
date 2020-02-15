@@ -534,6 +534,7 @@ ul.tabbar li:last-child {
 
 ul.tabbar li:hover {
     background-color: rgb(0, 0, 255, 0.2);
+    border: dimgray 1px solid;
 }
 
 /*
@@ -542,11 +543,12 @@ div.tabbar li:hover:not(.active) {
 }*/
 
 ul.tabbar li.active {
-    background-color: rgb(0, 0, 255, 0.3);
+    background-color: rgba(165, 165, 202, 0.3);
 }
 
 ul.tabbar li.active:hover {
-    background-color: rgb(0, 0, 255, 0.2);
+    background-color: rgb(0, 0, 255, 0.4);
+    border: dimgray 1px solid;
 }
 
 ul.tabbar li span.symbol {
@@ -560,6 +562,6 @@ ul.subtab {
 }
 
 ul.subtab li {
-    background-color: rgb(0, 0, 255, 0.3);
+    background-color: rgba(165, 165, 202, 0.3);
     display: flex;
 }

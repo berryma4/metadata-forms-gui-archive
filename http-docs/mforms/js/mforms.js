@@ -798,33 +798,37 @@ function mformsRenderTextWidget(widDef, b, context, custParms) {
     mformFinishWidget(widDef, b, context, custParms);
 }
 
-function mformActivateTab(hwidget) {
-    var id = hwidget.id;
-    var tabNum = gattr(hwidget, "tab_num");
-    var widId = gattr(hwidget, "wid_id");
+function mformsActivateTab(hwidget) {
+    //var id = hwidget.id;
+    var newActiveTabNum = gattr(hwidget, "tab_num");
     var formId = gattr(hwidget, "form_id");
     var dataObjId = gattr(hwidget, "dataObjId");
-    var parentId = gattr("parent_id");
+    var parentId = gattr(hwidget, "parent_id");
     var context = GTX.formContexts[formId][dataObjId];
+    var gtx = context.gbl;
     var form = context.form;
-    var widDef = GTX.widgets[widId];
-    var dataObj = GTX.dataObj[dataObjId];
-    var dataContext = widDef.data_context;
+    var parDef = gtx.widgets[parentId];
+    //var dataObj = gtx.dataObj[dataObjId];
+    //var dataContext = widDef.data_context;
+    var newActiveTab = parDef.tabs[newActiveTabNum].tab;
     // find old tab active
-
+    var oldActive = parDef.active_tab;
+    var oldActiveNum = oldActive.tab_num;
+    if (newActiveTabNum == oldActiveNum) {
+        return;
+    }
     // change sub payned defenition to make the child
-    // active. 
-
-    // if no children for either old or new tab active
-    // then just change the color of the div.
-
-    // if children in either one then need to re-render the
-    // the menuue.
-
-    // Open a new form if one is defined for the child tab.
-
-
-    alert("mwidget activate tab");
+    // active.
+    oldActive.active = false;
+    newActiveTab.active = true;
+    parDef.activeTab = newActiveTab;
+    b = new String_builder();
+    var custContext = {
+        "skip_container": true
+    };
+    mformsRenderTabBar(parDef, b, context, custContext);
+    var targetDiv = parDef.id + "Cont";
+    b.toDiv(targetDiv);
 }
 
 function mformsRenderTabBar(widDef, b, context, custParms) {
@@ -846,10 +850,11 @@ function mformsRenderTabBar(widDef, b, context, custParms) {
     for (var tabndx in tabs) {
         var atab = tabs[tabndx].tab;
         var activeStr = "";
-
+        atab.tab_num = tabndx;
         if (atab.active == true) {
             activeTab = atab;
             activeStr = " active";
+            widDef.active_tab = activeTab;
         }
         var tabattr = {
             "id": "" + widId + tabndx,
@@ -876,7 +881,6 @@ function mformsRenderTabBar(widDef, b, context, custParms) {
         b.finish("li");
     }
     b.finish("ul");
-    mformFinishWidget(widDef, b, context, custParms);
 
 
     // Now find our active Tab and cause it to render
@@ -905,6 +909,8 @@ function mformsRenderTabBar(widDef, b, context, custParms) {
         };
         display_form(contentDivId, activeTab.form, localContext, context.gbl);
     }
+
+    mformFinishWidget(widDef, b, context, custParms);
 
 }
 
