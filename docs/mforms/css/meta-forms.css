@@ -445,8 +445,6 @@ div.simpleSearchcont {
     xoverflow-y: auto;
     xmax-height: 30em;
     xwidth: 100%;
-
-
 }
 
 table.simpleSearchtbl {
@@ -488,7 +486,7 @@ https: //www.w3schools.com/css/css_navbar.asp*/
 div.tabbarCont {
     width: fit-content;
     align-content: center;
-    display: flex;
+    display: table;
     margin-right: 2em;
     flex-wrap: wrap;
     align-items: stretch;
@@ -506,16 +504,24 @@ ul.tabbar {
     padding-left: 0.1em;
     padding-right: 0.1em;
     margin-right: 1em;
-    display: flex;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
+    display: table-row;
+
+
     flex-wrap: wrap;
     align-items: stretch;
 
 }
 
+ul.tabbar li:last-child {
+    border-top-right-radius: 6px;
+}
+
+ul.tabbar li:first-child {
+    border-top-left-radius: 6px;
+}
+
 ul.tabbar li {
-    display: flex;
+    display: table-cell;
     color: white;
     text-align: center;
     padding: 0.2em;
@@ -555,13 +561,31 @@ ul.tabbar li span.symbol {
     padding-right: 0.5em;
 }
 
+ul.subtab li:last-child {
+    border-top-right-radius: 0px;
+}
+
+ul.subtab li:first-child {
+    border-top-left-radius: 0px;
+}
+
 ul.subtab {
     border-radius: 0px;
     width: fit-content;
-    display: flex;
+    display: table-row;
 }
 
 ul.subtab li {
     background-color: rgba(165, 165, 202, 0.3);
-    display: flex;
+    display: table-cell;
+    border-radius: 0px;
+}
+
+div.tabContent {
+    display: table-row;
+    width: 100%;
+    align-items: self;
+    margin-bottom: 2em;
+    margin-right: 2em;
+    box-shadow: 5px 10px #888888;
 }

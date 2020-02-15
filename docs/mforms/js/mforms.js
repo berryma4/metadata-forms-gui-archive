@@ -121,7 +121,8 @@ function mformValidateFieldValue(context, dataObj, widDef, hwidget, fldVal) {
 // enable auto suggest and update underlying DOM model
 function mformFieldChanged(hwidget) {
     var attr = hwidget.attributes;
-    var widId = hwidget.id.split("-_")[0];
+    var widIdFull = hwidget.id;
+    var widId = widIdFull.split("-_")[0];
     var widDef = GTX.widgets[widId];
     var dataContext = widDef.data_context;
     var dataContextOvr = gattr(hwidget, "data_context");
@@ -175,15 +176,13 @@ function mformFieldChanged(hwidget) {
 
         if (saveFlg == true) {
             setNested(dataObj, dataContext, fldVal);
-            if ('show_data_obj_div' in context.form) {
-                toDiv(context.form.show_data_obj_div, "<pre>" + JSON.stringify(dataObj, null, 2) + "</pre>");
-            }
+            refreshShowDataObj(context);
         }
 
         // Process Auto Suggest
         if ("suggest" in widDef) {
             var sug = widDef.suggest;
-            var sugContId = widDef.id + "sugCont";
+            var sugContId = widIdFull + "sugCont";
             var dispVal = fldVal.toUpperCase().trim();
             if (dispVal > " ") {
                 var extParms = {
@@ -194,12 +193,14 @@ function mformFieldChanged(hwidget) {
                 var rparms = {
                     "id": sugContId,
                     "widId": widDef.id,
+                    "fullWidId": widIdFull,
                     "context": context,
                     "uri": suguri,
                     "widDef": widDef,
                     "dataObj": dataObj,
                     "value": dispVal,
-                    "targetDiv": sugContId
+                    "targetDiv": sugContId,
+                    "data_context": dataContext
                 };
                 requestAutoSuggest(rparms);
             } else {
@@ -326,7 +327,8 @@ var widgRenderFuncs = {
     "date": mformsRenderTextWidget,
     "table": mformsRenderEditableTable,
     "simple_search_res": mformsSimpleSearchRes,
-    "tabbar": mformsRenderTabBar
+    "tabbar": mformsRenderTabBar,
+    "emptydiv": mformsRenderEmptyDiv
 };
 // "col": mformsRenderColumn
 
@@ -345,7 +347,6 @@ var mformTextFieldCopyAttr = {
     "cols": true,
     "label": true,
     "class": true,
-    "data_context": true,
     "form_id": true,
     "dataObjId": true,
     "title": true,
@@ -399,6 +400,70 @@ function getDataValue(dataObj, widDef, context, custParms) {
     return dataVal;
 }
 
+// Compute a data context that is either the simple data context
+// specified in the widget or has been adjusted to reflect
+// it's location in an array structure.
+function makeDataContext(widDef, context, custParms) {
+    var pathout = [];
+    if ("arrayStack" in custParms) {
+        var tarr = custParms.arrayStack;
+        for (var sndx in tarr) {
+            var sele = tarr[sndx];
+            pathout.push(sele.path);
+            pathout.push("[" + sele.ndx + "]");
+        }
+        pathout.push(widDef.data_context);
+        custParms.data_context = pathout.join(".");
+    } else {
+        custParms.data_context = widDef.data_context;
+    }
+    return custParms.data_context;
+}
+
+// Compute a unique Id for a givent widget.  When it is a simple
+// widget will just be the ID.  when the widget is part of an
+// array it will include the array access path 
+function makeId(widDef, context, custParms) {
+    if (custParms.arrayStack != undefined) {
+        var tarr = custParms.arrayStack;
+        var ts = "";
+        for (var sndx in tarr) {
+            var sele = tarr[sndx];
+            ts += "_" + sele.path + "_" + sele.ndx;
+        }
+        custParms.id = widDef.id + "-" + ts;
+    } else {
+        custParms.id = widDef.id;
+    }
+    return custParms.id;
+}
+
+
+function mformBasicWidAttr(widDef, context, custParms) {
+    var widId = makeId(widDef, context, custParms);
+    var data_context = makeDataContext(widDef, context, custParms);
+    var widAttr = {
+        'id': widId,
+        //'onblur': fieldSpec.onchange + "(" + onChgParms + ")",
+        //'onchange': fieldSpec.onchange + "(" + onChgParms + ")",
+        'type': widDef.type,
+        'onChange': 'mformFieldChanged(this)',
+        'onInput': 'mformFieldInput(this)',
+        'dataObjId': context.dataObjId,
+        'form_id': context.form_id
+    };
+
+    if (widId != widDef.id) {
+        widAttr.wid_id = widDef.id;
+    }
+
+    if (data_context != widDef.data_context) {
+        widAttr.data_context = data_context;
+        widAttr.isArray = true;
+    }
+    return widAttr;
+}
+
 
 // Start rendering the widget with common logic
 // for label and container. 
@@ -440,7 +505,7 @@ function mformStartWidget(widDef, b, context, custParms) {
 function mformFinishWidget(widDef, b, context, custParms) {
     b.make("div", {
         "class": "fieldStatusMsg",
-        "id": widDef.id + "Status"
+        "id": custParms.id + "Status"
     }).nl();
     if (custParms.skip_container != true) {
         b.finish("div").nl();
@@ -448,31 +513,23 @@ function mformFinishWidget(widDef, b, context, custParms) {
     return b;
 }
 
-function mformBasicWidAttr(widDef, context, custParms) {
-    return {
-        'id': widDef.id,
-        //'onblur': fieldSpec.onchange + "(" + onChgParms + ")",
-        //'onchange': fieldSpec.onchange + "(" + onChgParms + ")",
-        'type': widDef.type,
-        'onChange': 'mformFieldChanged(this)',
-        'onInput': 'mformFieldInput(this)',
-        'dataObjId': context.dataObjId,
-        'form_id': context.form_id,
-    };
-}
-
-
 
 // --------------------
 // --- Primary Rendering Functions
 // --------------------
 
+function mformsRenderEmptyDiv(widDef, b, context, custParms) {
+    b.make("div", {
+        "class": widDef.class,
+        "id": widDef.id
+    });
+}
 
 function mformsRenderButton(widDef, b, context, custParms) {
     b.start("div", {
         "class": widDef.class + "contain"
     });
-    var attr = mformBasicWidAttr(widDef, context);
+    var attr = mformBasicWidAttr(widDef, context, custParms);
     mformCopyAttribs(widDef, attr, mformTextFieldCopyAttr);
     copyOverCustParms(attr, widDef, custParms);
     attr.type = "button";
@@ -529,7 +586,7 @@ function mformsRenderGroupWidget(widDef, b, context, custParms) {
     }
 
     if ("widgets" in widDef) {
-        mformsRenderWidgets(widDef, widDef.widgets, b, context, {});
+        mformsRenderWidgets(widDef, widDef.widgets, b, context, custParms);
     }
     if (rendFieldSet == true) {
         b.finish("div");
@@ -544,7 +601,7 @@ function mformRenderRadio(widDef, b, context, custParms) {
     custParms.skip_label = true;
     mformStartWidget(widDef, b, context, custParms);
     // Add the actual Text Widget
-    var widAttr = mformBasicWidAttr(widDef, context);
+    var widAttr = mformBasicWidAttr(widDef, context, custParms);
     mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
     copyOverCustParms(widAttr, widDef, custParms);
     var fldName = widDef.id + "Name";
@@ -636,7 +693,7 @@ function mformRenderDropdown(widDef, b, context, custParms) {
     var widId = widDef.id;
     mformStartWidget(widDef, b, context, custParms);
     // Add the actual Text Widget
-    var widAttr = mformBasicWidAttr(widDef, context);
+    var widAttr = mformBasicWidAttr(widDef, context, custParms);
     mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
     copyOverCustParms(widAttr, widDef, custParms);
     delete widAttr.onInput; // We do not need this handler for drop down
@@ -686,70 +743,27 @@ function mformRenderDropdown(widDef, b, context, custParms) {
 }
 
 function copyOverCustParms(widAttr, widDef, custParms) {
-    if ("id" in custParms) {
-        widAttr.id = custParms.id; // overlay locally computed.
-    } else if ("id" in widDef) {
-        custParms.id = widDef.id;
-        widAttr.id = widDef.id;
-    }
-
     if ("col_Id" in custParms) {
         widAttr.col_id = custParms.colId;
-    }
-    if ("form_id" in custParms) {
-        widAttr.form_id = custParms.form_id;
     }
     if ("table_id" in custParms) {
         widAttr.table_id = custParms.table_id;
     }
-    if ("data_arr_path" in custParms) {
-        widAttr.data_arr_path = custParms.data_arr_path;
-    }
-
-    if ("data_context" in custParms) {
-        widAttr.data_context = custParms.data_context;
-    } else if ("data_context" in widDef) {
-        custParms.data_context = widDef.data_context;
-        widAttr.data_Context = widDef.data_context;
-    }
-
-    if ("widId" in custParms) {
-        widAttr.widId = custParms.widId; // original widget without array modifier
-    }
 }
-
 
 
 function mformsRenderTextWidget(widDef, b, context, custParms) {
     mformFixupWidget(widDef, context);
     var gtx = context.gbl;
-    //mformsAdjustCustParms(widDef, b, context, custParms);
-    var widId = custParms.widId;
-    var colPath = custParms.data_context;
+    var dContext = makeDataContext(widDef, context, custParms);
     mformStartWidget(widDef, b, context, custParms);
     // Add the actual Text Widget
-    var widAttr = mformBasicWidAttr(widDef, context);
+    var widAttr = mformBasicWidAttr(widDef, context, custParms);
+    var widId = widAttr.id;
     var form = context.form;
     mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
     copyOverCustParms(widAttr, widDef, custParms);
-    // "rowNdx": rowndx,
-    // "dataArr": dataArr,
-    //"table": widDef
-
-    var widVal = "";
-    if (widDef.isCol == true) {
-        widVal = getNested(context.dataObj, custParms.data_context, null);
-        widAttr.iscolumn = true;
-        widAttr.data_context = colPath;
-
-    } else {
-        // Add Initial Field Value from the Data Object
-        if ("dataObj" in context) {
-            widVal = getDataValue(context.dataObj, widDef, context, custParms);
-        }
-    }
-
-
+    var widVal = getDataValue(context.dataObj, widDef, dContext, custParms);
 
     // Format with fixed decimal points if requested
     // in the metadata
@@ -839,7 +853,7 @@ function mformsRenderTabBar(widDef, b, context, custParms) {
     var colPath = widDef.data_Context;
     mformStartWidget(widDef, b, context, custParms);
     // Add the actual Text Widget
-    var widAttr = mformBasicWidAttr(widDef, context);
+    var widAttr = mformBasicWidAttr(widDef, context, custParms);
     var form = context.form;
     mformCopyAttribs(widDef, widAttr, mformTextFieldCopyAttr);
     copyOverCustParms(widAttr, widDef, custParms);
@@ -882,7 +896,14 @@ function mformsRenderTabBar(widDef, b, context, custParms) {
     }
     b.finish("ul");
 
-
+    var contentDivId = widDef.content_div;
+    if (contentDivId == undefined) {
+        contentDivId = widId + "tabContent";
+        b.make("div", {
+            "id": contentDivId,
+            "class": widDef.class + "tabContent" + " tabContent"
+        });
+    }
     // Now find our active Tab and cause it to render
     // the child tabs.
     if ((activeTab !== null) && ("child" in activeTab)) {
@@ -891,11 +912,9 @@ function mformsRenderTabBar(widDef, b, context, custParms) {
             mformsRenderTabBar(cwid, b, context, custParms);
         }
     }
-    var contentDivId = widId + "tabContent";
-    b.make("div", {
-        "id": contentDivId,
-        "class": widDef.class + "tabContent"
-    });
+
+    mformFinishWidget(widDef, b, context, custParms);
+
 
     if ((activeTab != null) && ("form" in activeTab)) {
         var localContext = [];
@@ -909,8 +928,6 @@ function mformsRenderTabBar(widDef, b, context, custParms) {
         };
         display_form(contentDivId, activeTab.form, localContext, context.gbl);
     }
-
-    mformFinishWidget(widDef, b, context, custParms);
 
 }
 
@@ -948,6 +965,7 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
     var tblId = widDef.id;
     var cols = widDef.columns;
     var dataObj = context.dataObj;
+    var dcontext = widDef.data_context;
     if (!("data_context" in widDef)) {
         console.log("ERROR  data_context is mandatory for widget: " + JSON.stringify(widDef));
         return;
@@ -967,49 +985,58 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
         "class": widDef.class
     });
 
-    b.start("tr", {
-        "id": tblId + "tblhead",
-        "class": widDef.class + "tr"
-    });
 
     var dataArr = getNested(dataObj, widDef.data_context, []);
     if (dataArr.length == 0) {
         // Create the data array if there is not one.
         setNested(dataObj, widDef.data_context, dataArr);
     }
-    // Render the Rows of the Table
-    // We have to render the requested number
-    // of rows even if there is not that much data
-    var numRowtoRender = getNested(widDef, "min_rows", 1);
-    var rowExtra = getNested(widDef, "rows_extra", 0);
-    if (dataArr.length + rowExtra > numRowtoRender) {
-        numRowtoRender = dataArr.length + rowExtra;
-    }
 
-    // -----
-    //--- Render Table Header
-    //------
     var colId = null;
     var rendFunc = null;
     var colWidDef = null;
-    for (var i = 0; i < cols.length; i++) {
-        colId = cols[i];
-        if (colId in flds) {
-            colWidDef = flds[colId];
-            b.start("th", {
-                "id": tblId + colId + "id",
-                "class": colWidDef.cell_class,
-                "table_id": tblId,
-                "col_id": colId,
-                "form_id": context.form_id,
-                "dataObjId": context.dataObjId,
-                "onClick": "mformsColHeadClicked(this)"
-            });
-            b.b(colWidDef.label);
-            b.finish("th");
-        }
+    // Render the Rows of the Table
+    // We have to render the requested number
+    // of rows even if there is not that much data
+    var minRowsRender = getNested(widDef, "min_rows", 1);
+    var maxRowsRender = getNested(widDef, "max_rows", 1);
+    var numRowtoRender = dataArr.length;
+    if (numRowtoRender < minRowsRender) {
+        numRowtoRender = minRowsRender;
     }
-    b.finish("tr");
+
+
+    //----
+    //-- Render Column Header
+    //----
+    if (widDef.skip_col_header != true) {
+        b.start("tr", {
+            "id": tblId + "tblhead",
+            "class": widDef.class + "tr"
+        });
+
+        // -----
+        //--- Render Table Header
+        //------
+        for (var i = 0; i < cols.length; i++) {
+            colId = cols[i];
+            if (colId in flds) {
+                colWidDef = flds[colId];
+                b.start("th", {
+                    "id": tblId + colId + "id",
+                    "class": colWidDef.cell_class,
+                    "table_id": tblId,
+                    "col_id": colId,
+                    "form_id": context.form_id,
+                    "dataObjId": context.dataObjId,
+                    "onClick": "mformsColHeadClicked(this)"
+                });
+                b.b(colWidDef.label);
+                b.finish("th");
+            }
+        }
+        b.finish("tr");
+    }
 
     //------------
     //--- Render Table Body
@@ -1028,17 +1055,32 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
                 if (colWidDef.type in widgRenderFuncs) {
                     var dataContextCell = widDef.data_context + ".[" + rowndx + "]." + colWidDef.data_context;
                     try {
-                        rendFunc = widgRenderFuncs[colWidDef.type];
-                        rendFunc(colWidDef, b, context, {
+                        var custContext = {
                             "rowNdx": rowndx,
                             "dataArr": dataArr,
                             "table": widDef,
                             "col_id": colId,
                             "table_id": tblId,
                             "id": colId + "-_" + rowndx,
-                            "data_context": dataContextCell,
+                            //"data_context": dataContextCell,
                             "skip_label": true
-                        });
+                        };
+                        var dcontextEle = {
+                            "path": dcontext,
+                            "ndx": rowndx
+                        };
+                        if ("arrayStack" in custParms) {
+                            custContext.arrayStack = custParms.arrayStack;
+                            custContext.arrayStack.push(dcontextEle);
+                        } else {
+                            custContext.arrayStack = [dcontextEle];
+                        }
+                        rendFunc = widgRenderFuncs[colWidDef.type];
+                        if (rendFunc == undefined) {
+                            console.log("L1038 ERROR: Widget Not Found rowndx=", rowndx, "colWidDef=", colWidDef, " widDef=", widDef)
+                        } else {
+                            rendFunc(colWidDef, b, context, custContext);
+                        }
                     } catch (err) {
                         console.log("L324: Error rendering=", err, " colWidDef=", colWidDef, " funName", rendFunc);
                         b.b("<h6>Error Rendering See console</h6>");
@@ -1116,7 +1158,7 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
 //-----
 //-- MAIN RENDERING SECTION
 //-----
-function mformsRenderWidgets(parent, widgets, b, context) {
+function mformsRenderWidgets(parent, widgets, b, context, custParms) {
     var gtx = context.gbl;
     var flds = gtx.widgets;
     var parClass = parent.class;
@@ -1132,7 +1174,7 @@ function mformsRenderWidgets(parent, widgets, b, context) {
 
                 try {
                     var rendFunc = widgRenderFuncs[widDef.type];
-                    rendFunc(widDef, b, context, {});
+                    rendFunc(widDef, b, context, custParms);
                 } catch (err) {
                     console.log("L324: Error rendering=", err, " widDef=", widDef, " funName", rendFunc);
                     b.b("<h6>Error Rendering See console</h6>");
@@ -1181,7 +1223,7 @@ function mformsRenderForm(form, context) {
         }, form.label);
     }
 
-    mformsRenderWidgets(form, form.widgets, b, context);
+    mformsRenderWidgets(form, form.widgets, b, context, {});
     /*
     b.addInputField({
         label: "Cert #",
@@ -1194,6 +1236,10 @@ function mformsRenderForm(form, context) {
     b.finish("form");
     b.finish("div"); // form container
     b.toDiv(context.targetDiv);
+    refreshShowDataObj(context);
+}
+
+function refreshShowDataObj(context) {
     if ('show_data_obj_div' in context.form) {
         toDiv(context.form.show_data_obj_div, "<pre>" + JSON.stringify(context.dataObj, null, 2) + "</pre>");
     }
@@ -1206,38 +1252,36 @@ function autoSugClicked(hwidget) {
     var id = hwidget.id;
     var sugVal = gattr(hwidget, "sug_val");
     var widId = gattr(hwidget, "wid_id");
+    var fullWidId = gattr(hwidget, "fullWidId");
     var formId = gattr(hwidget, "form_id");
     var dataObjId = gattr(hwidget, "dataObjId");
     var context = GTX.formContexts[formId][dataObjId];
     var form = context.form;
     var widDef = GTX.widgets[widId];
     var dataObj = GTX.dataObj[dataObjId];
-    var dataContext = widDef.data_context;
-    var dataContextOvr = gattr(hwidget, "data_context");
-    if (dataContextOvr > "") {
-        // override the widget data context with the 
-        // value encoded into the widget if present.
-        // needed this to support array elements that 
-        // require a differnt data context for every row of every cell.
-        dataContext = dataContextOvr;
+    var dataContext = gattr(hwidget, "data_context");
+    if (dataContext == null) {
+        dataContext = widDef.data_context;
     }
+
     setNested(dataObj, dataContext, sugVal);
-    setFormValue(widDef.id, sugVal);
+    setFormValue(fullWidId, sugVal);
     var targetDiv = widDef.id + "sugCont";
     toDiv(targetDiv, "");
     hideDiv(targetDiv);
     if (form.onchange != undefined) {
         client_side_search(hwidget, context);
     }
+    refreshShowDataObj(context);
 }
 
 function mformsAutoSuggestOnData(data, httpObj, parms) {
-    var reqContext = parms.context;
-    var widContext = reqContext.context;
-    var widDef = reqContext.widDef;
+    var context = parms.context;
+    var widDef = parms.widDef;
     var targetDiv = widDef.id + "sugCont";
-    if (parms.uri in widContext.gbl.filesLoading) {
-        delete widContext.gbl.filesLoading[parms.uri];
+    var widId = parms.id;
+    if (parms.uri in context.gbl.filesLoading) {
+        delete context.gbl.filesLoading[parms.uri];
     }
     if (data <= "") {
         //console.log("L88: mformsAutoSuggestOnData err=" + httpObj);
@@ -1248,8 +1292,8 @@ function mformsAutoSuggestOnData(data, httpObj, parms) {
         hideDiv(targetDiv);
     } else {
         //console.log("L92: mformsAutoSuggestOnData get data=", data, " parms=", parms);
-        var objId = widContext.dataObjId;
-        var gtx = widContext.gbl;
+        var objId = context.dataObjId;
+        var gtx = context.gbl;
 
         // TODO: Add support for alternative parsers.
         var pdata = null;
@@ -1271,17 +1315,18 @@ function mformsAutoSuggestOnData(data, httpObj, parms) {
                 var sugCnt = flds[1];
                 var sugDispVal = sugStr.replace("_", " ");
                 var sugAttr = {
-                    "id": widDef.id + "autoSug" + sugStr,
+                    "id": widId + "autoSug" + sugStr,
+                    "fullWidId": parms.fullWidId,
                     "sug_val": sugDispVal,
                     "wid_id": widDef.id,
-                    "form_id": widContext.form_id,
-                    "dataObjId": widContext.dataObjId,
+                    "form_id": context.form_id,
+                    "dataObjId": context.dataObjId,
                     "class": sug.class,
+                    "data_context": parms.data_context,
                     "onClick": "autoSugClicked(this);"
                 };
                 b.make("div", sugAttr, sugDispVal + "<small> - " + sugCnt + "</small>");
             }
-
             b.toDiv(targetDiv);
             showDiv(targetDiv);
         } catch (err) {
@@ -1292,12 +1337,9 @@ function mformsAutoSuggestOnData(data, httpObj, parms) {
     }
 }
 
-function requestAutoSuggest(parmsin) {
-    var context = parmsin.context;
-    var parms = {
-        "context": parmsin
-    };
-    var req_uri = parmsin.uri; // ".txt?ti=" + Date.now();
+function requestAutoSuggest(parms) {
+    var context = parms.context;
+    var req_uri = parms.uri; // ".txt?ti=" + Date.now();
     //req_uri = req_uri.replace("//", "/");
     //console.log("L25: mformsGetDef req_uri=", req_uri);
     parms.req_headers = {
@@ -1307,7 +1349,7 @@ function requestAutoSuggest(parmsin) {
     parms.req_method = "GET";
     parms.uri = req_uri;
     context.gbl.filesLoading[req_uri] = true;
-    context.gbl.activeAugoSug[parmsin.widId] = parmsin.id;
+    context.gbl.activeAugoSug[parms.widId] = parms.id;
     simpleGet(req_uri, mformsAutoSuggestOnData, parms);
 }
 
@@ -1655,9 +1697,8 @@ function mformSaveDataObjOnData(data, httpObj, parms) {
             parms.widVal =
                 console.log(" parsed dataObj=", pdata, " context=", parms.context);
             mformsRenderForm(context.form, context);
-            if ('show_data_obj_div' in context.form) {
-                toDiv(context.form.show_data_obj_div, "<pre>" + JSON.stringify(pdata, null, 2) + "</pre>");
-            }
+            refreshShowDataObj(context)
+            
             */
         }
     }
@@ -1725,9 +1766,7 @@ function mformGetDataObjOnData(data, httpObj, parms) {
         context.gbl.filesLoaded[parms.uri] = pdata;
         console.log(" parsed dataObj=", pdata, " context=", context);
         mformsRenderForm(context.form, context);
-        if ('show_data_obj_div' in context.form) {
-            toDiv(context.form.show_data_obj_div, "<pre>" + JSON.stringify(pdata, null, 2) + "</pre>");
-        }
+        refreshShowDataObj(context);
     }
 }
 
@@ -1890,4 +1929,5 @@ function display_form(targetDiv, formSpecUri, localContext, gContext) {
     }
 
     mformsGetDef(formSpecUri, localContext);
+
 }

@@ -763,7 +763,7 @@
   class: mtable
   data_context: procedures
   total_line: true
-  client_side_sotr: true
+  client_side_sort: true
   columns: 
     - arrProcDate
     - arrProcArea

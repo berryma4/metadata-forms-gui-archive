@@ -3,31 +3,32 @@
   class: tabbar subtab
   icon: none
   type: tabbar
+  content_div: provTabContent
   tabs:
    -tab: 
        id: tabProvLicLic
        label: License
        icon: none
        active: true
-       form: forms/prov-license
+       form: forms/provider-license
    - tab:
        id: tabProvSpecialty
        label: specialty
        icon: none
        active: false
-       form: forms/prov-specialty
+       form: forms/provider-specialty
    - tab:
        id: tabProvPermit
        label: Permit
        icon: none
        active: false
-       form: forms/prov-Permit
+       form: forms/provider-Permit
    - tab: 
        id: tabProvSanctions
        label: sanctions
        icon: none
        active: false
-       form: forms/prov-sanctions
+       form: forms/provider-sanctions
 
 # Add a notion of a boolean flag to change icon.
 
@@ -38,7 +39,7 @@
   # content Div is a child div id
   # created to render child pages or 
   # forms into.
-  content_div: mainTabSubBar
+  content_div: provTabContent
   tabs:
    - tab:
        label: Summary
@@ -80,6 +81,10 @@
         icon: none
         child: provClaimDeduct
 
+- widget:
+  id: provTabContent
+  class: tabContent
+  type: emptydiv
 
 - form:
    id : ProvMainPage
@@ -94,4 +99,7 @@
 
    widgets:   
     - provMainTabBar
+    - provTabContent
+ 
+
  

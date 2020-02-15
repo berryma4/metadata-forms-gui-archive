@@ -9,7 +9,7 @@ body {
     flex-wrap: wrap;
 }
 
-
+#mbody {}
 
 .input_fieldCont,
 .input_fieldvCont,
@@ -51,6 +51,17 @@ fieldset.radio {
 
 }
 
+.hbuttoncontain {
+    display: inline-block;
+}
+
+.searchButtonscont {
+    display: block;
+    width: 98%;
+    text-align: end;
+    margin-bottom: 1em;
+}
+
 @media only screen and (min-width : 800px) {
     div.simpleSearchcont {
         display: flex;
@@ -76,17 +87,6 @@ fieldset.radio {
         margin-left: 1.22em;
     }
 
-}
-
-.hbuttoncontain {
-    display: inline-block;
-}
-
-.searchButtonscont {
-    display: block;
-    width: 98%;
-    text-align: end;
-    margin-bottom: 1em;
 }
 
 
@@ -150,7 +150,7 @@ fieldset.radio {
     }
 
     div.auto_sug_items {
-        padding-bottom: 0.4em;
+        padding-bottom: 0.7em;
     }
 
 

@@ -1,0 +1,85 @@
+- widget:
+    id: provELicNum
+    data_type: text
+    type: text
+    label : License Number
+    label_class: wrap
+    size: 25
+    data_context: lic_num
+    class: input_field
+    ignore-case-match: true
+    suggest:
+      uri: /data/dental/provider/autosug/lic_num/{auto_sug_value}.txt
+      parse: tsv
+      class: auto_sug_items
+
+- widget:
+  id: provELicState
+  type: dropdown
+  data_type: dropdown
+  label: State
+  data_context: state
+  class : input_field
+  option:
+       - {"label" : "*", "value" : "-"}
+       - {"label" : "MI", "value" : "MI"}
+       - {"label" : "MN", "value": "MN"}
+       - {"label" : "AK", "value" : "AK"}
+       - {"label" : "IA", "value" : "IA"}
+
+- widget:
+  id: provELicIssueDate
+  type: date
+  data_type: date
+  label: Issue Date  
+  data_context: issue_date
+  class : input_field
+
+  
+- widget:
+  id: provELicExpireDate
+  type: date
+  data_type: date
+  label: Issue Date  
+  data_context: expire_date
+  class : input_field
+
+  
+- widget:
+    id: provLicRowGroup
+    type: widgetGroup
+    class: vgroup
+    layout: horizontal
+    collapsed: true    
+    cell_class: tdLeft
+    renderFieldset: false
+    widgets: 
+         - provELicNum
+         - provELicState
+         - provELicIssueDate
+         - provELicExpireDate
+
+
+- widget:
+  id: provLicenseTable
+  xlabel: License
+  type: table
+  max_visible_rows: 10
+  min_rows: 1
+  rows_extra: 1
+  class: mtable
+  data_context: license
+  total_line: false
+  skip_col_header: true
+  columns: 
+    - provLicRowGroup
+
+- form:
+   id : provLicenseTabForm
+   class: inputFrm
+   xlabel: Provider License
+   show_data_obj_div: dataObjDivBottom
+   autocomplete: false
+   widgets:   
+    - provLicenseTable
+ 

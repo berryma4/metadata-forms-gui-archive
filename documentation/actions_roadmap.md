@@ -2,6 +2,28 @@ Actions & Roadmap for Metadata Forms Engine
 
 # Rank Ordered Feature Work
 
+* Prov-Python:   License should be an array.   With license type, state, data. 
+
+* provPython: Speciality should be an array with first item as primary to allow show in search.      Languages should be an array.     Format Dates as Javascript standard
+
+* ProvDemo: License:  An editable table where each row is composed of a multi-field block that is not presented in an array.  
+
+* ProvDemo: Permits should be an array 
+
+* ProvDemo:  State widget should be rendered from list of states returned from service.
+
+* ProvDemo:  Search rendering is not respecting column list with proper headers for simple search results. 
+
+* ProvDemo: Search multi-word tokens are failing in search due to escaping that is slightly different.  Need to duplicate exact functionality from the python make safe function.
+
+* ProvDemo: Provider search should filter non primary keys using a string prefix.
+
+* TabBar:  Sub tab bar should remember what tab was open after visiting other major tab button and then returning to sub tab menu.
+
+* TabBar: Remember tab states even after a form is refreshed with new parsing.
+
+* Use cached version of form when has already been loaded during current session but expire the cached version after so many hours.
+
 * tabBar:
 
   * When child exits should render the next line but only when active.
@@ -9,6 +31,8 @@ Actions & Roadmap for Metadata Forms Engine
   * 
 
 * Utility to combine JS files into a single output to allow individual editing but static serving.  Then break the mforms  into separate widget .js files to make it easier to edit.
+
+* ProvDemo:  A easy way to return to search screen where no tabs are visitble.
 
 * ProvDemo: **Update CSS to match mockup**.  Update stylesheets to reflect those provided by MarkBo at least for the dental samples.
 
