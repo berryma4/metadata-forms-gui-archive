@@ -3,3 +3,10 @@
     width: fit-content;
     padding-left: 0.15em;
 }
+
+div.vgroupcont {
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-x: hidden;
+}

@@ -83,6 +83,12 @@ img.sampleImage {
     margin-top: 0.1em;
     display: inline-block;
     margin-bottom: 0.5em;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.vert_radioCont {
+    flex-direction: row;
 }
 
 .input_fieldvCont,
@@ -174,14 +180,16 @@ div.vgroupcont div.hgroupcont {
     text-align: left;
 }
 
-    {
-    border-radius: 2px;
+div.groupContentDiv {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 div.silent_groupcont {
     border: 0px;
     border-style: none;
     display: flex;
+    flex-wrap: wrap;
     vertical-align: top;
 }
 
