@@ -252,36 +252,37 @@ var testStrObjectCommentOnEOL = `
     - arrProcFee # One of columns to total
   columns: # List of column objects
     - arrProcDate: # one of my columns
-         total: false # wether I should add total on this column
+         total: false # whether I should add total on this column
          label: Procedure Date        
     - arrProcArea:
          total: false
-         label: Area
-         title: Procedure Area
+         label: 'Area '' #54' # hash in single quotes with escaped single quote
+         title: "Procedure Area \\" &" # ampersand in double quotes with escaped double quote
      
 `;
 
 
 // Should produce and array of tab inside the widget.
 var testProperArrayDetections = `
--widget:
+- widget:
   id: provMainTabBar
   class: tabbar
   type: tabbar
   content_div: mainTabSubBar
-  -tab:
-     label: Summary
-     class: tabGood
-     form: forms/provider-summary
-     active: true
-  - tab:
-      label: Provider
-      icon: none
-      form: forms/provider-provider
-  - tab:
-      label: License
-      icon: none
-      child:  provLicenseTab
+  tabs: 
+    - tab:
+        label: Summary
+        class: tabGood
+        form: forms/provider-summary
+        active: true
+    - tab:
+        label: Provider
+        icon: none
+        form: forms/provider-provider
+    - tab:
+        label: License
+        icon: none
+        child:  provLicenseTab
 `;
 
 function mParserTest(label, dataStr) {
