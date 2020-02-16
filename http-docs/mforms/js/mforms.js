@@ -67,12 +67,11 @@ function widgetGainFocus(hwidget) {
 
 
 function mformValidateFieldValue(context, dataObj, widDef, hwidget, fldVal) {
-    var dataContext = widDef.data_context;
-    var widId = widDef.id;
+    var widIdFull = hwidget.id;
     if (isObject(widDef.valid_fun)) {
         widDef.valid_fun = [widDef.valid_fun];
     }
-    var statusDiv = widDef.id + "Status";
+    var statusDiv = widIdFull + "Status";
     // Process Validation RegEx Patterns
     if ("valid_pat" in widDef) {
         var vpat = widDef.valid_pat;
@@ -385,12 +384,9 @@ function mformCopyAttribs(widDef, widAttr, copySpec) {
 }
 
 function getDataValue(dataObj, widDef, context, custParms) {
-    var dataPath = widDef.data_context;
+    var dataPath = makeDataContext(widDef, context, custParms)
     if (dataPath == undefined) {
         alert("ERROR Widget Data Context is not specified " + JSON.stringify(widDef));
-    }
-    if ("data_context" in custParms) {
-        dataPath = custParms.data_context;
     }
     var dataVal = getNested(dataObj, dataPath, null);
     if ((dataVal == null) && (widDef.default != undefined)) {
@@ -468,8 +464,8 @@ function mformBasicWidAttr(widDef, context, custParms) {
 // Start rendering the widget with common logic
 // for label and container. 
 function mformStartWidget(widDef, b, context, custParms) {
+    var widId = makeId(widDef, context, custParms);
     var cssClass = widDef.class;
-    var widId = widDef.id;
     if ("widIdRow" in custParms) {
         widId = custParms.widIdRow;
     }
@@ -491,14 +487,15 @@ function mformStartWidget(widDef, b, context, custParms) {
     if (widDef.label_class != undefined) {
         labelClass = widDef.label_class + " " + labelClass;
     }
-    if (("label" in widDef) && (widDef.skip_label != true) && (custParms.skip_label != true)) {
-        // Add Div with Label
-        b.make("label", {
-            "class": labelClass,
-            "for": widId,
-            "id": widId + "Label"
-        }, widDef.label);
-    }
+    if ("label" in widDef)
+        if ((widDef.skip_label != true) && (custParms.skip_label != true)) {
+            // Add Div with Label
+            b.make("label", {
+                "class": labelClass,
+                "for": widId,
+                "id": widId + "Label"
+            }, widDef.label);
+        }
     return b;
 }
 
@@ -1063,21 +1060,30 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
                             "id": colId + "-_" + rowndx,
                             //"data_context": dataContextCell,
                         };
-                        if (colWidDef.isCol == true) {
-                            // If it is a simple column then we should
-                            // not render label because it will be in the
-                            // table header.
-                            custContext.skip_label = true;
-                        }
                         var dcontextEle = {
                             "path": dcontext,
                             "ndx": rowndx
                         };
+                        // For each array in a table we must add it to the 
+                        // array stack so we can properly handle nested arrays.
+                        custContext.arrayStack = [];
                         if ("arrayStack" in custParms) {
-                            custContext.arrayStack = custParms.arrayStack;
-                            custContext.arrayStack.push(dcontextEle);
-                        } else {
-                            custContext.arrayStack = [dcontextEle];
+                            // clone array stack from parent table
+                            // so we can augment it with our portion
+                            // for this widget.
+                            for (var cpndx in custParms.arrayStack) {
+                                var cpele = custParms.arrayStack[cpndx];
+                                custContext.arrayStack.push(cpele);
+                            }
+                        }
+                        custContext.arrayStack.push(dcontextEle);
+
+                        if (colWidDef.isCol == true) {
+                            // For cells labed as columns we 
+                            // will be rendering header in the table
+                            // table TH so want to skip the label for
+                            // rendering the actual field.
+                            custContext.skip_label = true;
                         }
                         rendFunc = widgRenderFuncs[colWidDef.type];
                         if (rendFunc == undefined) {
@@ -1159,6 +1165,22 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
     mformFinishWidget(widDef, b, context, custParms);
 }
 
+// Create a clone of parts of the custom parms object
+// to allow retention of the array stack and other things
+// we want preserved while allowing other things to varry
+// in the stack.
+function partialCloneCustParms(custParms) {
+    if ((custParms == null) || (custParms == undefined)) {
+        return {};
+    } else {
+        var tout = {};
+        if ("arrayStack" in custParms) {
+            tout.arrayStack = custParms.arrayStack;
+        }
+        return tout;
+    }
+
+}
 //-----
 //-- MAIN RENDERING SECTION
 //-----
@@ -1178,7 +1200,8 @@ function mformsRenderWidgets(parent, widgets, b, context, custParms) {
 
                 try {
                     var rendFunc = widgRenderFuncs[widDef.type];
-                    rendFunc(widDef, b, context, custParms);
+                    var wsCustParms = partialCloneCustParms(custParms);
+                    rendFunc(widDef, b, context, wsCustParms);
                 } catch (err) {
                     console.log("L324: Error rendering=", err, " widDef=", widDef, " funName", rendFunc);
                     b.b("<h6>Error Rendering See console</h6>");
@@ -1227,7 +1250,7 @@ function mformsRenderForm(form, context) {
         }, form.label);
     }
 
-    mformsRenderWidgets(form, form.widgets, b, context, {});
+    mformsRenderWidgets(form, form.widgets, b, context, null);
     /*
     b.addInputField({
         label: "Cert #",

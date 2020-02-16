@@ -83,7 +83,7 @@ fieldset.radio {
 
 
 #provLicRowGroupcont {
-    flex-wrap: nowrap;
+    flex-wrap: no-wrap;
 }
 
 #provLicLeftcont {
@@ -182,6 +182,28 @@ fieldset.radio {
     }
 
 
+    #dataObjDivBottom {
+        max-width: 98%;
+        overflow-x: hidden;
+    }
+
+    div.tabbarCont {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+    }
+
+    ul.tabbar {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+    }
+
+    #provLicRowGroupcont {
+        flex-wrap: wrap;
+    }
 }
 
 /* Smartphones (landscape) ----------- */
@@ -189,3 +211,8 @@ fieldset.radio {
     body {
         font-size: 13pt;
     }
+
+    #provLicRowGroupcont {
+        flex-wrap: wrap;
+    }
+}

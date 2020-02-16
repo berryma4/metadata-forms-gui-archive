@@ -42,7 +42,7 @@
   id: provELicExpireDate
   type: date
   data_type: date
-  label: Issue Date
+  label: Expire Date
   label_class: wrap  
   data_context: expire_date
   class : input_field

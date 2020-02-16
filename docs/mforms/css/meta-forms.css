@@ -263,9 +263,16 @@ legend.vgroupLabel {
     margin-left: 0.2em;
 }
 
+form.inputFrm,
+div.inputFrm {
+    max-height: fit-content;
+    overflow-y: hidden;
+}
 
 fieldset.inputFrm {
     margin-left: 4em;
+    max-height: fit-content;
+    overflow-y: hidden;
 }
 
 div.fsblock {
