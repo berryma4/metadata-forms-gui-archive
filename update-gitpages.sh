@@ -13,4 +13,3 @@ rm -Rf docs/css
 cp -r http-docs/* docs
 cp -r data docs
 rm -Rf docs/data/raw-download
-cp -r documentation docs
