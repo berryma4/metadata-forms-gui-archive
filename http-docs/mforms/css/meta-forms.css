@@ -164,6 +164,7 @@ div.groupcont,
 div.vgroupcont div.hgroupcont {
     width: auto;
     display: flex;
+    flex-wrap: wrap;
     margin-bottom: 0.5em;
     border-radius: 2px;
     background-color: rgb(226, 247, 247, 0.137);
