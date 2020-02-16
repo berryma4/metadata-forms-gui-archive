@@ -2,26 +2,53 @@ Actions & Roadmap for Metadata Forms Engine
 
 # Rank Ordered Feature Work
 
-* Lookup are being fired twice because the on-change and on-update are both hitting autosuggest.
-* ProvDemo:  Ability to make some fields mandatory based on the value of another field.  EG:  If  Other insurance is checked then all the fields in that group are mandatory
-* **ProvDemo:** Ability to determine total form stack validity even if they have not clicked on those tabs.
-* ProvDemo:  **Tab Bar Support Icons with State based on form compliance:** with Sub Tab Bar as nicely shown in  screen 75 Credentialing & Hospital Association.  Provide a alternating Icon for each tab that chooses one of a set of images based status of the tab.     Will need a notion of VerifyTab or VerifySubForm so we can also do server side validation.
-* ProvDemo:  Generic Status display screen for a process flow This is like a table but process but should support as a generic status object. screen 70.
-* ProvDemo:  Search rendering is Should render specified column name list rather than headers from server.  This is a mapping issues. not respecting column list with proper headers for simple search results. 
+* Prevent Lookup, formload and autosuggest  from being fired twice because the on-change and on-update are both hitting autosuggest.
 * ProvDemo: Search multi-word tokens are failing in search due to escaping that is slightly different.  Need to duplicate exact functionality from the python make safe function.
 * ProvDemo: Provider search should filter non primary keys using a string prefix.
-* ProvPython: ProvDemo: Permits should be an array 
+* ProvDemo:  Search rendering is Should render specified column name list rather than headers from server.  This is a mapping issues. not respecting column list with proper headers for simple search results. 
 * ProvDemo:  State widget should be rendered from list of states returned from service
 * ProvDemo: Status in dropdown must allow specification of a class to show in green.
 * ProvDemo: Specialty needs to option to delete row using trashcan.  screen 27
-* Prov-Python:   License should be an array.   With license type, state, data. 
-* ProvDemo: Local Storage to save objects as updated.  Fetch from there and allow a TTL to expire them from cache. 
 * PovDemo: Specialty drop down needs to support title to display larger  dropdown.
+* Prov-Python:   License should be an array.   With license type, state, data. 
+* Readme:  Add sample auto-suggest screen from provider
+* Readme: Add sample Simple Search Screen from provider
+* Readme: Add Tabs and subtabs screen from provider
+* ProvDemo: Show hourglass when waiting exceeds 300ms on fetching remote resources.
+* ProvDemo:  Ability to make some fields mandatory based on the value of another field.  EG:  If  Other insurance is checked then all the fields in that group are mandatory
+* ProvDemo: Update Buttons CSS to reflect what is required for the mockup.
+* ProvDemo:  **Add the Add new provider screens** ProvDemo: Show alternate new provider flow.   Show license match in auto suggest Give them option to click on that row to go to edit rather than hokey provider already exists.   Page 10 - 14.   Need to double check which license # we are checking against since license a multi-edit in other pages which one is the primary for that provider.
+* ProvDemo: Support "&" in Tab Label
+* ProvDemo: Implement Summary Tab.
+* ProvDemo: Implement License/Permit Tab.
+* ProvDemo: Implement License/Sanctions Tab.
+* ProvDemo: Implement rest of fields for provider tab and modify to be closer to their shown sample. Page 14 - 18 with some dropdown defined on 19 to 23.
+* ProvDemo: Implement Special programs Tab. Page 31 - 37
+* ProvDemo: Implement Business office Tab Pages 38 - 53 This is a complex flow with sub search of business office but selecting office just populates fields into next form.
+* ProvDemo: Implement Participation Tab: Page 54 - 61
+* ProvDemo: Implement Participation Tab /  Define new Participation group - Page 61 - 67
+* ProvDemo: Implement Credentialing / History Tab - Page 72
+* ProvDemo: Implement Credentialing / Education Tab - Page 71, 73,  74
+* ProvDemo: Implement Credentialing / Hospital Association Tab - Page 75-77
+* ProvDemo: Implement Credentialing / Insurance Tab Page 78 - 79
+* ProvDemo: Implement Credentialing / Compliance Page  80 - 81
+* ProvDemo: Implement Credentialing / Professional Information Page  81-82
+* ProvDemo: Implement Credentialing / Work History Information Page 84-85
+* ProvDemo: Implement Claims / Deductions / Garnishments Page 88, 89, 90 Also includes Court Order 94 - 95,    Also includes Federal Notice of Levies Page #96
+* ProvDemo: Implement Claims / Deductions/ Levies Page 90, 92
+* ProvDemo: Implement Claims/ Deductions All Deductions  Page 93,   Also includes Export all to excel which should be done as custom function linked to a Ahref widget.
+* ProvDemo: Implement Claims Deductions / Overpayments screen 97 but it really looks like just another version of court order tab with a different levy source. 
+* ProvDemo: Implement Credentialing / Summary Tab Page 68-70
+* ProvDemo: Implement Focused Review function Page 106-120, some lookup on 
+* **ProvDemo:** Ability to determine total form stack validity even if they have not clicked on those tabs.
+* ProvDemo:  **Tab Bar Support Icons with State based on form compliance:** with Sub Tab Bar as nicely shown in  screen 75 Credentialing & Hospital Association.  Provide a alternating Icon for each tab that chooses one of a set of images based status of the tab.     Will need a notion of VerifyTab or VerifySubForm so we can also do server side validation.
+* ProvDemo:  Generic Status display screen for a process flow This is like a table but process but should support as a generic status object. screen 70.
+* ProvPython: ProvDemo: Permits should be an array 
+* ProvDemo: Local Storage to save objects as updated.  Fetch from there and allow a TTL to expire them from cache. 
 * ProvDemo:  A easy way to return to search screen where no tabs are visitble.
 * ProvDemo: **Update CSS to match mockup**.  Update stylesheets to reflect those provided by MarkBo at least for the dental samples.
 * provPython: Speciality should be an array with first item as primary to allow show in search.      Languages should be an array.     Format Dates as Javascript standard
 * TabBar:  Use cached version of form when has already been loaded during current session but expire the cached version after so many hours.
-* 
 * TabBar: Remember tab states even after a form is refreshed with new parsing or prevent re-parsing for a TTL period.   This means we should keep the list of forms parsed in RAM and skip re-fetching them if we have results.  Also requires a form of TTL.
 * AutoSuggest: Need to be able to exit and hide auto suggest with escape. 
 * AutoSuggest:  Need to be able to move down in auto sug with arrow and select with enter.
@@ -31,8 +58,6 @@ Actions & Roadmap for Metadata Forms Engine
 * Client side search needs option to change heading repeat spec.
 * Client side search needs to filter records based on other fields that are filled in.
 * ProvDemo:  Fix reset button so on same page with Search.
-* ProvDemo: Update Button CSS to reflect what is required for the mockup.
-* ProvDemo:  Add the Add new provider screen
 * DONE:JOE:2020-02-09: ProvDemo:  Python to convert sample dentists into searchable format with simple handler to do the search but preferably make it work entirely client side.
 * ProvDemo:  Ability to string Dialog Pop over forms into a sequence.
 * ProvDemo:  Popover: Add New Provider Screens 10 to 12
@@ -56,7 +81,6 @@ Actions & Roadmap for Metadata Forms Engine
 * FetchData: Demonstrate creating a POST string for send when fetching the object.
 * SaveData: Need a list of all fields rendered for a form to make form level validation check easy.
 * SaveData: Reject or Disable Save to server:  when Some Fields fail the validation rules.  **Save Data back to server:** Add Prevent Save Call until all validation rules for all widgets are successful.
-* 
 * Support Form stack where new forms can be displayed on top of other forms with some control over positioning then when the other form is finished the form immediately below it is restored.  Ability to chain forms together into a series where all the mandatory fields in the series must be filled in before the form is saved to server.
 * Add support to allow multiple forms to be defined in a single file and only the one marked master.
 * EditTable: Allow Removal of AddRow button.  Also allow the label and style to be shown for the AddRow.  Allow HTML symbol prefix or suffix  image and allow leading image icon. 
@@ -65,9 +89,6 @@ Actions & Roadmap for Metadata Forms Engine
 * Utility showing data mapping to field ID to make it easier to see how the Data map will be rendered.
 * Utility to combine JS files into a single output to allow individual editing but static serving.  Then break the mforms  into separate widget .js files to make it easier to edit.
 * Script to copy over basic form contents to create a new repo directory or clone a new one with minimum contents to successfully render forms.   Script to create a new dependent directory that will be using the library.  Should also update it.  EG:   update dependant  ../test1  should create a new directory ../test1.  It should checkout ../mformsproto then copy the right files from the docs, js, etc directory create a new .gitignore if it does not exist and copy over the http server if it des not exist.  Any of these files that are copied over should by default not be saved in the local repository.  Will need to move the docs,js,styles inside of docs/mforms to keep them isolated from the local repo files.
-* AutoSuggest:  Support preserving original values for display even though we must remove punctuation and uppercase to normalize for storage.
-* AutoSuggest:  Support  allowing optional  prefilter eg:  Filter on FirstName based on Presence of Zipcode.
-* Allow custom rendering agent / widget  for auto suggest
 * Support  save_start, save_success, save_fail callback function specified in metadata so the programmer can easily change GUI state. 
 * AutoSuggest: Set cursor and end of text input after selection has been made. [See selection range](https://www.endyourif.com/set-cursor-position-of-textarea-with-javascript/)
 * Demo: Dental Claim Add rest of fields from ADA form that exist below the Procedure codes.
@@ -83,6 +104,9 @@ Actions & Roadmap for Metadata Forms Engine
 * Support calling of a user specified Function to validate field contents.
 * Support calling of user specified URI to validate field contents.
 * Add support for a Widget Icon that is added in addition to the label field Widget Icon that is rendered before the actual Widget when specified.
+* Add formatting function to take something like a REPattern and reformat with spaces. Hook into a formatting RE pattern in metadata.
+* AutoSuggest:  Support preserving original values for display even though we must remove punctuation and uppercase to normalize for storage.
+* AutoSuggest:  Support  allowing optional  prefilter eg:  Filter on FirstName based on Presence of Zipcode.
 * Add support for basic validators functions demonstrate with zipcode and state using server side services.
 * Dates Widget: Allow parsing of dates in common text formats into form required for the date widget. Also allow reformat into desired format for sending back to service.
 * respect data type specifier in widget rather than keeping as text
@@ -92,6 +116,7 @@ Actions & Roadmap for Metadata Forms Engine
 * DONE:JOE:2020-02-10: Demo: Dental Claim:Create basic ADA For Fields.
 * DONE:JOE:2020-02-15:  Editable Table: Add a way to group multiple widgets in a single cell when the table would otherwise be too wide. Note: Done by using a group widget in the table column.
 * Demo Dental Claim:  Use AutoSuggest feature to show possible codes but extend to also show a description rather than just the expanded token.  When user enters any portion of a procedure code or  description of code show list of codes 5  that could fit.    Implement as re-usable functionality. 
+* Allow custom rendering agent / widget  for auto suggest
 * Editable Table: Demonstrate alternating color bands in table widget.
 * Editable Table: Demonstrate repeated headers in a table widget
 * Editable Table: Provide client side sort,  
@@ -105,7 +130,7 @@ Actions & Roadmap for Metadata Forms Engine
 * Editable Table: Ability to remove a row
 * Editable Table: Ability to notify server of row addition
 * Editable Table: Ability to notify server of row deletion
-* Add formatting function to take something like a comma delimited list and reformat with spaces. Hook into a formatting RE pattern.
+* 
 * DEMO: DentalClaim: Display description based on selected proceedure code by default then allow user to edit to change. ensure that keep the users change if they have specified it but change to reflect new code if it remains the default.
 * Demo:Lookup service to allow search of procedure codes when field gains context
 * Demo: Dental Claim: Hook up validator for tooth numbers.
