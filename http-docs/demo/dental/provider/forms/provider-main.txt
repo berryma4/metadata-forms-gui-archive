@@ -22,7 +22,7 @@
        label: Permit
        icon: none
        active: false
-       form: forms/provider-Permit
+       form: forms/provider-permit
    - tab: 
        id: tabProvSanctions
        label: sanctions

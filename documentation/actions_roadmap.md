@@ -2,6 +2,10 @@ Actions & Roadmap for Metadata Forms Engine
 
 # Rank Ordered Feature Work
 
+* PovDemo: Specialty drop down needs to support title to display larger  dropdown.
+
+* ProvDemo: Specialty needs to option to delete row using trashcan.  screen 27
+
 * Validation message is broken in dental claim for tooth system.
 
 * Prov-Python:   License should be an array.   With license type, state, data. 
