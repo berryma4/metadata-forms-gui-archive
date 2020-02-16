@@ -4,7 +4,7 @@
 
 Building forms based GUI to CRUD operations.  Provide a Meta data based system to deliver highly Git Demo functional user interfaces for editing, viewing and updating data in REST based services.   Can dramatically reduce the Labor required to build and maintain custom GUI while retaining sufficient flexibility to deliver a pleasant and efficient user experience.  
 
-* **[simple demo]( https://frigateforms.com)** on github pages.  Gitpages only allow form display and will not accept updates.   If you wish to demonstrate saving data via REST calls then a server capable of processing PUT and POST commands must be available.  See: [httpServer](httpServer)
+* **[Live demo]( https://frigateforms.com)** on github pages.  Gitpages only allow form display and will not accept updates.   If you wish to demonstrate saving data via REST calls then a server capable of processing PUT and POST commands must be available.  See: [httpServer](httpServer)
 
 Please file a Issue to request enhancements.  You can also reach me on Linked-in [Contact](https://www.linkedin.com/in/joe-ellsworth-68222/)   main Git Repo URI:   [metadata-forms-gui](https://github.com/joeatbayes/metadata-forms-gui) 
 
@@ -12,18 +12,18 @@ Please file a Issue to request enhancements.  You can also reach me on Linked-in
 
 > ### Certificate of Need
 
-![Sample Screen for FDA Project Certificate Of Need](docs/documentation/samples/fda-cert-of-need.jpg)
+![Sample Screen for FDA Project Certificate Of Need](documentation/samples/fda-cert-of-need.jpg)
 
 [Live Version]( https://frigateforms.com/demo/cert-of-need/index.html)  [metadata source](http-docs/demo/cert-of-need/forms/cneed.txt)  [html source](http-docs/demo/cert-of-need/index.html)
 
 > ### Dental Claim Form
 
-![dental Claim Form](docs/documentation/img/dental-claim-form-1.jpg)
+![dental Claim Form](documentation/img/dental-claim-form-1.jpg)
 [Live Version](https://frigateforms.com/demo/dental/claims/dental-claim.html)   [metadata source](/http-docs/demo/dental/claims/forms/dental-claim.txt)    [html source](http-docs/demo/dental/claims/dental-claim.html)
 
 > ### Simple Form
 
-![Simple Form](docs/documentation/img/simple-form-demo-1.jpg)
+![Simple Form](documentation/img/simple-form-demo-1.jpg)
 
 [Live Version](https://frigateforms.com/)  [metadata source](http-docs/demo/examples/forms/simple-form.txt) [html source](http-docs/demo/examples/simple-form.html)
 
@@ -31,7 +31,7 @@ Please file a Issue to request enhancements.  You can also reach me on Linked-in
 
 
 
-![field level validation](docs/documentation/img/sample-failed-regex-validation.jpg)
+![field level validation](documentation/img/sample-failed-regex-validation.jpg)
 
 [metadata source](http-docs/demo/examples/forms/field-validator-regex.txt)
 
