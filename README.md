@@ -2,9 +2,9 @@
 # Meta data driven forms GUI for REST services![frigate forms logo](http-docs/img/frigate-forms-logo.png)
 ###### ***Status: Alpha-Dev** - Ready to use in projects but some features may need enhancements.*   
 
-Building forms based GUI to CRUD operations.  Provide a Meta data based system to deliver highly Git Demo functional user interfaces for editing, viewing and updating data in REST based services.   Can dramatically reduce the Labor required to build and maintain custom GUI while retaining sufficient flexibility to deliver a pleasant and efficient user experience.  
+Building forms based GUI to CRUD operations.  Provide a Meta data based system to rapidly deliver highly functional user interfaces.  It supports editing, viewing and updating data in REST based services.   It can dramatically reduce the Labor required to build and maintain custom GUI while retaining sufficient flexibility to deliver a customized and efficient user experience.  
 
-* **[Live demo]( https://frigateforms.com)** on github pages.  Gitpages only allow form display and will not accept updates.   If you wish to demonstrate saving data via REST calls then a server capable of processing PUT and POST commands must be available.  See: [httpServer](httpServer)
+* **[Live demo]( https://frigateforms.com)** on github pages.  Gitpages only allow form display and will not accept updates.   If you wish to demonstrate saving data via REST calls then a server capable of processing PUT and POST commands must be available.  See: [httpServer](httpServer)    *The Demos are highly responsive,  Try them on both desktop and mobile devices.*
 
 Please file a Issue to request enhancements.  You can also reach me on Linked-in [Contact](https://www.linkedin.com/in/joe-ellsworth-68222/)   main Git Repo URI:   [metadata-forms-gui](https://github.com/joeatbayes/metadata-forms-gui) 
 
