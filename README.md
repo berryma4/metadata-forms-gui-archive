@@ -2,9 +2,9 @@
 # Meta data driven forms GUI for REST services![frigate forms logo](http-docs/img/frigate-forms-logo.png)
 ###### ***Status: Alpha-Dev** - Ready to use in projects but some features may need enhancements.*   
 
-Building forms based GUI to CRUD operations.  Provide a Meta data based system to rapidly deliver highly functional user interfaces.  It supports editing, viewing and updating data in REST based services.   It can dramatically reduce the Labor required to build and maintain custom GUI while retaining sufficient flexibility to deliver a customized and efficient user experience.  
+**[Live demo]( https://frigateforms.com)** for [FDA Certificates](https://frigateforms.com/demo/cert-of-need/index.html),  [Dental Claims](https://frigateforms.com/demo/dental/claims/dental-claim.html),  [Dental Providers](https://frigateforms.com/demo/dental/provider/dental-provider.html), etc.   *The Demos are highly responsive,  Try them on both desktop and mobile devices.*on github pages.  
 
-* **[Live demo]( https://frigateforms.com)** on github pages.  Gitpages only allow form display and will not accept updates.   If you wish to demonstrate saving data via REST calls then a server capable of processing PUT and POST commands must be available.  See: [httpServer](httpServer)    *The Demos are highly responsive,  Try them on both desktop and mobile devices.*
+Metadata based forms based GUI for CRUD operations.  Provide a Meta data based system to rapidly deliver highly functional user interfaces.  It supports editing, viewing and updating data in HTML with REST based backend services.   It can dramatically reduce the Labor required to build and maintain a custom GUI while retaining sufficient flexibility to deliver a branded, customized and efficient user experience.  
 
 Please file a Issue to request enhancements.  You can also reach me on Linked-in [Contact](https://www.linkedin.com/in/joe-ellsworth-68222/)   main Git Repo URI:   [metadata-forms-gui](https://github.com/joeatbayes/metadata-forms-gui) 
 
@@ -79,6 +79,7 @@ Please file a Issue to request enhancements.  You can also reach me on Linked-in
 
 ## HTTP Server
 
+* Demo Note:   Gitpages where we host the live demo only allows form display and will not accept updates.   If you wish to demonstrate saving data via REST calls then a server capable of processing PUT and POST commands must be available.  See: [httpServer](httpServer)    
 * [httpServer.exe](http-server/http-server.exe) A basic HTTP server to allow local testing of forms and data retrieval logic.   Implemented in  [http-server.go](httpSever/http-server.go)  It maps "/data" to the data directory at [../data](data/) and URI "/" is mapped that is expected to contain the main html and javascript is mapped to [../http-docs](http-docs).   All mapping is relative to current directory where executable is ran so it expects the executable to be ran from inside of "http-docs" All examples are written to expect these to be mapped.  This server can be replaced with an appropriate configured http server provided it supports the correct mapping for /data and /http-docs.  The exe extension is only present in windows.  For MAC and linux it is a executable file of same name without the extension.
 
 ## Test Files
