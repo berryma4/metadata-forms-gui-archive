@@ -2,6 +2,7 @@ Actions & Roadmap for Metadata Forms Engine
 
 # Rank Ordered Feature Work
 
+* When displaying dental claim on phone in portrait the text widgets are indented but radio buttons are not.  None should be indented on mobile devices. 
 * Prevent Lookup, formload and autosuggest  from being fired twice because the on-change and on-update are both hitting autosuggest.
 * ProvDemo: Search multi-word tokens are failing in search due to escaping that is slightly different.  Need to duplicate exact functionality from the python make safe function.
 * ProvDemo: Provider search should filter non primary keys using a string prefix.
@@ -130,7 +131,6 @@ Actions & Roadmap for Metadata Forms Engine
 * Editable Table: Ability to remove a row
 * Editable Table: Ability to notify server of row addition
 * Editable Table: Ability to notify server of row deletion
-* 
 * DEMO: DentalClaim: Display description based on selected proceedure code by default then allow user to edit to change. ensure that keep the users change if they have specified it but change to reflect new code if it remains the default.
 * Demo:Lookup service to allow search of procedure codes when field gains context
 * Demo: Dental Claim: Hook up validator for tooth numbers.
@@ -144,10 +144,7 @@ Actions & Roadmap for Metadata Forms Engine
 * Warn programmer if Requested data object can not be located.
 * Edittable: Add a collapse column icon to header.  When it is clicked reduce column size to 3 characters and then only the expand icon. 
 * Demo: Dental Claim:Convert CDT to CSV for rapid file transfer.
-* DONE: JOE:2020-02-08: Demo: Dental Claim:Form field which Sums other fields on the form.  Even when those fields are not part of table
-* DONE:JOE:2020-01-30: Demo: Dental Claim:Feature to set a random / timestamp data object Id after an empty object is loaded. Support rendering blank form when source object can not be located.
-* DONE:JOE:2020-01-30: Demo: Dental Claim: Download sample CDT Codes to populate drop down.
-* DONE:JOE:2020-02-13: Done as Auto Suggest for provider can be reused for Claim: Demo: Dental Claim: Fast search filter widget to make search by codes easy. AND Filter dropdown list of CDT codes as user types the code.
+* 
 * Demo: Dental Claim: Need to Allow update or refresh of a given form field based on actions taken in other form fields.  EG: A search set a member identity field based on the results of a search field. 
 * Demo: Dental Claim:Support display only field.   Also support initial state of disable for a form widget.
 * Demo: Disable state for a given widget depending on the state of another widget. Allow some fields to be disabled in metadata spec to prevent editing. Allow some fields to be disabled for editing until a rule becomes true.  
@@ -223,8 +220,7 @@ Actions & Roadmap for Metadata Forms Engine
 * Demo: XRay viewer Widget with Zoom,  pan, brightness, crop and edit saves as metadata.
 * Color Picker Widget.
 * Ability to source data from two different objects resident in the object graph for interpolation.   EG: If you have a master contact list and are editing a detailed contact then you may want to render fields in the sub form from both records.  This requires the data_context to be enhanced so it can handle branched access where it currently only looks into the active object.    EG:  If the master contact has a ID of 300 and  a field of first_name we want to render in the sub form then the individual contact event has an ID of 18181 and is the active object and it includes an attribute master_contact: 300 then we need to be able to derive a path that goes to the root of the object graph using 300 as the key to retrieve it.   EG:   /objects:{master_contact}.name  which derives to going into the global list at GTX.objects['300'].name  rather than looking at current object.
-* DONE: JOE:2020-02-10: Ability to specify a class for label independent of class of the widget.
-* DONE:JOE:2020-02-11: Text widget when num_dec has been specified should reformat to fit the specification when it looses format.  In reality this should be implemented as a general purpose function that allows a reformat pattern to do this work. 
+* 
 * DEMO: Button or Link to show the metadata definition in a separate target window.
 * Display currency with formatting showing space at grouping then remove the space prior to conversion.
 * Support streaming local changes to browser local storage so can restore if user leaves page and returns.   
@@ -241,15 +237,11 @@ Actions & Roadmap for Metadata Forms Engine
 * Demo Claim: Demonstrate displaying data from a FHIR service.
 * Demo Claim: Add sample using a publicly available REST API to source the data.
 * Edit Table: Extend tables widget to allow a multi-level sort functionality by Shift click on different headers.  Show shift click instruction on hover or some other multi-level sort function
-* DONE: JOE:2020-02-15: Demonstrate ability to  handle multi-level nested forms eg:   Plan to list of clients to single client to list of sub clients to list of contacts to single contact with CRUD Add, Edit, Drop.
-* SKIP: Alternative Found: Make a clean way to read a directory of files and return header data to allow rendering a summary table.  EG: If each contact is in a separate file then would want to returns some basic data for each contact to render the initial table prior to the click that drills in to edit each piece of content.
-* DONE:JOE:2020-02-13: Allow label Class to override normal generated class for the label.  Demonstrate shrinking label for state to allow better formatting.    This is to allow easier formatting when we want custom behavior out of a subset of labels.
-* DONE:JOE:2020-02-15: Done in a different way using cached objects and ability to render child forms in tabs.  Add support to invalidate and remove parent object after edit of child when child views are included in parent fetch.  Or support editing them in place so other forms can properly see the changed fields when sub form edit field is displayed.
-* DONE:JOE:2020-01-30: **DEMO** [Configure custom domain](https://help.github.com/en/github/working-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site) for github pages site
+* 
 * DeepLinking: Add support to change context on right hand # of uri at top of browser as user selects different widgets.  
 * Create a new set of files for cert of need where the facility operator is consolidated to include all certificates for that operator.  Also include ability to get the children with a sub query.
 * Add physicians list to the data set for demonstration.
-* DONE:JOE:2020-02-05: ProvDemo: Download and parse public data for Dental providers to drive auto suggest, search and supply basic data for demo.
+* 
 * Add fallback of manually built date picker widget for older browsers .   Support Native Date picker on modern browsers fall back to rendered. 
 * FormLoader: Allow naming a widget that triggers loading an additional file to complete filling in a form.  See Also specifying an include file in a form. 
 * Metadata: Allow fragments to be enhanced with data from local environment such as active forms, loaded data objects and other form files using interpolation
@@ -719,6 +711,18 @@ defaults:
 
 -------------------------------
 
+* DONE: JOE:2020-02-10: Ability to specify a class for label independent of class of the widget.
+* DONE:JOE:2020-02-11: Text widget when num_dec has been specified should reformat to fit the specification when it looses format.  In reality this should be implemented as a general purpose function that allows a reformat pattern to do this work. 
+* DONE:JOE:2020-02-05: ProvDemo: Download and parse public data for Dental providers to drive auto suggest, search and supply basic data for demo.
+* DONE: JOE:2020-02-15: Demonstrate ability to  handle multi-level nested forms eg:   Plan to list of clients to single client to list of sub clients to list of contacts to single contact with CRUD Add, Edit, Drop.
+* SKIP: Alternative Found: Make a clean way to read a directory of files and return header data to allow rendering a summary table.  EG: If each contact is in a separate file then would want to returns some basic data for each contact to render the initial table prior to the click that drills in to edit each piece of content.
+* DONE:JOE:2020-02-13: Allow label Class to override normal generated class for the label.  Demonstrate shrinking label for state to allow better formatting.    This is to allow easier formatting when we want custom behavior out of a subset of labels.
+* DONE:JOE:2020-02-15: Done in a different way using cached objects and ability to render child forms in tabs.  Add support to invalidate and remove parent object after edit of child when child views are included in parent fetch.  Or support editing them in place so other forms can properly see the changed fields when sub form edit field is displayed.
+* DONE:JOE:2020-01-30: **DEMO** [Configure custom domain](https://help.github.com/en/github/working-with-github-pages/configuring-a-custom-domain-for-your-github-pages-site) for github pages site
+* DONE: JOE:2020-02-08: Demo: Dental Claim:Form field which Sums other fields on the form.  Even when those fields are not part of table
+* DONE:JOE:2020-01-30: Demo: Dental Claim:Feature to set a random / timestamp data object Id after an empty object is loaded. Support rendering blank form when source object can not be located.
+* DONE:JOE:2020-01-30: Demo: Dental Claim: Download sample CDT Codes to populate drop down.
+* DONE:JOE:2020-02-13: Done as Auto Suggest for provider can be reused for Claim: Demo: Dental Claim: Fast search filter widget to make search by codes easy. AND Filter dropdown list of CDT codes as user types the code.
 * DONE:JOE:2020-02-16: DentalClaimDemo: Make the container objects flex-wrap they are not reflowing on browser correctly.
 * DONE:JOE:2020-02-15: Validation message is broken in dental claim for tooth system.
 * DONE:JOE:2020-02-15: ProvDemo: License:  An editable table where each row is composed of a multi-field block that is not presented in an array.  
@@ -837,118 +841,108 @@ defaults:
 
 * DONE:JOE:2019-12-19: Modify form fetch to skip fetch is form is already in memory
 
-* # DONE:
+* DONE:JOE:2020-02-02: Add a counter of how many objects auto created during this RIA session and append to end of auto gen ID as additional cache buster.
 
-  * DONE:JOE:2020-02-02: Add a counter of how many objects auto created during this RIA session and append to end of auto gen ID as additional cache buster.
+* DONE:JOE:2020-02-02: Implement Basic Save Object Function that can post or PUT back to server.  SaveData: Finish code to submit object back to a target URI.
 
-  * DONE:JOE:2020-02-02: Implement Basic Save Object Function that can post or PUT back to server.  SaveData: Finish code to submit object back to a target URI.
+* DONE:JOE:2020-02-02: Demonstrate easy way of forcing labels to wrap the field so they are above the field instead of to the left.
 
-  * DONE:JOE:2020-02-02: Demonstrate easy way of forcing labels to wrap the field so they are above the field instead of to the left.
+* DONE:JOE:2020-02-01: Allow extra label class to be specified.
 
-  * DONE:JOE:2020-02-01: Allow extra label class to be specified.
+* DONE:JOE:2020-02-02: Fixed: Drop downs in table cell are not keeping value in domain object when table is refreshed.
 
-  * DONE:JOE:2020-02-02: Fixed: Drop downs in table cell are not keeping value in domain object when table is refreshed.
+* DONE: JOE:2020-02-02: Editable Table: Support total columns
 
-  * DONE: JOE:2020-02-02: Editable Table: Support total columns
+* DONE:JOE:2020-02-02: Support fixed decimal formatting for table cell columns
 
-  * DONE:JOE:2020-02-02: Support fixed decimal formatting for table cell columns
+* DONE: JOE:2020-02-01: Editable Table: To allow resort we need to be able to replace the table in the div container  which means we need to be able to render it without the container so we can to a toDiv into that container.
 
-  * DONE: JOE:2020-02-01: Editable Table: To allow resort we need to be able to replace the table in the div container  which means we need to be able to render it without the container so we can to a toDiv into that container.
+* DONE:JOE:2020-02-01: Extend the Tables widget to provide custom widgets in the tables.
 
-  * DONE:JOE:2020-02-01: Extend the Tables widget to provide custom widgets in the tables.
+* DONE:JOE:2020-01-30: Horizontal Div blocks are not properly wrapping.
 
-  * DONE:JOE:2020-01-30: Horizontal Div blocks are not properly wrapping.
+* DONE:JOE:2020:02-02: Demo: Dental Claim: On claim form support adding new blank lines with a +
 
-  * DONE:JOE:2020:02-02: Demo: Dental Claim: On claim form support adding new blank lines with a +
+* DONE:JOE:2020-02-01: When updating DOM with record value if the field fails it's validation then display error message at that time in a div that remains hidden until validation validation suceeds
 
-  * DONE:JOE:2020-02-01: When updating DOM with record value if the field fails it's validation then display error message at that time in a div that remains hidden until validation validation suceeds
+* DONE:JOE:2020-02-01: Switch to using HTML label-for tag rather than old approach.
 
-  * DONE:JOE:2020-02-01: Switch to using HTML label-for tag rather than old approach.
+* DONE:JOE: 2020-01-28: Add Basic Date Widget Support
 
-  * DONE:JOE: 2020-01-28: Add Basic Date Widget Support
+* DONE:JOE:2020-01-31: Add support for HGroup.   Horizontal Group ideally using CSS to allow same row flex placement but with a min-width  to force wrapping as the screen shrinks.  horizontal group that is not allowed to wrap widgets. EG for city, state, zip
 
-  * DONE:JOE:2020-01-31: Add support for HGroup.   Horizontal Group ideally using CSS to allow same row flex placement but with a min-width  to force wrapping as the screen shrinks.  horizontal group that is not allowed to wrap widgets. EG for city, state, zip
+* DONE:JOE:2020-01-28: Add support for drop down list widget
 
-  * DONE:JOE:2020-01-28: Add support for drop down list widget
+* DONE:JOE:2020-01-28: Add support for radio button widget
 
-  * DONE:JOE:2020-01-28: Add support for radio button widget
+* DONE:JOE:2020-02-01: Display edit error messages below the field when validation pattern match rules are violated.  Implement validation function showing an error message
 
-  * DONE:JOE:2020-02-01: Display edit error messages below the field when validation pattern match rules are violated.  Implement validation function showing an error message
+* DONE:JOE:2020-01-27: Allow clicking on +- to show hide Div group sections make rendering the collapse functions optional.
 
-  * DONE:JOE:2020-01-27: Allow clicking on +- to show hide Div group sections make rendering the collapse functions optional.
+* DONE:JOE:2020-02-01: Editable Table: Must support column header rather than field headers.
 
-  * DONE:JOE:2020-02-01: Editable Table: Must support column header rather than field headers.
+* DONE:JOE:2020-02-02: Editable Table: Add basic support for Rows & Columns 
 
-  * DONE:JOE:2020-02-02: Editable Table: Add basic support for Rows & Columns 
+* DONE:JOE:2020-02-02: DEMO:Dental: Tooth and area_oral_cavity are not properly handeling array structure.  They are both dropdown list.    Need to modify radio, select, etc to use the override data path like text box.
 
-  * DONE:JOE:2020-02-02: DEMO:Dental: Tooth and area_oral_cavity are not properly handeling array structure.  They are both dropdown list.    Need to modify radio, select, etc to use the override data path like text box.
+* DONE:JOE:2020-02-02:Editable Table: Support Add Row column.
 
-  * DONE:JOE:2020-02-02:Editable Table: Support Add Row column.
+* DONE:JOE:2020-02-01: Add Basic array level support to setNested and getNested.
 
-  * DONE:JOE:2020-02-01: Add Basic array level support to setNested and getNested.
+* DONE:JOE:2020-02-01: Editable Table: Ability to render a minimum number of rows even if blank
 
-  * DONE:JOE:2020-02-01: Editable Table: Ability to render a minimum number of rows even if blank
+* DONE:JOE:2020-02-01: Editable Table: Ability to add a new row.
 
-  * DONE:JOE:2020-02-01: Editable Table: Ability to add a new row.
+* DONE:JOE:2020-02-01: Switch over to using Label-for instead of manual label div specification.
 
-  * DONE:JOE:2020-02-01: Switch over to using Label-for instead of manual label div specification.
+* DONE:JOE:2020-02-01: Editable Table: Fix Add row so it is rendered as a button rather than Div also added container div to keep it inside the parent div without float:right
 
-  * DONE:JOE:2020-02-01: Editable Table: Fix Add row so it is rendered as a button rather than Div also added container div to keep it inside the parent div without float:right
+* DONE:JOE:2020-02-01: Editable Table: Support a Table for Array Element Display 
 
-  * DONE:JOE:2020-02-01: Editable Table: Support a Table for Array Element Display 
+* Editable Table: Ability to change sort by clicking on header
 
-  * Editable Table: Ability to change sort by clicking on header
+* DONE:JOE:2020-02-01: Editable Table: Table Row Widget with includes Columns which support 1 or more widgets where the data binding includes the row index.   
 
-  * DONE:JOE:2020-02-01: Editable Table: Table Row Widget with includes Columns which support 1 or more widgets where the data binding includes the row index.   
+* DONE:JOE:2020-02-01: Editable Table: Modify get nested so if a value is passed with path as  family.children.[3].name.first that is pulls the 3rd child.  Same with updates.
 
-  * DONE:JOE:2020-02-01: Editable Table: Modify get nested so if a value is passed with path as  family.children.[3].name.first that is pulls the 3rd child.  Same with updates.
+* DONE:JOE:2020-01-28: Consolidated CSS files and removed some redundant settings. 
 
-  * DONE:JOE:2020-01-28: Consolidated CSS files and removed some redundant settings. 
+* DONE:JOE:2020-01-28: Modified generation of save_button using container div to keep it inside the parent div were the form is rendered.
 
-  * DONE:JOE:2020-01-28: Modified generation of save_button using container div to keep it inside the parent div were the form is rendered.
+* DONE:JOE:2020-01-28:  Update Readme file to point users to getting started guide and programmers guide.  Also added the dental claim sample and removed text that would have been duplicated between the two other guides.   Updated links to take people to the meta source for the samples.
 
-  * DONE:JOE:2020-01-28:  Update Readme file to point users to getting started guide and programmers guide.  Also added the dental claim sample and removed text that would have been duplicated between the two other guides.   Updated links to take people to the meta source for the samples.
+* DONE:JOE:2020-01-28: Update front portion of programmers guide to show the source code needed to create a simple form. 
 
-  * DONE:JOE:2020-01-28: Update front portion of programmers guide to show the source code needed to create a simple form. 
+* SKIP:JOE:2020-01-25: Fix Parser to properly Handle Array of Sub Objects semantic: NOTE:  See Test 5 in mforms_parse_test.html   It seems to work correctly.  Need a better test use case if it is really broke.
 
-  * SKIP:JOE:2020-01-25: Fix Parser to properly Handle Array of Sub Objects semantic: NOTE:  See Test 5 in mforms_parse_test.html   It seems to work correctly.  Need a better test use case if it is really broke.
+  ```yaml
+    - widget:
+      id: procedures
+      type: table
+      total_col:
+       arrProcFee
+      columns: 
+        - arrProcDate:
+             total: false
+             label: Procedure Date        
+        - arrProcArea:
+             total: false
+             label: Area
+             title: Procedure Area
+  ```
 
-    ```yaml
-      - widget:
-        id: procedures
-        type: table
-        total_col:
-         arrProcFee
-        columns: 
-          - arrProcDate:
-               total: false
-               label: Procedure Date        
-          - arrProcArea:
-               total: false
-               label: Area
-               title: Procedure Area
-    ```
+- DONE:JOE:2019-12-19: Demo of contact form that shows changes in the bound JSON as the fields are edited.
+- DONE: JOE: 2019-12-19: Add Dropdown select field
+- DONE: JOE:2019-12-19: Add Radio Button List  Supply basic style for horizontal or vertical
+- DONE:JOE:2019-12-19:Add support for Date Widget.
+- DONE:JOE:2019-12-19: Add support for vertical radio button as a css styling option.
+- DONE:JOE:2019-12-19: Covert vgroup coding to a field group 
+- DONE:JOE:2019-12-18: Add support for TextArea covering several lines.  Change cert of need description to display in this widget.
+- DONE:JOE:2019-12-17: Add support for update of data object when fields change
+- DONE:JOE:2019-12-19: When no label is included in Vgroup then suppress generation of label field.
+- DONE:JOE:2019-12-17: Properly render multi-line text area field.
 
-* DONE:JOE:2019-12-19: Demo of contact form that shows changes in the bound JSON as the fields are edited.
 
-* DONE: JOE: 2019-12-19: Add Dropdown select field
 
-* DONE: JOE:2019-12-19: Add Radio Button List  Supply basic style for horizontal or vertical
-
-* DONE:JOE:2019-12-19:Add support for Date Widget.
-
-* DONE:JOE:2019-12-19: Add support for vertical radio button as a css styling option.
-
-* DONE:JOE:2019-12-19: Covert vgroup coding to a field group 
-
-* DONE:JOE:2019-12-18: Add support for TextArea covering several lines.  Change cert of need description to display in this widget.
-
-* DONE:JOE:2019-12-17: Add support for update of data object when fields change
-
-* DONE:JOE:2019-12-19: When no label is included in Vgroup then suppress generation of label field.
-
-* DONE:JOE:2019-12-17: Properly render multi-line text area field.
-
-  
 
 * 
