@@ -1,5 +1,5 @@
- #topFieldsGroupcont,
- #lowerGroupcont {
+ #topFieldsGroupCont,
+ #lowerGroupCont {
      border: none;
      margin: 0px;
      padding: 0px;
@@ -8,9 +8,9 @@
 
  }
 
- #topRightFieldsGroupcont,
- #topLeftFieldsGroupcont,
- #lowerLeftGroupcont,
+ #topRightFieldsGroupCont,
+ #topLeftFieldsGroupCont,
+ #lowerLeftGroupCont,
  #lowerRightGroupCont {
      display: inline-block;
      xmax-width: 550px;
@@ -48,9 +48,9 @@
 
  @media only screen and (min-width: 1125px) {
 
-     #topRightFieldsGroupcont,
-     #topLeftFieldsGroupcont,
-     #lowerLeftGroupcont,
+     #topRightFieldsGroupCont,
+     #topLeftFieldsGroupCont,
+     #lowerLeftGroupCont,
      #lowerRightGroupCont {
          max-width: 45%;
          min-width: 45%;
@@ -79,7 +79,7 @@
          max-width: 100%;
      }
 
-     #dentalClaimcont {
+     #dentalClaimCont {
          max-width: 100%;
      }
 
@@ -88,9 +88,9 @@
          max-width: 100%;
      }
 
-     #topRightFieldsGroupcont,
-     #topLeftFieldsGroupcont,
-     #lowerLeftGroupcont,
+     #topRightFieldsGroupCont,
+     #topLeftFieldsGroupCont,
+     #lowerLeftGroupCont,
      #lowerRightGroupCont {
          xwidth: 82%;
          max-width: fit-content;

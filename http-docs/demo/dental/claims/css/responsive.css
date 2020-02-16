@@ -1,8 +1,8 @@
 @media only screen and (min-width: 1025px) {
 
-    #topRightFieldsGroupcont,
-    #topLeftFieldsGroupcont,
-    #lowerLeftGroupcont,
+    #topRightFieldsGroupCont,
+    #topLeftFieldsGroupCont,
+    #lowerLeftGroupCont,
     #lowerRightGroupCont {
         max-width: 45%;
         min-width: 45%;
@@ -14,9 +14,9 @@ only screen and (max-device-width: 812px),
 only screen and (max-device-width: 640px),
 only screen and (max-width: 1300px) {
 
-    #topRightFieldsGroupcont,
-    #topLeftFieldsGroupcont,
-    #lowerLeftGroupcont,
+    #topRightFieldsGroupCont,
+    #topLeftFieldsGroupCont,
+    #lowerLeftGroupCont,
     #lowerRightGroupCont {
         xwidth: 82%;
         xmax-width: 82%;

@@ -4,7 +4,7 @@
     padding-left: 0.15em;
 }
 
-div.vgroupcont {
+div.vgroupCont {
     max-width: 100%;
     display: flex;
     flex-wrap: wrap;

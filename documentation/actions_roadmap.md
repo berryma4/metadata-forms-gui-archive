@@ -7,14 +7,19 @@ Actions & Roadmap for Metadata Forms Engine
 * ProvDemo: Search multi-word tokens are failing in search due to escaping that is slightly different.  Need to duplicate exact functionality from the python make safe function.
 * ProvDemo: Provider search should filter non primary keys using a string prefix.
 * ProvDemo:  Search rendering is Should render specified column name list rather than headers from server.  This is a mapping issues. not respecting column list with proper headers for simple search results. 
-* ProvDemo:  State widget should be rendered from list of states returned from service
-* ProvDemo: Status in dropdown must allow specification of a class to show in green.
+* DONE:JOE:2020-02-16: ProvDemo:  State widget should be rendered from list of states returned from service
+* Client side search needs to render headers from widget spec.
+* Client side search needs to render columns based on a named widget spec.
+* Client side search needs option to change heading repeat spec.
+* Client side search needs to filter records based on other fields that are filled in.
+* ProvDemo: Status in on Licence status screen must allow specification of a class to show in green when active.
 * ProvDemo: Specialty needs to option to delete row using trashcan.  screen 27
 * PovDemo: Specialty drop down needs to support title to display larger  dropdown.
 * Prov-Python:   License should be an array.   With license type, state, data. 
 * Readme:  Add sample auto-suggest screen from provider
 * Readme: Add sample Simple Search Screen from provider
 * Readme: Add Tabs and subtabs screen from provider
+* Utility:  Modify prviders_process_raw.py so it can accept any TSV file.  Map a subset of fields to new names build auto suggest and search indexes on a subset of fields.  Also allow it to combine fields for the auto suggest filter eg:   State + cities to produce a subseted directory source.
 * ProvDemo: Show hourglass when waiting exceeds 300ms on fetching remote resources.
 * ProvDemo:  Ability to make some fields mandatory based on the value of another field.  EG:  If  Other insurance is checked then all the fields in that group are mandatory
 * ProvDemo: Update Buttons CSS to reflect what is required for the mockup.
@@ -54,10 +59,8 @@ Actions & Roadmap for Metadata Forms Engine
 * AutoSuggest: Need to be able to exit and hide auto suggest with escape. 
 * AutoSuggest:  Need to be able to move down in auto sug with arrow and select with enter.
 * Move Client Side Search Spec out of form to the widget that will trigger rendering and convert part of onclick in form to array of widgets to notify.
-* Client side search needs to render headers from widget spec.
-* Client side search needs to render columns based on a named widget spec.
-* Client side search needs option to change heading repeat spec.
-* Client side search needs to filter records based on other fields that are filled in.
+* TabBar Responsive : Modify tab bar to use standard UL / Nested Div to render Tab / Sub Tab and deliver CSS to render as drop down menu.   Allow Mobile CSS selection to switch from full rendered Tab Bar to drop down menu when detects mobile devices. See [navbar tutorial Dropdown Navbar and responsive navbar](https://www.w3schools.com/css/css_navbar.asp)  and [responsive topnav with dropdown](https://www.w3schools.com/howto/howto_js_responsive_navbar_dropdown.asp) and [how to subnav](https://www.w3schools.com/howto/howto_css_subnav.asp) which shows subnav going all the way across under top nav.  and [Mega Menu](https://www.w3schools.com/howto/howto_css_mega_menu.asp)
+* 
 * ProvDemo:  Fix reset button so on same page with Search.
 * DONE:JOE:2020-02-09: ProvDemo:  Python to convert sample dentists into searchable format with simple handler to do the search but preferably make it work entirely client side.
 * ProvDemo:  Ability to string Dialog Pop over forms into a sequence.
@@ -67,15 +70,15 @@ Actions & Roadmap for Metadata Forms Engine
 * ProvDemo:  Need a non editing text box to display long messages. 
 * Modify Date parser to accept alternative input form and reform to desired format to support date picker.
 * Support Checkbox Widget
-* ProvDemo Need ability to display a large text box area above main widgets in the form. Screen 13:
-* ProvDemo: Need ability to support Back button that moves forward or backward through a string a dialog forms.
+* ProvDemo: ability to display a large text box area above main widgets in the form. Screen 13:
+* ProvDemo: ability to support Back button that moves forward or backward through a string a dialog forms.
 * ProvDemo: Ability for Button to displaynext form.
 * ProvDemo:   Evaluate what is missing to support edit functionality for screens supplied by MarkBo and propose new general purpose features or help adjust prioritize features from below.
 * ProvDemo: Feature to prevent rendering a section until the container or another section receives focus.  It would be better to not even render the advanced search functions until the user requests that feature. 
 * ProvDemo: Implement screens inspired by MarkBo supplied screens including sample data.  This will require form chaining with backout and Top of page tabs also needs validation of all forms across multiple forms in stack.  Also requires ability to expand a row in table with edit fields that can colllapse kind of like I did the general group but takes less space when collapsed I think we should avoid form chaining when table expansion will work.   Will need file upload functionality and implementation of paging client side for fee tables but I suspect the fee tables are small enough to render them all client side if we implement non-edit tables where the rows expand to all in-table edit rather than rendering entire row as editable.
 * ProvDemo:  When a group is hidden it should remove the bottom line or some other change to save vertical space while still showing the label.   and clicking anywhere on the group should expand.  Also option to have the expansion arrow show on end of ledend instead of end of group.
 * Make the Tab order on android work correctly for Text Area and radio forms.   If the user is advancing with TAB through a form we do not want to break the flow and make them close the android keyboard to advance past these fields. 
-* ProvDemo: Implement the render dropdown form service call. ProvDemo: Demonstrate render dropdown but wait to get contents until field gains context
+* DONE:JOE:2020-02-16: ProvDemo: Implement the render dropdown form service call. ProvDemo: Demonstrate render dropdown but wait to get contents until field gains context
 * ProvDemo: TabBar: Ability to show TABS that have incomplete work before record can be saved to server.
 * SaveData: Display indicator that form when  dirty and unsaved when a field changes from original data. Save Data: Need to updates field_value_valid flag  at field level so we can rapidly determine if any required fields contain invalid values.  Save button should be disabled when invalid fields are present.  SaveData: Disable Save Button until the Form is Dirty.
 * SaveDAta: Detect forms that contain unsaved data.   Warn user if they are leaving page context when there are  unsaved changes on the form. 
@@ -136,7 +139,7 @@ Actions & Roadmap for Metadata Forms Engine
 * Demo: Dental Claim: Hook up validator for tooth numbers.
 * Demo: Dental Claim: Hookup lookup service for procedure codes with auto suggest similar to [listbox-combo](https://www.w3.org/TR/wai-aria-practices/examples/combobox/aria1.1pattern/listbox-combo.html) but type ahead is obtained by query against the server.
 * Demo: Dental Claim:Demonstrate a company search using data from cert-of-need or from provider search. 
-* YAML: Test / Demo arbitrary creation of variables at top level of Yaml to support re-use.  EG: A float  pattern would be re-usable across many fields. 
+* YAML:  Allow arbitrary creation of variables at top level of Yaml to support re-use.  EG: A float  pattern would be re-usable across many fields. 
 * Extend showDiv, hideDiv in display-util to use the lastDisplayStyle feature so when re-showing a div we bring back it's original display status rather than block.  Otherwise will mess up formating when users are using flex-box or other new formatting structures.
 * AutoHideCollapsible feature added at the group level.  Do not render that portion if a data match does not exist eg:    {collapsible: { dataFiter: { src_data_context: person.isbuyer  compareFun: isTrue(), monitor: [persIsBuyer]}}}    Then must set a filter event or watcher so every change to one of a set Id triggers re-evaluation to add that area.  We will need the containter rendered so there is someplace to put it even if we skipped rendering it last time.     This implies we will need a list of rendered ID for the form so we can do global validation of mandatory fields that skips those fields we chose not render.
 * DeepLinking: Support Deep linking where a URI can cause retrieval of data objects and redisplay of a stack of forms rendered with data from those objects. 
@@ -144,7 +147,6 @@ Actions & Roadmap for Metadata Forms Engine
 * Warn programmer if Requested data object can not be located.
 * Edittable: Add a collapse column icon to header.  When it is clicked reduce column size to 3 characters and then only the expand icon. 
 * Demo: Dental Claim:Convert CDT to CSV for rapid file transfer.
-* 
 * Demo: Dental Claim: Need to Allow update or refresh of a given form field based on actions taken in other form fields.  EG: A search set a member identity field based on the results of a search field. 
 * Demo: Dental Claim:Support display only field.   Also support initial state of disable for a form widget.
 * Demo: Disable state for a given widget depending on the state of another widget. Allow some fields to be disabled in metadata spec to prevent editing. Allow some fields to be disabled for editing until a rule becomes true.  
@@ -220,7 +222,6 @@ Actions & Roadmap for Metadata Forms Engine
 * Demo: XRay viewer Widget with Zoom,  pan, brightness, crop and edit saves as metadata.
 * Color Picker Widget.
 * Ability to source data from two different objects resident in the object graph for interpolation.   EG: If you have a master contact list and are editing a detailed contact then you may want to render fields in the sub form from both records.  This requires the data_context to be enhanced so it can handle branched access where it currently only looks into the active object.    EG:  If the master contact has a ID of 300 and  a field of first_name we want to render in the sub form then the individual contact event has an ID of 18181 and is the active object and it includes an attribute master_contact: 300 then we need to be able to derive a path that goes to the root of the object graph using 300 as the key to retrieve it.   EG:   /objects:{master_contact}.name  which derives to going into the global list at GTX.objects['300'].name  rather than looking at current object.
-* 
 * DEMO: Button or Link to show the metadata definition in a separate target window.
 * Display currency with formatting showing space at grouping then remove the space prior to conversion.
 * Support streaming local changes to browser local storage so can restore if user leaves page and returns.   
@@ -237,11 +238,9 @@ Actions & Roadmap for Metadata Forms Engine
 * Demo Claim: Demonstrate displaying data from a FHIR service.
 * Demo Claim: Add sample using a publicly available REST API to source the data.
 * Edit Table: Extend tables widget to allow a multi-level sort functionality by Shift click on different headers.  Show shift click instruction on hover or some other multi-level sort function
-* 
 * DeepLinking: Add support to change context on right hand # of uri at top of browser as user selects different widgets.  
 * Create a new set of files for cert of need where the facility operator is consolidated to include all certificates for that operator.  Also include ability to get the children with a sub query.
 * Add physicians list to the data set for demonstration.
-* 
 * Add fallback of manually built date picker widget for older browsers .   Support Native Date picker on modern browsers fall back to rendered. 
 * FormLoader: Allow naming a widget that triggers loading an additional file to complete filling in a form.  See Also specifying an include file in a form. 
 * Metadata: Allow fragments to be enhanced with data from local environment such as active forms, loaded data objects and other form files using interpolation

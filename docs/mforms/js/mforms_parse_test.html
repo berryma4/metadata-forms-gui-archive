@@ -108,6 +108,20 @@
       } catch(err) {
         addTestRes("FAIL: Attempting to access tout[0].widget.columns[0].arrProcDate.label err=" + err );
       }
+      try {
+      if (tout[0].widget.columns[1].arrProcArea.label !== "Area ' #54") {
+        addTestRes("FAIL: Expected tout[0].widget.columns[0].arrProcArea.label to contain 'Area ' #54' but it contained '" + tout[0].widget.columns[1].arrProcArea.label  + "'");
+      }
+      } catch(err) {
+        addTestRes("FAIL: Attempting to access tout[0].widget.columns[0].arrProcArea.label err=" + err );
+      }
+      try {
+      if (tout[0].widget.columns[1].arrProcArea.title !== "Procedure Area \" &") {
+        addTestRes("FAIL: Expected tout[0].widget.columns[0].arrProcArea.label to contain 'Procedure Area \" &' but it contained '" + tout[0].widget.columns[1].arrProcArea.title  + "'");
+      }
+      } catch(err) {
+        addTestRes("FAIL: Attempting to access tout[0].widget.columns[0].arrProcArea.label err=" + err );
+      }
 
       // TODO: Add checks to see if data arrived in proper with comments truncated
     }
@@ -172,8 +186,8 @@
    function runTest9() {
       var tout = runTest("Test Proper Array Detection", testProperArrayDetections);
       try {
-      if(tout[0].widget.tab[1].label != "provider") {
-        addTestRes("FAIL: Expected Provider 1 to have label of provider");
+      if(tout[0].widget.tabs[1].tab.label != "Provider") {
+        addTestRes("FAIL: Expected Provider 1 to have label of provider but found "+ tout[0].widget.tabs[1].tab.label);
       }
       } catch(err) {
         addTestRes("FAIL: Validation check failed err=" +  err);

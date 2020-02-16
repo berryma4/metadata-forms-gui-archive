@@ -120,16 +120,15 @@
 - widget:
     id: provState
     data_type: text
-    type: text
-    label : state
+    type: dropdown
+    label : State
     label_class: wrap
-    size: 2
     data_context: addr.mail.state
     class: input_field
-    suggest:
-      uri: /data/dental/provider/autosug/state/{auto_sug_value}.txt
-      parse: tsv
-      class: auto_sug_items
+    option_source:
+      uri: /data/states.txt
+      method: GET
+      parse: TSV
 
 - widget:
     id: provZip
@@ -201,16 +200,15 @@
 - widget:
     id: provBusState
     data_type: text
-    type: text
+    type: dropdown
     label : state
     label_class: wrap
-    size: 2
     data_context: addr.bus.state
     class: input_field
-    suggest:
-      uri: /data/dental/provider/autosug/state/{auto_sug_value}.txt
-      parse: tsv
-      class: auto_sug_items
+    option_source:
+      uri: /data/states.txt
+      method: GET
+      parse: TSV
 
 - widget:
     id: provBusZip

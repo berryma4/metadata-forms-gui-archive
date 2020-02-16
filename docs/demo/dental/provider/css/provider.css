@@ -51,11 +51,11 @@ fieldset.radio {
 
 }
 
-.hbuttoncontain {
+.hbuttonContain {
     display: inline-block;
 }
 
-.searchButtonscont {
+.searchButtonsCont {
     display: block;
     width: 98%;
     text-align: end;
@@ -82,16 +82,21 @@ fieldset.radio {
 #provLicenseTabletbl tr {}
 
 
-#provLicRowGroupcont {
+#provLicRowGroupCont {
     flex-wrap: no-wrap;
 }
 
-#provLicLeftcont {
+#provLicLeftCont {
     flex-wrap: wrap;
 }
 
+.greenBoxed {
+    background-color: green;
+    border: solid 2px darkgreen;
+}
+
 @media only screen and (min-width : 800px) {
-    div.simpleSearchcont {
+    div.simpleSearchCont {
         display: flex;
         overflow-y: auto;
         max-height: 30em;
@@ -102,7 +107,7 @@ fieldset.radio {
 }
 
 @media only screen and (min-width : 1024px) {
-    div.simpleSearchcont {
+    div.simpleSearchCont {
         display: flex;
         overflow-y: auto;
         max-height: 30em;
@@ -141,7 +146,7 @@ fieldset.radio {
         min-width: 800px;
     }
 
-    div.simpleSearchcont {
+    div.simpleSearchCont {
         max-width: 100%;
         overflow-x: auto;
         max-height: none;
@@ -201,7 +206,7 @@ fieldset.radio {
         align-items: stretch;
     }
 
-    #provLicRowGroupcont {
+    #provLicRowGroupCont {
         flex-wrap: wrap;
     }
 }
@@ -212,7 +217,7 @@ fieldset.radio {
         font-size: 13pt;
     }
 
-    #provLicRowGroupcont {
+    #provLicRowGroupCont {
         flex-wrap: wrap;
     }
 }

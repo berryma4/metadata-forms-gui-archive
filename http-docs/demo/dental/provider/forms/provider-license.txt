@@ -21,12 +21,10 @@
   label_class: wrap
   data_context: state
   class : input_field
-  option:
-       - {"label" : "*", "value" : "-"}
-       - {"label" : "MI", "value" : "MI"}
-       - {"label" : "MN", "value": "MN"}
-       - {"label" : "AK", "value" : "AK"}
-       - {"label" : "IA", "value" : "IA"}
+  option_source:
+      uri: /data/states.txt
+      method: GET
+      parse: TSV {"label" : "IA", "value" : "IA"}
 
 - widget:
   id: provELicIssueDate
@@ -69,7 +67,7 @@
   data_context: status
   class : input_field
   option:
-       - {"label" : "Active", "value" : "A"}
+       - {"label" : "Active", "value" : "A",  "class" : "greenBoxed"}
        - {"label" : "Inactive", "value" : "I"}
 
   

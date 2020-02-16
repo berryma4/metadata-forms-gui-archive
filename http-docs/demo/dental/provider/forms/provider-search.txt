@@ -330,7 +330,7 @@
     # onchange behavior.
     onchange:
       function: client_side_search
-      target_div: provSearchResultscont
+      target_div: provSearchResultsCont
       target_widget: provSearchResultsTbl
        
       # List the set of fields used to compose

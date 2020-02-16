@@ -542,8 +542,8 @@ function mformsRenderGroupWidget(widDef, b, context, custParms) {
     var parClass = parent.class;
     var cssClass = widDef.class;
     b.start("div", {
-        "id": widDef.id + "cont",
-        "class": cssClass + "cont"
+        "id": widDef.id + "Cont",
+        "class": cssClass + "Cont"
     });
 
     var rendFieldSet = getNested(widDef, "renderFieldset", true);
@@ -667,7 +667,7 @@ function mformRenderRadio(widDef, b, context, custParms) {
                 optattr.checked = true;
             }
             b.start("div", {
-                "id": optattr.id + "cont",
+                "id": optattr.id + "Cont",
                 "class": "buttonCont"
             });
             b.make("input", optattr);
@@ -683,11 +683,80 @@ function mformRenderRadio(widDef, b, context, custParms) {
 }
 
 
+function mformDropdownOnData(data, httpObj, parms) {
+    if (parms.uri in parms.context.gbl.filesLoading) {
+        delete parms.context.gbl.filesLoading[parms.uri];
+    }
+    if (data <= "") {
+        console.log("L5: mformRenderDropdownOnData err=" + httpObj);
+        toDiv("ErrorMsg", "Failure mformGetDataObjOnData  uri=" + parms.uri + "\n" + httpObj);
+    } else {
+        try {
+            var context = parms.context;
+            var widDef = parms.widDef;
+            var custParms = parms.custParms;
+            var gtx = parms.context.gbl;
+            console.log("L8: mformRenderDropdownOnData get data=", data, " parms=", parms);
+            // TODO: Add support for alternative parsers.
+            var pdata = null;
+
+            if (parms.parser == "TSV") {
+                pdata = parseTSV(data);
+            } else if (parms.parser == "JSON") {
+                pdata = JSON.parse(data);
+            } else {
+                console.log("L707: ERROR Unknown Parser widDef=", widDef, " uri=",
+                    parms.uri);
+                return;
+            }
+            context.gbl.filesLoaded[parms.uri] = pdata;
+            custParms.send_to_div = true; // will send data direct to div instead of part of larger stream.
+            custParms.skip_container = true; // will place data into previously rendered container
+            b = new String_builder();
+            console.log("L715: parsed dataObj=", pdata, " context=", context);
+            mformRenderDropdown(widDef, b, context, custParms);
+        } catch (err) {
+            console.log("error parsing=", err, " data=", data);
+        }
+    }
+}
 
 function mformRenderDropdown(widDef, b, context, custParms) {
     mformFixupWidget(widDef, context);
     var gtx = context.gbl;
-    var widId = widDef.id;
+    var widId = makeId(widDef, context, custParms);
+    var options = [];
+    if ("option_source" in widDef) {
+        var opsource = widDef.option_source;
+        var beguri = opsource.uri;
+        // Load the Options from disk and render latter 
+        var req_uri = InterpolateStr(beguri, [widDef, custParms, context.dataObj, context, context.form]);
+        // Fetch the List of Options from file on server or service.
+        if (context.gbl.filesLoaded[req_uri] != undefined) {
+            // data is already cached from prior call
+            options = context.gbl.filesLoaded[req_uri];
+        } else {
+            // We are not already trying to load and it is not already
+            // loaded so we need to request it.
+            var parms = {
+                "uri": req_uri,
+                "req_method": getNested(opsource, "method", "GET"),
+                "widDef": widDef,
+                "context": context,
+                "custParms": custParms,
+                "parser": getNested(opsource, "parse", "TSV").toUpperCase()
+            };
+            parms.req_headers = {
+                'Content-Type': "application/json",
+                'Authorization': context.gbl.user.accessToken
+            };
+            context.gbl.filesLoading[req_uri] = true;
+            simpleGet(req_uri, mformDropdownOnData, parms);
+        }
+    } else if ("option" in widDef) {
+        options = widDef.option;
+    }
+
     mformStartWidget(widDef, b, context, custParms);
     // Add the actual Text Widget
     var widAttr = mformBasicWidAttr(widDef, context, custParms);
@@ -698,45 +767,59 @@ function mformRenderDropdown(widDef, b, context, custParms) {
     b.start("select", widAttr);
 
     var matchOptVal = null;
+    var dataPath = makeDataContext(widDef, context, custParms);
     var dataVal = getDataValue(context.dataObj, widDef, context, custParms);
     var opt = null;
     var optndx = null;
-    if ("option" in widDef) {
-        var options = widDef.option;
-        if (dataVal != null) {
-            // Find the matching option and default
-            var dataValMatch = dataVal.trim().toLowerCase();
-            // search options to find one that matches the 
-            // value. 
-            for (optndx in options) {
-                opt = options[optndx];
-                if ("value" in opt) {
-                    var oval = opt.value.trim().toLowerCase();
-                    if (oval == dataValMatch) {
-                        matchOptVal = opt.value;
-                        break;
-                    }
+
+    if (dataVal != null) {
+        // Find the matching option and default
+        var dataValMatch = dataVal.trim().toLowerCase();
+        // search options to find one that matches the 
+        // value. 
+        for (optndx in options) {
+            opt = options[optndx];
+            if ("value" in opt) {
+                var oval = opt.value.trim().toLowerCase();
+                if (oval == dataValMatch) {
+                    matchOptVal = opt.value;
+                    break;
                 }
             }
         }
+    }
 
-        var optattr = null;
-        for (optndx in options) {
-            opt = options[optndx];
-            optattr = {
-                "value": opt.value
-            };
-            if (opt.value == matchOptVal) {
-                optattr.selected = true;
-            } else if ((matchOptVal == false) && ("default" in opt) && (opt.default == true)) {
-                optattr.selected = true;
-            }
-            b.make("option", optattr, opt.label);
-        } // for
-    } // if options defined
-
+    var optattr = null;
+    for (optndx in options) {
+        opt = options[optndx];
+        optattr = {
+            "value": opt.value
+        };
+        if ("class" in opt) {
+            optattr.class = opt.class;
+        }
+        // TODO: Add Multi-select support here
+        //  where every selected value is active.
+        if (opt.value == matchOptVal) {
+            optattr.selected = true;
+        } else if ((matchOptVal == false) && ("default" in opt) && (opt.default == true)) {
+            optattr.selected = true;
+        }
+        b.make("option", optattr, opt.label);
+    } // for
     b.finish("select");
     mformFinishWidget(widDef, b, context, custParms);
+    if (custParms.send_to_div == true) {
+        // Have received the data from Event handler 
+        // that sent of the request during rendering
+        // We just replace contents of existing dropdown
+        // with new one while leaving rest of div untouched.
+        delete custParms.send_to_div;
+        delete custParms.skip_container;
+        var widTargetDivId = widId + "Cont";
+        b.toDiv(widTargetDivId);
+        b.clear();
+    }
 }
 
 function copyOverCustParms(widAttr, widDef, custParms) {
@@ -796,7 +879,7 @@ function mformsRenderTextWidget(widDef, b, context, custParms) {
         var sug = widDef.suggest;
         var sugId = widDef.id + "sugCont";
         var sugClass = sug.class;
-        var sugContClass = sugClass + "cont";
+        var sugContClass = sugClass + "Cont";
 
         var sugAttr = {
             "id": sugId,
@@ -1231,7 +1314,7 @@ function mformsRenderForm(form, context) {
     mformSetFormContext(form, context);
 
     b.start("div", {
-        "id": form.id + "cont",
+        "id": form.id + "Cont",
         "class": form.class
     });
 
@@ -1461,8 +1544,8 @@ function mformsSimpleSearchRes(widDef, b, context, custParms) {
     var searchRes = custParms.searchRes;
     var formId = context.form.id;
     //b.start("div", {
-    //    "id": widDef.id + "cont",
-    //    "class": widDef.class + "cont"
+    //    "id": widDef.id + "Cont",
+    //    "class": widDef.class + "Cont"
     //});
     b.start("table", {
         "id": widDef.id + "tbl",

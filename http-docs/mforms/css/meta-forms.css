@@ -147,7 +147,7 @@ button:focus {
     outline: none;
 }
 
-.submit_buttoncontain {
+.submit_buttonContain {
     width: 100%;
     align-items: right;
     align-content: right;
@@ -166,8 +166,8 @@ div.hgroupCont,
 .groupFS,
 .vgroupCont,
 .hgroupCont,
-div.groupcont,
-div.vgroupcont div.hgroupcont {
+div.groupCont,
+div.vgroupCont div.hgroupCont {
     width: auto;
     display: flex;
     flex-wrap: wrap;
@@ -185,7 +185,7 @@ div.groupContentDiv {
     flex-wrap: wrap;
 }
 
-div.silent_groupcont {
+div.silent_groupCont {
     border: 0px;
     border-style: none;
     display: flex;
@@ -444,7 +444,7 @@ div.auto_sug_items:hover {
     border-radius: 2px;
 }
 
-div.auto_sug_itemscont {
+div.auto_sug_itemsCont {
     z-index: 99;
     display: none;
     background-color: rgb(220, 228, 228);
@@ -464,7 +464,7 @@ div.auto_sug_itemscont {
 --- Basic Styling for simple clickable row 
 --- search Table
 ----------------*/
-div.simpleSearchcont {
+div.simpleSearchCont {
     display: flex;
     xoverflow-y: auto;
     xmax-height: 30em;
