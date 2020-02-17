@@ -1255,7 +1255,7 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
         });
         b.make("span", {
             "class": "addRowSymbol"
-        }, " &#43");
+        }, "&#10009;");
         b.b(addRowLabel);
         b.finish("div");
 

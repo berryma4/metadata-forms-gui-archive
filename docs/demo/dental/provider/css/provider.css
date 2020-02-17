@@ -83,7 +83,7 @@ fieldset.radio {
 
 
 #provLicRowGroupCont {
-    flex-wrap: no-wrap;
+    flex-wrap: nowrap;
 }
 
 #provLicLeftCont {
