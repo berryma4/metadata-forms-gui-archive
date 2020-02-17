@@ -18,18 +18,16 @@ Actions & Roadmap for Metadata Forms Engine
 * Prov-Python:   License should be an array.   With license type, state, data. 
 * Readme:  Add sample auto-suggest screen from provider
 * Readme: Add sample Simple Search Screen from provider
-* Readme: Add Tabs and subtabs screen from provider
 * Utility:  Modify prviders_process_raw.py so it can accept any TSV file.  Map a subset of fields to new names build auto suggest and search indexes on a subset of fields.  Also allow it to combine fields for the auto suggest filter eg:   State + cities to produce a subseted directory source.
 * ProvDemo: Show hourglass when waiting exceeds 300ms on fetching remote resources.
 * ProvDemo:  Ability to make some fields mandatory based on the value of another field.  EG:  If  Other insurance is checked then all the fields in that group are mandatory
-* ProvDemo: Update Buttons CSS to reflect what is required for the mockup.
 * ProvDemo:  **Add the Add new provider screens** ProvDemo: Show alternate new provider flow.   Show license match in auto suggest Give them option to click on that row to go to edit rather than hokey provider already exists.   Page 10 - 14.   Need to double check which license # we are checking against since license a multi-edit in other pages which one is the primary for that provider.
 * ProvDemo: Support "&" in Tab Label
 * ProvDemo: Implement Summary Tab.
 * ProvDemo: Implement License/Permit Tab.
 * ProvDemo: Implement License/Sanctions Tab.
 * ProvDemo: Implement rest of fields for provider tab and modify to be closer to their shown sample. Page 14 - 18 with some dropdown defined on 19 to 23.
-* ProvDemo: Implement Special programs Tab. Page 31 - 37
+* 
 * ProvDemo: Special Programs Should not include all fields for all special programs.  There is a data value for special programs that should remove some fields.   The Meicare preclusion list includes claimRejectionDate, reinclusionDate and Business Name while the Medicare Opt out includes a transaction date.  
 * ProvDemo: Implement Special Programs History
 * ProvDemo: Implement Business office Tab Pages 38 - 53 This is a complex flow with sub search of business office but selecting office just populates fields into next form.
@@ -62,7 +60,6 @@ Actions & Roadmap for Metadata Forms Engine
 * AutoSuggest:  Need to be able to move down in auto sug with arrow and select with enter.
 * Move Client Side Search Spec out of form to the widget that will trigger rendering and convert part of onclick in form to array of widgets to notify.
 * TabBar Responsive : Modify tab bar to use standard UL / Nested Div to render Tab / Sub Tab and deliver CSS to render as drop down menu.   Allow Mobile CSS selection to switch from full rendered Tab Bar to drop down menu when detects mobile devices. See [navbar tutorial Dropdown Navbar and responsive navbar](https://www.w3schools.com/css/css_navbar.asp)  and [responsive topnav with dropdown](https://www.w3schools.com/howto/howto_js_responsive_navbar_dropdown.asp) and [how to subnav](https://www.w3schools.com/howto/howto_css_subnav.asp) which shows subnav going all the way across under top nav.  and [Mega Menu](https://www.w3schools.com/howto/howto_css_mega_menu.asp)
-* 
 * ProvDemo:  Fix reset button so on same page with Search.
 * DONE:JOE:2020-02-09: ProvDemo:  Python to convert sample dentists into searchable format with simple handler to do the search but preferably make it work entirely client side.
 * ProvDemo:  Ability to string Dialog Pop over forms into a sequence.
@@ -119,8 +116,7 @@ Actions & Roadmap for Metadata Forms Engine
 * Edit-Table: Extend the tables widget to provide in table sort functionality by clicking on the headers.
 * Edit Table: When adding a row should scroll the table to make the row added visible.
 * Editable Table: When last row is still empty need to disable add row as an optional parameter.
-* DONE:JOE:2020-02-10: Demo: Dental Claim:Create basic ADA For Fields.
-* DONE:JOE:2020-02-15:  Editable Table: Add a way to group multiple widgets in a single cell when the table would otherwise be too wide. Note: Done by using a group widget in the table column.
+* 
 * Demo Dental Claim:  Use AutoSuggest feature to show possible codes but extend to also show a description rather than just the expanded token.  When user enters any portion of a procedure code or  description of code show list of codes 5  that could fit.    Implement as re-usable functionality. 
 * Allow custom rendering agent / widget  for auto suggest
 * Editable Table: Demonstrate alternating color bands in table widget.
@@ -714,6 +710,11 @@ defaults:
 
 -------------------------------
 
+* DONE: JOE:2020-02-14: Readme: Add Tabs and subtabs screen from provider
+* DONE:JOE:2020-02-16: ProvDemo: Update Buttons CSS to reflect what is required for the mockup.
+* DONE:JOE:2020-02-16: ProvDemo: Implement Special programs Tab. Page 31 - 37.  Note implemented as a simple array rather than the multiple screens they showed.
+* DONE:JOE:2020-02-10: Demo: Dental Claim:Create basic ADA For Fields.
+* DONE:JOE:2020-02-15:  Editable Table: Add a way to group multiple widgets in a single cell when the table would otherwise be too wide. Note: Done by using a group widget in the table column.
 * DONE: JOE:2020-02-10: Ability to specify a class for label independent of class of the widget.
 * DONE:JOE:2020-02-11: Text widget when num_dec has been specified should reformat to fit the specification when it looses format.  In reality this should be implemented as a general purpose function that allows a reformat pattern to do this work. 
 * DONE:JOE:2020-02-05: ProvDemo: Download and parse public data for Dental providers to drive auto suggest, search and supply basic data for demo.
