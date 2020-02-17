@@ -22,6 +22,31 @@ function gattr(ele, name) {
 //--------------
 //--- INTERACTION / OnClick / EVENTS
 //---------------
+// TODO: Hide the bottom of the group box when hidden.
+function toggleDivEvent(sender, groupId) {
+    var contentDivId = groupId + "Content";
+    var iconDivId = groupId + "expIcon";
+    var tdiv = document.getElementById(contentDivId);
+
+    if ((tdiv !== undefined) && (tdiv !== null)) {
+        var lastStyle = tdiv.style.lastStyle;
+        if (tdiv.style.display != "none") {
+            tdiv.style.lastStyle = tdiv.style.display;
+            tdiv.style.display = "none";
+            toDiv(iconDivId, "&#8664;");
+            //sender.className = "arrow-down";
+        } else {
+            if (lastStyle != undefined) {
+                tdiv.style.display = lastStyle;
+            } else {
+                tdiv.style.display = "flex";
+            }
+            //sender.className = "arrow-up";
+            toDiv(iconDivId, "&#8662;");
+        }
+    }
+    return tdiv;
+}
 
 function mformSaveFormChanges(hwidget) {
     var attr = hwidget.attributes;
@@ -505,7 +530,7 @@ function mformFinishWidget(widDef, b, context, custParms) {
         "id": custParms.id + "Status"
     }).nl();
     if (custParms.skip_container != true) {
-        b.finish("div").nl();
+        b.nl().finish("div").nl();
     }
     return b;
 }
@@ -541,6 +566,7 @@ function mformsRenderGroupWidget(widDef, b, context, custParms) {
     var flds = gtx.widgets;
     var parClass = parent.class;
     var cssClass = widDef.class;
+    var widId = makeId(widDef, context, custParms);
     b.start("div", {
         "id": widDef.id + "Cont",
         "class": cssClass + "Cont"
@@ -549,36 +575,35 @@ function mformsRenderGroupWidget(widDef, b, context, custParms) {
     var rendFieldSet = getNested(widDef, "renderFieldset", true);
     if (rendFieldSet == true) {
         b.start("fieldset", {
-            "id": widDef.id + "FS",
+            "id": widId + "FS",
             "class": cssClass + "FS"
         });
     }
 
-    var contDivName = widDef.id + "Content";
-
+    var contDivName = widId + "Content";
     if ("label" in widDef) {
-        b.make("legend", {
-            "id": widDef.id + "Legend",
+        b.start("legend", {
+            "id": widId + "Legend",
             "class": cssClass + "Leg",
-        }, widDef.label);
-
-        var arrowClass = "arrow-up";
-
+            "onclick": "toggleDivEvent(this, '" + widId + "')"
+        });
+        b.b(widDef.label);
+        var arrowClass = "arrow";
+        var arrSymbol = "&#8662;";
         var contDivAttr = {
             "id": contDivName,
             "class": "groupContentDiv"
         };
         if (widDef.collapsed == true) {
             contDivAttr.style = "display:None;";
-            arrowClass = "arrow-down";
+            arrowClass = "arrow";
+            arrSymbol = "&#8664;";
         }
-
         b.make("div", {
             "class": arrowClass,
-            "onclick": "toggleDivEvent(this, '" + contDivName + "')"
-        });
-
-
+            "id": widId + "expIcon"
+        }, arrSymbol);
+        b.finish("legend");
         b.start("div", contDivAttr);
     }
 
@@ -1042,34 +1067,65 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
     mformFixupWidget(widDef, context);
     var gtx = context.gbl;
     var flds = gtx.widgets;
-    var tblId = widDef.id;
+    var tblId = makeId(widDef, context, custParms);
+    var dataContext = makeDataContext(widDef, context, custParms);
     var cols = widDef.columns;
     var dataObj = context.dataObj;
     var dcontext = widDef.data_context;
+    var tableEleType = "table";
+    var thEleType = "th";
+    var tdEleType = "td";
+    var trEleType = "tr";
+    var trEleParms = {
+        "class": "row"
+    };
+    var tdEleParms = {
+        "class": "cell"
+    };
+    var thEleParms = {
+        "class": "cell head"
+    };
+    if (widDef.render_as_div == true) {
+        tableEleType = "div";
+        thEleType = "div";
+        tdEleType = "div";
+        trEleType = "div";
+    }
+
     if (!("data_context" in widDef)) {
         console.log("ERROR  data_context is mandatory for widget: " + JSON.stringify(widDef));
         return;
     }
     var colndx = null;
     var rowndx = null;
+    custParms.skip_label = true; // will render label as part of caption
     mformStartWidget(widDef, b, context, custParms);
     // TODO: determine right or left alignment
     // by column
+
 
     //b.make("div", {
     //    "class": widDef.class + "caption"
     //}, widDef.label);
 
-    b.start("table", {
+    b.start(tableEleType, {
         "id": tblId + "tbl",
         "class": widDef.class
     });
 
+    if (widDef.label != undefined) {
+        if (tableEleType == "table") {
+            b.make("caption", widDef.label);
+        } else {
+            b.make("h3", {}, widDef.label);
+        }
+    }
 
-    var dataArr = getNested(dataObj, widDef.data_context, []);
+    var dataArr = getNested(dataObj, dataContext, []);
     if (dataArr.length == 0) {
         // Create the data array if there is not one.
-        setNested(dataObj, widDef.data_context, dataArr);
+        dataArr.push({});
+        setNested(dataObj, dataContext, dataArr);
     }
 
     var colId = null;
@@ -1084,15 +1140,15 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
     if (numRowtoRender < minRowsRender) {
         numRowtoRender = minRowsRender;
     }
-
+    var tdata = getNested(dataObj, dataContext);
 
     //----
     //-- Render Column Header
     //----
     if (widDef.skip_col_header != true) {
-        b.start("tr", {
+        b.start(trEleType, {
             "id": tblId + "tblhead",
-            "class": widDef.class + "tr"
+            "class": widDef.class + "tr row rowHead"
         });
         // -----
         //--- Render Table Header
@@ -1101,9 +1157,9 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
             colId = cols[i];
             if (colId in flds) {
                 colWidDef = flds[colId];
-                b.start("th", {
+                b.start(thEleType, {
                     "id": tblId + colId + "id",
-                    "class": colWidDef.cell_class,
+                    "class": colWidDef.cell_class + " head",
                     "table_id": tblId,
                     "col_id": colId,
                     "form_id": context.form_id,
@@ -1111,10 +1167,10 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
                     "onClick": "mformsColHeadClicked(this)"
                 });
                 b.b(colWidDef.label);
-                b.finish("th");
+                b.finish(thEleType);
             }
         }
-        b.finish("tr");
+        b.finish(trEleType);
     }
 
     //------------
@@ -1122,17 +1178,22 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
     //------------
     for (rowndx = 0; rowndx < numRowtoRender; rowndx++) {
         // Render the Data rows
-        b.start("tr");
+        b.start(trEleType, trEleParms);
         for (colndx = 0; colndx < cols.length; colndx++) {
             colId = cols[colndx];
             if (colId in flds) {
                 colWidDef = flds[colId];
-                b.start("td", {
-                    "class": colWidDef.cell_class
+                var cellClass = "cell";
+                if ("cell_class" in colWidDef) {
+                    cellClass = colWidDef.cell_class + " " + cellClass;
+                }
+                b.start(tdEleType, {
+                    "class": cellClass,
+                    "id": colWidDef.id + "_cell_" + rowndx + "_" + colndx
                 });
                 mformFixupWidget(colWidDef, context);
                 if (colWidDef.type in widgRenderFuncs) {
-                    var dataContextCell = widDef.data_context + ".[" + rowndx + "]." + colWidDef.data_context;
+                    //var dataContextCell = widDef.data_context + ".[" + rowndx + "]." + colWidDef.data_context;
                     try {
                         var custContext = {
                             "rowNdx": rowndx,
@@ -1140,7 +1201,7 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
                             "table": widDef,
                             "col_id": colId,
                             "table_id": tblId,
-                            "id": colId + "-_" + rowndx,
+                            "id": colWidDef + "-_" + rowndx + "_" + colndx,
                             //"data_context": dataContextCell,
                         };
                         var dcontextEle = {
@@ -1184,17 +1245,19 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
                         id: widId
                     }, "Unkown Widget Type " + colWidDef.type + " id=" + colId + " colWidDef=" + JSON.stringify(colWidDef)).nl();
                 }
-                b.finish("td");
-            }
-        }
-        b.finish("tr");
-    }
+                //b.b("xxx" + tdEleType);
+                b.finish(tdEleType);
+            } // if col id found
+        } // for td cell
+        //b.b("yyy" + trEleType);
+        b.finish(trEleType);
+    } // for row
 
     if (widDef.total_line == true) {
         // Add the Total Row 
-        b.start("tr", {
+        b.start(trEleType, {
             "id": tblId + "tblTotRow",
-            "class": widDef.class + "tr" + " " + widDef.class + "totRow"
+            "class": widDef.class + trEleType + " " + widDef.class + "totRow" + " row totRow"
         });
         var numEmptyCellRendered = 0;
         for (colndx = 0; colndx < cols.length; colndx++) {
@@ -1207,11 +1270,11 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
                     if (numEmptyCellRendered < 1) {
                         tmpOutStr = "Totals";
                     }
-                    b.make("th", {}, tmpOutStr);
+                    b.make(thEleType, {}, tmpOutStr);
                     numEmptyCellRendered++;
                 } else {
-                    b.start("th", {
-                        "class": colWidDef.cell_class + " " + colWidDef.class + "total",
+                    b.start(tdEleType, {
+                        "class": colWidDef.cell_class + " " + colWidDef.class + "total" + " cell totCell",
                         "id": context.form_id + tblId + colId + "total"
                     });
                     var totVal = mformsCalcArrTotal(dataArr, colWidDef.data_context);
@@ -1221,13 +1284,21 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
                     }
                     // TODO: Add formatting of output field.
                     b.b(totVal.toFixed(numDec));
-                    b.finish("td");
+                    b.finish(tdEleType);
                 }
             }
         }
-        b.finish("tr");
+        b.finish(trEleType);
     }
-    b.finish("table");
+
+    if (widDef.render_as_div != true) {
+        // If rendering as a table then we must 
+        // finish the table before rendering the 
+        // add button.  Otherwise we render the 
+        // add row button before closing the table
+        // div.
+        b.finish(tableEleType);
+    }
 
 
     //----------
@@ -1257,12 +1328,15 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
             "class": "addRowSymbol"
         }, "&#10009;");
         b.b(addRowLabel);
+        b.finish("button");
         b.finish("div");
-
-        mformFinishWidget(widDef, b, context, custContext);
-
     }
 
+    if (widDef.render_as_div == true) {
+        b.finish(tableEleType);
+    }
+
+    mformFinishWidget(widDef, b, context, custParms);
 }
 
 
@@ -1337,6 +1411,13 @@ function mformsRenderForm(form, context) {
     context.form_id = form.id;
     mformSetFormContext(form, context);
 
+    if (form.label != undefined) {
+        b.make("h3", {
+            "id": form.id + "Head",
+            class: form.class + "Head"
+        }, form.label);
+    }
+
     b.start("div", {
         "id": form.id + "Cont",
         "class": form.class
@@ -1345,17 +1426,15 @@ function mformsRenderForm(form, context) {
     var formAttr = {
         "id": form.id
     };
+
     mformCopyAttribs(form, formAttr, mformTextFieldCopyAttr);
     if (form.autocomplete == false) {
         formAttr.autocomplete = false;
     }
+
+
     b.start("form", formAttr);
-    if (form.label != undefined) {
-        b.make("h3", {
-            "id": form.id + "Head",
-            class: form.class + "Head"
-        }, form.label);
-    }
+
 
     mformsRenderWidgets(form, form.widgets, b, context, null);
     /*

@@ -4,9 +4,17 @@ Actions & Roadmap for Metadata Forms Engine
 
 * When displaying dental claim on phone in portrait the text widgets are indented but radio buttons are not.  None should be indented on mobile devices. 
 * Prevent Lookup, formload and autosuggest  from being fired twice because the on-change and on-update are both hitting autosuggest.
+* DONE:2020-02-17: ProvDemo: Allow tables to be rendered with a series of DIV instead of a table while retaining custom array.  this can allow wrapping of columns which is not possible with normal table. 
 * ProvDemo: Search multi-word tokens are failing in search due to escaping that is slightly different.  Need to duplicate exact functionality from the python make safe function.
+* ProvDemo: Option to render Table as a set of nested DIV rather than the Table Syntax
+* ProvDemo: Move the Collaps Expand Icon inside the field group label. 
+* ProvDemo: Add Status field at the bottom of Group and at bottom of Table.
+* ProvDemo: Provider Detail, Languages Needs Multi-select dropdown.
+* ProvDemo: Provider Detail, Contact, email.  Default needs custom function to only allow one of the array elements to be selected as default. 
 * ProvDemo: Provider search should filter non primary keys using a string prefix.
+* ProvDemo: PythonConv:  License with License state should be a segmented key. So we can search for license only within the specified state.  Screens 11 to 13.
 * ProvDemo:  Search rendering is Should render specified column name list rather than headers from server.  This is a mapping issues. not respecting column list with proper headers for simple search results. 
+* ProvDemo: Ability to render optional or mandatory tag after label.
 * DONE:JOE:2020-02-16: ProvDemo:  State widget should be rendered from list of states returned from service
 * Client side search needs to render headers from widget spec.
 * Client side search needs to render columns based on a named widget spec.
@@ -27,7 +35,6 @@ Actions & Roadmap for Metadata Forms Engine
 * ProvDemo: Implement License/Permit Tab.
 * ProvDemo: Implement License/Sanctions Tab.
 * ProvDemo: Implement rest of fields for provider tab and modify to be closer to their shown sample. Page 14 - 18 with some dropdown defined on 19 to 23.
-* 
 * ProvDemo: Special Programs Should not include all fields for all special programs.  There is a data value for special programs that should remove some fields.   The Meicare preclusion list includes claimRejectionDate, reinclusionDate and Business Name while the Medicare Opt out includes a transaction date.  
 * ProvDemo: Implement Special Programs History
 * ProvDemo: Implement Business office Tab Pages 38 - 53 This is a complex flow with sub search of business office but selecting office just populates fields into next form.

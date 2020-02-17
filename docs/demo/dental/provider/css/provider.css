@@ -6,21 +6,18 @@ body {
         Tahoma,
         "Trebuchet MS", Veranda, Geneva,
         sans-serif;
-    flex-wrap: wrap;
+
 }
 
-#mbody {}
+.input_fieldCont {
+    margin-left: 0.2em;
+}
 
-.input_fieldCont,
-.input_fieldvCont,
-.input_fieldContainer,
-.input_fieldvContainer,
-.vert_radioCont {}
-
-.input_fieldLabel,
-.input_fieldvLabel,
-.vert_radioLabel,
-.hor_radioLabel {
+/*
+.xinput_fieldLabel,
+.xinput_fieldvLabel,
+.xvert_radioLabel,
+.xhor_radioLabel {
     font-family: Charcoal,
         Helvetica,
         "Trebuchet MS",
@@ -32,63 +29,33 @@ body {
 }
 
 
-input.input_field,
-.input_fieldv,
-select.input_field,
-fieldset.hor_radio,
-fieldset.vert_radio,
-fieldset.radio {
+xinput.input_field,
+.xinput_fieldv,
+xselect.input_field,
+xfieldset.hor_radio,
+xfieldset.vert_radio,
+xfieldset.radio {
     background-color: #F7F8FA;
     border: 1px solid #7D8083;
     border-radius: 3px;
     padding: 0.3em;
     height: 2.4em;
 }
+*/
 
 #page {
     display: flex;
     flex-wrap: nowrap;
-
 }
 
-.hbuttonContain {
-    display: inline-block;
+
+#provSearchAdvancedGroupCont {
+    min-width: 70%;
+    max-width: 100%;
+    align-items: center;
+    justify-items: center;
 }
 
-.searchButtonsCont {
-    display: block;
-    width: 98%;
-    text-align: end;
-    margin-bottom: 1em;
-}
-
-#provLicenseTableCont {
-    border: none;
-    background-color: transparent;
-}
-
-#provLicenseTabletbl {
-    border: none;
-    background-color: transparent;
-    border-spacing: 0em 2em;
-}
-
-#provLicenseTabletbl td {
-    border: none;
-    background-color: transparent;
-
-}
-
-#provLicenseTabletbl tr {}
-
-
-#provLicRowGroupCont {
-    flex-wrap: nowrap;
-}
-
-#provLicLeftCont {
-    flex-wrap: wrap;
-}
 
 button.addRow {
     background-color: #124981;
@@ -98,6 +65,22 @@ button.addRow {
 .greenBoxed {
     background-color: green;
     border: solid 2px darkgreen;
+}
+
+#provSearchAdvancedGroupContent {
+    display: flex;
+    xalign-items: stretch;
+    justify-content: space-between;
+}
+
+div#provSearchAdvancedGroupContent .input_fieldCont {
+    flex: 1 1 16em;
+}
+
+#provSearchAdvancedGroupFS {
+    min-width: 85%;
+    width: 100%;
+
 }
 
 @media only screen and (min-width : 800px) {
@@ -123,6 +106,18 @@ button.addRow {
 
     div.input_fieldCont {
         margin-left: 1.22em;
+    }
+
+    #provLicRowGroupCont {
+        flex-wrap: nowrap;
+    }
+
+    #provDetailFormCont {
+        flex-wrap: nowrap;
+    }
+
+    #provDetailRightFieldsGroupCont {
+        margin-left: 0.5em;
     }
 
 }
@@ -157,13 +152,40 @@ button.addRow {
         max-height: none;
     }
 
+    #provDetailRightFieldsGroupCont {
+        width: 100%;
+        max-width: 100%;
+    }
 
-    input.input_field,
-    .input_fieldv,
-    select.input_field,
-    fieldset.hor_radio,
-    fieldset.vert_radio,
-    fieldset.radio {
+    #provDetailFormCont {
+        flex-wrap: wrap;
+    }
+
+    #dataObjDivBottom {
+        max-width: 98%;
+        overflow-x: hidden;
+    }
+
+    #xprovSearchAdvancedGroupCont {
+        display: flex;
+        min-width: 100%;
+    }
+
+    #provSearchAdvancedGroupContent {
+        display: flex;
+        xalign-items: stretch;
+        justify-content: space-between;
+    }
+
+
+
+
+    Xinput.input_field,
+    .Xinput_fieldv,
+    Xselect.input_field,
+    Xfieldset.hor_radio,
+    Xfieldset.vert_radio,
+    Xfieldset.radio {
         background-color: #F7F8FA;
         border: 1px solid #7D8083;
         border-radius: 2px;
@@ -173,7 +195,7 @@ button.addRow {
         width: auto;
     }
 
-    div.input_fieldCont {
+    Xdiv.input_fieldCont {
         margin-left: 0px;
     }
 
@@ -191,12 +213,6 @@ button.addRow {
         padding-bottom: 0.7em;
     }
 
-
-    #dataObjDivBottom {
-        max-width: 98%;
-        overflow-x: hidden;
-    }
-
     div.tabbarCont {
         width: 100%;
         display: flex;
@@ -210,11 +226,8 @@ button.addRow {
         flex-wrap: wrap;
         align-items: stretch;
     }
-
-    #provLicRowGroupCont {
-        flex-wrap: wrap;
-    }
 }
+
 
 /* Smartphones (landscape) ----------- */
 @media only screen and (max-width : 400px) {

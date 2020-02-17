@@ -232,7 +232,7 @@
     id: provBusAddrGroup
     label: Business Address
     type: widgetGroup
-    class: vgroup
+    class: hgroup
     layout: horizontal
     widgets: 
      - provBusAdress1
@@ -271,8 +271,119 @@
        - {"label" : "Arkansas", "value" : "AK"}
 
 
+
+
+
+- widget:
+    id: provContactsEmail
+    data_type: text
+    type: text
+    label : Email Address
+    label_class: wrap
+    size: 25
+    data_context: email
+    class: input_field
+
+- widget:
+    id: provContactsEmailType
+    data_type: text
+    type: dropdown
+    label : Type 
+    label_class: wrap
+    data_context: type
+    class: input_field
+    option:
+       - {"label" : "-", "value" : "-"}
+       - {"label" : "Work", "value" : "W"}
+       - {"label" : "Home", "value": "H"}
+       - {"label" : "Cell", "value" : "M"}
+       - {"label" : "Cell Work", "value" : "CW"}
+
+- widget:
+    id: provContactsDefault
+    data_type: text
+    type: dropdown
+    label : Default
+    label_class: wrap
+    data_context: default
+    class: input_field
+    option:
+       - {"label" : "-", "value" : "-"}
+       - {"label" : "Y", "value" : "Y"}
+       - {"label" : "N", "value": "N"}
+
+- widget:
+  id: provContactsEmailTbl
+  label: Email 
+  type: table
+  max_visible_rows: 5
+  class: mtable
+  data_context: contacts.email
+  total_line: false
+  skip_col_header: true
+  render_as_div: true
+  add_button:
+     label: Add Email
+     class: simple_add
+     skip: false
+  columns: 
+     - provContactsEmail
+     - provContactsEmailType
+     - provContactsDefault
+
+
+- widget:
+    id: provContactsGroup
+    type: widgetGroup
+    label: Contacts
+    class: hgroup
+    layout: horizontal
+    cell_class: tdLeft
+    renderFieldset: true
+    widgets: 
+      - provContactsEmailTbl
+
+
+- widget:
+    id: provTopFieldsGroup
+    type: widgetGroup
+    class: silent_group
+    renderFieldset: false
+    layout: horizontal
+    widgets: 
+     - provFirstName
+     - provLastName
+     - provGender
+     - provNPI
+     - provCredential
+     - provSpecial
+     - provLicenseNumber
+
+
+- widget:
+    id: provDetailLeftFieldsGroup
+    type: widgetGroup
+    class: silent_group
+    renderFieldset: false
+    layout: horizontal
+    widgets: 
+     - provTopFieldsGroup
+     - provBusAddrGroup
+     - provMailAddrGroup
+
+
+- widget:
+    id: provDetailRightFieldsGroup
+    type: widgetGroup
+    class: silent_group
+    renderFieldset: false
+    layout: horizontal
+    widgets: 
+     - provContactsGroup
+
+
 - form:
-   id : ProvDetailForm
+   id : provDetailForm
    class: inputFrm
    label: Provider Detail Form
    show_data_obj_div: dataObjDivBottom
@@ -283,12 +394,5 @@
       parse: JSON
 
    widgets:   
-     - provFirstName
-     - provLastName
-     - provGender
-     - provNPI
-     - provCredential
-     - provSpecial
-     - provLicenseNumber
-     - provBusAddrGroup
-     - provMailAddrGroup 
+     - provDetailLeftFieldsGroup
+     - provDetailRightFieldsGroup

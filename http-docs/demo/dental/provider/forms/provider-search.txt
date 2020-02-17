@@ -64,7 +64,7 @@
     type: text
     label : NPI
     label_class: wrap
-    size: 15
+    size: 18
     data_context: prov.search.NPI
     class: input_field
     suggest:
@@ -112,7 +112,7 @@
     label : SSN
     label_class: wrap
     data_context: prov.search.SSN
-    size: 20
+    size: 18
     class: input_field
 
 
@@ -132,7 +132,7 @@
     type: text
     label : Business Name
     label_class: wrap
-    size: 35
+    size: 18
     data_context: prov.search.business_name
     class: input_field
 
@@ -154,7 +154,7 @@
     type: text
     label : Office Email
     label_class: wrap
-    size: 25
+    size: 18
     data_context: prov.search.office_email
     class: input_field
 
@@ -167,7 +167,7 @@
     label_class: wrap
     data_context: prov.search.office_address
     class: input_field
-    size: 35
+    size: 18
 
 #- widget:
 #    id: provSearchOfficeAddr
@@ -186,7 +186,7 @@
     label_class: wrap
     data_context: prov.search.office_city
     class: input_field
-    size: 22
+    size: 18
     suggest:
       uri: /data/dental/provider/autosug/city/{auto_sug_value}.txt
       parse: tsv
@@ -200,6 +200,7 @@
     label_class: wrap
     data_context: prov.search.office_state
     class: input_field
+    size: 2
     data_source=data/dental/lookup/states.tsv
     suggest:
       uri: /data/dental/provider/autosug/state/{auto_sug_value}.txt
@@ -215,6 +216,7 @@
     label_class: wrap
     data_context: prov.search.office_county
     class: input_field
+    size: 18
     data_source=data/dental/lookup/counties/{prov_search.office.state}.tsv
 
 - widget:
@@ -225,6 +227,7 @@
     label_class: wrap
     data_context: prov.search.office_country
     class: input_field
+    size: 18
     data_source=data/dental/lookup/countries.tsv
 
 
@@ -236,7 +239,7 @@
     label_class: wrap
     data_context: prov.search.office.zip
     class: input_field
-    size: 12
+    size: 18
     suggest:
       uri: /data/dental/provider/autosug/zip/{auto_sug_value}.txt
       parse: tsv
