@@ -90,6 +90,11 @@ fieldset.radio {
     flex-wrap: wrap;
 }
 
+button.addRow {
+    background-color: #124981;
+    color: rgb(220, 220, 200);
+}
+
 .greenBoxed {
     background-color: green;
     border: solid 2px darkgreen;

@@ -1233,26 +1233,50 @@ function mformsRenderEditableTable(widDef, b, context, custParms) {
     //----------
     //--- Render the Table Add Row button
     //----------
-    b.start("div", {
-        "class": widDef.class + "addRowCont"
-    });
-    b.make("button", {
-        "id": tblId + "-_AddBut",
-        "table_id": tblId,
-        "form_id": context.form_id,
-        "dataObjId": context.dataObjId,
-        "class": widDef.class + "AddBut",
-        "onClick": "addTableRowButton(this)"
-    }, "<b>+</b>Add row");
-    b.finish("div");
-    mformFinishWidget(widDef, b, context, custParms);
+    //add_button:
+    //    label: Add Special Program
+    //    class: addRow
+    //    skip: false
+    var addrow = widDef.add_button;
+    var skipAddRow = getWDef(addrow, "skip", false);
+    var addRowLabel = getWDef(addrow, "label", "Add Row");
+    var classAdd = getWDef(addrow, "class", "");
+    if (skipAddRow != true) {
+        b.start("div", {
+            "class": (widDef.class + "addRowCont" + " " + classAdd).trim()
+        });
+        b.start("button", {
+            "id": tblId + "-_AddBut",
+            "table_id": tblId,
+            "form_id": context.form_id,
+            "dataObjId": context.dataObjId,
+            "class": (widDef.class + "AddBut" + " " + classAdd).trim(),
+            "onClick": "addTableRowButton(this)"
+        });
+        b.make("span", {
+            "class": "addRowSymbol"
+        }, " &#43");
+        b.b(addRowLabel);
+        b.finish("div");
+
+        mformFinishWidget(widDef, b, context, custContext);
+
+    }
+
 }
 
+
+
 // Create a clone of parts of the custom parms object
+
 // to allow retention of the array stack and other things
+
 // we want preserved while allowing other things to varry
+
 // in the stack.
+
 function partialCloneCustParms(custParms) {
+
     if ((custParms == null) || (custParms == undefined)) {
         return {};
     } else {

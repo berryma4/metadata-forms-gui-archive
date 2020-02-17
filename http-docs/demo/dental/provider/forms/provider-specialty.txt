@@ -81,6 +81,10 @@
   data_context: specialty
   total_line: false
   skip_col_header: true
+  add_button:
+     label: Add Specialty
+     class: addRow
+     skip: false
   columns: 
     - provSpecialtyRowGroup
 

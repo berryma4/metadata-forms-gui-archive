@@ -777,6 +777,24 @@ function setNested(model, path, value) {
 }
 
 
+// similar to getNested but does not try
+// to split the path to walk any deeper than
+// top level objects.  Can be faster than
+// getNested due to less string manipulation
+function getWDef(model, path, defVal) {
+  if (defVal == undefined) {
+    defVal = null;
+  }
+  if ((model == undefined) || (model == null)) {
+    return defVal;
+  }
+  var retVal = model[path];
+  if (retVal == undefined) {
+    return defVal;
+  } else {
+    return retVal
+  }
+}
 
 
 // Spit path on __ and then lookup path segments
@@ -788,6 +806,9 @@ function setNested(model, path, value) {
 function getNested(model, path, defVal) {
   if (defVal == undefined) {
     defVal = null;
+  }
+  if ((model == undefined) || (model == null)) {
+    return defVal;
   }
   var segs = path.split(".");
   var sobj = model;

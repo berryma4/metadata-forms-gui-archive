@@ -30,6 +30,8 @@ Actions & Roadmap for Metadata Forms Engine
 * ProvDemo: Implement License/Sanctions Tab.
 * ProvDemo: Implement rest of fields for provider tab and modify to be closer to their shown sample. Page 14 - 18 with some dropdown defined on 19 to 23.
 * ProvDemo: Implement Special programs Tab. Page 31 - 37
+* ProvDemo: Special Programs Should not include all fields for all special programs.  There is a data value for special programs that should remove some fields.   The Meicare preclusion list includes claimRejectionDate, reinclusionDate and Business Name while the Medicare Opt out includes a transaction date.  
+* ProvDemo: Implement Special Programs History
 * ProvDemo: Implement Business office Tab Pages 38 - 53 This is a complex flow with sub search of business office but selecting office just populates fields into next form.
 * ProvDemo: Implement Participation Tab: Page 54 - 61
 * ProvDemo: Implement Participation Tab /  Define new Participation group - Page 61 - 67
@@ -502,6 +504,7 @@ expinp:
 --- and will not be findable after expansion.   Alternatively
 --- we index the pre-expansion pattern and then use it for
 --- the import but then it becomes unclear when the system
+
 --- should apply interpolation.
 ------
 --- since the most recent defenition of expinp replaces 
@@ -587,6 +590,7 @@ defaults:
     size: 50
     data_context: insurer.address2
     
+
 ------------------------
  Because it merged in the Defaults from the Widget
  for any value not specified.  This is different

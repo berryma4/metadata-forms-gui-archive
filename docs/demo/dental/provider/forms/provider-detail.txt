@@ -194,7 +194,7 @@
     class: input_field
     suggest:
       uri: /data/dental/provider/autosug/city/{auto_sug_value}.txt
-      parse: tsv
+      parse: TSV
       class: auto_sug_items
 
 - widget:

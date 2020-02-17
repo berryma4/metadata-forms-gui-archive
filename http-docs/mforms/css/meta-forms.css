@@ -410,14 +410,21 @@ div.mtableaddRowCont {
 button.mtableAddBut {
     font-weight: 600;
     border: solid rgb(224, 221, 221) 3px;
-    border-radius: 3px;
-    padding: 3px;
-    max-width: 80px;
+    border-radius: 6px;
+    padding: 0.3em;
+    padding-right: 0.6em;
+    padding-left: 0.6em;
+    width: fit-content;
     margin: 5px;
 }
 
 button.mtableAddBut:hover {
     border-color: slategrey;
+}
+
+span.addRowSymbol {
+    font-size: 1.5em;
+    padding-right: 0.5em;
 }
 
 .nowrap {
