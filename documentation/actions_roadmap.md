@@ -4,10 +4,10 @@ Actions & Roadmap for Metadata Forms Engine
 
 * When displaying dental claim on phone in portrait the text widgets are indented but radio buttons are not.  None should be indented on mobile devices. 
 * Prevent Lookup, formload and autosuggest  from being fired twice because the on-change and on-update are both hitting autosuggest.
-* DONE:2020-02-17: ProvDemo: Allow tables to be rendered with a series of DIV instead of a table while retaining custom array.  this can allow wrapping of columns which is not possible with normal table. 
+* DONE:2020-02-17:JOE: ProvDemo: Allow tables to be rendered with a series of DIV instead of a table while retaining custom array.  this can allow wrapping of columns which is not possible with normal table. 
 * ProvDemo: Search multi-word tokens are failing in search due to escaping that is slightly different.  Need to duplicate exact functionality from the python make safe function.
-* ProvDemo: Option to render Table as a set of nested DIV rather than the Table Syntax
-* ProvDemo: Move the Collaps Expand Icon inside the field group label. 
+* DONE:2010-02-17:JOE: ProvDemo: Option to render Table as a set of nested DIV rather than the Table Syntax
+* DONE:2020-02-17: ProvDemo: Move the Collapse Expand Icon inside the field group label. 
 * ProvDemo: Add Status field at the bottom of Group and at bottom of Table.
 * ProvDemo: Provider Detail, Languages Needs Multi-select dropdown.
 * ProvDemo: Provider Detail, Contact, email.  Default needs custom function to only allow one of the array elements to be selected as default. 
@@ -93,7 +93,7 @@ Actions & Roadmap for Metadata Forms Engine
 * SaveData: Reject or Disable Save to server:  when Some Fields fail the validation rules.  **Save Data back to server:** Add Prevent Save Call until all validation rules for all widgets are successful.
 * Support Form stack where new forms can be displayed on top of other forms with some control over positioning then when the other form is finished the form immediately below it is restored.  Ability to chain forms together into a series where all the mandatory fields in the series must be filled in before the form is saved to server.
 * Add support to allow multiple forms to be defined in a single file and only the one marked master.
-* EditTable: Allow Removal of AddRow button.  Also allow the label and style to be shown for the AddRow.  Allow HTML symbol prefix or suffix  image and allow leading image icon. 
+* DONE:2020-02-17: EditTable: Allow Removal of AddRow button.  Also allow the label and style to be shown for the AddRow.  Allow HTML symbol prefix or suffix  image and allow leading image icon. 
 * **OIDC for existing Session** - Implement basic support for OIDC to allow real data access.   This only needs  to run once a OIDC session has been established they can use login from other screens provided it is in the same domain.  Otherwise will need login screens.
 * Demonstrate use of a custom rendering function.
 * Utility showing data mapping to field ID to make it easier to see how the Data map will be rendered.
@@ -123,7 +123,6 @@ Actions & Roadmap for Metadata Forms Engine
 * Edit-Table: Extend the tables widget to provide in table sort functionality by clicking on the headers.
 * Edit Table: When adding a row should scroll the table to make the row added visible.
 * Editable Table: When last row is still empty need to disable add row as an optional parameter.
-* 
 * Demo Dental Claim:  Use AutoSuggest feature to show possible codes but extend to also show a description rather than just the expanded token.  When user enters any portion of a procedure code or  description of code show list of codes 5  that could fit.    Implement as re-usable functionality. 
 * Allow custom rendering agent / widget  for auto suggest
 * Editable Table: Demonstrate alternating color bands in table widget.
@@ -191,7 +190,7 @@ Actions & Roadmap for Metadata Forms Engine
 * DONE:JOE:2020-02-08: Detect portrait mode on phone and change font size or try different font specifications such as 12px to see what shows up most consistently readable across the largest number of devices.
 * DONE:JOE:2020-02-15: Add support for tabs across top of page rendering sub forms into tab as they are clicked.
 * DONE:JOE:2020-02-13: DEMO: Hide data / JSON view when in  portrait on mobile device. Main Index Page: Suppress the display of JSON from Data Object or reflow move to bottom when page is too narrow
-* Add support to change text size when page is displayed on mobile device.
+* DONE:JOE:2020-02-13: Add support to change text size when page is displayed on mobile device.
 * Add support for chained forms that display one after another
 * Add support for disabled widgets.
 * Add support to disable submit button when all mandatory fields are not filled in.
