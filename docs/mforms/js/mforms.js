@@ -581,6 +581,10 @@ function mformsRenderGroupWidget(widDef, b, context, custParms) {
     }
 
     var contDivName = widId + "Content";
+    var contDivAttr = {
+        "id": contDivName,
+        "class": "groupContentDiv"
+    };
     if ("label" in widDef) {
         b.start("legend", {
             "id": widId + "Legend",
@@ -590,10 +594,7 @@ function mformsRenderGroupWidget(widDef, b, context, custParms) {
         b.b(widDef.label);
         var arrowClass = "arrow";
         var arrSymbol = "&#8662;";
-        var contDivAttr = {
-            "id": contDivName,
-            "class": "groupContentDiv"
-        };
+
         if (widDef.collapsed == true) {
             contDivAttr.style = "display:None;";
             arrowClass = "arrow";
@@ -604,14 +605,13 @@ function mformsRenderGroupWidget(widDef, b, context, custParms) {
             "id": widId + "expIcon"
         }, arrSymbol);
         b.finish("legend");
-        b.start("div", contDivAttr);
     }
-
+    b.start("div", contDivAttr);
     if ("widgets" in widDef) {
         mformsRenderWidgets(widDef, widDef.widgets, b, context, custParms);
     }
+    b.finish("div");
     if (rendFieldSet == true) {
-        b.finish("div");
         b.finish("fieldset");
     }
     b.finish("div");

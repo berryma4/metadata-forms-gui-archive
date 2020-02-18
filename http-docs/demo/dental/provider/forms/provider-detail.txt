@@ -272,6 +272,52 @@
 
 
 
+- widget:
+    id: provLanguages
+    data_type: text
+    type: dropdown
+    label : Languages 
+    label_class: wrap
+    size: 1
+    data_context: languages
+    class: input_field
+    placeholder: Select All that apply
+    option:
+       - {"label" : "Arabic", "value" : "AB"}
+       - {"label" : "English", "value" : "EN"}
+       - {"label" : "German", "value" : "GR"}
+       - {"label" : "Hinidi", "value" : "HI"}
+       - {"label" : "Spanish", "value": "CH"}
+       - {"label" : "French", "value" : "FR"}
+       - {"label" : "Japanese", "value" : "JP"}
+
+- widget:
+    id: provAccomodations
+    data_type: text
+    type: dropdown
+    label : Accomodations 
+    label_class: wrap
+    size: 1
+    data_context: Accomodations
+    class: input_field
+    placeholder: Select All that apply
+    option:
+       - {"label" : "All", "value" : "AL"}
+       - {"label" : "Accessible Communications", "value" : "AC"}
+      
+    
+
+- widget:
+    id: provLangAccomGrp
+    type: widgetGroup
+    label: Languages & Accomodations
+    class: vgroup
+    layout: horizontal
+    renderFieldset: true
+    widgets: 
+      - provLanguages
+      - provAccomodations
+
 
 
 - widget:
@@ -332,16 +378,76 @@
      - provContactsDefault
 
 
+
+- widget:
+    id: provContactsPhone
+    data_type: text
+    type: text
+    label : Phone Number
+    label_class: wrap
+    size: 25
+    data_context: phone_num
+    class: input_field
+
+- widget:
+    id: provContactsPhoneType
+    data_type: text
+    type: dropdown
+    label : Type 
+    label_class: wrap
+    data_context: type
+    class: input_field
+    option:
+       - {"label" : "-", "value" : "-"}
+       - {"label" : "Work", "value" : "W"}
+       - {"label" : "Home", "value": "H"}
+       - {"label" : "Spouse", "value" : "S"}
+
+- widget:
+    id: provContactsPhoneDefault
+    data_type: text
+    type: dropdown
+    label : Default
+    label_class: wrap
+    data_context: default
+    class: input_field
+    option:
+       - {"label" : "-", "value" : "-"}
+       - {"label" : "Y", "value" : "Y"}
+       - {"label" : "N", "value": "N"}
+
+
+- widget:
+  id: provContactsPhoneNumTbl
+  label: Phone Numbers
+  type: table
+  max_visible_rows: 5
+  class: mtable
+  data_context: contacts.email
+  total_line: false
+  skip_col_header: true
+  render_as_div: true
+  add_button:
+     label: Add Phone Number
+     class: simple_add
+     skip: false
+  columns: 
+     - provContactsPhone
+     - provContactsPhoneType
+     - provContactsPhoneDefault
+
+
 - widget:
     id: provContactsGroup
     type: widgetGroup
     label: Contacts
-    class: hgroup
-    layout: horizontal
-    cell_class: tdLeft
+    class: vgroup
+    layout: vertical
     renderFieldset: true
     widgets: 
+      #- provLangAccomGrp
       - provContactsEmailTbl
+      - provContactsPhoneNumTbl
 
 
 - widget:
@@ -379,7 +485,11 @@
     renderFieldset: false
     layout: horizontal
     widgets: 
+     - provLangAccomGrp
+     #- provLanguages
+     #- provAccomodations
      - provContactsGroup
+     
 
 
 - form:

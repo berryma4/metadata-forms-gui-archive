@@ -80,8 +80,17 @@ div#provSearchAdvancedGroupContent .input_fieldCont {
 #provSearchAdvancedGroupFS {
     min-width: 85%;
     width: 100%;
+}
+
+#provDetailRightFieldsGroupCont {
+    vertical-align: top;
+    justify-content: start;
+    align-items: flex-start;
+    height: fit-content;
+    flex-direction: column;
 
 }
+
 
 @media only screen and (min-width : 800px) {
     div.simpleSearchCont {

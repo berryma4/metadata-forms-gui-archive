@@ -3,6 +3,10 @@ Actions & Roadmap for Metadata Forms Engine
 # Rank Ordered Feature Work
 
 * When displaying dental claim on phone in portrait the text widgets are indented but radio buttons are not.  None should be indented on mobile devices. 
+* Languages & Accommodations on provider detail page should be Multi-select.  Also should default to unset if no matches are found and no default specified in form spec.
+* Credentialing / Educations tab.
+* Provider detail Missing some fields such as  Middle Name, Prefix, Suffix, SSN, Type1 NPI Numbers, Ethnicity, DOB, Degrees.
+* DONE:JOE:2020-02-17: Provider Detail When languages group is added as a group formatting causes improper second column. Fixed: When No Fieldset was specified was getting one extra /div. in render group.
 * Prevent Lookup, formload and autosuggest  from being fired twice because the on-change and on-update are both hitting autosuggest.
 * DONE:2020-02-17:JOE: ProvDemo: Allow tables to be rendered with a series of DIV instead of a table while retaining custom array.  this can allow wrapping of columns which is not possible with normal table. 
 * ProvDemo: Search multi-word tokens are failing in search due to escaping that is slightly different.  Need to duplicate exact functionality from the python make safe function.
