@@ -2,7 +2,7 @@
 # Meta data driven forms GUI for REST services![frigate forms logo](http-docs/img/frigate-forms-logo.png)
 ###### ***Status: Alpha-Dev** - Ready to use in projects but some features may need enhancements.*   
 
-**[Live demo]( https://frigateforms.com)** for [FDA Certificates](https://frigateforms.com/demo/cert-of-need/index.html),  [Dental Claims](https://frigateforms.com/demo/dental/claims/dental-claim.html),  [Dental Providers](https://frigateforms.com/demo/dental/provider/dental-provider.html), etc.   *The Demos are highly responsive,  Try them on both desktop and mobile devices.*on github pages.  
+**[Live demo]( https://frigateforms.com)** for [FDA Certificates](https://frigateforms.com/demo/cert-of-need/index.html),  [Dental Claims](https://claim.frigateforms.com/),  [Dental Providers](https://provider.frigateforms.com/), etc.   *The Demos are highly responsive,  Try them on both desktop and mobile devices.*on github pages.  
 
 Metadata based forms based GUI for CRUD operations.  Provide a Meta data based system to rapidly deliver highly functional user interfaces.  It supports editing, viewing and updating data in HTML with REST based backend services.   It can dramatically reduce the Labor required to build and maintain a custom GUI while retaining sufficient flexibility to deliver a branded, customized and efficient user experience.  
 
@@ -19,7 +19,7 @@ Please file a Issue to request enhancements.  You can also reach me on Linked-in
 > ### Dental Claim Form
 
 ![dental Claim Form](documentation/img/dental-claim-form-1.jpg)
-[Live Version](https://frigateforms.com/demo/dental/claims/dental-claim.html)   [metadata source](/http-docs/demo/dental/claims/forms/dental-claim.txt)    [html source](http-docs/demo/dental/claims/dental-claim.html)
+[Live Version](http://claim.frigateforms.com/)   [metadata source](https://github.com/joeatbayes/dental-claim-demo/blob/master/http-docs/forms/dental-claim.txt)    [html source](https://github.com/joeatbayes/dental-claim-demo/blob/master/http-docs/index.html)
 
 > ### Simple Form
 
